@@ -1,6 +1,9 @@
 <template>
   <div>
-    <label :for="label_for" class="block text-sm font-semibold font-sans-serif leading-5 text-gray-700">{{ label_name }}</label>
+    <label :for="label_for" class="block text-sm font-semibold font-sans-serif leading-5 text-gray-700">      
+      {{ label_name }}
+      <span v-if="label_notes" class="text-gray-500 text-[13px] font-semibold  leading-[17px] tracking-tight">{{ label_notes }}</span>
+    </label>
     <div class="relative flex mt-1 rounded-md shadow-sm">
       <div v-if="input_phone_country" class="absolute inset-y-0 left-0 flex items-center">
         <label for="country" class="sr-only">Country</label>
@@ -85,6 +88,9 @@ const CountDown = (duration) =>{
 
 const props = defineProps({
 label_name:{
+  type: String,
+},
+label_notes:{
   type: String,
 },
 label_for:{

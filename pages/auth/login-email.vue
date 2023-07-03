@@ -26,7 +26,7 @@
                   <label for="remember-me" class="ltr:ml-3 rtl:mr-2 block font-semibold text-sm leading-6 text-gray-900 cursor-pointer">تذكرني</label>
                 </div>
               <div class="text-sm">
-                <NuxtLink to="/auth/reset" class="font-bold text-xs text-gray-900 hover:text-gray-600">هل نسيت كلمة المرور ؟</NuxtLink>
+                <NuxtLink to="/auth/reset-password" class="font-bold text-xs text-gray-900 hover:text-gray-600">هل نسيت كلمة المرور ؟</NuxtLink>
               </div>
             </div>
           </div>
