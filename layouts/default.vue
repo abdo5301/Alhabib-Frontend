@@ -9,7 +9,7 @@
       <ul class="flex flex-row justify-center gap-3 py-3">
         <li><NuxtLink to="/auth/register">إنشاء حساب</NuxtLink></li>
         <li>/</li>
-        <li><NuxtLink to="/auth/login">تسجيل الدخول</NuxtLink></li>
+        <li><NuxtLink to="/auth/login-phone">تسجيل الدخول</NuxtLink></li>
       </ul>
     </nav>
     <slot />
