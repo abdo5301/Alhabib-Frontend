@@ -4,7 +4,7 @@
     <div class="relative">
       <ListboxButton v-if="!label_selected" class="relative flex items-center w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 sm:text-sm sm:leading-6">
         <span class="flex items-center">
-          <img v-if="with_image" :src="selected.image" alt="" :class="[with_name ? 'w-10':'w-10','flex-shrink-0 rounded-full',img_style??img_style]" />
+          <img v-if="with_image" :src="selected.image" alt="" :class="['w-8 lg:w-10 flex-shrink-0 rounded-full',img_style??img_style]" />
           <span v-if="with_name && label_selected_name" :class="[(with_image? 'ltr:ml-3 rtl:mr-3':''),'block truncate']">{{ selected.name }}</span>
         </span>
         <span v-if="select_icon" class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -14,7 +14,7 @@
 
       <ListboxButton v-if="label_selected" class="flex items-center">
         <span class="flex items-center">
-          <img  v-if="with_image" :src="selected.image" alt="" :class="[label_selected_name && with_name ? 'h-5 w-5':'w-10','flex-shrink-0 rounded-full',img_style??img_style]" />
+          <img  v-if="with_image" :src="selected.image" alt="" :class="[label_selected_name && with_name ? 'h-5 w-5':'w-8 lg:w-10','flex-shrink-0 rounded-full',img_style??img_style]" />
           <span v-if="with_name && label_selected_name" :class="[(with_image? 'ltr:ml-3 rtl:mr-3':''),'block truncate']">{{ selected.name }}</span>
         </span>
         <span v-if="select_icon" class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
