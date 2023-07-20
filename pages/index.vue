@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto w-1/2 py-8">
+  <div class="container mx-auto w-3/4 py-60 ">
     <h1 class="text-3xl font-bold underline text-center">
-      Index Here!
+      Index Here
     </h1>
   </div>
 </template>

@@ -18,7 +18,7 @@
        (input_phone_otp && otpCountDown ? 'rtl:pl-[202px] ltr:pr-[202px]':''),
        (error_text ? 'block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6'
       :'block w-full rounded-md border-0 py-1.5 text-gray-900  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-300  sm:text-sm sm:leading-6') , 
-      (input_phone_country ? 'pl-[95px]':'') ]"
+      (input_phone_country ?? 'pl-[95px]',input_style??input_style) ]"
       :placeholder="input_placeholder" :value="modelValue" @input="$emit('update:modelValue',$event.target.value)" :aria-invalid="input_aria_invalid" :aria-describedby="input_aria_describedby" ref="input"/>
       
       <div v-if="error_text" class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -140,6 +140,9 @@ input_phone_country: {
 input_phone_otp: {
   type: Boolean,
   default: false
+},
+input_style:{
+  type: String,
 },
 error_text:{
   type: String,

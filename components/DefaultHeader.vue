@@ -134,12 +134,6 @@
 </template>
 
 <script setup>
-import { initFlowbite } from 'flowbite'
-
-onMounted(() => {
-  initFlowbite();
-})
-
 const currency_select = [
   {
     id: 1,
