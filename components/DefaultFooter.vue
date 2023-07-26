@@ -72,7 +72,7 @@
           <div class="flex flex-col gap-5">
             <div class="flex  w-full items-center content-start gap-4 bg-white rounded-[14px] px-2 py-1 ring-gray-200">
               <div
-                class="flex items-center py-[2px] px-3 text-yellow-800 bg-yellow-300 rounded-[10px] text-xs lg:text-sm font-semibold">
+                class="flex items-center py-[2px] px-2 text-yellow-800 bg-yellow-300 rounded-[10px] text-xs lg:text-sm font-semibold">
                 ابق على اطلاع</div>
               <div class="flex items-center gap-2">
                 <span class="text-[13px] lg:text-sm font-normal text-black">حمّل تطبيقنا لتحظى بتجربة تسوق رائعة </span>
@@ -134,9 +134,9 @@
         <!--End Left Section -->
 
         <div class="lg:hidden flex flex-col items-center justify-center gap-12 pt-9 w-full px-14">
-          <div class="w-full">
+          <div class="w-full flex flex-col items-center justify-center">
             <button type="button"
-              class="flex items-center font-semibold border-b border-gray-500 w-full p-2 text-lg text-gray-600 transition duration-75 group"
+              class="flex items-center  font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-help" data-collapse-toggle="dropdown-help">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">المساعدة</span>
               <span class="rtl:ml-4 ltr:mr-4">
@@ -167,9 +167,9 @@
               </ul>
             </div>
           </div>
-          <div class="w-full">
+          <div class="w-full flex flex-col items-center justify-center">
             <button type="button"
-              class="flex items-center font-semibold border-b border-gray-500 w-full p-2 text-lg text-gray-600 transition duration-75 group"
+              class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-information" data-collapse-toggle="dropdown-information">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">معلومات</span>
               <span class="rtl:ml-4 ltr:mr-4">
@@ -194,9 +194,9 @@
               </ul>
             </div>
           </div>
-          <div class="w-full">
+          <div class="w-full flex flex-col items-center justify-center">
             <button type="button"
-              class="flex items-center font-semibold border-b border-gray-500 w-full p-2 text-lg text-gray-600 transition duration-75 group"
+              class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-branches" data-collapse-toggle="dropdown-branches">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">فروعنا</span>
               <span class="rtl:ml-4 ltr:mr-4">
