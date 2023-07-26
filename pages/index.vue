@@ -1,5 +1,6 @@
 <template>
- <HomeFirstBanner></HomeFirstBanner>
+ <HomeFirstBanner />
+ <HomeSecondBanner />
 </template>
 
 <script setup>
