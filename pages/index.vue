@@ -1,39 +1,37 @@
 <template>
- <HomeFirstBanner />
- <HomeSecondBanner />
- <HomeCategorySection :categories="bed_categories" class="mb-[93px]">تسوق مستلزمات السرير</HomeCategorySection>
- <FeatureSection />
+  <HomeFirstBanner />
+  <HomeSecondBanner />
+  <HomeCategorySection :categories="bed_categories" class="mb-[93px]">تسوق مستلزمات السرير</HomeCategorySection>
+  <HomeSingleBanner />
+  <HomeFeatureSection />
 </template>
 
 <script setup>
-import FeatureSection from '~/components/home/FeatureSection.vue';
-
-
 const bed_categories = [
   {
     id: 1,
     name: 'لباد وواقي مرتبة',
-    image:'/images/category/lbad.png',
-    href:'#'
+    image: '/images/category/lbad.png',
+    href: '#'
   },
   {
     id: 2,
     name: 'مفارش وبطانيات',
-    image:'/images/category/bedding.png',
-    href:'#'
+    image: '/images/category/bedding.png',
+    href: '#'
 
   },
   {
     id: 3,
     name: 'وسائد وخداديات',
-    image:'/images/category/cushions.png',
-    href:'#'
+    image: '/images/category/cushions.png',
+    href: '#'
   },
   {
     id: 4,
     name: 'الأطفال والمواليد',
-    image:'/images/category/baby.png',
-    href:'#'
+    image: '/images/category/baby.png',
+    href: '#'
   },
 
 ]
