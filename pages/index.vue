@@ -2,10 +2,12 @@
  <HomeFirstBanner />
  <HomeSecondBanner />
  <HomeCategorySection :categories="bed_categories" class="mb-[93px]">تسوق مستلزمات السرير</HomeCategorySection>
-
+ <FeatureSection />
 </template>
 
 <script setup>
+import FeatureSection from '~/components/home/FeatureSection.vue';
+
 
 const bed_categories = [
   {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label :for="label_for" class="block text-sm font-semibold font-sans-serif leading-5 text-gray-700">      
+    <label v-if="label_name" :for="label_for" class="block text-sm font-semibold font-sans-serif leading-5 text-gray-700">      
       {{ label_name }}
       <span v-if="label_notes" class="text-gray-500 text-[13px] font-semibold  leading-[17px] tracking-tight">{{ label_notes }}</span>
     </label>

@@ -127,7 +127,7 @@
                   input_style="h-[38px] placeholder:text-sm" input_name="newsletter"
                   input_placeholder="أدخل بريدك الإلكتروني.." />
                 <Button type="submit" color="black"
-                  class="flex  mt-1 w-[115px] lg:w-[129px]  h-[38px] justify-center font-extrabold text-xs lg:text-sm">اشتراك
+                  class="flex px-2 mt-1 w-[115px] lg:w-[129px]  h-[38px] justify-center font-extrabold text-xs lg:text-sm">اشتراك
                   بالنشرة</Button>
               </form>
             </div>
