@@ -1,5 +1,5 @@
 <template>
-  <div class="container w-full mx-auto  h-[220px] lg:h-[451px]">
+  <div class="container w-full mx-auto  h-[281px] lg:h-[615px]">
     <!--  Single Image Banner -->
     <div v-if="first_banner == 'image'" class="w-full">
       <img src="images/banner/main-banner-1.jpg" alt="Alhabib"
