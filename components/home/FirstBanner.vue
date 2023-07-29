@@ -2,7 +2,7 @@
   <div class="container w-full mx-auto  h-[281px] lg:h-[615px]">
     <!--  Single Image Banner -->
     <div v-if="first_banner == 'image'" class="w-full">
-      <img src="images/banner/main-banner-1.jpg" alt="Alhabib"
+      <img src="/images/banner/main-banner-1.jpg" alt="Alhabib"
         class="absolute h-[282px] lg:h-[615px] mx-auto right-0 left-0 top-0 w-full">
     </div>
 
