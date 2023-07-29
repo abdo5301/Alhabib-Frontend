@@ -1,11 +1,40 @@
 <template>
-  <div class="container mx-auto w-3/4 py-60 ">
-    <h1 class="text-3xl font-bold underline text-center">
-      Index Here
-    </h1>
-  </div>
+  <HomeFirstBanner />
+  <HomeSecondBanner />
+  <HomeCategorySection :categories="bed_categories" class="mb-[93px]">تسوق مستلزمات السرير</HomeCategorySection>
+  <HomeSingleBanner />
+  <HomeFeatureSection />
 </template>
 
 <script setup>
-  
+const bed_categories = [
+  {
+    id: 1,
+    name: 'لباد وواقي مرتبة',
+    image: '/images/category/lbad.png',
+    href: '#'
+  },
+  {
+    id: 2,
+    name: 'مفارش وبطانيات',
+    image: '/images/category/bedding.png',
+    href: '#'
+
+  },
+  {
+    id: 3,
+    name: 'وسائد وخداديات',
+    image: '/images/category/cushions.png',
+    href: '#'
+  },
+  {
+    id: 4,
+    name: 'الأطفال والمواليد',
+    image: '/images/category/baby.png',
+    href: '#'
+  },
+
+]
+
+
 </script>

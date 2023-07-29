@@ -1,6 +1,21 @@
+<style scoped>
+.default_header {
+  background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%);
+}
+
+.fixed_header {
+  background: white;
+}
+
+@media (min-width: 1024px) {
+  .default_header:hover {
+    background: white;
+  }
+}
+</style>
 <template>
   <div>
-    <header class="relative bg-transparent lg:hover:bg-white">
+    <header :class="[page_scrolled ? 'fixed_header' : 'default_header', 'fixed w-full lg:hover:bg-white z-40']">
       <nav aria-label="Top" class="lg:h-[165px] h-[4rem] px-3 lg:px-[20px] pt-[22px] lg:pt-[40px]">
         <div class="flex gap-12 flex-col">
 
@@ -134,6 +149,19 @@
 </template>
 
 <script setup>
+const page_scrolled = ref(false);
+
+onMounted(() => {
+  window.addEventListener("scroll", () => {
+    var curr = window.scrollY;
+    page_scrolled.value = true;
+    if (curr === 0) {
+      page_scrolled.value = false;
+    }
+  });
+
+})
+
 const currency_select = [
   {
     id: 1,

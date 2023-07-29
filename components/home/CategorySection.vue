@@ -1,0 +1,23 @@
+<template>
+  <div class="flex mx-auto container flex-col gap-12 justify-center items-center px-[22px] lg:px-[75px]">
+    <h1 class="text-gray-700 text-xl lg:text-[28px] font-bold">
+      <slot />
+    </h1>
+    <div dir="ltr" class="overflow-hidden hover:overflow-x-auto flex w-full mx-auto items-center justify-start lg:gap-14 gap-10 pb-4">
+      <NuxtLink :to="category.href" v-for="category in categories" :key="category.id" class="flex flex-shrink-0 flex-col gap-5 items-center justify-center">
+        <img class="rounded-md lg:w-[300px] w-[210px] lg:h-[225px] h-[200px]" :src="category.image" :alt="category.name">
+        <span class="text-gray-700 text-base lg:text-xl font-bold">{{ category.name }}</span>
+      </NuxtLink>
+    </div>
+  </div>
+</template>
+
+<script setup>
+
+const props = defineProps({
+  categories: {
+    type: Object
+  }
+})
+
+</script>

@@ -67,20 +67,23 @@
         <!--End Right Section -->
 
         <!--Start Left Section -->
-        <div class="flex gap-5 items-start flex-col px-[48px] lg:px-12">
+        <div class="flex gap-5 items-start flex-col mx-auto lg:px-12 px-4 max-w-max">
           <!--Start Download App Section -->
           <div class="flex flex-col gap-5">
-            <div class="flex  w-full items-center content-start gap-4 bg-white rounded-[14px] px-2 py-1 ring-gray-200">
+            <div class="flex  w-full items-center lg:gap-4 gap-[10px] bg-white rounded-[14px] px-[5px] lg:px-2 py-1 ring-gray-200">
               <div
-                class="flex items-center py-[2px] px-3 text-yellow-800 bg-yellow-300 rounded-[10px] text-xs lg:text-sm font-semibold">
+                class="flex items-center min-w-max py-[2px] px-[5px] lg:px-2 text-yellow-800 bg-yellow-300 rounded-[10px] text-xs lg:text-sm font-semibold">
                 ابق على اطلاع</div>
-              <div class="flex items-center gap-2">
-                <span class="text-[13px] lg:text-sm font-normal text-black">حمّل تطبيقنا لتحظى بتجربة تسوق رائعة </span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <div class="w-full flex items-center justify-between lg:gap-2">
+                <span class="text-[13px] lg:text-sm font-normal text-black flex-1">حمّل تطبيقنا لتحظى بتجربة تسوق رائعة
+                </span>
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
                     fill="#6B7280" />
                 </svg>
+                </span>
                 <span class="hidden lg:flex px-1"></span>
               </div>
             </div>
@@ -115,7 +118,7 @@
               </svg>
               <span class="text-lg text-black font-bold">اشترك معنا!</span>
             </div>
-            <p class="flex text-gray-500 text-xs lg:text-base font-normal order-3 lg:order-2">سجّل بنشرتنا البريدية وتابع
+            <p class="flex text-gray-500 text-xs lg:text-base font-normal order-3 lg:order-2  lg:min-w-full min-w-max">سجّل بنشرتنا البريدية وتابع
               أحدث المنتجات وجديد العروض
               والتخفيضات!</p>
             <div class="w-full order-1 lg:order-3">
@@ -124,7 +127,7 @@
                   input_style="h-[38px] placeholder:text-sm" input_name="newsletter"
                   input_placeholder="أدخل بريدك الإلكتروني.." />
                 <Button type="submit" color="black"
-                  class="flex  mt-1 w-[115px] lg:w-[129px]  h-[38px] justify-center font-extrabold text-xs lg:text-sm">اشتراك
+                  class="flex px-2 mt-1 w-[115px] lg:w-[129px]  h-[38px] justify-center font-extrabold text-xs lg:text-sm">اشتراك
                   بالنشرة</Button>
               </form>
             </div>
@@ -133,10 +136,10 @@
         </div>
         <!--End Left Section -->
 
-        <div class="lg:hidden flex flex-col items-center justify-center gap-12 pt-9 w-full px-14">
-          <div class="w-full">
+        <div class="lg:hidden flex flex-col items-center justify-center gap-12 pt-9 w-full px-7">
+          <div class="w-full flex flex-col items-center justify-center">
             <button type="button"
-              class="flex items-center font-semibold border-b border-gray-500 w-full p-2 text-lg text-gray-600 transition duration-75 group"
+              class="flex items-center  font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-help" data-collapse-toggle="dropdown-help">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">المساعدة</span>
               <span class="rtl:ml-4 ltr:mr-4">
@@ -167,9 +170,9 @@
               </ul>
             </div>
           </div>
-          <div class="w-full">
+          <div class="w-full flex flex-col items-center justify-center">
             <button type="button"
-              class="flex items-center font-semibold border-b border-gray-500 w-full p-2 text-lg text-gray-600 transition duration-75 group"
+              class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-information" data-collapse-toggle="dropdown-information">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">معلومات</span>
               <span class="rtl:ml-4 ltr:mr-4">
@@ -194,9 +197,9 @@
               </ul>
             </div>
           </div>
-          <div class="w-full">
+          <div class="w-full flex flex-col items-center justify-center">
             <button type="button"
-              class="flex items-center font-semibold border-b border-gray-500 w-full p-2 text-lg text-gray-600 transition duration-75 group"
+              class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-branches" data-collapse-toggle="dropdown-branches">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">فروعنا</span>
               <span class="rtl:ml-4 ltr:mr-4">
