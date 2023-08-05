@@ -17,6 +17,8 @@
 <script setup>
 import { initFlowbite } from 'flowbite'
 
+const { $lang } = useNuxtApp()
+
 onMounted(() => {
   initFlowbite();
 })
@@ -24,7 +26,8 @@ onMounted(() => {
 const title = useState('title', () => 'Alhabib Shop');
 useHead({
   htmlAttrs: {
-    dir: 'rtl',
+    lang: $lang.code,
+    dir:  $lang.dir,
     class: 'h-full bg-gray-50'
   },
   bodyAttrs: {

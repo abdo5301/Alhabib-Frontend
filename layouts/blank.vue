@@ -13,7 +13,7 @@
     <Title>{{ title }}</Title>
     <div class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
-         <NuxtLink to="/"><img class="mx-auto h-10 w-auto" src="/images/logo.svg" alt="Alhabib Shop" /></NuxtLink>       
+         <NuxtLink :to="localePath('/')"><img class="mx-auto h-10 w-auto" src="/images/logo.svg" alt="Alhabib Shop" /></NuxtLink>       
       </div>
       <slot />
     </div>
@@ -21,10 +21,14 @@
 </template>
 
 <script setup>
+const { $lang } = useNuxtApp()
+
 const title = useState('title',()=>'Alhabib Shop');
+const localePath = useLocalePath()
 useHead({
       htmlAttrs:{
-        dir:'rtl',
+        dir: $lang.dir,
+        lang: $lang.code,
         class: 'h-full bg-gray-50'
       },
       bodyAttrs: {
