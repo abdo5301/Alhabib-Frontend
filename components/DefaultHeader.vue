@@ -23,25 +23,31 @@
 
             <!-- Right Section -->
             <div class="flex items-center w-1/3">
-              <MobileNavbarMenu :menu_data="navigation" :language_data="language_select" :currency_data="currency_select">
+              <MobileNavbarMenu :menu_data="navigation" :currency_data="currency_select">
               </MobileNavbarMenu>
 
               <div class="hidden lg:flex lg:items-center">
+                <!-- Language -->
+                <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
+                  :title="locale.name"><img width="40" :src="locale.icon" :alt="locale.name"></a>
+                <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[10px]" aria-hidden="true" />
                 <!-- Currency -->
                 <SelectMenu :select_data="currency_select" :label_selected="true" :with_name="true"
                   :label_selected_name="true" />
-                <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[10px]" aria-hidden="true" />
-                <!-- Language -->
-                <SelectMenu :select_data="language_select" :label_selected="true" :with_image="true" :with_name="true" />
               </div>
 
               <!-- Search -->
               <div id="mobileDropdownSearchButton" data-dropdown-toggle="mobileDropdownSearch"
                 data-dropdown-placement="bottom"
-                class="flex items-end mt-[6.5px] lg:hidden rtl:pr-[9px] ltr:pl-[9px] cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 23" fill="none">
+                class="flex items-end rtl:mt-[6.5px] ltr:mt-[4px] lg:hidden rtl:pr-[9px] ltr:pl-[9px] cursor-pointer">
+                <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 23" fill="none">
                   <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M9.6 4.59999C6.94904 4.59999 4.80002 6.65948 4.80002 9.19999C4.80002 11.7405 6.94904 13.8 9.6 13.8C12.251 13.8 14.4 11.7405 14.4 9.19999C14.4 6.65948 12.251 4.59999 9.6 4.59999ZM2.40002 9.19999C2.40002 5.38922 5.62356 2.29999 9.6 2.29999C13.5764 2.29999 16.8 5.38922 16.8 9.19999C16.8 10.6902 16.307 12.0701 15.4689 13.198L21.2485 18.7368C21.7171 19.1859 21.7171 19.9141 21.2485 20.3632C20.7799 20.8123 20.0201 20.8123 19.5514 20.3632L13.7718 14.8243C12.5949 15.6276 11.155 16.1 9.6 16.1C5.62356 16.1 2.40002 13.0108 2.40002 9.19999Z"
+                    fill="#1F2937" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="21" viewBox="0 0 24 21" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M14.7787 4.02816C17.3186 4.02816 19.3776 5.83156 19.3776 8.05616C19.3776 10.2808 17.3186 12.0842 14.7787 12.0842C12.2387 12.0842 10.1797 10.2808 10.1797 8.05616C10.1797 5.83156 12.2387 4.02816 14.7787 4.02816ZM21.6771 8.05616C21.6771 4.71926 18.5885 2.01416 14.7787 2.01416C10.9688 2.01416 7.88024 4.71926 7.88024 8.05616C7.88024 9.36106 8.35254 10.5693 9.15559 11.557L3.61805 16.4071C3.16905 16.8004 3.16905 17.438 3.61805 17.8312C4.06705 18.2245 4.79502 18.2245 5.24402 17.8312L10.7816 12.9811C11.9092 13.6845 13.2888 14.0982 14.7787 14.0982C18.5885 14.0982 21.6771 11.3931 21.6771 8.05616Z"
                     fill="#1F2937" />
                 </svg>
               </div>
@@ -60,7 +66,7 @@
                     </div>
                     <input v-model="search" id="search" name="search"
                       class="block w-full rounded-md border-0 bg-white py-2 ltr:pl-11 ltr:pr-3 rtl:pr-11 rtl:pl-3 text-gray-900 ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6"
-                      placeholder="ابحث باسم المنتج , خامته , موسمه..." type="search" />
+                      :placeholder="$t('header_search_placeholder')" type="search" />
                   </div>
                 </div>
               </div>
@@ -69,7 +75,7 @@
             <!-- Center Logo -->
             <div class="flex items-center justify-center flex-1 w-1/3">
               <div class="flex items-center justify-center w-[110px] lg:w-[186px]">
-                <NuxtLink to="/">
+                <NuxtLink :to="localePath('/')">
                   <span class="sr-only">Your Company</span>
                   <img class="w-full" src="/images/logo.svg" alt="" />
                 </NuxtLink>
@@ -80,7 +86,7 @@
             <div class="flex  items-center justify-end gap-1 flex-1 flex-row w-1/3">
               <!-- User -->
               <div class="flex">
-                <NuxtLink to="/auth/login-phone" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
+                <NuxtLink :to="localePath('/auth/login-phone')" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
                   <span class="sr-only">User</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                     <path
@@ -136,7 +142,7 @@
                 </div>
                 <input v-model="search" id="mobile-search" name="search"
                   class="block w-full rounded-md border-0 bg-white py-2 ltr:pl-11 ltr:pr-3 rtl:pr-11 rtl:pl-3 text-gray-900 ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6"
-                  placeholder="ابحث باسم المنتج , خامته , موسمه..." type="search" />
+                  :placeholder="$t('header_search_placeholder')" type="search" />
               </div>
             </div>
           </div>
@@ -150,6 +156,10 @@
 
 <script setup>
 const page_scrolled = ref(false);
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
+const availableLocales = useNuxtApp().$all_lang
+const lang = useNuxtApp().$lang
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
@@ -166,24 +176,12 @@ const currency_select = [
   {
     id: 1,
     name: 'EGP',
+    href: '#'
   },
   {
     id: 2,
     name: 'SAR',
-  }
-]
-const language_select = [
-  {
-    id: 1,
-    name: 'EN',
-    image:
-      '/images/en-flag.svg',
-  },
-  {
-    id: 2,
-    name: 'AR',
-    image:
-      '/images/ar-flag.svg',
+    href: '#'
   }
 ]
 const search = ref('');

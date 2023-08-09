@@ -1,13 +1,13 @@
 <template>
   <div>
-     <Card card_title="تسجيل الدخول">
+     <Card :card_title="$t('login_title')">
         
           <div class="mb-5 text-center leading-6 font-sans-serif">
-              <div class="text-base font-normal  text-gray-500">لإكمال تسجيل دخولك، أدخل رمز التحقق المرسل الى</div>
-              <div class="font-bold text-lg pt-9 pb-5 text-gray-900">966534398859+</div>
+              <div class="text-base font-normal  text-gray-500">{{ $t('phone_confirm_title') }}</div>
+              <div class="font-bold text-lg pt-5 pb-5 text-gray-900" dir="ltr">{{ phone }}</div>
               <div class="font-normal text-base text-gray-900">
-              <span class="px-1">ليس رقمك؟</span>
-              <NuxtLink to="/auth/login-phone" class="underline decoration-1">اضغط هنا للتعديل</NuxtLink>
+              <span class="px-1">{{ $t('phone_confirm_edit_phone') }}</span>
+              <NuxtLink :to="localPath('/auth/login-phone')" class="underline decoration-1">{{ $t('phone_confirm_edit_phone_link') }}</NuxtLink>
               </div>
           </div>
           
@@ -15,9 +15,9 @@
             
            <Alert color="red" v-if="error_text" :alert_icon="true">{{ error_text }}</Alert> 
 
-           <Input  :error_text="error_text" :input_phone_otp="true" v-model="code" label_name="رمز التحقق" label_for="code" input_id="input-code" input_name="code" input_dir="ltr"/>
+           <Input  :error_text="error_text" :input_phone_otp="true" v-model="code" :label_name="$t('label_otp')" label_for="code" input_id="input-code" input_name="code" input_dir="ltr"/>
           
-           <Button type="submit" color="black" class="flex w-full justify-center" :outline="false" :disabled="!unDisabled">تسجيل الدخول</Button>
+           <Button type="submit" color="black" class="flex w-full justify-center" :outline="false" :disabled="!unDisabled">{{ $t('login_title') }}</Button>
           
         </form>
     
@@ -30,9 +30,10 @@
 
 definePageMeta({ layout: 'blank' })
 
-const dir = ref('rtl')
+const phone = ref('+966534398859')
 const code = ref('');
-
+const { t } = useI18n()
+const localPath = useLocalePath()
 const isLoading = ref(false);
 
 const unDisabled = computed(()=>{
@@ -41,7 +42,7 @@ const unDisabled = computed(()=>{
 
 const error_text = computed(()=>{
   if(code.value.length > 0)
-  return 'الرجاء التأكد من إدخال رمز التحقق الصحيح';
+  return t('phone_confirm_error');
 })
 
 function login(){

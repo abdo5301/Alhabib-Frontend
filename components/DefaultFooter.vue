@@ -6,55 +6,60 @@
         <!--Start Right Section -->
         <div class="hidden lg:flex gap-5 items-start justify-between py-2 mx-20">
           <div class="flex flex-col gap-4 w-44">
-            <h2 class="text-xl font-extrabold text-gray-600 uppercase">المساعدة</h2>
+            <h2 class="text-xl font-extrabold text-gray-600 uppercase">{{ $t('footer_help_menu_title') }}</h2>
             <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4">
               <li>
-                <NuxtLink to="https://flowbite.com/" class="hover:underline text-base">اتصل بنا</NuxtLink>
+                <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_contact') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline text-base">الأسئلة الشائعة</NuxtLink>
+                <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_faq') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline">الشحن والتواصل</NuxtLink>
+                <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_shipping') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline">سياسة الإسترجاع والتبديل</NuxtLink>
+                <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline">إنشاء تذكرة استرجاع</NuxtLink>
+                <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return_ticket') }}</NuxtLink>
               </li>
             </ul>
           </div>
           <div class="flex flex-col gap-4 w-44">
-            <h2 class="text-xl font-extrabold text-gray-600 uppercase">معلومات</h2>
+            <h2 class="text-xl font-extrabold text-gray-600 uppercase">{{ $t('footer_info_menu_title') }}</h2>
             <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4">
               <li>
-                <NuxtLink to="https://flowbite.com/" class="hover:underline text-base">من نحن</NuxtLink>
+                <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_info_menu_about') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline">المدونة</NuxtLink>
+                <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_blog') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline">خريطة الموقع</NuxtLink>
+                <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
               </li>
             </ul>
           </div>
           <div class="flex flex-col gap-4 w-44">
-            <h2 class="text-xl font-extrabold text-gray-600 uppercase">فروعنا</h2>
+            <h2 class="text-xl font-extrabold text-gray-600 uppercase">{{ $t('footer_branches_menu_title') }}</h2>
             <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4">
               <li>
-                <NuxtLink to="https://flowbite.com/" class="hover:underline text-base">معرض حي الياسمين</NuxtLink>
+                <NuxtLink target="_blank" to="#" class="hover:underline text-sm">{{ $t('footer_branches_menu_1') }}
+                </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline">معرض طريق الملك عبدالعزيز</NuxtLink>
+                <NuxtLink target="_blank"
+                  to="https://www.google.com/maps/place/Alhabib+Bedding/@24.7251951,46.7555043,17z/data=!3m1!4b1!4m6!3m5!1s0x3e2f0196e7c3760b:0x95c39d5c44dafd88!8m2!3d24.7251951!4d46.7555043!16s%2Fg%2F11jyx92rgs?hl=en-SA&shorturl=1&entry=tts&shorturl=1"
+                  class="hover:underline text-sm">{{ $t('footer_branches_menu_2') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="https://tailwindcss.com/" class="hover:underline">حي قرطبة</NuxtLink>
+                <NuxtLink target="_blank"
+                  to="https://www.google.com/maps/place/%D9%85%D9%81%D8%A7%D8%B1%D8%B4+%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8+%7C+Alhabib+Bedding%E2%80%AD/@24.7253326,46.6876522,12z/data=!4m6!3m5!1s0x3e2efd776f821de9:0x2b0778664ce1a91a!8m2!3d24.8068988!4d46.7363265!16s%2Fg%2F11twz11nlv?hl=en-SA&coh=164777&shorturl=1&entry=tts&shorturl=1"
+                  class="hover:underline text-sm">{{ $t('footer_branches_menu_3') }}</NuxtLink>
               </li>
             </ul>
           </div>
           <div class="flex">
-            <NuxtLink to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
+            <NuxtLink target="_blank" to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
               <img src="/images/vat.png" width="40" alt="VAT">
             </NuxtLink>
           </div>
@@ -70,19 +75,25 @@
         <div class="flex gap-5 items-start flex-col mx-auto lg:px-12 px-4 max-w-max">
           <!--Start Download App Section -->
           <div class="flex flex-col gap-5">
-            <div class="flex  w-full items-center lg:gap-4 gap-[10px] bg-white rounded-[14px] px-[5px] lg:px-2 py-1 ring-gray-200">
+            <div
+              class="flex  w-full items-center lg:gap-4 gap-[10px] bg-white rounded-[14px] px-[5px] lg:px-2 py-1 ring-gray-200">
               <div
                 class="flex items-center min-w-max py-[2px] px-[5px] lg:px-2 text-yellow-800 bg-yellow-300 rounded-[10px] text-xs lg:text-sm font-semibold">
-                ابق على اطلاع</div>
+                {{ $t('footer_keep') }}</div>
               <div class="w-full flex items-center justify-between lg:gap-2">
-                <span class="text-[13px] lg:text-sm font-normal text-black flex-1">حمّل تطبيقنا لتحظى بتجربة تسوق رائعة
+                <span class="text-[13px] lg:text-sm font-normal text-black flex-1">{{ $t('footer_download_app') }}
                 </span>
                 <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
-                    fill="#6B7280" />
-                </svg>
+                  <svg v-if="$lang.code=='ar'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
+                      fill="#6B7280" />
+                  </svg>
+                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 19 20" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M6.92826 5.29289C6.55726 5.68342 6.55726 6.31658 6.92826 6.70711L10.0565 10L6.92826 13.2929C6.55726 13.6834 6.55726 14.3166 6.92826 14.7071C7.29925 15.0976 7.90076 15.0976 8.27176 14.7071L12.0718 10.7071C12.4428 10.3166 12.4428 9.68342 12.0718 9.29289L8.27176 5.29289C7.90076 4.90237 7.29925 4.90237 6.92826 5.29289Z"
+                      fill="#6B7280" />
+                  </svg>
                 </span>
                 <span class="hidden lg:flex px-1"></span>
               </div>
@@ -116,19 +127,17 @@
                   d="M15.5999 2.3999C16.1898 2.3999 16.7057 2.76648 16.8566 3.29283L18.3896 8.63862L22.7495 10.9605C23.152 11.1748 23.3999 11.571 23.3999 11.9999C23.3999 12.4288 23.152 12.825 22.7495 13.0393L18.3896 15.3612L16.8566 20.707C16.7057 21.2333 16.1898 21.5999 15.5999 21.5999C15.0101 21.5999 14.4941 21.2333 14.3432 20.707L12.8102 15.3612L8.45033 13.0393C8.04791 12.825 7.79998 12.4288 7.79998 11.9999C7.79998 11.571 8.04791 11.1748 8.45033 10.9605L12.8102 8.63862L14.3432 3.29283C14.4941 2.76648 15.0101 2.3999 15.5999 2.3999Z"
                   stroke="white" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <span class="text-lg text-black font-bold">اشترك معنا!</span>
+              <span class="text-lg text-black font-bold">{{ $t('footer_newsletter_title') }}</span>
             </div>
-            <p class="flex text-gray-500 text-xs lg:text-base font-normal order-3 lg:order-2  lg:min-w-full min-w-max">سجّل بنشرتنا البريدية وتابع
-              أحدث المنتجات وجديد العروض
-              والتخفيضات!</p>
+            <p class="flex text-gray-500 text-xs lg:text-base font-normal order-3 lg:order-2  lg:min-w-full min-w-max">
+              {{ $t('footer_newsletter_description') }}</p>
             <div class="w-full order-1 lg:order-3">
               <form class="w-full flex gap-3 items-center max-w-full" action="#" @submit.prevent="subscribe_newsletter">
                 <Input v-model="newsletter_email" input_type="email" class="w-3/4"
                   input_style="h-[38px] placeholder:text-sm" input_name="newsletter"
-                  input_placeholder="أدخل بريدك الإلكتروني.." />
+                  :input_placeholder="$t('footer_newsletter_placeholder')" />
                 <Button type="submit" color="black"
-                  class="flex px-2 mt-1 w-[115px] lg:w-[129px]  h-[38px] justify-center font-extrabold text-xs lg:text-sm">اشتراك
-                  بالنشرة</Button>
+                  class="flex px-2 mt-1 w-[115px] lg:w-[129px]  h-[38px] justify-center font-extrabold text-xs lg:text-sm">{{ $t('footer_newsletter_submit') }}</Button>
               </form>
             </div>
           </div>
@@ -141,7 +150,8 @@
             <button type="button"
               class="flex items-center  font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-help" data-collapse-toggle="dropdown-help">
-              <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">المساعدة</span>
+              <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
+                $t('footer_help_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -153,19 +163,19 @@
             <div id="dropdown-help" class="hidden pt-4">
               <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4 items-center">
                 <li>
-                  <NuxtLink to="#" class="hover:underline text-base">اتصل بنا</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_contact') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline text-base">الأسئلة الشائعة</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_faq') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">الشحن والتواصل</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_shipping') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">سياسة الإسترجاع والتبديل</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">إنشاء تذكرة استرجاع</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return_ticket') }}</NuxtLink>
                 </li>
               </ul>
             </div>
@@ -174,7 +184,8 @@
             <button type="button"
               class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-information" data-collapse-toggle="dropdown-information">
-              <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">معلومات</span>
+              <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
+                $t('footer_info_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -186,13 +197,13 @@
             <div id="dropdown-information" class="hidden pt-4">
               <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4 items-center">
                 <li>
-                  <NuxtLink to="#" class="hover:underline text-base">من نحن</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_info_menu_about') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">المدونة</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_blog') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">خريطة الموقع</NuxtLink>
+                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
                 </li>
               </ul>
             </div>
@@ -201,7 +212,8 @@
             <button type="button"
               class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-branches" data-collapse-toggle="dropdown-branches">
-              <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">فروعنا</span>
+              <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
+                $t('footer_branches_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -213,13 +225,18 @@
             <div id="dropdown-branches" class="hidden pt-4">
               <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4 items-center">
                 <li>
-                  <NuxtLink to="#" class="hover:underline text-base">معرض حي الياسمين</NuxtLink>
+                  <NuxtLink to="#" target="_blank" class="hover:underline text-base">{{ $t('footer_branches_menu_1') }}
+                  </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">معرض طريق الملك عبدالعزيز</NuxtLink>
+                  <NuxtLink
+                    to="https://www.google.com/maps/place/Alhabib+Bedding/@24.7251951,46.7555043,17z/data=!3m1!4b1!4m6!3m5!1s0x3e2f0196e7c3760b:0x95c39d5c44dafd88!8m2!3d24.7251951!4d46.7555043!16s%2Fg%2F11jyx92rgs?hl=en-SA&shorturl=1&entry=tts&shorturl=1"
+                    target="_blank" class="hover:underline">{{ $t('footer_branches_menu_2') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">حي قرطبة</NuxtLink>
+                  <NuxtLink
+                    to="https://www.google.com/maps/place/%D9%85%D9%81%D8%A7%D8%B1%D8%B4+%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8+%7C+Alhabib+Bedding%E2%80%AD/@24.7253326,46.6876522,12z/data=!4m6!3m5!1s0x3e2efd776f821de9:0x2b0778664ce1a91a!8m2!3d24.8068988!4d46.7363265!16s%2Fg%2F11twz11nlv?hl=en-SA&coh=164777&shorturl=1&entry=tts&shorturl=1"
+                    target="_blank" class="hover:underline">{{ $t('footer_branches_menu_3') }}</NuxtLink>
                 </li>
               </ul>
             </div>
@@ -232,8 +249,8 @@
 
       <div class="flex flex-col lg:flex-row gap-8 items-center justify-between w-full pb-3 px-10 pt-7 lg:pt-0">
         <!--Copy Rights Section -->
-        <span class="text-sm font-normal text-gray-700 order-2">جميع الحقوق محفوظة.<NuxtLink to="https://alhabibshop.com/"
-            class="hover:underline"> مفارش الحبيب © 2023 </NuxtLink>
+        <span class="text-sm font-normal text-gray-700 order-2">
+          {{ $t('footer_copy_right') }}
         </span>
 
         <!--Payments Section -->
@@ -326,7 +343,7 @@
 </template>
 
 <script setup>
-
+const { $lang } = useNuxtApp()
 const newsletter_email = ref('')
 
 function subscribe_newsletter() {

@@ -14,14 +14,14 @@
         </select>
       </div>
       <input  :dir="input_dir" :type="input_password ? passwordFieldType : input_type" :name="input_name" :id="input_id" 
-      :class="[(input_phone_otp && !otpCountDown ? 'rtl:pl-[95px] ltr:pr-[95px]':''),
-       (input_phone_otp && otpCountDown ? 'rtl:pl-[202px] ltr:pr-[202px]':''),
+      :class="[(input_phone_otp && !otpCountDown ? 'rtl:pl-[95px] ltr:pr-[120px]':''),
+       (input_phone_otp && otpCountDown ? 'rtl:pl-[202px] ltr:pr-[225px]':''),
        (error_text ? 'block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6'
       :'block w-full rounded-md border-0 py-1.5 text-gray-900  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-300  sm:text-sm sm:leading-6') , 
-      (input_phone_country ?? 'pl-[95px]',input_style??input_style) ]"
+      (input_phone_country ?'pl-[95px]':''),(input_style?input_style:'') ]"
       :placeholder="input_placeholder" :value="modelValue" @input="$emit('update:modelValue',$event.target.value)" :aria-invalid="input_aria_invalid" :aria-describedby="input_aria_describedby" ref="input"/>
       
-      <div v-if="error_text" class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+      <div v-if="error_text" :class="[(input_phone_otp && otpCountDown ? 'rtl:ml-[202px] ltr:mr-[195px]':''),(input_phone_otp && !otpCountDown ? 'rtl:ml-[90px] ltr:mr-[90px]':''),'pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3']">
         <ExclamationCircleIcon class="h-5 w-5 text-red-500" aria-hidden="true" />
       </div>
 
@@ -31,8 +31,8 @@
       </div>
 
       <div v-if="input_phone_otp">
-      <button ref="resendOtp" v-if="!otpCountDown"  @click="CountDown(20)" type="button" :class="[('absolute rtl:left-0 ltr:right-0 inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50')]">
-        إرسال
+      <button ref="resendOtp" v-if="!otpCountDown"  @click="CountDown(20)" type="button" :class="[('absolute rtl:left-0 ltr:-right-[0.5px] inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50')]">
+        {{ $t('resend_otp') }}
         <ArrowsRightLeftIcon  class="-ml-[2px] h-4 w-4 text-gray-900" aria-hidden="true" />
       </button>
       <div v-if="otpCountDown" :class="[('absolute rtl:left-0 ltr:right-0 inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 pb-[8px] pt-[6px] m-[1px] text-sm font-semibold bg-gray-50 text-gray-500 ring-1 ring-inset ring-gray-300')]">
@@ -50,7 +50,7 @@
 <script setup>
 import { ExclamationCircleIcon,ArrowsRightLeftIcon,ClockIcon  } from '@heroicons/vue/20/solid'
 import { EyeIcon,EyeSlashIcon } from '@heroicons/vue/24/outline'
-
+const { t } = useI18n()
 const input = ref(props.modelValue);
 
 defineEmits(['update:modelValue']);
@@ -77,7 +77,7 @@ const CountDown = (duration) =>{
     clearInterval(otpInterVal);
     if (!isNaN(duration)) {
          otpInterVal = setInterval(()=>{
-          otpCountDown.value = " أعد الإرسال بعد " + duration + " ثانية  ";
+          otpCountDown.value = t('resend_otp_after')+ ' ' + duration +' '+ t('second');
             if (--duration < 0) {
                 otpCountDown.value = false;
                 clearInterval(otpInterVal);

@@ -1,7 +1,7 @@
 <template>
   <HomeFirstBanner />
   <HomeSecondBanner />
-  <HomeCategorySection :categories="bed_categories" class="mb-[93px]">تسوق مستلزمات السرير</HomeCategorySection>
+  <HomeCategorySection :categories="bed_categories" class="mb-[93px]">{{ $t('home_category_bed_title') }}</HomeCategorySection>
   <HomeSingleBanner />
   <HomeFeatureSection />
 </template>

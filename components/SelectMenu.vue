@@ -25,11 +25,11 @@
       <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
         <ListboxOptions class="absolute z-10 mt-1 max-h-56 w-full min-w-max overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           <ListboxOption as="template" v-for="item in props.select_data" :key="item.id" :value="item" v-slot="{ active, selected }">
-            <li  :class="[active ? 'bg-gray-400 text-white' : 'text-gray-900',selected ? 'hidden' : '', 'relative cursor-default select-none py-2 ltr:pl-3 rtl:pr-3 ltr:pr-6 rtl:pl-6']">
-              <div  class="flex items-center">
+            <li  :class="[active ? 'bg-gray-400 text-white' : 'text-gray-900',selected ? 'hidden' : '', 'relative cursor-default select-none']">
+              <NuxtLink :to="item.href" class="flex items-center w-full py-2 ltr:pl-3 rtl:pr-3 ltr:pr-6 rtl:pl-6">
                 <img  v-if="with_image" :src="item.image" alt="" :class="['h-5 w-5 flex-shrink-0 rounded-full',img_style??img_style]" />
                 <span v-if="with_name" :class="[(selected ? 'font-semibold' : 'font-normal'), (with_image? 'ltr:ml-3 rtl:mr-3':''),'block truncate']">{{ item.name }}</span>
-              </div>
+              </NuxtLink>
             </li>
           </ListboxOption>
         </ListboxOptions>
@@ -45,6 +45,9 @@ import { ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 const props = defineProps({
   select_data : { 
     type: Object, 
+  },
+  data_type : {
+    type: String
   },
   label_selected :{
     type: Boolean,
