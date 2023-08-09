@@ -69,5 +69,10 @@
   "reset_password_success_title":"Password has been updated",
   "reset_password_welcome":"welcome again,",
   "reset_password_success":"Your password has been updated successfully.",
-  "reset_password_redirect":"Back to home page"
+  "reset_password_redirect":"Back to home page",
+  "home_blog_banner_title":"Check our blog",
+  "home_blog_link_1":"Sizes names in Alhabib beddings",
+  "home_blog_link_2":"How often should I change my pillow?",
+  "home_blog_link_3":"Is your bed contributing to your back pains?",
+  "home_blog_link_btn":"Visit the blog"
 }

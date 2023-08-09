@@ -70,6 +70,11 @@
   "reset_password_success_title":"تم تحديث كلمة المرور",
   "reset_password_welcome":"مرحبًا بك مجددًا،",
   "reset_password_success":"تم تحديث كلمة المرور الخاصه بك بنجاح.",
-  "reset_password_redirect":"العودة للصفحة الرئيسية"
+  "reset_password_redirect":"العودة للصفحة الرئيسية",
+  "home_blog_banner_title":"تفقّد مدونتنا",
+  "home_blog_link_1":"مسميات مقاسات مفارش الحبيب",
+  "home_blog_link_2":"متى علي تغيير الوسادة ؟",
+  "home_blog_link_3":"هل يؤثر سريرك سلبياً على آلام ظهرك؟",
+  "home_blog_link_btn":"زيارة المدونة"
 
 }
