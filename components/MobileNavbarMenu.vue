@@ -24,10 +24,32 @@
     tabindex="-1">
 
     <div class="flex basis-full flex-col">
-      <ul class="flex flex-col gap-7 pt-[64px] px-7">
+      <div class="flex items-center justify-end rtl:pl-8 ltr:pr-8 rtl:pr-4 ltr:pl-4 pt-6 pb-5">
+        <!--Close menu  -->
+        <div class="bg-transparent rounded-lg w-6 h-5 flex flex-1 items-center justify-start">
+          <button type="button" data-drawer-hide="mobile-main-menu" aria-controls="mobile-main-menu"
+            class="bg-transparent rounded-lg w-6 h-5 flex items-center justify-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="25" viewBox="0 0 32 28" fill="none">
+              <path d="M24.1027 22.8425L6.19238 4.93164" stroke="gray" stroke-width="1.5" stroke-miterlimit="10"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M24.0139 5.02075L6.10352 22.9316" stroke="gray" stroke-width="1.5" stroke-miterlimit="10"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="sr-only">Close menu</span>
+          </button>
+        </div>
+        <!-- Currency -->
+        <SelectMenu :select_data="currency_data" :label_selected="true" :with_name="true" :label_selected_name="true" />
+        <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[8px]" aria-hidden="true" />
+        <!-- Language -->
+        <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
+          :title="locale.name"><img width="23" height="22" :src="locale.icon" :alt="locale.name"></a>
+
+      </div>
+      <ul class="flex flex-col gap-7 rtl:pr-4 rtl:pl-[22px] ltr:pr-[22px] ltr:pl-4">
         <li v-if="menu_data.pages.length" v-for="page in menu_data.pages" :key="page.name"
           class="border-b border-gray-300 pb-4">
-          <NuxtLink :to="page.href" class="bg-transparent rounded-lg w-full flex justify-between rtl:pl-4 ltr:pr-4">
+          <NuxtLink :to="page.href" class="bg-transparent rounded-lg w-full flex justify-between px-2">
             <span class="text-red-500 text-base font-semibold">
               {{ page.name }}
             </span>
@@ -38,7 +60,7 @@
           <button v-if="category.featured.length" type="button" :data-drawer-target="'mobile-menu-' + category.id"
             :data-drawer-show="'mobile-menu-' + category.id" data-drawer-hide="mobile-main-menu"
             :aria-controls="'mobile-menu-' + category.id" data-drawer-placement="right"
-            class="bg-transparent rounded-lg w-full flex justify-between rtl:pl-4 ltr:pr-4">
+            class="bg-transparent rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               category.name }}</span>
             <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
@@ -56,40 +78,12 @@
             </svg>
           </button>
           <NuxtLink v-else :to="category.href"
-            class="bg-transparent rounded-lg w-full flex justify-between rtl:pl-4 ltr:pr-4">
+            class="bg-transparent rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               category.name }}</span>
           </NuxtLink>
         </li>
-
-        <li class="border-b border-gray-300 pb-5">
-          <div class="flex items-center justify-center gap-10 px-5">
-
-            <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
-              :title="locale.name"><img width="40" :src="locale.icon" :alt="locale.name"></a>
-
-            <span class="h-8 w-[0.5px] bg-[#4B5563] mx-[10px]" aria-hidden="true" />
-
-            <!-- Currency -->
-            <SelectMenu :select_data="currency_data" :label_selected="true" :with_name="true"
-              :label_selected_name="true" />
-          </div>
-        </li>
-
       </ul>
-    </div>
-
-    <div class="bg-[#1a191961] basis-[77px] flex justify-center pt-5">
-      <button type="button" data-drawer-hide="mobile-main-menu" aria-controls="mobile-main-menu"
-        class="bg-transparent rounded-lg w-8 h-7 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="28" viewBox="0 0 32 28" fill="none">
-          <path d="M24.1027 22.8425L6.19238 4.93164" stroke="white" stroke-width="1.5" stroke-miterlimit="10"
-            stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M24.0139 5.02075L6.10352 22.9316" stroke="white" stroke-width="1.5" stroke-miterlimit="10"
-            stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        <span class="sr-only">Close menu</span>
-      </button>
     </div>
   </div>
   <!-- End Mobile Main Menu -->
@@ -102,7 +96,7 @@
     <div class="flex basis-full flex-col" v-if="category.featured.length">
       <button type="button" :data-drawer-hide="'mobile-menu-' + category.id" data-drawer-show="mobile-main-menu"
         :aria-controls="'mobile-menu-' + category.id"
-        class="bg-transparent rounded-lg w-8 h-8 pt-[21px] rtl:mr-6 ltr:ml-6 flex items-center justify-center">
+        class="bg-transparent rounded-lg w-8 h-8 pt-4 rtl:mr-4 ltr:ml-4 flex items-center justify-center">
         <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
           fill="none">
           <path d="M19.24 7.90674L27.3333 16.0001L19.24 24.0934" stroke="#6B7280" stroke-width="1.5"
@@ -118,46 +112,22 @@
         </svg>
         <span class="sr-only">Close menu</span>
       </button>
-      <ul class="flex flex-col gap-7 pt-[19px] px-7">
+      <ul class="flex flex-col gap-7 pt-4 rtl:pr-4 rtl:pl-[22px] ltr:pr-[22px] ltr:pl-4">
         <li class="border-b border-gray-300 pb-4 pt-3">
           <NuxtLink :to="category.href"
-            class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between rtl:pl-4 ltr:pr-4">
+            class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{ $t('header_mobile_menu_view_all') }}</span>
           </NuxtLink>
         </li>
 
         <li v-for="featured in category.featured" :key="featured.id" class="border-b border-gray-300 pb-4">
           <NuxtLink :to="featured.href"
-            class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between rtl:pl-4 ltr:pr-4">
+            class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               featured.name }}</span>
-            <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M12.7593 7.90625L4.66602 15.9996L12.7593 24.0929" stroke="#4B5563" stroke-width="0.6"
-                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M27.3326 16H4.89258" stroke="#4B5563" stroke-width="0.6" stroke-miterlimit="10"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
-              <path d="M14.43 5.92969L20.5 11.9997L14.43 18.0697" stroke="#4B5563" stroke-width="0.6"
-                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M3.50008 12H20.3301" stroke="#4B5563" stroke-width="0.6" stroke-miterlimit="10"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
           </NuxtLink>
         </li>
       </ul>
-    </div>
-    <div class="bg-[#1a191961] basis-[77px] flex justify-center pt-5" v-if="category.featured.length">
-      <button type="button" :data-drawer-hide="'mobile-menu-' + category.id" :aria-controls="'mobile-menu-' + category.id"
-        class="bg-transparent rounded-lg w-8 h-7 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="28" viewBox="0 0 32 28" fill="none">
-          <path d="M24.1027 22.8425L6.19238 4.93164" stroke="white" stroke-width="1.5" stroke-miterlimit="10"
-            stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M24.0139 5.02075L6.10352 22.9316" stroke="white" stroke-width="1.5" stroke-miterlimit="10"
-            stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        <span class="sr-only">Close menu</span>
-      </button>
     </div>
   </div>
   <!-- End Mobile Sub Menu -->

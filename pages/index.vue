@@ -2,6 +2,7 @@
   <HomeFirstBanner />
   <HomeSecondBanner />
   <HomeCategorySection :categories="bed_categories" class="mb-[93px]">{{ $t('home_category_bed_title') }}</HomeCategorySection>
+  <HomeBlogBanner>{{ $t('home_blog_banner_title') }}</HomeBlogBanner>
   <HomeSingleBanner />
   <HomeFeatureSection />
 </template>
