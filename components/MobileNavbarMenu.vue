@@ -39,7 +39,8 @@
           </button>
         </div>
         <!-- Currency -->
-        <SelectMenu :select_data="currency_data" :label_selected="true" :with_name="true" :label_selected_name="true" />
+        <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
+          :title="locale.name">{{ locale.list_name }}</a>
         <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[8px]" aria-hidden="true" />
         <!-- Language -->
         <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"

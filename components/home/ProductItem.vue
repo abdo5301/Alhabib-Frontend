@@ -1,0 +1,96 @@
+<template>
+  <div class="flex flex-shrink-0 flex-col justify-start lg:w-[268px] w-[175px]">
+    <div class="relative w-full">
+      <img class="w-full lg:h-[267px] h-[170px]" :src="image">
+      <button @click.prevent="$emit('favoriteClick', favorite = !favorite)"
+        class="absolute bg-[#f9fafb9e] lg:p-2 p-1 rounded-full lg:bottom-[12px] bottom-[7px] lg:right-[12px] right-[10px] text-gray-700 text-base lg:text-xl font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
+          :fill="favorite ? '#A30000' : 'none'">
+          <path
+            d="M4.67785 6.84448C2.77405 8.74829 2.77405 11.835 4.67785 13.7388L13.0001 22.061L21.3221 13.7388C23.226 11.835 23.226 8.74829 21.3221 6.84448C19.4183 4.94067 16.3317 4.94067 14.4279 6.84448L13.0001 8.27239L11.5721 6.84448C9.66834 4.94067 6.58166 4.94067 4.67785 6.84448Z"
+            :stroke="favorite ? '#A30000' : '#1F2937'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+    <div :dir="$lang.dir" class="w-full gap-4 lg:h-[255px] h-[230px] flex flex-col pt-[11px] pb-[15px] px-2 bg-[#FFF]">
+      <NuxtLink :to="link" class="line-clamp-2 lg:text-base text-xs text-gray-900 font-normal">
+        {{ name }}
+      </NuxtLink>
+      <!-- Tags -->
+      <div v-if="tags && tags.length" class="flex flex-wrap justify-start gap-[10px]">
+        <span v-for="tag, index in tags" :key="tag.id">
+          <span class="text-center px-3 font-normal text-xs text-gray-900 bg-[#D9D9D9] rounded-md" v-if="index < 2">{{
+            tag.name }}</span>
+        </span>
+      </div>
+      <!-- price -->
+      <div v-if="special" class="flex gap-2 justify-start">
+        <span class="text-red-600 font-bold lg:text-base text-xs">
+          {{ special }}
+        </span>
+        <del class="text-gray-900 font-normal lg:text-base text-xs">
+          {{ price }}
+        </del>
+      </div>
+      <div v-else class="flex gap-2 justify-start">
+        <span class="text-gray-900 font-bold lg:text-base text-xs">
+          {{ price }}
+        </span>
+      </div>
+      <!-- Colors -->
+      <div v-if="colors && colors.length" class="flex justify-start gap-[11px] flex-wrap">
+        <span v-for="color, index in colors" :key="color.hex"
+          :class="[(color.hex == props.color ? 'ring-1 ring-gray-900' : ''), ('relative  flex items-center justify-center rounded-full w-7 h-7 z-20')]">
+          <span class="rounded-full w-6 h-6 z-40" :style="['background-color:' + color.hex]">
+          </span>
+          <span v-if="color.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
+        </span>
+      </div>
+      <!-- Card -->
+      <div class="w-full flex flex-col justify-end flex-1">
+        <Button type="button" color="black"
+          class="items-center justify-center font-extrabold lg:text-sm text-xs shadow-sm text-white">{{
+            $t('home_products_cart_btn') }}</Button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script setup>
+defineEmits(['favoriteClick'])
+const { $lang } = useNuxtApp()
+const props = defineProps({
+  name: {
+    type: String,
+  },
+  tags: {
+    type: Object,
+  },
+  colors: {
+    type: Object,
+  },
+  image: {
+    type: String,
+  },
+  price: {
+    type: String,
+  },
+  special: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
+  link: {
+    type: String,
+  },
+  favorite: {
+    type: Boolean,
+  },
+  id: {
+    type: Number,
+  },
+});
+
+</script>

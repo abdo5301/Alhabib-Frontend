@@ -15,6 +15,7 @@ export default defineNuxtConfig({
         file: 'en.json',
         dir: 'ltr',
         icon:'/images/en-flag.svg',
+        list_name:'ENG'
       },
       {
         code: 'ar',
@@ -23,6 +24,7 @@ export default defineNuxtConfig({
         file: 'ar.json',
         dir: 'rtl',
         icon:'/images/ar-flag.svg',
+        list_name:'العربية'
       },
     ]
   },
