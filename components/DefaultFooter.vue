@@ -101,10 +101,12 @@
             <div class="flex gap-[14px]">
               <NuxtLink target="_blank"
                 to="https://apps.apple.com/sa/app/%D9%85%D9%81%D8%A7%D8%B1%D8%B4-%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8/id1420285929">
-                <img src="/images/app-store-btn.svg" alt="App Store">
+                <img v-if="$lang.dir =='rtl'" src="/images/download-app/app-store-ar.svg" alt="App Store">
+                <img v-else src="/images/download-app/app-store-en.svg" alt="App Store">
               </NuxtLink>
               <NuxtLink target="_blank" to="https://play.google.com/store/apps/details?id=com.alhabibshop.android">
-                <img src="/images/google-play-btn.svg" alt="Google Play">
+                <img v-if="$lang.dir =='rtl'" src="/images/download-app/google-play-ar.svg" alt="Google Play">
+                <img v-else src="/images/download-app/google-play-en.svg" alt="App Store">
               </NuxtLink>
             </div>
           </div>

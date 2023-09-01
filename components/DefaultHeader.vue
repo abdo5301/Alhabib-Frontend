@@ -1,6 +1,6 @@
 <style scoped>
 .default_header {
-  background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.901) 50%, rgba(255, 255, 255, 0.00) 100%);
 }
 
 .fixed_header {
@@ -31,9 +31,8 @@
                 <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
                   :title="locale.name"><img width="40" :src="locale.icon" :alt="locale.name"></a>
                 <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[10px]" aria-hidden="true" />
-                <!-- Currency -->
-                <SelectMenu :select_data="currency_select" :label_selected="true" :with_name="true"
-                  :label_selected_name="true" />
+                <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
+                  :title="locale.name">{{ locale.list_name }}</a>
               </div>
 
               <!-- Search -->
@@ -191,6 +190,7 @@ const navigation = {
       id: '1',
       name: ' مفارش وبطانيات',
       href: '#',
+      image:'/images/category/bedding.png',
       featured: [
         {
           id: '101',
@@ -208,6 +208,7 @@ const navigation = {
       id: '2',
       name: 'مجموعة الفنادق الفاخرة',
       href: '#',
+      image:'/images/category/cushions.png',
       featured: [
         {
           id: '103',

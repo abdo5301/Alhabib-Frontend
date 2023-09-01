@@ -11,7 +11,7 @@
 
 
     <!-- IF Desktop Slider Banner -->
-    <div dir="ltr" v-if="slider_banner == 'slider'" id="default-carousel" class="hidden lg:block relative w-full" data-carousel="static">
+    <div dir="ltr" v-if="slider_banner == 'slider'" id="default-carousel" class="hidden lg:block relative w-full" data-carousel="slide">
       <div class="relative overflow-hidden h-[348px]">
         <!-- Item -->
         <NuxtLink to="#" v-for="item in slider_array" :key="item.id" class="hidden duration-700 ease-in-out"
