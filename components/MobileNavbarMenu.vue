@@ -38,27 +38,26 @@
             <span class="sr-only">Close menu</span>
           </button>
         </div>
-        <!-- Currency -->
+        <!-- Language -->
         <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
           :title="locale.name">{{ locale.list_name }}</a>
         <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[8px]" aria-hidden="true" />
-        <!-- Language -->
         <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
           :title="locale.name"><img width="23" height="22" :src="locale.icon" :alt="locale.name"></a>
 
       </div>
       <ul class="flex flex-col gap-7 rtl:pr-4 rtl:pl-[22px] ltr:pr-[22px] ltr:pl-4">
-        <li v-if="menu_data.pages.length" v-for="page in menu_data.pages" :key="page.name"
+        <li v-if="menu_data.pages && menu_data.pages.length" v-for="page in menu_data.pages" :key="page.name"
           class="border-b border-gray-300 pb-4">
-          <NuxtLink :to="page.href" class="bg-transparent rounded-lg w-full flex justify-between px-2">
+          <NuxtLink :to="localePath(page.href)" class="bg-transparent rounded-lg w-full flex justify-between px-2">
             <span class="text-red-500 text-base font-semibold">
               {{ page.name }}
             </span>
           </NuxtLink>
         </li>
 
-        <li v-for="category in menu_data.categories" :key="category.id" class="border-b border-gray-300 pb-4">
-          <button v-if="category.featured.length" type="button" :data-drawer-target="'mobile-menu-' + category.id"
+        <li v-for="category in menu_data.data" :key="category.id" class="border-b border-gray-300 pb-4">
+          <button v-if="category.subcategory.length" type="button" :data-drawer-target="'mobile-menu-' + category.id"
             :data-drawer-show="'mobile-menu-' + category.id" data-drawer-hide="mobile-main-menu"
             :aria-controls="'mobile-menu-' + category.id" data-drawer-placement="right"
             class="bg-transparent rounded-lg w-full flex justify-between px-2">
@@ -78,7 +77,7 @@
                 stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-          <NuxtLink v-else :to="category.href"
+          <NuxtLink v-else :to="localePath('/' + category.slug)"
             class="bg-transparent rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               category.name }}</span>
@@ -90,11 +89,11 @@
   <!-- End Mobile Main Menu -->
 
   <!-- Start Mobile Sub Menu -->
-  <div v-for="category in menu_data.categories" :id="'mobile-menu-' + category.id"
+  <div v-for="category in menu_data.data" :id="'mobile-menu-' + category.id"
     class="fixed flex top-0 left-0 z-40 h-screen overflow-y-auto transition-transform -translate-x-full duration-500 bg-white w-full dark:bg-gray-800"
     tabindex="-1">
 
-    <div class="flex basis-full flex-col" v-if="category.featured.length">
+    <div class="flex basis-full flex-col" v-if="category.subcategory.length">
       <button type="button" :data-drawer-hide="'mobile-menu-' + category.id" data-drawer-show="mobile-main-menu"
         :aria-controls="'mobile-menu-' + category.id"
         class="bg-transparent rounded-lg w-8 h-8 pt-4 rtl:mr-4 ltr:ml-4 flex items-center justify-center">
@@ -115,17 +114,17 @@
       </button>
       <ul class="flex flex-col gap-7 pt-4 rtl:pr-4 rtl:pl-[22px] ltr:pr-[22px] ltr:pl-4">
         <li class="border-b border-gray-300 pb-4 pt-3">
-          <NuxtLink :to="category.href"
+          <NuxtLink :to="localePath('/' + category.slug)"
             class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{ $t('header_mobile_menu_view_all') }}</span>
           </NuxtLink>
         </li>
 
-        <li v-for="featured in category.featured" :key="featured.id" class="border-b border-gray-300 pb-4">
-          <NuxtLink :to="featured.href"
+        <li v-for="sub_category in category.subcategory" :key="sub_category.id" class="border-b border-gray-300 pb-4">
+          <NuxtLink :to="localePath('/' + sub_category.slug)"
             class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
-              featured.name }}</span>
+              sub_category.name }}</span>
           </NuxtLink>
         </li>
       </ul>
@@ -146,11 +145,7 @@ const lang = useNuxtApp().$lang
 const props = defineProps({
   menu_data: {
     type: Object
-  },
-  currency_data: {
-    type: Object
   }
-
 })
 
 

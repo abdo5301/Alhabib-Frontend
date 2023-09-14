@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-shrink-0 flex-col justify-start lg:w-[268px] w-[175px]">
     <div class="relative w-full">
-      <img class="w-full lg:h-[267px] h-[170px]" :src="image">
+      <img class="w-full lg:h-[267px] h-[170px]" :src="image ?? 'https://via.placeholder.com/640x480.png/D9D9D9?text=Alhabib-Shop'">
       <button @click.prevent="$emit('favoriteClick', favorite = !favorite)"
         class="absolute bg-[#f9fafb9e] lg:p-2 p-1 rounded-full lg:bottom-[12px] bottom-[7px] lg:right-[12px] right-[10px] text-gray-700 text-base lg:text-xl font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
@@ -18,7 +18,7 @@
       </NuxtLink>
       <!-- Tags -->
       <div v-if="tags && tags.length" class="flex flex-wrap justify-start gap-[10px]">
-        <span v-for="tag, index in tags" :key="tag.id">
+        <span v-for="tag, index in tags" :key="index">
           <span class="text-center px-3 font-normal text-xs text-gray-900 bg-[#D9D9D9] rounded-md" v-if="index < 2">{{
             tag.name }}</span>
         </span>
@@ -38,13 +38,21 @@
         </span>
       </div>
       <!-- Colors -->
-      <div v-if="colors && colors.length" class="flex justify-start gap-[11px] flex-wrap">
-        <span v-for="color, index in colors" :key="color.hex"
-          :class="[(color.hex == props.color ? 'ring-1 ring-gray-900' : ''), ('relative  flex items-center justify-center rounded-full w-7 h-7 z-20')]">
-          <span class="rounded-full w-6 h-6 z-40" :style="['background-color:' + color.hex]">
+      <div v-if="related_products && related_products.length" class="flex justify-start gap-[11px] flex-wrap">
+        <span
+          class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full w-7 h-7 z-20">
+          <span class="rounded-full w-6 h-6 z-40" :style="['background-color:' + color]">
           </span>
-          <span v-if="color.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
         </span>
+        <span v-for="related, index in related_products" :key="related.color">
+          <span v-if="index < 5 && related.color != color"
+          :class="[('relative  flex items-center justify-center rounded-full w-7 h-7 z-20')]">
+          <span  class="rounded-full w-6 h-6 z-40" :style="['background-color:' + related.color]">
+          </span>
+          <span v-if="related.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
+        </span>
+        </span>
+        
       </div>
       <!-- Card -->
       <div class="w-full flex flex-col justify-end flex-1">
@@ -67,7 +75,7 @@ const props = defineProps({
   tags: {
     type: Object,
   },
-  colors: {
+  related_products: {
     type: Object,
   },
   image: {

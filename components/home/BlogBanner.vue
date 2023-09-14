@@ -5,18 +5,13 @@
     </h1>
     <div class="container relative flex flex-col lg:flex-row justify-start mx-auto mb-24 bg-[#fff]">
       <div class="flex flex-shrink-0 font-semibold justify-start">
-        <img src="/images/bedding-202.png" class="flex-shrink-0 lg:w-[563px] lg:h-[347px] w-full h-auto" alt="Blog">
+        <img v-if="blog_data.image" :src="blog_data.image.url" class="flex-shrink-0 lg:w-[563px] lg:h-[347px] w-full h-auto" alt="Blog">
+        <img v-else src="/images/bedding-202.png" class="flex-shrink-0 lg:w-[563px] lg:h-[347px] w-full h-auto" alt="Blog">
       </div>
-      <ul
+      <ul v-if="blog_data.topics && blog_data.topics.length"
         class="flex flex-col pt-6 lg:pt-[45px] gap-8 lg:gap-12 underline-offset-8 text-gray-600 lg:text-[#000] font-semibold text-base lg:text-2xl flex-1 w-full rtl:mr-5 ltr:ml-5 lg:rtl:mr-24 lg:ltr:ml-20">
-        <li>
-          <NuxtLink :to="localPath('/')" class="underline">{{ $t('home_blog_link_1') }}</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink :to="localPath('/')" class="underline">{{ $t('home_blog_link_2') }}</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink :to="localPath('/')" class="underline">{{ $t('home_blog_link_3') }}</NuxtLink>
+        <li v-for="topic, index in blog_data.topics" :key="index">
+          <NuxtLink :to="localPath('/' +topic.slug)" class="underline">{{ topic.title }}</NuxtLink>
         </li>
       </ul>
       <div
@@ -63,4 +58,9 @@
 <script setup>
 const { $lang } = useNuxtApp()
 const localPath = useLocalePath()
+const props = defineProps({
+  blog_data: {
+    type: Object
+  }
+})
 </script>

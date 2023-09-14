@@ -1,44 +1,16 @@
 <template>
   <HomeFirstBanner />
   <HomeSecondBanner />
-  <HomeCategorySection :categories="bed_categories" class="mb-[93px]">{{ $t('home_category_bed_title') }}</HomeCategorySection>
-  <HomeSliderBanner class="pb-20 lg:pt-6" /> 
-  <HomeProductSection class="pb-20 lg:pt-6" /> 
-  <HomeBlogBanner>{{ $t('home_blog_banner_title') }}</HomeBlogBanner>
+  <HomeCategorySection v-if="home_data.categories && home_data.categories.length" :categories="home_data.categories ?? []" class="mb-[93px]">{{ $t('home_category_bed_title') }}</HomeCategorySection>
+  <HomeSliderBanner v-if="home_data.banners && home_data.banners.length" :banners="home_data.banners ?? []" class="pb-20 lg:pt-6" /> 
+  <HomeProductSection v-if="home_data.master_products && home_data.master_products.length" :products="home_data.master_products ?? []" class="pb-20 lg:pt-6" /> 
+  <HomeBlogBanner v-if="home_data.blog" :blog_data="home_data.blog ?? []">{{ $t('home_blog_banner_title') }}</HomeBlogBanner>
   <HomeCustomerImageSlider/>
   <HomeSingleBanner />
   <HomeFeatureSection />
 </template>
 
 <script setup>
-const bed_categories = [
-  {
-    id: 1,
-    name: 'لباد وواقي مرتبة',
-    image: '/images/category/lbad.png',
-    href: '#'
-  },
-  {
-    id: 2,
-    name: 'مفارش وبطانيات',
-    image: '/images/category/bedding.png',
-    href: '#'
-
-  },
-  {
-    id: 3,
-    name: 'وسائد وخداديات',
-    image: '/images/category/cushions.png',
-    href: '#'
-  },
-  {
-    id: 4,
-    name: 'الأطفال والمواليد',
-    image: '/images/category/baby.png',
-    href: '#'
-  },
-
-]
-
+const home_data = await useNuxtApp().$apiFetch('/home')
 
 </script>
