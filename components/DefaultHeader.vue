@@ -23,7 +23,7 @@
 
             <!-- Right Section -->
             <div class="flex items-center w-1/3">
-              <MobileNavbarMenu :menu_data="navigation" :currency_data="currency_select">
+              <MobileNavbarMenu :menu_data="navigation">
               </MobileNavbarMenu>
 
               <div class="hidden lg:flex lg:items-center">
@@ -171,60 +171,6 @@ onMounted(() => {
 
 })
 
-const currency_select = [
-  {
-    id: 1,
-    name: 'EGP',
-    href: '#'
-  },
-  {
-    id: 2,
-    name: 'SAR',
-    href: '#'
-  }
-]
 const search = ref('');
-const navigation = {
-  categories: [
-    {
-      id: '1',
-      name: ' مفارش وبطانيات',
-      href: '#',
-      image:'/images/category/bedding.png',
-      featured: [
-        {
-          id: '101',
-          name: 'مفارش',
-          href: '#',
-        },
-        {
-          id: '102',
-          name: 'بطانيات',
-          href: '#',
-        },
-      ],
-    },
-    {
-      id: '2',
-      name: 'مجموعة الفنادق الفاخرة',
-      href: '#',
-      image:'/images/category/cushions.png',
-      featured: [
-        {
-          id: '103',
-          name: 'لحاف',
-          href: '#',
-        },
-        {
-          id: '104',
-          name: 'لباد',
-          href: '#',
-        },
-      ],
-    },
-  ],
-  pages: [
-    { name: 'تخفيضات', href: '#' },
-  ],
-}
+const  navigation = await useNuxtApp().$apiFetch('/categories')
 </script>

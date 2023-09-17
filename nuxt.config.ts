@@ -42,7 +42,8 @@ export default defineNuxtConfig({
     //  baseUrl: '/api',
     // Config within public will be also exposed to the client
     public: {
-      BASE_URL: '/api',
+      // BASE_URL:'',
+      API_URL: 'https://test.admin.alhabibshop.com/api/v1',
     }
   },
   plugins: [                                                                  
