@@ -80,6 +80,15 @@
   "home_customer_image_description":"أبهرنا بإبداعك في تصوير منتجاتنا بعد ما صارت جزء من غرفتك",
   "home_products_title":"المنتجات",
   "home_products_cart_btn":"إضافة للسلة",
-  "sar":"ريال"
+  "sar":"ريال",
+  "category_filter_title":"التصنيفات",
+  "category_filter_title_mobile":"تصنيف",
+  "category_sorting_title":"ترتيب حسب",
+  "category_sorting_title_mobile":"ترتيب",
+  "category_sorting_price_asc":"السعر من الاعلى الى الاقل",
+  "category_sorting_price_desc":"السعر من الاقل الى الاعلى",
+  "category_sorting_new_arrival":"وصل حديثًا",
+  "category_sorting_best_sellers":"الاكثر مبيعًا",
+  "category_sorting_sales":"الاكثر مبيعًا حديثًا"
 
 }

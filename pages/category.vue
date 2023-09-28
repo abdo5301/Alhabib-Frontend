@@ -1,0 +1,211 @@
+<template>
+  <div class="container pb-[104px]">
+    <Breadcrumb class="pb-[40px]" :pages=breadcrumb></Breadcrumb>
+
+    <div class="container px-[25px] lg:px-[68px]">
+      <CategoryDescription :title="title" :content="content" class="pt-4" />
+      <CategorySubCategory :categories="sub_category" class="lg:pt-[64px] pt-8" />
+    </div>
+    <!-- Filter start -->
+    <div
+      class="container lg:px-[68px] mb-[15px] border-t border-b h-[60px] border-gray-100 mt-[54px] hidden lg:flex items-center justify-start">
+
+      <h3 class="text-gray-700 font-bold text-base leading-5 rtl:pr-3 ltr:pl-3">
+        {{ $t("category_filter_title") }}
+      </h3>
+      <span class="border-r-2 mx-[29px] border-gray-400 h-6"></span>
+      <!-- filter selected tags -->
+      <div class="mx-[100px] flex gap-5 items-center justify-start flex-1">
+        <CategoryFilterTag name="مزدوج" />
+        <CategoryFilterTag name="أزرق" />
+      </div>
+      <CategorySortingMenu />
+    </div>
+
+    <div class="container flex gap-[46px] lg:px-[68px]">
+      <div class="w-[295px] text-gray-700 font-bold text-base leading-5 rtl:pr-4 ltr:pl-3 pt-[15px]">
+        <div id="accordion-arrow-icon" data-active-classes="bg-gray-50" data-inactive-classes="py-5"
+          data-accordion="open">
+          <CategoryFilterItem v-for="filter_item, index in filter_data" :filter_array="filter_item.data"
+            :title="filter_item.name" :key="filter_item.key" :filter_key="filter_item.key"
+            :first_item="index == 0 ? true : false" />
+        </div>
+      </div>
+      <div class="mt-2 flex flex-wrap items-stretch justify-start gap-[42px] gap-y-[55px]">
+        <CategoryProductItem v-for="product in category_data.data" :key="product.id" :id="product.id" :name="product.name"
+          :image="product.image" :color="product.color" :price="product.started_price + ' ' + currency"
+          :special="product.started_discounted_price + ' ' + currency" :link="localePath('/' + product.slug)"
+          :favorite="product.favorite" :tags="product.tags" :related_products="product.related_class_products"
+          @favorite-click="product.favorite = !product.favorite" />
+      </div>
+    </div>
+    <!-- Filter end -->
+
+    <CategoryDescription :title="title" :content="content"
+      class="container mt-[90px] px-[25px] lg:rtl:pr-[68px] lg:rtl:pl-[113px] lg:ltr:pl-[68px] lg:ltr:pr-[113px]" />
+
+  </div>
+</template>
+
+<script setup>
+const title = 'المفارش';
+const content = 'نحرص في مفارش الحبيب على توفير أجود أنواع المفارش، بأقمشة متنوعة من القطن والبوليستر و المخمل والفرو وغيرها، وبأشكال وألوان عديدة تلبّي احتياجات جميع الأذواق';
+const category_data = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=8')
+const localePath = useLocalePath()
+const lang = useNuxtApp().$lang
+const { t } = useI18n()
+const currency = t('sar')
+
+function test() {
+  console.log('ok');
+}
+
+const breadcrumb = [
+  {
+    'name': 'مفارش وبطانيات',
+    'link': localePath('/category')
+  },
+  {
+    'name': 'مفارش',
+    'link': localePath('/category')
+  }
+]
+
+const sub_category = [
+  {
+    'id': 1,
+    'name': 'مفارش',
+    'slug': '/category',
+    'image': '/images/category/baby.png'
+  },
+  {
+    'id': 2,
+    'name': 'مفارش صيفية',
+    'slug': '/category',
+    'image': '/images/category/bedding.png'
+  },
+  {
+    'id': 3,
+    'name': 'مفارش شتوية',
+    'slug': '/category',
+    'image': '/images/category/cushions.png'
+  },
+  {
+    'id': 4,
+    'name': 'لباد واقي مرتبه وحشوة لحاف',
+    'slug': '/category',
+    'image': '/images/category/lbad.png'
+  }
+]
+
+const filter_data = [
+  {
+    'id': 1,
+    'name': 'المقاس',
+    'key': 'size',
+    'data': [
+      {
+        'id': 1,
+        'name': 'مزدوج'
+      },
+      {
+        'id': 2,
+        'name': 'مفرد ونص'
+      },
+      {
+        'id': 3,
+        'name': 'كوين'
+      },
+    ]
+  },
+  {
+    'id': 2,
+    'name': 'اللون',
+    'key': 'color',
+    'data': [
+      {
+        'id': 4,
+        'name': 'أزرق',
+        'image': '/images/colors/blue.svg',
+      },
+      {
+        'id': 5,
+        'name': 'أخضر',
+        'image': '/images/colors/green.svg',
+      },
+      {
+        'id': 6,
+        'name': 'أحمر',
+        'image': '/images/colors/red.svg',
+      },
+      {
+        'id': 20,
+        'name': 'متعدد الألوان',
+        'image': '/images/colors/multi-colors.svg',
+      },
+      {
+        'id': 21,
+        'name': 'أبيض',
+        'image': '/images/colors/wight.svg',
+      },
+      {
+        'id': 22,
+        'name': 'أسود',
+        'image': '/images/colors/black.svg',
+      },
+    ]
+  },
+  {
+    'id': 3,
+    'name': 'السعر',
+    'key': 'price',
+    'data': [
+      {
+        'id': 7,
+        'name': '500 فما أعلى'
+      },
+      {
+        'id': 8,
+        'name': '200 - 400'
+      },
+      {
+        'id': 9,
+        'name': 'أقل من 200'
+      },
+    ]
+  },
+  {
+    'id': 4,
+    'name': 'عدد القطع',
+    'key': 'pieces',
+    'data': [
+      {
+        'id': 10,
+        'name': '4 قطع'
+      },
+      {
+        'id': 11,
+        'name': '5 قطع'
+      },
+      {
+        'id': 12,
+        'name': '6 قطع'
+      },
+      {
+        'id': 13,
+        'name': '7 قطع'
+      },
+      {
+        'id': 14,
+        'name': '8 قطع'
+      },
+      {
+        'id': 15,
+        'name': '6 قطع'
+      },
+    ]
+  }
+
+]
+
+</script>
