@@ -79,5 +79,15 @@
   "home_customer_image_description":"Impress us with your creativity in photographing our products after they become part of your bedroom",
   "home_products_title":"Products",
   "home_products_cart_btn":"ADD TO SHOPPING BAG",
-  "sar":"SAR"
+  "sar":"SAR",
+  "category_filter_title":"Filter",
+  "category_filter_title_mobile":"Filter",
+  "category_sorting_title":"Sort by",
+  "category_sorting_title_mobile":"Sort",
+  "category_sorting_price_asc":"Price low to high",
+  "category_sorting_price_desc":"Price high to low",
+  "category_sorting_new_arrival":"New arrival",
+  "category_sorting_best_sellers":"Best sellers",
+  "category_sorting_sales":"Sales"
+
 }

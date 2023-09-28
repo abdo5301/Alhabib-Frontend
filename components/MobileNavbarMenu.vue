@@ -77,7 +77,7 @@
                 stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-          <NuxtLink v-else :to="localePath('/' + category.slug)"
+          <NuxtLink v-else :to="localePath('/category')"
             class="bg-transparent rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               category.name }}</span>
@@ -114,14 +114,14 @@
       </button>
       <ul class="flex flex-col gap-7 pt-4 rtl:pr-4 rtl:pl-[22px] ltr:pr-[22px] ltr:pl-4">
         <li class="border-b border-gray-300 pb-4 pt-3">
-          <NuxtLink :to="localePath('/' + category.slug)"
+          <NuxtLink :to="localePath('/category')"
             class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{ $t('header_mobile_menu_view_all') }}</span>
           </NuxtLink>
         </li>
 
         <li v-for="sub_category in category.subcategory" :key="sub_category.id" class="border-b border-gray-300 pb-4">
-          <NuxtLink :to="localePath('/' + sub_category.slug)"
+          <NuxtLink :to="localePath('/category')"
             class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               sub_category.name }}</span>

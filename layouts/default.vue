@@ -7,6 +7,7 @@
     <Title>{{ title }}</Title>
     <DefaultHeader></DefaultHeader>
     <div class="flex-grow">
+      <div v-if="route.path !='/' && route.path !='/en'" class="lg:h-[165px] h-[65px]"></div>
       <slot />
     </div>
     <DefaultFooter></DefaultFooter>
@@ -18,6 +19,7 @@
 import { initFlowbite } from 'flowbite'
 
 const { $lang } = useNuxtApp()
+const route = useRoute()
 
 onMounted(() => {
   initFlowbite();
