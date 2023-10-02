@@ -20,7 +20,7 @@
           <span class="rounded-full w-6 h-6 z-40" :style="['background-color:' + color]">
           </span>
         </span>
-        <span v-for="related, index in related_products" :key="related.color">
+        <span v-for="related, index in related_products" :key="related.color" class="empty:hidden">
           <span v-if="index < 5 && related.color != color"
             :class="[('relative  flex items-center justify-center rounded-full w-7 h-7 z-20')]">
             <span class="rounded-full w-6 h-6 z-40" :style="['background-color:' + related.color]">

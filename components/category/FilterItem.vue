@@ -1,72 +1,67 @@
 <template>
-  <svg v-if="!first_item" xmlns="http://www.w3.org/2000/svg" width="295" height="2" viewBox="0 0 295 2" fill="none">
-    <path d="M294.9 1.02539L-0.000318527 1.02539" stroke="#E5E7EB" />
-  </svg>
-  <h2 :id="'filter-accordion-' + filter_key">
-    <button type="button" @click="active_filter = !active_filter"
-      class="flex items-center justify-between w-full pt-5 px-3 font-bold text-gray-700 text-base leading-5"
-      :data-accordion-target="'#filter-accordion-body-' + filter_key" :aria-expanded="opened"
-      :aria-controls="'filter-accordion-body-' + filter_key">
-      <span>{{ title }}</span>
-      <svg v-if="active_filter" xmlns="http://www.w3.org/2000/svg" width="14" height="3" viewBox="0 0 14 3" fill="none">
-        <path d="M13 1.07422L7 1.07422H1" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-      <svg v-else xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 25 28" fill="none">
-        <path d="M12.5 1.14941V13.9991M12.5 13.9991V26.8489M12.5 13.9991H24M12.5 13.9991L1 13.9991" stroke="#9CA3AF"
-          stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </button>
-  </h2>
-  <div :id="'filter-accordion-body-' + filter_key" :aria-labelledby="'filter-accordion-' + filter_key">
-    <ul v-if="filter_key == 'pieces'"
-      class="flex items-center justify-start flex-wrap gap-y-[18px] w-full gap-2 pt-[18px] px-3 pb-6 text-xs text-gray-900 font-normal leading-5">
-      <li v-for="item, index in filter_array" :key="item.id">
-        <input type="checkbox" :id="'checkbox-item-' + item.id" :value="item.name" class="hidden peer" required="">
-        <label :for="'checkbox-item-' + item.id"
-          class="inline-flex items-center cursor-pointer peer-checked:ring-gray-800 ring-1 ring-gray-300 ring-inset h-[25px] py-1 px-4 bg-white rounded-md">
-          {{ item.name }}
-        </label>
-      </li>
-    </ul>
-    <ul v-else-if="filter_key == 'color'"
-      class="flex items-stretch justify-start flex-wrap gap-y-4 gap-8 w-full pt-[18px] pb-6 text-sm text-gray-900 font-normal leading-5 px-3">
-      <CategoryFilterColor v-for="item in filter_array" :key="item.id" :filter_id="item.id" :name="item.name" :image="item.image" />
-    </ul>
-    <ul v-else class="space-y-3 pt-3 px-3 pb-6 text-sm text-gray-900 font-normal">
-      <li v-for="item, index in filter_array" :key="item.id">
-        <div class="flex items-center rounded">
-          <input :id="'checkbox-item-' + item.id" type="checkbox" value=""
-            class="w-4 text-gray-900 bg-white border-gray-300 rounded cursor-pointer focus:ring-transparent">
-          <label :for="'checkbox-item-' + item.id"
-            class="w-fit rtl:mr-2 ltr:ml-2 text-sm font-medium text-gray-900 rounded cursor-pointer">{{ item.name
-            }}</label>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <li v-if="filter_type == 'pieces'">
+    <!-- Input -->
+    <input  type="checkbox" :id="'checkbox-item-' + filter_id" :value="name"
+     @change="$emit('filterValue',name)" class="hidden peer" :checked="selected_filter_array.includes(name)">
+    <!-- Label -->
+    <label :for="'checkbox-item-' + filter_id"
+      class="inline-flex items-center cursor-pointer peer-checked:ring-gray-800 ring-1 ring-gray-300 ring-inset h-[25px] py-1 px-4 bg-white rounded-md">
+      {{ name }}
+    </label>
+  </li>
+  <li v-else-if="filter_type == 'color'">
+    <!-- Input -->
+    <input  @change="(selected = !selected),$emit('filterValue',name)"  type="checkbox" :id="'checkbox-item-' + filter_id" :value="name"
+      class="hidden peer" :checked="selected = selected_filter_array.includes(name)">
+    <!-- Label -->
+    <label :for="'checkbox-item-' + filter_id"
+      class="relative flex justify-center items-stretch flex-col gap-1 cursor-pointer py-1 w-[40px]">
+      <span v-if="selected" class="absolute top-[19px] rtl:right-[11px] ltr:left-[11px]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" fill="none">
+          <path
+            d="M15.3461 0.470863C15.677 0.765568 15.8629 1.16522 15.8629 1.58193C15.8629 1.99864 15.677 2.39829 15.3461 2.693L6.52115 10.5506C6.19017 10.8452 5.74131 11.0107 5.2733 11.0107C4.80529 11.0107 4.35643 10.8452 4.02545 10.5506L0.495455 7.40757C0.173947 7.11118 -0.00395468 6.71421 6.67215e-05 6.30216C0.00408812 5.89011 0.189711 5.49595 0.516956 5.20458C0.8442 4.91321 1.28688 4.74793 1.74966 4.74435C2.21244 4.74077 2.65828 4.89917 2.99116 5.18544L5.2733 7.21742L12.8504 0.470863C13.1814 0.176248 13.6303 0.0107422 14.0983 0.0107422C14.5663 0.0107422 15.0151 0.176248 15.3461 0.470863Z"
+            fill="white" />
+        </svg>
+      </span>
+      <img :src="image" :alt="name">
+      <span class="flex items-stretch justify-center w-full text-center"> {{ name }} </span>
+    </label>
+  </li>
+  <li v-else>
+    <div class="flex items-center rounded">
+      <!-- Input -->
+      <input  :id="'checkbox-item-' + filter_id" type="checkbox" :value="name"
+        @change="$emit('filterValue',name)" :checked="selected_filter_array.includes(name)"
+        class="w-4 text-gray-900 bg-white border-gray-300 rounded cursor-pointer focus:ring-transparent">
+      <!-- Label -->
+      <label :for="'checkbox-item-' + filter_id"
+        class="w-fit rtl:mr-2 ltr:ml-2 text-sm font-medium text-gray-900 rounded cursor-pointer">{{ name }}</label>
+    </div>
+  </li>
 </template>
-
 
 <script setup>
 
-const active_filter = ref(true)
-defineProps({
-  title: {
+defineEmits(["filterValue"]); 
+
+const selected = ref(false);
+
+const props =defineProps({
+  filter_id: {
+    type: Number
+  },
+  name: {
     type: String
   },
-  filter_key: {
+  image: {
     type: String
   },
-  first_item: {
-    type: Boolean
+  filter_type: {
+    type: String
   },
-  filter_array: {
+  selected_filter_array:{
     type: Object
-  },
-  opened: {
-    type: Boolean,
-    default: true
   }
-});
+
+})
 </script>
