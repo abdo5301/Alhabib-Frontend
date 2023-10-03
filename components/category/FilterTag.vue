@@ -1,7 +1,7 @@
 <template>
   <span :id="'badge-dismiss-'+name"
     class="inline-flex items-center ring-1 ring-gray-200 ring-inset h-8 rtl:pr-1 rtl:pl-4 ltr:pr-4 ltr:pl-1  py-[2px] rtl:mr-2 ltr:ml-2  bg-white rounded-md">
-    <button type="button"
+    <button type="button" @click="$emit('removeFilterItem',name)"
       class="inline-flex items-center p-1 rtl:ml-[6px] ltr:mr-[6px] text-normal text-gray-400 bg-transparent rounded-sm hover:bg-gray-100 hover:text-gray-900"
       :data-dismiss-target="'#badge-dismiss-'+name" aria-label="Remove">
       <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -17,6 +17,7 @@
 </template>
 
 <script setup>
+  defineEmits(['removeFilterItem'])
   defineProps({
     name:{
       type: String
