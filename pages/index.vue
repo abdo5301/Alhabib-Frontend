@@ -11,6 +11,15 @@
 </template>
 
 <script setup>
-const home_data = await useNuxtApp().$apiFetch('/home')
+
+function home_data(){
+  let data = []
+  try {
+    data = useNuxtApp().$apiFetch('/home')
+  } catch (error) {
+   data = []
+  }
+  return data;
+} 
 
 </script>
