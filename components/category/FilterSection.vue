@@ -1,8 +1,10 @@
 <template>
-  <svg v-if="!first_item" xmlns="http://www.w3.org/2000/svg" width="295" height="2" viewBox="0 0 295 2" fill="none">
+  <span v-if="!first_item" class="flex items-center justify-center lg:px-0 px-2">
+    <svg  xmlns="http://www.w3.org/2000/svg" class="lg:w-[295px] w-full h-[2px]" viewBox="0 0 295 2" fill="none">
     <path d="M294.9 1.02539L-0.000318527 1.02539" stroke="#E5E7EB" />
   </svg>
-  <h2 :id="'filter-accordion-' + filter_key">
+  </span>
+  <h2 :id="'filter-accordion-' + filter_key" class="hidden lg:block">
     <button type="button" @click="active_filter = !active_filter"
       class="flex items-center justify-between w-full pt-5 px-3 font-bold text-gray-700 text-base leading-5"
       :data-accordion-target="'#filter-accordion-body-' + filter_key" :aria-expanded="opened"
@@ -18,10 +20,11 @@
       </svg>
     </button>
   </h2>
+  <span class="flex lg:hidden items-center justify-between w-full pt-5 px-3 font-bold text-gray-700 text-base leading-5">{{ title }}</span>
   <div :id="'filter-accordion-body-' + filter_key" :aria-labelledby="'filter-accordion-' + filter_key">
-    <ul :class="[filter_key == 'pieces' ? 'flex items-center justify-start flex-wrap gap-y-[18px] w-full gap-2 pt-[18px] px-3 pb-6 text-xs text-gray-900 font-normal leading-5' :
-      filter_key == 'color' ? 'flex items-stretch justify-start flex-wrap gap-y-4 gap-8 w-full pt-[18px] pb-6 text-sm text-gray-900 font-normal leading-5 px-3' :
-        'space-y-3 pt-3 px-3 pb-6 text-sm text-gray-900 font-normal']">
+    <ul :class="[filter_key == 'pieces' ? 'flex items-center justify-start flex-wrap gap-y-[18px] w-full gap-2 lg:pt-[18px] pt-5 px-3 pb-6 text-xs text-gray-900 font-normal leading-5' :
+      filter_key == 'color' ? 'flex items-stretch justify-start flex-wrap gap-y-4 gap-8 w-full lg:pt-[18px] pt-5 pb-6 text-sm text-gray-900 font-normal leading-5 px-3' :
+        'space-y-3 lg:pt-3 pt-5 px-3 pb-6 text-sm text-gray-900 font-normal']">
       <CategoryFilterItem ref="input" v-for="item in filter_array" :filter_type="filter_key" :key="item.id" :selected_filter_array ="selected_filter_array"
         :filter_id="item.id" :name="item.name" :image="item.image ?? item.image" @filter-value="updateFilterValue"/>
     </ul>

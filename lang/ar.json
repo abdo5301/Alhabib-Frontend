@@ -83,6 +83,8 @@
   "sar":"ريال",
   "category_filter_title":"التصنيفات",
   "category_filter_title_mobile":"تصنيف",
+  "category_filter_reset_mobile":"إعادة تعيين",
+  "category_filter_submit_mobile":"تطبيق التصنيفات",
   "category_sorting_title":"ترتيب حسب",
   "category_sorting_title_mobile":"ترتيب",
   "category_sorting_price_asc":"السعر من الاعلى الى الاقل",

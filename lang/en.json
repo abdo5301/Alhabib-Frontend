@@ -82,6 +82,8 @@
   "sar":"SAR",
   "category_filter_title":"Filter",
   "category_filter_title_mobile":"Filter",
+  "category_filter_reset_mobile":"Reset",
+  "category_filter_submit_mobile":"Apply",
   "category_sorting_title":"Sort by",
   "category_sorting_title_mobile":"Sort",
   "category_sorting_price_asc":"Price low to high",

@@ -1,14 +1,14 @@
 <template>
-  <div class="container pb-[104px]">
+  <div class="pb-[104px]">
     <Breadcrumb class="pb-[40px]" :pages=breadcrumb></Breadcrumb>
 
-    <div class="container px-[25px] lg:px-[68px]">
+    <div class="px-[25px] lg:px-[68px]">
       <CategoryDescription :title="title" :content="content" class="pt-4" />
       <CategorySubCategory :categories="sub_category" class="lg:pt-[64px] pt-8" />
     </div>
     <!-- Filter start -->
     <div
-      class="container lg:px-[68px] mb-[15px] border-t border-b h-[60px] border-gray-100 mt-[54px] hidden lg:flex items-center justify-start">
+      class="lg:px-[68px] mb-[15px] border-t border-b h-[60px] border-gray-100 mt-[54px] hidden lg:flex items-center justify-start">
 
       <h3 class="text-gray-700 font-bold text-base leading-5 rtl:pr-3 ltr:pl-3">
         {{ $t("category_filter_title") }}
@@ -16,32 +16,48 @@
       <span class="border-r-2 mx-[29px] border-gray-400 h-6"></span>
       <!-- filter selected tags -->
       <div class="mx-[100px] flex gap-5 items-center justify-start flex-1">
-        <CategoryFilterTag v-for="selected_filter in filter_array" :key="selected_filter" :name="selected_filter" @remove-filter-item="updateFilterArray" />
+        <CategoryFilterTag v-for="selected_filter in filter_array" :key="selected_filter" :name="selected_filter"
+          @remove-filter-item="updateFilterArray" />
       </div>
       <CategorySortingMenu />
     </div>
 
-    <div class="container flex gap-[46px] lg:px-[68px]">
-      <div class="w-[295px] text-gray-700 font-bold text-base leading-5 rtl:pr-4 ltr:pl-3 pt-[15px]">
+    <div class="flex lg:gap-[46px] lg:px-[68px] px-6 flex-col lg:flex-row">
+      <!-- Desktop Filter -->
+      <div class="hidden lg:block w-[295px] text-gray-700 font-bold text-base leading-5 rtl:pr-4 ltr:pl-3 pt-[15px]">
         <div id="accordion-arrow-icon" data-active-classes="bg-gray-50" data-inactive-classes="py-5"
           data-accordion="open">
-          <CategoryFilterSection  v-for="filter_section, index in filter_data" v-model="filter_array[filter_section.name]"
+          <CategoryFilterSection v-for="filter_section, index in filter_data" v-model="filter_array[filter_section.name]"
             :filter_array="filter_section.data" :title="filter_section.name" :key="filter_section.key"
-            :filter_key="filter_section.key" :first_item="index == 0 ? true : false" @filter-value="updateFilterArray" :selected_filter_array="filter_array"/>
+            :filter_key="filter_section.key" :first_item="index == 0 ? true : false" @filter-value="updateFilterArray"
+            :selected_filter_array="filter_array" />
         </div>
       </div>
-      <div class="mt-2 flex flex-wrap items-stretch justify-start gap-[42px] gap-y-[55px]">
+      <!-- Mobile Filter -->
+      <div class="lg:hidden flex justify-center items-center gap-5">
+        <!-- Filter -->
+        <CategoryMobileFilter @filter-reset="resetFilter" :filter_data="filter_data" :selected_filter_array="filter_array" @filter-value="updateFilterArray">{{ $t("category_filter_title_mobile") }}</CategoryMobileFilter>
+        <!-- Sorting -->
+        <CategoryMobileSortingMenu>{{ $t("category_sorting_title_mobile") }}</CategoryMobileSortingMenu>
+      </div>
+      <!-- Mobile listing switch buttons -->
+      <div class="lg:hidden flex justify-end items-center gap-1 pt-[26px]">
+        <CategoryListingSwitch @update-listing="listingTypeUpdate"/>
+      </div>
+      <!-- Product listing -->
+      <div :class="[listing_type=='solo'?'gap-[18px]':'gap-y-[45px] gap-x-[27px]',
+      'lg:mt-2 mt-5 flex flex-wrap items-stretch justify-start gap-[42px] lg:gap-y-[55px]']">
         <CategoryProductItem v-for="product in category_data.data" :key="product.id" :id="product.id" :name="product.name"
           :image="product.image" :color="product.color" :price="product.started_price + ' ' + currency"
           :special="product.started_discounted_price + ' ' + currency" :link="localePath('/category')"
           :favorite="product.favorite" :tags="product.tags" :related_products="product.related_class_products"
-          @favorite-click="product.favorite = !product.favorite" />
+          @favorite-click="product.favorite = !product.favorite" :list_type="listing_type"/>
       </div>
     </div>
     <!-- Filter end -->
 
     <CategoryDescription :title="title" :content="content"
-      class="container mt-[90px] px-[25px] lg:rtl:pr-[68px] lg:rtl:pl-[113px] lg:ltr:pl-[68px] lg:ltr:pr-[113px]" />
+      class="mt-[90px] px-[25px] lg:rtl:pr-[68px] lg:rtl:pl-[113px] lg:ltr:pl-[68px] lg:ltr:pr-[113px]" />
 
   </div>
 </template>
@@ -49,13 +65,19 @@
 <script setup>
 const category_data = shallowRef(await useNuxtApp().$apiFetch('/master-products/of-category?category_id=8'))
 const filter_array = ref([])
-
-function updateFilterArray(filter_value){
-if(filter_array.value.includes(filter_value)){
-  filter_array.value.splice(filter_array.value.indexOf(filter_value), 1)
-}else{
-  filter_array.value.push(filter_value)
+const listing_type = ref('list')
+function listingTypeUpdate(new_list_type){
+  listing_type.value = new_list_type
 }
+function updateFilterArray(filter_value) {
+  if (filter_array.value.includes(filter_value)) {
+    filter_array.value.splice(filter_array.value.indexOf(filter_value), 1)
+  } else {
+    filter_array.value.push(filter_value)
+  }
+}
+function resetFilter(){
+  filter_array.value = []
 }
 
 const title = 'المفارش';
