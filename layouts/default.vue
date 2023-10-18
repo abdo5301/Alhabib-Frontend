@@ -16,16 +16,10 @@
 
 
 <script setup>
-import { initFlowbite } from 'flowbite'
-
 const { $lang } = useNuxtApp()
 const route = useRoute()
-
-onMounted(() => {
-  initFlowbite();
-})
-
-const title = useState('title', () => 'Alhabib Shop');
+const { t } = useI18n()
+const title = useState('website_name', () => t('company_name'));
 useHead({
   htmlAttrs: {
     lang: $lang.code,

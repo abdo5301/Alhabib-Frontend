@@ -11,12 +11,12 @@
       <!-- Carousel Banner -->
       <div class="relative h-full overflow-hidden">
         <!-- Item 1 -->
-        <div class="hidden transform ease-in-out h-full" data-carousel-item="active">
+        <div class="transform ease-in-out h-full" data-carousel-item>
           <img src="/images/banner/main-banner-1.jpg"
             class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="slider">
         </div>
         <!-- Item 2 -->
-        <div class="hidden transform ease-in-out h-full" data-carousel-item>
+        <div class="transform ease-in-out h-full" data-carousel-item>
           <img src="/images/banner/main-banner-2.jpg"
             class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="slider">
         </div>

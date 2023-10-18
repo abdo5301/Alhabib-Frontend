@@ -1,9 +1,10 @@
 <template>
+  <Title>{{ category_title }} | {{ website_name }}</Title>
   <div class="pb-[104px]">
     <Breadcrumb class="pb-[40px]" :pages=breadcrumb></Breadcrumb>
 
     <div class="px-[25px] lg:px-[68px]">
-      <CategoryDescription :title="title" :content="content" class="pt-4" />
+      <CategoryDescription :title="category_title" :content="category_content" class="pt-4" />
       <CategorySubCategory :categories="sub_category" class="lg:pt-[64px] pt-8" />
     </div>
     <!-- Filter start -->
@@ -49,20 +50,26 @@
       'lg:mt-2 mt-5 flex flex-wrap items-stretch justify-start gap-[42px] lg:gap-y-[55px]']">
         <CategoryProductItem v-for="product in category_data.data" :key="product.id" :id="product.id" :name="product.name"
           :image="product.image" :color="product.color" :price="product.started_price + ' ' + currency"
-          :special="product.started_discounted_price + ' ' + currency" :link="localePath('/category')"
+          :special="product.started_discounted_price + ' ' + currency" :link="localePath('/product/'+product.id)"
           :favorite="product.favorite" :tags="product.tags" :related_products="product.related_class_products"
           @favorite-click="product.favorite = !product.favorite" :list_type="listing_type"/>
       </div>
     </div>
     <!-- Filter end -->
 
-    <CategoryDescription :title="title" :content="content"
+    <CategoryDescription :title="category_title" :content="category_content"
       class="mt-[90px] px-[25px] lg:rtl:pr-[68px] lg:rtl:pl-[113px] lg:ltr:pl-[68px] lg:ltr:pr-[113px]" />
 
   </div>
 </template>
 
 <script setup>
+import { initFlowbite } from 'flowbite'
+onMounted(() => {
+    initFlowbite();
+})
+
+const website_name = useState('website_name');
 const category_data = shallowRef(await useNuxtApp().$apiFetch('/master-products/of-category?category_id=8'))
 const filter_array = ref([])
 const listing_type = ref('list')
@@ -80,8 +87,8 @@ function resetFilter(){
   filter_array.value = []
 }
 
-const title = 'المفارش';
-const content = 'نحرص في مفارش الحبيب على توفير أجود أنواع المفارش، بأقمشة متنوعة من القطن والبوليستر و المخمل والفرو وغيرها، وبأشكال وألوان عديدة تلبّي احتياجات جميع الأذواق';
+const category_title = 'المفارش';
+const category_content = 'نحرص في مفارش الحبيب على توفير أجود أنواع المفارش، بأقمشة متنوعة من القطن والبوليستر و المخمل والفرو وغيرها، وبأشكال وألوان عديدة تلبّي احتياجات جميع الأذواق';
 
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
@@ -91,11 +98,11 @@ const currency = t('sar')
 const breadcrumb = [
   {
     'name': 'مفارش وبطانيات',
-    'link': localePath('/category')
+    'link': localePath('/category/123')
   },
   {
     'name': 'مفارش',
-    'link': localePath('/category')
+    'link': localePath('/category/123')
   }
 ]
 

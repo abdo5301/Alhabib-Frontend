@@ -15,7 +15,7 @@
 </style>
 <template>
   <div>
-    <header :class="[page_scrolled ? 'fixed_header' : 'default_header',route.path != '/' && route.path != '/en' ? 'border-b border-b-gray-300' : 'border-b-0', 'fixed w-full lg:hover:bg-white z-40']">
+    <header :class="[page_scrolled || (route.path != '/' && route.path != '/en') ? 'fixed_header' : 'default_header',route.path != '/' && route.path != '/en' ? 'border-b border-b-gray-300' : 'border-b-0', 'fixed w-full lg:hover:bg-white z-40']">
       <nav aria-label="Top" class="lg:h-[165px] h-[4rem] px-3 lg:px-[20px] pt-[22px] lg:pt-[40px]">
         <div class="flex gap-12 flex-col">
 
