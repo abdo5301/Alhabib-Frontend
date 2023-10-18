@@ -11,7 +11,7 @@
       <ul v-if="blog_data.topics && blog_data.topics.length"
         class="flex flex-col pt-6 lg:pt-[45px] gap-8 lg:gap-12 underline-offset-8 text-gray-600 lg:text-[#000] font-semibold text-base lg:text-2xl flex-1 w-full rtl:mr-5 ltr:ml-5 lg:rtl:mr-24 lg:ltr:ml-20">
         <li v-for="topic, index in blog_data.topics" :key="index">
-          <NuxtLink :to="localPath('/' +topic.slug)" class="underline">{{ topic.title }}</NuxtLink>
+          <NuxtLink :to="localPath('/')" class="underline">{{ topic.title }}</NuxtLink>
         </li>
       </ul>
       <div

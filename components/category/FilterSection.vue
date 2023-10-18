@@ -25,7 +25,7 @@
     <ul :class="[filter_key == 'pieces' ? 'flex items-center justify-start flex-wrap gap-y-[18px] w-full gap-2 lg:pt-[18px] pt-5 px-3 pb-6 text-xs text-gray-900 font-normal leading-5' :
       filter_key == 'color' ? 'flex items-stretch justify-start flex-wrap gap-y-4 gap-8 w-full lg:pt-[18px] pt-5 pb-6 text-sm text-gray-900 font-normal leading-5 px-3' :
         'space-y-3 lg:pt-3 pt-5 px-3 pb-6 text-sm text-gray-900 font-normal']">
-      <CategoryFilterItem ref="input" v-for="item in filter_array" :filter_type="filter_key" :key="item.id" :selected_filter_array ="selected_filter_array"
+      <CategoryFilterItem v-for="item in filter_array" :filter_type="filter_key" :key="item.id" :selected_filter_array ="selected_filter_array"
         :filter_id="item.id" :name="item.name" :image="item.image ?? item.image" @filter-value="updateFilterValue"/>
     </ul>
   </div>

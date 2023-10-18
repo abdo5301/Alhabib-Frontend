@@ -1,4 +1,5 @@
 {
+  "company_name": "ALhabib-Bedding",
   "header_search_placeholder": "Search by the product name, season...",
   "header_mobile_menu": "Menu",
   "header_mobile_menu_view_all": "View all",
@@ -90,6 +91,21 @@
   "category_sorting_price_desc":"Price high to low",
   "category_sorting_new_arrival":"New arrival",
   "category_sorting_best_sellers":"Best sellers",
-  "category_sorting_sales":"Sales"
-
+  "category_sorting_sales":"Sales",
+  "product_color_title":"Color : ",
+  "product_size_title":"Size",
+  "product_size_modal_link":"How can I measure my bed?",
+  "product_size_menu_title":"Select Size",
+  "product_size_stock_alert":"Out of stock",
+  "product_stock_notify_button":"Notify me",
+  "product_stock_notify_button_disabled":"You will receive an alert when available",
+  "product_stock_notify_alert":"Notifications are on, you'll be notified through email when restock",
+  "product_add_favorite_btn":"Add to Favorites",
+  "product_add_favorite_alert":"Product added to your favorite products",
+  "product_remove_favorite_alert":"Product removed from your favorite products",
+  "product_receive_from_shop_title":"We made it easy for you!",
+  "product_receive_from_shop_content":"Order online and pick it up in store!",
+  "product_details_info_title":"Product Details",
+  "product_details_care_title":"Care Instructions",
+  "product_details_return_title":"Shipping and Return"
 }

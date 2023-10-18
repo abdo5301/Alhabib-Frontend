@@ -1,6 +1,6 @@
 <template>
   <div :class="[list_type=='solo'?'w-full':'w-[175px]','flex flex-shrink-0 flex-col lg:gap-3 gap-[10px] justify-start lg:w-[318px]']">
-    <div class="relative w-full">
+    <NuxtLink :to="link" class="relative w-full">
       <img :class="[list_type=='solo'?'h-[377px]':'h-[175px]','w-full lg:h-[304px] rounded-lg object-cover']"
         :src="image ?? '/images/product/product-2.jpeg'">
       <button @click.prevent="$emit('favoriteClick', favorite = !favorite)"
@@ -12,7 +12,7 @@
             :stroke="favorite ? '#A30000' : '#1F2937'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </button>
-    </div>
+    </NuxtLink>
     <div :dir="$lang.dir" :class="[list_type=='solo'?'h-[170px]':'h-[145px]','w-full flex flex-col lg:gap-3 gap-[10px] lg:h-[170px] px-1']">
       <!-- Colors -->
       <div v-if="related_products && related_products.length && color" class="flex justify-start lg:gap-[11px] gap-[5px] flex-wrap">

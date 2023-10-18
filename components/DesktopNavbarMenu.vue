@@ -23,7 +23,7 @@
   <div v-for="category in menu_data.data" :key="category.id" :id="category.id" data-popover role="tooltip"
     class="bg-white max-h-[400px] h-[400px] rounded-lg border-gray-200 shadow-sm border-y w-full px-8 pb-4 invisible">
     <div class="pt-8 pb-2 px-[100px]">
-      <NuxtLink :to="localePath('/category')" class=" text-gray-900 font-bold text-lg">
+      <NuxtLink :to="localePath('/category/'+category.id)" class=" text-gray-900 font-bold text-lg">
         {{ category.name }}
       </NuxtLink>
     </div>
@@ -32,12 +32,12 @@
       <div class="w-1/2 h-full flex justify-between">
         <ul v-if="category.subcategory" class="h-3/4 grid grid-cols-1 gap-16 font-sans-serif font-semibold  text-gray-900">
           <li v-for="sub_category in category.subcategory" :key="sub_category.id">
-            <NuxtLink :to="localePath('/category')" class="hover:text-gray-500">
+            <NuxtLink :to="localePath('/category/'+category.id)" class="hover:text-gray-500">
               {{ sub_category.name }}
             </NuxtLink>
             <ul  v-if="sub_category.subcategory" class="grid grid-cols-1 gap-2 font-sans-serif font-semibold  text-gray-900">
               <li v-for="m_sub_category in sub_category.subcategory" :key="m_sub_category.id">
-                <NuxtLink :to="localePath('/category')" class="hover:text-gray-500">
+                <NuxtLink :to="localePath('/category/'+category.id)" class="hover:text-gray-500">
                   {{ m_sub_category.name }}
                 </NuxtLink>
               </li>
@@ -48,7 +48,7 @@
 
       <div class="flex h-full">
         <span class="h-3/4 w-[0.5px] bg-[#9CA3AF] mx-[60px]" aria-hidden="true" />
-        <NuxtLink :to="localePath('/category')">
+        <NuxtLink :to="localePath('/category/'+category.id)">
           <img v-if="category.image" :src="category.image.url" class="h-[258px] w-[504px]">
           <img v-else src="https://via.placeholder.com/640x480.png/0055cc?text=suscipit" class="h-[258px] w-[504px]">
         </NuxtLink>

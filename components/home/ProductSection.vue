@@ -14,7 +14,7 @@
        :color="product.color"
        :price="product.started_price + ' ' + currency"
        :special="product.started_discounted_price + ' ' + currency"
-       :link="localPath('/'+product.slug)"
+       :link="localPath('/product/'+product.id)"
        :favorite="product.favorite"
        :tags="product.tags"
        :related_products="product.related_class_products"
