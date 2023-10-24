@@ -1,13 +1,13 @@
 <template>
   <button type="button" data-drawer-target="mobile-product-filter" data-drawer-show="mobile-product-filter"
     data-drawer-placement="left" aria-controls="mobile-product-filter"
-    class="focus:ring-2 focus:bg-gray-100 transition ease-in-out duration-150 flex items-center justify-center gap-[18px] text-center py-[9px] px-3 w-[180px] h-[48px] text-gray-600 leading-6 font-medium text-lg rounded-md ring-1 ring-gray-300 ">
+    class="focus:ring-2 bg-white focus:bg-gray-100 transition ease-in-out duration-150 flex items-center justify-center gap-[18px] text-center py-[9px] px-3 w-[180px] h-[48px] text-gray-600 leading-6 font-medium text-lg rounded-md ring-1 ring-gray-300 ">
     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
       <path fill-rule="evenodd" clip-rule="evenodd"
         d="M3.5 3C3.5 2.44772 3.94772 2 4.5 2H16.5C17.0523 2 17.5 2.44772 17.5 3V6C17.5 6.26522 17.3946 6.51957 17.2071 6.70711L12.5 11.4142V15C12.5 15.2652 12.3946 15.5196 12.2071 15.7071L10.2071 17.7071C9.92111 17.9931 9.49099 18.0787 9.11732 17.9239C8.74364 17.7691 8.5 17.4045 8.5 17V11.4142L3.79289 6.70711C3.60536 6.51957 3.5 6.26522 3.5 6V3Z"
         fill="#6B7280" />
     </svg>
-    <slot />
+    {{ $t("category_filter_title_mobile") }}
   </button>
 
   <!-- content -->
@@ -32,7 +32,7 @@
       </span>
       <div class="w-full flex flex-col justify-start flex-wrap rtl:pl-[14px] ltr:pr-[14px] rtl:pr-5 ltr:pl-5 pb-12">
         <CategoryFilterSection v-for="filter_section, index in filter_data" :filter_array="filter_section.data"
-          :title="filter_section.name" :key="filter_section.key" :filter_key="filter_section.key"
+          :title="filter_section.name" :key="filter_section.key" :filter_key="filter_section.key" :mobile_filter="true"
           :first_item="index == 0 ? true : false" @filter-value="getFilterValue"
           :selected_filter_array="selected_filter_array" />
       </div>

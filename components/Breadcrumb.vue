@@ -19,25 +19,27 @@
           fill="#9CA3AF" />
       </svg>
     </li>
-    <li v-for="page, index in pages" :key="index" class="flex items-center lg:gap-4 gap-[6px]">
-      <NuxtLink v-if="(index + 1) != pages.length" class="flex items-center text-gray-500 font-semibold lg:text-base text-xs leading-5"
+    <li v-if="pages[0] && pages[0].name" v-for="page, index in pages" :key="index" class="flex items-center lg:gap-4 gap-[6px] empty:hidden">
+      <NuxtLink  class="flex items-center text-gray-500 font-semibold lg:text-base text-xs leading-5"
         :to="localePath(page.link)">
         {{ page.name }}
       </NuxtLink>
-      <span v-else class="flex items-center text-gray-500 font-bold lg:text-lg text-xs leading-5">
-        {{ page.name }}
-      </span>
-      <svg v-if="(index + 1) != pages.length && lang.dir == 'rtl'" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+      <svg v-if="lang.dir == 'rtl'" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
         viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
           fill="#9CA3AF" />
       </svg>
-      <svg v-if="(index + 1) != pages.length && lang.dir == 'ltr'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M7.29289 5.29289C6.90237 5.68342 6.90237 6.31658 7.29289 6.70711L10.5858 10L7.29289 13.2929C6.90237 13.6834 6.90237 14.3166 7.29289 14.7071C7.68342 15.0976 8.31658 15.0976 8.70711 14.7071L12.7071 10.7071C13.0976 10.3166 13.0976 9.68342 12.7071 9.29289L8.70711 5.29289C8.31658 4.90237 7.68342 4.90237 7.29289 5.29289Z"
           fill="#9CA3AF" />
       </svg>
+    </li>
+    <li  class="flex items-center lg:gap-4 gap-[6px]">
+      <span  class="flex items-center text-gray-500 font-bold lg:text-lg text-xs leading-5">
+        {{ current }}
+      </span>
     </li>
   </ol>
 </template>
@@ -47,6 +49,9 @@
 defineProps({
   pages: {
     type: Object,
+  },
+  current: {
+    type: String
   } 
 });
 

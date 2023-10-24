@@ -6,16 +6,21 @@
         {{ $t('product_size_title') }}
       </h4>
       <!-- Size modal trigger -->
-      <NuxtLink class="text-[15px] font-semibold leading-5 underline underline-offset-4" to="javascript:void(0)"
+      <NuxtLink
+        v-if="options && options.length && options[0].variation_option.variation.description && options[0].variation_option.variation.description.title"
+        class="text-[15px] font-semibold leading-5 underline underline-offset-4" to="javascript:void(0)"
         @click="size_modal.show()">
-        {{ $t('product_size_modal_link') }}
+        {{ options[0].variation_option.variation.description.title }}
       </NuxtLink>
       <!-- Size modal content -->
       <div id="size-modal" tabindex="-1"
         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full flex-shrink-0">
         <div
           class="relative w-full max-w-[869px] h-[607px] my-auto bg-gray-50 flex items-center justify-center text-gray-900 font-bold text-[27px] shadow">
-          محتوى صوري عن كيفية قياس السرير
+          <img
+            v-if="options && options.length && options[0].variation_option.variation.description && options[0].variation_option.variation.description.image"
+            :src="options[0].variation_option.variation.description.image.url" alt="Product option helper">
+          <span v-else> محتوى صوري عن كيفية تحديد الخيار المناسب</span>
           <button type="button" @click="size_modal.hide()"
             class="absolute top-9 rtl:left-10 ltr:right-10 text-gray-400 bg-transparent">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 27 27" fill="none">

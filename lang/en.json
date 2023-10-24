@@ -92,6 +92,7 @@
   "category_sorting_new_arrival":"New arrival",
   "category_sorting_best_sellers":"Best sellers",
   "category_sorting_sales":"Sales",
+  "category_load_more_btn":"Show More",
   "product_color_title":"Color : ",
   "product_size_title":"Size",
   "product_size_modal_link":"How can I measure my bed?",
@@ -108,4 +109,5 @@
   "product_details_info_title":"Product Details",
   "product_details_care_title":"Care Instructions",
   "product_details_return_title":"Shipping and Return"
+  
 }

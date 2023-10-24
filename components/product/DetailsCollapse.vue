@@ -17,9 +17,8 @@
       </button>
     </h2>
     <div class="hidden" :id="'section-accordion-body-' + section_key" :aria-labelledby="'section-accordion-' + section_key">
-      <p class="py-6 text-lg text-black font-medium leading-8">
-        <slot />
-      </p>
+      <div class="py-6 text-lg text-black font-medium leading-8" v-html="description">
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +29,9 @@ const active_section = ref(props.opened)
 
 const props = defineProps({
   title: {
+    type: String
+  },
+  description: {
     type: String
   },
   first_item: {

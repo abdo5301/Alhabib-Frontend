@@ -3,9 +3,8 @@
     <h3 class="font-bold lg:text-2xl text-base leading-5 text-gray-900">
       {{ title }}
     </h3>
-    <p class="font-light lg:font-normal lg:text-base text-xs leading-5 text-gray-900">
-      {{ content }}
-    </p>
+    <div v-html="content" class="font-light lg:font-normal lg:text-base text-xs leading-5 text-gray-900">
+    </div>
   </div>
 </template>
 
