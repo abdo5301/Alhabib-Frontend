@@ -1,12 +1,14 @@
 <template>
   <Title>{{ product_data.name }} | {{ website_name }}</Title>
-  <Breadcrumb class="pb-[80px]" :pages=breadcrumb></Breadcrumb>
-  <div class="w-full pb-40 px-[70px] gap-[100px] flex justify-start flex-grow">
+  <Breadcrumb class="pb-[80px]" :current="product_data.name" :pages=breadcrumb></Breadcrumb>
+  <div class="w-full pb-20 px-[70px] gap-[100px] flex justify-start flex-grow">
     <!-- Images -->
-    <div class="basis-1/2">
-      <LazyProductGallery :images="product_data.images" />
+    <div :class="[product_data.media.images.length || product_data.media.videos.length ? 'basis-1/2' : 'hidden']">
+      <LazyProductGallery v-if="product_data.media.images.length || product_data.media.videos.length"
+        :images="product_data.media.images" />
     </div>
-    <div class="basis-1/2 flex justify-start items-start flex-col gap-6 max-w-xl">
+    <div
+      :class="[product_data.media.images.length || product_data.media.videos.length ? 'basis-1/2' : 'basis-full', ' flex justify-start items-start flex-col gap-6 max-w-xl']">
       <!-- Title -->
       <h3 class="h-16 flex items-start justify-start text-gray-900 font-bold text-xl leading-8">
         {{ product_data.name }}
@@ -45,7 +47,7 @@
           {{ $t('product_color_title') }} {{ product_data.color.name }}
         </h4>
         <div
-          v-if="product_data.related_class_products && product_data.related_class_products.length && product_data.color"
+          v-if="product_data.related_class_products && product_data.related_class_products.length &&  product_data.related_class_products && product_data.color && product_data.color.hex"
           class="flex justify-start gap-[5px] flex-wrap">
           <span
             class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[27px] lg:h-[27px] w-[23px] h-[23px] z-20">
@@ -54,9 +56,9 @@
           </span>
           <NuxtLink :to="localePath('/product/' + related.id)"
             v-for="related, index in product_data.related_class_products" :key="related.color" class="empty:hidden">
-            <span v-if="index < 5 && related.color != product_data.color.hex"
+            <span v-if="index < 5 && related.color.hex != product_data.color.hex"
               :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
-              <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + related.color]">
+              <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + related.color.hex]">
               </span>
               <span v-if="related.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
             </span>
@@ -122,22 +124,29 @@
       <!-- Receive From Shop -->
       <ProductReceiveFromShop />
       <!-- Details -->
-      <div class="w-full bg-[#F9FAFB] max-h-[300px] overflow-y-auto no-scrollbar" id="product-details-accordion" data-active-classes="py-[1px]"
-        data-inactive-classes="py-[1px]" data-accordion="open">
-        <ProductDetailsCollapse :opened="true"  :title="$t('product_details_info_title')"   section_key="details">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium tempora veniam adipisci iure illum nisi sit optio aliquid at, neque doloribus atque minima accusantium officia hic soluta qui voluptatem aliquam.</ProductDetailsCollapse>
-        <ProductDetailsCollapse :opened="false" :title="$t('product_details_care_title')"   section_key="care">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint voluptas dolorem eum natus facere saepe, enim suscipit porro, consectetur, dolor sequi ullam a officia libero est? Libero vero molestiae dicta.</ProductDetailsCollapse>
-        <ProductDetailsCollapse :opened="false" :title="$t('product_details_return_title')" section_key="return">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque earum itaque voluptate quis nihil expedita minus nulla odit doloribus tempore a iure quos fuga, quae cumque blanditiis et nobis deleniti?</ProductDetailsCollapse>  
+      <div class="w-full bg-[#F9FAFB] max-h-[300px] overflow-y-auto no-scrollbar" id="product-details-accordion"
+        data-active-classes="py-[1px]" data-inactive-classes="py-[1px]" data-accordion="open">
+        <ProductDetailsCollapse v-for="product_details, index in product_data.description"
+          :opened="index == 0 ? true : false" :title="product_details.title" :key="index"
+          :section_key="index + '-' + product_details.title" :description="product_details.description" />
       </div>
     </div>
+
+  </div>
+  <div class="w-full flex justify-center items-center mb-6 px-[90px] ">
+    <span class="bg-gray-400 w-full h-[1px]"></span>
   </div>
 </template>
 
 <script setup>
 import { initFlowbite } from 'flowbite'
+import Flicking from "@egjs/vue3-flicking";
+
 onMounted(() => {
   initFlowbite();
 })
 const website_name = useState('website_name');
+const route = useRoute();
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
 const { t } = useI18n()
@@ -147,7 +156,9 @@ const out_stock = ref(false)
 const out_stock_btn = ref(t('product_stock_notify_button'))
 const disable_out_stock_btn = ref(false)
 
-
+const product_fetch_data = await useNuxtApp().$apiFetch('/master-products/get?master_product_id=' + route.params.id)
+const product_data = product_fetch_data.data ? product_fetch_data.data : []
+//console.log(product_data)
 function getSelectedOption(option_data) {
   out_stock_btn.value = t('product_stock_notify_button')
   disable_out_stock_btn.value = false
@@ -175,20 +186,12 @@ function outStockNotify() {
 
 const breadcrumb = [
   {
-    'name': 'مفارش وبطانيات',
-    'link': localePath('/category/123')
-  },
-  {
-    'name': 'مفارش',
-    'link': localePath('/category/123')
-  },
-  {
-    'name': 'مفرش اكيل صيفي مزدوج',
-    'link': localePath('/product/123')
+    'name': product_data.breadcrumb.name,
+    'link': localePath('/category/' + product_data.breadcrumb.id)
   }
 ]
 
-const product_data = {
+const fixed_product_data = {
   id: 1,
   name: 'مفرش فندقي نداف قطن موف فاتح 250 غرزة',
   tags: [

@@ -15,19 +15,19 @@
     </NuxtLink>
     <div :dir="$lang.dir" :class="[list_type=='solo'?'h-[170px]':'h-[145px]','w-full flex flex-col lg:gap-3 gap-[10px] lg:h-[170px] px-1']">
       <!-- Colors -->
-      <div v-if="related_products && related_products.length && color" class="flex justify-start lg:gap-[11px] gap-[5px] flex-wrap">
+      <div v-if="related_products && related_products.length && color && color.hex" class="flex justify-start lg:gap-[11px] gap-[5px] flex-wrap">
         <span class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[27px] lg:h-[27px] w-[23px] h-[23px] z-20">
-          <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + color]">
+          <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + color.hex]">
           </span>
         </span>
-        <span v-for="related, index in related_products" :key="related.color" class="empty:hidden">
-          <span v-if="index < 5 && related.color != color"
+        <NuxtLink :to="localePath('/product/' + related.id)" v-for="related, index in related_products" :key="'related-color-'+index" class="empty:hidden">
+          <span v-if="related.color && index < 5 && related.color.hex != color.hex"
             :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
-            <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + related.color]">
+            <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + related.color.hex]">
             </span>
             <span v-if="related.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
           </span>
-        </span>
+        </NuxtLink>
       </div>
       <NuxtLink :to="link" class="line-clamp-2 lg:text-base text-sm lg:min-h-[48px] min-h-[42px] text-gray-900 font-normal leading-[22px]">
         {{ name }}
@@ -60,6 +60,7 @@
 
 
 <script setup>
+const localePath = useLocalePath()
 defineEmits(['favoriteClick'])
 const { $lang } = useNuxtApp()
 const props = defineProps({
@@ -82,7 +83,7 @@ const props = defineProps({
     type: String,
   },
   color: {
-    type: String,
+    type: Object,
   },
   link: {
     type: String,
