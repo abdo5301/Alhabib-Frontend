@@ -140,7 +140,6 @@
 
 <script setup>
 import { initFlowbite } from 'flowbite'
-import Flicking from "@egjs/vue3-flicking";
 
 onMounted(() => {
   initFlowbite();
