@@ -1,7 +1,7 @@
 <template>
   <Title>{{ product_data.name }} | {{ website_name }}</Title>
   <Breadcrumb class="pb-[80px]" :current="product_data.name" :pages=breadcrumb></Breadcrumb>
-  <div class="w-full pb-20 px-[70px] gap-[100px] flex justify-start flex-grow">
+  <div class="w-full pb-20 lg:px-[70px] px-6 gap-[100px] flex justify-start flex-grow">
     <!-- Images -->
     <div :class="[product_data.media.images.length || product_data.media.videos.length ? 'basis-1/2' : 'hidden']">
       <LazyProductGallery v-if="product_data.media.images.length || product_data.media.videos.length"
@@ -47,7 +47,7 @@
           {{ $t('product_color_title') }} {{ product_data.color.name }}
         </h4>
         <div
-          v-if="product_data.related_class_products && product_data.related_class_products.length &&  product_data.related_class_products && product_data.color && product_data.color.hex"
+          v-if="product_data.related_class_products && product_data.related_class_products.length && product_data.related_class_products && product_data.color && product_data.color.hex"
           class="flex justify-start gap-[5px] flex-wrap">
           <span
             class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[27px] lg:h-[27px] w-[23px] h-[23px] z-20">
@@ -133,8 +133,13 @@
     </div>
 
   </div>
-  <div class="w-full flex justify-center items-center mb-6 px-[90px] ">
+  <div class="w-full flex justify-center items-center mb-6 lg:px-[70px] px-6">
     <span class="bg-gray-400 w-full h-[1px]"></span>
+  </div>
+
+  <div class="w-full lg:pb-20 pb-8 lg:mt-16 mt-6 lg:px-[70px] px-6 flex flex-col justify-start lg:gap-14 gap-6">
+    <LazyProductRelatedProducts v-for="related_products in product_data.related_products"
+      :products="related_products.master_products">{{ related_products.title }}</LazyProductRelatedProducts>
   </div>
 </template>
 
