@@ -1,10 +1,10 @@
 <template>
   <!-- Modal trigger -->
   <div @click="modal.show()"
-    class="w-full flex items-center justify-between px-1 py-[18px] flex-shrink-0 bg-white rounded-md ring-1 ring-gray-400 cursor-pointer">
+    class="w-full flex items-center justify-between lg:px-1 rtl:pr-4 rtl:pl-[11px] ltr:pl-4 ltr:pr-[11px] py-[18px] flex-shrink-0 bg-white rounded-md ring-1 ring-gray-400 cursor-pointer">
     <div class="flex gap-[17px] items-center justify-start">
       <span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="46" viewBox="0 0 45 46" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[45px] w-[35px] lg:h-[46px] h-[35px]" viewBox="0 0 45 46" fill="none">
           <path
             d="M30.0002 7.72168H22.5H14.9998H7.49965H0V11.0821C0 13.6802 1.67824 15.7864 3.74956 15.7864C5.82087 15.7864 7.49912 13.6802 7.49912 11.0821C7.49912 13.6802 9.17842 15.7864 11.2497 15.7864C13.32 15.7864 14.9993 13.6802 14.9993 11.0821C14.9993 13.6802 16.6781 15.7864 18.7489 15.7864C20.8202 15.7864 22.4995 13.6802 22.4995 11.0821C22.4995 13.6802 24.1788 15.7864 26.249 15.7864C28.3203 15.7864 29.9996 13.6802 29.9996 11.0821C29.9996 13.6802 31.6779 15.7864 33.7492 15.7864C35.8205 15.7864 37.4988 13.6802 37.4988 11.0821C37.4988 13.6802 39.1781 15.7864 41.2494 15.7864C43.3196 15.7864 44.9989 13.6802 44.9989 11.0821V7.72168H37.4993H30.0002Z"
             fill="black" />
@@ -31,19 +31,19 @@
             fill="black" />
         </svg>
       </span>
-      <div class="flex flex-col gap-3 text-black text-lg leading-5">
-        <h4 class="font-bold">{{ $t('product_receive_from_shop_title') }}</h4>
+      <div class="flex flex-col gap-3 text-black lg:text-lg text-sm leading-5">
+        <h4 class="lg:font-bold font-semibold">{{ $t('product_receive_from_shop_title') }}</h4>
         <span class="font-medium">{{ $t('product_receive_from_shop_content') }}</span>
       </div>
     </div>
-    <span class="rtl:ml-[22px] ltr:mr-[22px]">
-      <svg v-if="lang.dir == 'rtl'" xmlns="http://www.w3.org/2000/svg" width="12" height="23" viewBox="0 0 12 23"
+    <span class="lg:rtl:ml-[11px] lg:ltr:mr-[11px]">
+      <svg v-if="lang.dir == 'rtl'" xmlns="http://www.w3.org/2000/svg" class="lg:w-[12px] w-[9px] lg:h-[22px] h-[14px]" viewBox="0 0 12 23"
         fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M11.4142 0.711748C12.1953 1.5709 12.1953 2.96386 11.4142 3.82302L4.82843 11.0674L11.4142 18.3117C12.1953 19.1709 12.1953 20.5639 11.4142 21.423C10.6332 22.2822 9.36683 22.2822 8.58579 21.423L0.585787 12.623C-0.195262 11.7639 -0.195262 10.3709 0.585787 9.51175L8.58579 0.711748C9.36683 -0.147406 10.6332 -0.147406 11.4142 0.711748Z"
           fill="#6B7280" />
       </svg>
-      <svg v-else xmlns="http://www.w3.org/2000/svg" width="12" height="22" viewBox="0 0 12 22" fill="none">
+      <svg v-else xmlns="http://www.w3.org/2000/svg" class="lg:w-[12px] w-[9px] lg:h-[22px] h-[14px]" viewBox="0 0 12 22" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M0.585787 0.644365C-0.195262 1.50352 -0.195262 2.89648 0.585787 3.75564L7.17157 11L0.585787 18.2444C-0.195262 19.1035 -0.195262 20.4965 0.585787 21.3556C1.36683 22.2148 2.63317 22.2148 3.41421 21.3556L11.4142 12.5556C12.1953 11.6965 12.1953 10.3035 11.4142 9.44437L3.41421 0.644365C2.63317 -0.214788 1.36683 -0.214788 0.585787 0.644365Z"
           fill="#6B7280" />

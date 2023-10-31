@@ -1,7 +1,7 @@
 <template>
   <!--Select button -->
   <button type="button" id="productOptionsDropdownButton"
-    :class="[menu_title ? 'text-gray-700' : 'text-red-500', 'transition ease-in-out duration-150 shadow flex items-center justify-between gap-[18px] px-3 w-full h-[52px] leading-5 font-medium text-lg rounded-md ring-1 ring-gray-300 bg-white']">
+    :class="[menu_title ? 'text-gray-700' : 'text-red-500', 'transition ease-in-out duration-150 shadow flex items-center justify-between gap-[18px] px-3 w-full h-[52px] leading-5 font-medium lg:text-lg text-base rounded-md ring-1 ring-gray-300 bg-white']">
     {{ menu_title ?? $t('product_size_menu_title') }}
     <svg v-if="!show_menu" xmlns="http://www.w3.org/2000/svg" class="mx-4" width="20" height="20" viewBox="0 0 20 20"
       fill="none">
@@ -18,8 +18,8 @@
 
   <!-- Select menu -->
   <div id="productOptionsDropdown"
-    :class="['z-30 hidden bg-white shadow w-full max-w-xl border border-gray-300 rounded-md productOptionsDropdown']">
-    <ul class="text-lg leading-5 justify-start font-medium text-gray-700 divide-y divide-gray-300">
+    :class="['z-30 hidden bg-white shadow border border-gray-300 rounded-md productOptionsDropdown']">
+    <ul class="lg:text-lg text-base leading-5 justify-start font-medium text-gray-700 divide-y divide-gray-300">
       <li @click="dropdown.hide()" v-for="option, index in options" :key="option.id">
         <NuxtLink @click="$emit('updateOptionValue', option), menu_title = option.variation_option.value"
           to="javascript:void(0)" class="block px-5 py-5 hover:bg-gray-100">{{ option.variation_option.value }}</NuxtLink>
@@ -41,6 +41,7 @@ defineEmits(['updateOptionValue'])
 const { t } = useI18n()
 const menu_title = ref()
 const show_menu = ref(false)
+
 onMounted(
   () => {
     const $menu = document.getElementById('productOptionsDropdown');
@@ -60,6 +61,9 @@ onMounted(
       },
     };
     dropdown.value = new Dropdown($menu, $button, options);
+    const btn_style = window.getComputedStyle($button);
+    const btn_width = btn_style.getPropertyValue('width');
+    $menu.style.width = btn_width;
   }
 )
 </script>
