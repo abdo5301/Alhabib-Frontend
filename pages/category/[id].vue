@@ -48,20 +48,19 @@
         <CategoryListingSwitch @update-listing="listingTypeUpdate" />
       </div>
       <!-- Product listing -->
-      <div class="flex justify-start flex-col gap-16 lg:mt-2 mt-5 w-full"
-        v-if="category_data.data && category_data.data.length">
+      <div class="flex justify-start flex-col gap-16 lg:mt-2 mt-5 w-full" v-if="products.length > 0">
         <div :class="[listing_type == 'solo' ? 'gap-[18px]' : 'gap-y-[45px] gap-x-[27px]',
           'flex flex-wrap items-stretch justify-start gap-[42px] lg:gap-y-[55px]']">
-          <CategoryProductItem v-for="product in category_data.data" :key="product.id" :id="product.id"
-            :name="product.name" :image="product.image" :color="product.color"
-            :price="product.started_price + ' ' + currency" :special="product.started_discounted_price + ' ' + currency"
-            :link="localePath('/product/' + product.id)" :favorite="product.favorite" :tags="product.tags"
-            :related_products="product.related_class_products" @favorite-click="product.favorite = !product.favorite"
-            :list_type="listing_type" />
+          <CategoryProductItem v-for="product in products" :key="product.id" :id="product.id" :name="product.name"
+            :image="product.image" :color="product.color" :price="product.started_price"
+            :special="product.started_discounted_price" :link="localePath('/product/' + product.id)"
+            :favorite="product.favorite" :tags="product.tags" :related_products="product.related_class_products"
+            @favorite-click="product.favorite = !product.favorite" :list_type="listing_type" />
         </div>
         <!-- Infinite  scroll -->
         <div class="flex items-center justify-center flex-col gap-5 w-full">
-          <button type="button" @click="loadMore(1)" :disabled="infinite_scroll_loading"
+          <button v-if="products.length != category_data.meta.total" type="button" @click="loadMore()"
+            :disabled="infinite_scroll_loading"
             class="flex justify-center items-center gap-[11px] py-[9px] w-[194px] ring-1 ring-gray-300 rounded-2xl bg-white shadow-sm text-gray-700 text-base leading-5 font-bold hover:bg-gray-100 disabled:bg-gray-100 disabled:cursor-not-allowed">
             {{ $t('category_load_more_btn') }}
             <svg v-if="!infinite_scroll_loading" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -80,8 +79,8 @@
                 fill="currentFill" />
             </svg>
           </button>
-          <span class="text-gray-900 text-base font-normal leading-5"> لقد شاهدت {{ category_data.data.length }} من أصل {{
-            category_data.data.length }} منتج</span>
+          <span class="text-gray-900 text-base font-normal leading-5"> لقد شاهدت {{ products.length }} من أصل {{
+            category_data.meta.total }} من المنتجات</span>
         </div>
         <!-- Filter end -->
       </div>
@@ -101,15 +100,35 @@
 import { initFlowbite } from 'flowbite'
 onMounted(() => {
   initFlowbite();
+  //window.history.pushState({"id":1}, "Title", "/new-url");
 })
 
 const website_name = useState('website_name');
 const route = useRoute();
 const data_url = ref('/master-products/of-category?category_id=' + route.params.id)
 const category_data = shallowRef(await useNuxtApp().$apiFetch(data_url.value))
+const products = ref(category_data.value.data ? category_data.value.data : [])
 const filter_array = ref([])
 const sorting_value = ref()
 const listing_type = ref('list')
+const infinite_scroll_loading = ref(false)
+const current_page = ref(1)
+
+async function loadMore() {
+  infinite_scroll_loading.value = true
+  if(current_page.value > 1 && data_url.value.includes('&page=')){
+    data_url.value.replace('&page='+current_page.value ,'&page='+(current_page.value + 1))
+  }else{
+    data_url.value += '&page='+(current_page.value + 1)
+  }
+  category_data.value = await useNuxtApp().$apiFetch(data_url.value)
+  products.value = products.value.concat(category_data.value.data)
+  if (category_data.value.meta.total != products.value.length) {
+    current_page.value = current_page.value + 1
+  }
+  infinite_scroll_loading.value = false
+}
+
 function listingTypeUpdate(new_list_type) {
   listing_type.value = new_list_type
 }
@@ -141,7 +160,6 @@ async function updateProductsCollection() {
   data_url.value = '/master-products/of-category?category_id=' + route.params.id
   //filtering
   if (filter_array.value.length > 0) {
-    let filter_params = ''
     for (let index = 0; index < filter_array.value.length; index++) {
       let filter_object = filter_array.value[index];
       switch (filter_object.type) {
@@ -170,8 +188,10 @@ async function updateProductsCollection() {
   }
   //console.log(data_url.value)
   category_data.value = await useNuxtApp().$apiFetch(data_url.value)
+  products.value = category_data.value.data
   //console.log(category_data.value)
 }
+
 
 const category_title = category_data.value.data && category_data.value.data.length ? category_data.value.data[0].category.name : '';
 const category_top_title = category_data.value.data && category_data.value.data.length > 0 && category_data.value.data[0].category.top_description.title ? category_data.value.data[0].category.top_description.title : '';
@@ -191,11 +211,7 @@ const breadcrumb = category_data.value.data && category_data.value.data.length ?
   }
 ] : []
 
-const infinite_scroll_loading = ref(false)
-function loadMore(page) {
-  infinite_scroll_loading.value = true
-  setTimeout(function () { infinite_scroll_loading.value = false }, 2000);
-}
+
 
 const sub_category = category_data.value.data.length && category_data.value.data[0].category.subcategory && category_data.value.data[0].category.subcategory.length ? category_data.value.data[0].category.subcategory : []
 const fixed_sub_category = [

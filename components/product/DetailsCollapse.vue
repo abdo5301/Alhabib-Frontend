@@ -1,8 +1,8 @@
 <template>
-  <div class="border-t border-t-gray-400 pt-6 pb-8 px-[6px]">
+  <div class="border-t border-t-gray-400 pt-[28px] lg:pb-8 pb-9 lg:px-[6px] px-5">
     <h2 :id="'section-accordion-' + section_key">
       <button type="button" @click="active_section = !active_section"
-        class="flex items-center justify-between w-full  font-bold text-gray-700 text-base leading-5"
+        class="flex items-center justify-between w-full font-bold text-gray-700 text-base leading-5"
         :data-accordion-target="'#section-accordion-body-' + section_key" :aria-expanded="opened"
         :aria-controls="'section-accordion-body-' + section_key">
         <span>{{ title }}</span>
@@ -17,7 +17,7 @@
       </button>
     </h2>
     <div class="hidden" :id="'section-accordion-body-' + section_key" :aria-labelledby="'section-accordion-' + section_key">
-      <div class="py-6 text-lg text-black font-medium leading-8" v-html="description">
+      <div class="pt-6 pb-1 text-base text-black font-medium leading-8" v-html="description">
       </div>
     </div>
   </div>

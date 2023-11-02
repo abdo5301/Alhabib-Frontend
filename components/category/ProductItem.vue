@@ -40,17 +40,17 @@
         </span>
       </div>
       <!-- price -->
-      <div v-if="special" class="flex lg:gap-2 gap-1 justify-start">
+      <div v-if="special && special !== null" class="flex lg:gap-2 gap-1 justify-start">
         <span :class="[list_type=='solo'?'text-sm':'text-xs','text-red-600 font-bold lg:text-base leading-5']">
-          {{ special }}
+          {{ special + ' ' + currency }}
         </span>
         <del :class="[list_type=='solo'?'text-sm':'text-xs','text-gray-900 font-normal lg:text-base leading-5']">
-          {{ price }}
+          {{ price + ' ' + currency }}
         </del>
       </div>
       <div v-else class="flex gap-2 justify-start">
         <span :class="[list_type=='solo'?'text-sm':'text-xs','text-gray-900 font-bold lg:text-base leading-5']">
-          {{ price }}
+          {{ price + ' ' + currency }}
         </span>
       </div>
 
@@ -63,6 +63,8 @@
 const localePath = useLocalePath()
 defineEmits(['favoriteClick'])
 const { $lang } = useNuxtApp()
+const { t } = useI18n()
+const currency = t('sar')
 const props = defineProps({
   name: {
     type: String,
@@ -77,10 +79,10 @@ const props = defineProps({
     type: String,
   },
   price: {
-    type: String,
+    type: Number,
   },
   special: {
-    type: String,
+    type: Number,
   },
   color: {
     type: Object,

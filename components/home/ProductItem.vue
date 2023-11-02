@@ -13,7 +13,7 @@
         </svg>
       </button>
     </NuxtLink>
-    <div :dir="$lang.dir" class="w-full gap-4 lg:h-[255px] h-[230px] flex flex-col pt-[11px] pb-[15px] px-2 bg-[#FFF]">
+    <div :dir="$lang.dir" :class="[cart_btn?'lg:h-[255px] h-[230px]':'lg:h-[200px] h-[180px]','w-full gap-4 flex flex-col pt-[11px] pb-[15px] px-2 bg-[#FFF]']">
       <NuxtLink :to="link" class="line-clamp-2 lg:text-base text-xs text-gray-900 font-normal">
         {{ name }}
       </NuxtLink>
@@ -56,7 +56,7 @@
         </NuxtLink>
       </div>
       <!-- Card -->
-      <div class="w-full flex flex-col justify-end flex-1">
+      <div v-if="cart_btn" class="w-full flex flex-col justify-end flex-1">
         <Button type="button" color="black"
           class="items-center justify-center font-extrabold lg:text-sm text-xs shadow-sm text-white">{{
             $t('home_products_cart_btn') }}</Button>
@@ -100,6 +100,10 @@ const props = defineProps({
   id: {
     type: Number,
   },
+  cart_btn:{
+    type: Boolean,
+    default: true
+  }
 });
 
 </script>

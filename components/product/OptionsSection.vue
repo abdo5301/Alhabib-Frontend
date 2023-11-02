@@ -2,13 +2,13 @@
   <div :class="[out_stock ? ' gap-2' : ' gap-5', 'flex flex-col w-full']">
 
     <div class="flex w-full text-gray-900">
-      <h4 class="flex-1 font-bold text-lg leading-5">
+      <h4 class="flex-1 lg:font-bold font-semibold lg:text-lg text-base leading-5">
         {{ $t('product_size_title') }}
       </h4>
       <!-- Size modal trigger -->
       <NuxtLink
         v-if="options && options.length && options[0].variation_option.variation.description && options[0].variation_option.variation.description.title"
-        class="text-[15px] font-semibold leading-5 underline underline-offset-4" to="javascript:void(0)"
+        class="text-sm font-semibold leading-5 underline underline-offset-4" to="javascript:void(0)"
         @click="size_modal.show()">
         {{ options[0].variation_option.variation.description.title }}
       </NuxtLink>
@@ -40,7 +40,7 @@
           d="M27 15.6465C27 22.2739 21.6274 27.6465 15 27.6465C8.37258 27.6465 3 22.2739 3 15.6465C3 9.01907 8.37258 3.64648 15 3.64648C21.6274 3.64648 27 9.01907 27 15.6465ZM16.5 21.6465C16.5 22.4749 15.8284 23.1465 15 23.1465C14.1716 23.1465 13.5 22.4749 13.5 21.6465C13.5 20.8181 14.1716 20.1465 15 20.1465C15.8284 20.1465 16.5 20.8181 16.5 21.6465ZM15 8.14648C14.1716 8.14648 13.5 8.81806 13.5 9.64648V15.6465C13.5 16.4749 14.1716 17.1465 15 17.1465C15.8284 17.1465 16.5 16.4749 16.5 15.6465V9.64648C16.5 8.81806 15.8284 8.14648 15 8.14648Z"
           fill="#EF4444" />
       </svg>
-      <span class="text-red-600 font-bold text-lg leading-5">
+      <span class="text-red-600 lg:font-bold font-semibold lg:text-lg text-base leading-5">
         {{ $t('product_size_stock_alert') }}
       </span>
     </div>
