@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mx-auto container flex-col justify-center items-center px-[22px] lg:px-[75px] pb-20">
+  <div v-if="products.length > 0" class="flex mx-auto container flex-col justify-center items-center px-[22px] lg:px-[75px] pb-20">
     <h3 class="text-gray-700 text-xl lg:text-[34px] leading-4 font-bold lg:pb-12 pb-4">
      <slot />
     </h3>

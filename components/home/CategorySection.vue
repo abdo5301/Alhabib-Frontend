@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mx-auto container flex-col gap-12 justify-center items-center px-[22px] lg:px-[75px]">
+  <div v-if="categories.length > 0" class="flex mx-auto container flex-col gap-12 justify-center items-center px-[22px] lg:px-[75px]">
     <h1 class="text-gray-700 text-xl lg:text-[28px] font-bold">
       <slot />
     </h1>

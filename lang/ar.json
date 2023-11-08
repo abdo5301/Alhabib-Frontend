@@ -109,6 +109,14 @@
   "product_receive_from_shop_content":"اطلب من الموقع الإلكتروني واستلم الطلب من الفرع!", 
   "product_details_info_title":"تفاصيل المنتج",
   "product_details_care_title":"إرشادات العناية",
-  "product_details_return_title":"الشحن والاسترجاع"
+  "product_details_return_title":"الشحن والاسترجاع",
+  "cart_popup_alert_free_shipping":"لقد حصلت على شحن مجاني!",
+  "cart_popup_add_favorite_btn":"نقل للمفضلة",
+  "cart_title":"حقيبة التسوق ",
+  "sub_total":"المجموع الفرعي",
+  "checkout_title":"إنهاء الطلب",
+  "label_size":"المقاس",
+  "label_quantity":"الكمية"
+
   
 }

@@ -40,7 +40,7 @@
         </span>
       </div>
       <!-- price -->
-      <div v-if="special && special !== null" class="flex lg:gap-2 gap-1 justify-start">
+      <div v-if="special && special !== null && price && price !== null" class="flex lg:gap-2 gap-1 justify-start">
         <span :class="[list_type=='solo'?'text-sm':'text-xs','text-red-600 font-bold lg:text-base leading-5']">
           {{ special + ' ' + currency }}
         </span>
@@ -48,12 +48,13 @@
           {{ price + ' ' + currency }}
         </del>
       </div>
-      <div v-else class="flex gap-2 justify-start">
+      <div v-else-if="price && price !== null" class="flex gap-2 justify-start">
         <span :class="[list_type=='solo'?'text-sm':'text-xs','text-gray-900 font-bold lg:text-base leading-5']">
           {{ price + ' ' + currency }}
         </span>
       </div>
-
+      <div v-else class="flex gap-2 justify-start empty:hidden">
+      </div>
     </div>
   </div>
 </template>

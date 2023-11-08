@@ -116,11 +116,12 @@ const current_page = ref(1)
 
 async function loadMore() {
   infinite_scroll_loading.value = true
-  if(current_page.value > 1 && data_url.value.includes('&page=')){
-    data_url.value.replace('&page='+current_page.value ,'&page='+(current_page.value + 1))
-  }else{
-    data_url.value += '&page='+(current_page.value + 1)
+  if (current_page.value > 1 && data_url.value.includes('&page=')) {
+    data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value + 1))
+  } else {
+    data_url.value += '&page=' + (current_page.value + 1)
   }
+
   category_data.value = await useNuxtApp().$apiFetch(data_url.value)
   products.value = products.value.concat(category_data.value.data)
   if (category_data.value.meta.total != products.value.length) {
@@ -157,6 +158,7 @@ function updateSortingValue(new_sorting_value) {
 }
 
 async function updateProductsCollection() {
+  current_page.value = 1
   data_url.value = '/master-products/of-category?category_id=' + route.params.id
   //filtering
   if (filter_array.value.length > 0) {

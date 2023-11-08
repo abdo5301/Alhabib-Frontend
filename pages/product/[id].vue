@@ -297,8 +297,8 @@ const fixed_product_data = {
   ]
 }
 
-const price = ref(product_data.started_price +' '+ currency)
-const discount_price = ref(product_data.started_discounted_price +' '+ currency)
-const favorite = ref(product_data.favorite +' '+ currency)
+const price = ref(product_data.started_price !== null ? product_data.started_price +' '+ currency : null)
+const discount_price = ref(product_data.started_discounted_price !== null ? product_data.started_discounted_price +' '+ currency : null)
+const favorite = ref(product_data.favorite)
 
 </script>
