@@ -15,7 +15,8 @@
 </style>
 <template>
   <div>
-    <header :class="[page_scrolled || (route.path != '/' && route.path != '/en') ? 'fixed_header' : 'default_header',route.path != '/' && route.path != '/en' ? 'border-b border-b-gray-300' : 'border-b-0', 'fixed w-full lg:hover:bg-white z-40']">
+    <header
+      :class="[page_scrolled || (route.path != '/' && route.path != '/en') ? 'fixed_header' : 'default_header', route.path != '/' && route.path != '/en' ? 'border-b border-b-gray-300' : 'border-b-0', 'fixed w-full lg:hover:bg-white z-40']">
       <nav aria-label="Top" class="lg:h-[165px] h-[4rem] px-3 lg:px-[20px] pt-[22px] lg:pt-[40px]">
         <div class="flex gap-12 flex-col">
 
@@ -39,7 +40,8 @@
               <div id="mobileDropdownSearchButton" data-dropdown-toggle="mobileDropdownSearch"
                 data-dropdown-placement="bottom"
                 class="flex items-end rtl:mt-[6.5px] ltr:mt-[4px] lg:hidden rtl:pr-[9px] ltr:pl-[9px] cursor-pointer">
-                <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 23" fill="none">
+                <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="24" height="20"
+                  viewBox="0 0 24 23" fill="none">
                   <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M9.6 4.59999C6.94904 4.59999 4.80002 6.65948 4.80002 9.19999C4.80002 11.7405 6.94904 13.8 9.6 13.8C12.251 13.8 14.4 11.7405 14.4 9.19999C14.4 6.65948 12.251 4.59999 9.6 4.59999ZM2.40002 9.19999C2.40002 5.38922 5.62356 2.29999 9.6 2.29999C13.5764 2.29999 16.8 5.38922 16.8 9.19999C16.8 10.6902 16.307 12.0701 15.4689 13.198L21.2485 18.7368C21.7171 19.1859 21.7171 19.9141 21.2485 20.3632C20.7799 20.8123 20.0201 20.8123 19.5514 20.3632L13.7718 14.8243C12.5949 15.6276 11.155 16.1 9.6 16.1C5.62356 16.1 2.40002 13.0108 2.40002 9.19999Z"
                     fill="#1F2937" />
@@ -99,13 +101,22 @@
               </div>
               <!-- Cart -->
               <div class="flex">
-                <NuxtLink to="#" class="group -m-2 flex items-center p-1 lg:p-2">
+                <NuxtLink to="javascript:void(0)" @click="cartDrawer.show()"
+                  class="group -m-2 hidden lg:flex items-center p-1 lg:p-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24" fill="none">
                     <path
                       d="M14.6324 10.7652V6.90468C14.6324 4.77259 12.9946 3.04419 10.9743 3.04419C8.954 3.04419 7.3162 4.77259 7.3162 6.90468V10.7652M4.57261 8.83493H17.376L18.2906 20.4164H3.65808L4.57261 8.83493Z"
                       stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                   <span class="sr-only">items in cart, view bag</span>
+                </NuxtLink>
+                <NuxtLink :to="localePath('/cart')" class="group -m-2 lg:hidden flex items-center p-1 lg:p-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24" fill="none">
+                    <path
+                      d="M14.6324 10.7652V6.90468C14.6324 4.77259 12.9946 3.04419 10.9743 3.04419C8.954 3.04419 7.3162 4.77259 7.3162 6.90468V10.7652M4.57261 8.83493H17.376L18.2906 20.4164H3.65808L4.57261 8.83493Z"
+                      stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span class="sr-only">link to Cart Page</span>
                 </NuxtLink>
               </div>
               <!-- Favorite -->
@@ -151,15 +162,50 @@
     </header>
 
   </div>
+  <!-- Cart Popup Content -->
+  <div id="cart-popup-menu" aria-labelledby="cart-popup-label"
+    class="fixed top-0 rtl:left-0 ltr:right-0 z-[100] w-[600px] min-h-[700px] max-h-screen overflow-hidden hover:overflow-y-auto duration-700 transition-transform translate-x-1 -translate-y-full bg-white"
+    tabindex="-1">
+    <h5 id="cart-popup-label"
+      class="flex justify-center items-center text-center pt-11 text-[#000] font-bold lg:text-2xl text-xl leading-6">
+      {{ $t('cart_title') }} ({{ cart_count }})
+    </h5>
+    <div class="border-b border-b-gray-200 pt-5 w-full"></div>
+    <CartPopupAlert alert_type="free-shipping"></CartPopupAlert>
+    <!-- Cart Items -->
+    <div
+      class="w-full px-4 no-scrollbar pt-12 flex flex-col justify-start items-start gap-6 max-h-[440px] overflow-hidden hover:overflow-y-auto">
+      <CartPopupProductItem />
+      <CartPopupProductItem />
+      <CartPopupProductItem />
+    </div>
+    <!-- Cart Total -->
+    <div class="w-full pt-12 flex justify-between items-center px-4">
+      <div class="w-full flex justify-between items-center border-b border-b-gray-200 pb-[18px]">
+        <span class="text-gray-900 text-base font-bold leading-5">{{ $t('sub_total') }}</span>
+        <span class="text-gray-600 text-sm font-bold leading-5 rtl:pl-4 ltr:pr-4">1156 ريال</span>
+      </div>
+    </div>
+    <!-- checkout Link -->
+    <div class="px-4 pt-12 pb-6">
+      <NuxtLink :to="localePath('/checkout')" @click="cartDrawer.hide()"
+        class="w-full bg-black rounded-md h-[62px] flex flex-shrink-0 items-center justify-center text-white text-xl font-bold leading-5">
+        {{ $t('checkout_title') }}
+      </NuxtLink>
+    </div>
+  </div>
 </template>
 
 <script setup>
+import { Drawer } from 'flowbite';
 const page_scrolled = ref(false);
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 const availableLocales = useNuxtApp().$all_lang
 const lang = useNuxtApp().$lang
 const route = useRoute()
+const cartDrawer = ref()
+const cart_count = ref(5)
 onMounted(() => {
   window.addEventListener("scroll", () => {
     var curr = window.scrollY;
@@ -168,9 +214,19 @@ onMounted(() => {
       page_scrolled.value = false;
     }
   });
-
+  // set cart popup js
+  const $cartPopupMenu = document.getElementById('cart-popup-menu');
+  const $cartPopupMenuOptions = {
+    placement: lang.dir == 'rtl' ? 'left' : 'right',
+    backdrop: true,
+    bodyScrolling: false,
+    edge: false,
+    edgeOffset: '',
+    backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-50'
+  };
+  cartDrawer.value = new Drawer($cartPopupMenu, $cartPopupMenuOptions);
 })
 
 const search = ref('');
-const  navigation = await useNuxtApp().$apiFetch('/categories')
+const navigation = await useNuxtApp().$apiFetch('/categories')
 </script>

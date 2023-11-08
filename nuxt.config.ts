@@ -37,6 +37,12 @@ export default defineNuxtConfig({
     injectPosition: 'first',
     viewer: true,
   },
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   runtimeConfig: {
     // Private config that is only available on the server
     //  baseUrl: '/api',

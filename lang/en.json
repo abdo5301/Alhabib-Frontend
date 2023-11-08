@@ -108,6 +108,15 @@
   "product_receive_from_shop_content":"Order online and pick it up in store!",
   "product_details_info_title":"Product Details",
   "product_details_care_title":"Care Instructions",
-  "product_details_return_title":"Shipping and Return"
+  "product_details_return_title":"Shipping and Return",
+  "cart_popup_alert_free_shipping":"Free Shipping!",
+  "cart_popup_add_favorite_btn":"Move to favorite",
+  "cart_title":"Shopping Cart ",
+  "sub_total":"Subtotal",
+  "checkout_title":"Checkout",
+  "label_size":"Size",
+  "label_quantity":"Quantity"
+
+
   
 }
