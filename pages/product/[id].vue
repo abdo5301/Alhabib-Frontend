@@ -1,7 +1,8 @@
 <template>
   <Title>{{ product_data.name }} | {{ website_name }}</Title>
   <Breadcrumb class="lg:pb-[80px] pb-6" :current="product_data.name" :pages=breadcrumb></Breadcrumb>
-  <div class="w-full lg:pb-20 pb-3 lg:px-[70px] px-[23px] lg:gap-[100px] gap-10 flex flex-col lg:flex-row justify-start flex-grow">
+  <div
+    class="w-full lg:pb-20 pb-3 lg:px-[70px] px-[23px] lg:gap-[100px] gap-10 flex flex-col lg:flex-row justify-start flex-grow">
     <!-- Images -->
     <div :class="[product_data.media.images.length || product_data.media.videos.length ? 'basis-1/2' : 'hidden']">
       <LazyProductGallery v-if="product_data.media.images.length || product_data.media.videos.length"
@@ -10,7 +11,8 @@
     <div
       :class="[product_data.media.images.length || product_data.media.videos.length ? 'basis-1/2' : 'basis-full', ' flex justify-start items-start flex-col gap-6 max-w-xl']">
       <!-- Title -->
-      <h3 class="h-16 flex items-start justify-start text-gray-900 lg:font-bold font-semibold lg:text-xl text-base leading-8">
+      <h3
+        class="h-16 flex items-start justify-start text-gray-900 lg:font-bold font-semibold lg:text-xl text-base leading-8">
         {{ product_data.name }}
       </h3>
       <!-- Tags -->
@@ -86,7 +88,7 @@
           {{ out_stock_btn }}
         </button>
         <!-- cart btn -->
-        <button type="button" v-show="!out_stock"
+        <button type="button" v-show="!out_stock" @click="cartDrawer.show()"
           :disabled="product_data.products && product_data.products.length > 0 ? disable_cart_btn : false"
           class="flex flex-1 items-center justify-center lg:h-12 h-[52px] bg-black rounded-md lg:w-[498px] w-[315px] text-white lg:text-2xl text-sm leading-5 lg:font-bold font-semibold disabled:bg-gray-600 disabled:cursor-not-allowed">
           {{ $t('home_products_cart_btn') }}
@@ -141,13 +143,89 @@
     <LazyProductRelatedProducts v-for="related_products in product_data.related_products"
       :products="related_products.master_products">{{ related_products.title }}</LazyProductRelatedProducts>
   </div>
+
+  <!-- Cart Popup Content -->
+  <div id="add-cart-alert" aria-labelledby="add-cart-alert-label"
+    :class="[!isMobile ? '-translate-y-full' : 'translate-y-full', 'fixed rounded-t-md lg:rounded-t-none lg:top-0 bottom-0 rtl:left-0 ltr:right-0 z-[100] lg:w-[600px] w-full lg:min-h-[700px] min-h-[638px] lg:max-h-screen max-h-96  overflow-hidden hover:overflow-y-auto duration-700 transition-transform translate-x-1 bg-white']"
+    tabindex="-1">
+    <h5 id="add-cart-alert-label"
+      class="lg:flex hidden justify-center items-center text-center pt-11 text-[#000] font-bold lg:text-2xl text-xl leading-6">
+      {{ $t('cart_title') }} ({{ cart_count }})
+    </h5>
+    <div class="lg:block hidden border-b border-b-gray-200 pt-5 w-full"></div>
+    <CartPopupAlert alert_type="add-to-cart-success"></CartPopupAlert>
+    <!-- Cart Items -->
+    <div
+      class="w-full px-4 no-scrollbar lg:pt-12 pt-5 flex flex-col justify-start items-start gap-6 max-h-[440px] overflow-hidden hover:overflow-y-auto">
+      <CartPopupProductItem />
+    </div>
+    <!-- Cart Total -->
+    <div class="w-full lg:pt-12 pt-5 flex justify-between items-center px-6">
+      <div class="w-full flex justify-between items-center border-b border-b-gray-200 pb-[18px]">
+        <span class="text-gray-900 text-base font-bold leading-5">{{ $t('sub_total') }}</span>
+        <span class="text-gray-600 text-sm font-bold leading-5">
+          {{ discount_price ? discount_price : price ? price : " 100 ريال" }}</span>
+      </div>
+    </div>
+    <!-- checkout Link -->
+    <div class="px-5 lg:py-12 py-5 grid grid-cols-2 lg:gap-[25px] gap-[18px]">
+      <NuxtLink :to="localePath('/checkout')" @click="cartDrawer.hide()"
+        class="w-full bg-black rounded-md lg:h-[52px] h-[42px] flex flex-shrink-0 items-center justify-center text-white lg:text-xl text-base font-bold leading-5">
+        {{ $t('checkout_title') }}
+      </NuxtLink>
+      <NuxtLink :to="localePath('/cart')" @click="cartDrawer.hide()"
+        class="w-full bg-green-600 rounded-md lg:h-[52px] h-[42px] flex flex-shrink-0 items-center justify-center text-white lg:text-xl text-base font-bold leading-5">
+        {{ $t('show_cart_title') }}
+      </NuxtLink>
+    </div>
+    <!-- Before you go -->
+    <div class="px-6 lg:pb-10 pb-6 flex flex-col justify-start lg:gap-7 gap-3">
+      <h6 class="text-gray-900 font-bold lg:text-2xl text-base leading-5">
+        {{ $t('before_go_title') }}
+      </h6>
+      <div
+        class="flex pb-2 lg:gap-7 gap-3 justify-start items-stretch overflow-hidden hover:overflow-x-auto w-full mx-auto">
+        <ProductBeforeYouGoProduct name="دايز- مسك 250 مل" :price="'40' + ' ' + currency"
+          :link="localePath('/product/' + product_data.id)" />
+        <ProductBeforeYouGoProduct name="دايز- مسك 250 مل" :price="'40' + ' ' + currency"
+          :link="localePath('/product/' + product_data.id)" />
+        <ProductBeforeYouGoProduct name="دايز- مسك 250 مل" :price="'40' + ' ' + currency"
+          :link="localePath('/product/' + product_data.id)" />
+        <ProductBeforeYouGoProduct name="دايز- مسك 250 مل" :price="'40' + ' ' + currency"
+          :link="localePath('/product/' + product_data.id)" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { initFlowbite } from 'flowbite'
-
+import { Drawer } from 'flowbite';
+const cartDrawer = ref()
+const cart_count = ref(5)
+const isMobile = ref(false)
 onMounted(() => {
   initFlowbite();
+  // check mobile device
+  if (((window.innerWidth <= 800) && (window.innerHeight <= 600)) || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+
+  console.log(isMobile.value, window.innerWidth, window.innerHeight)
+
+  // set cart popup js
+  const $cartPopupMenu = document.getElementById('add-cart-alert');
+  const $cartPopupMenuOptions = {
+    placement: lang.dir == 'rtl' ? 'left' : 'right',
+    backdrop: true,
+    bodyScrolling: false,
+    edge: false,
+    edgeOffset: '',
+    backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-50'
+  };
+  cartDrawer.value = new Drawer($cartPopupMenu, $cartPopupMenuOptions);
 })
 const website_name = useState('website_name');
 const route = useRoute();
@@ -297,8 +375,8 @@ const fixed_product_data = {
   ]
 }
 
-const price = ref(product_data.started_price !== null ? product_data.started_price +' '+ currency : null)
-const discount_price = ref(product_data.started_discounted_price !== null ? product_data.started_discounted_price +' '+ currency : null)
+const price = ref(product_data.started_price !== null ? product_data.started_price + ' ' + currency : null)
+const discount_price = ref(product_data.started_discounted_price !== null ? product_data.started_discounted_price + ' ' + currency : null)
 const favorite = ref(product_data.favorite)
 
 </script>

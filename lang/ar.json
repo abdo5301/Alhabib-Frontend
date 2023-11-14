@@ -115,8 +115,11 @@
   "cart_title":"حقيبة التسوق ",
   "sub_total":"المجموع الفرعي",
   "checkout_title":"إنهاء الطلب",
+  "show_cart_title":"عرض الحقيبة",
+  "before_go_title":"قبل لا تروح!",
   "label_size":"المقاس",
-  "label_quantity":"الكمية"
+  "label_quantity":"الكمية",
+  "add_to_cart_success_alert":"تم اضافة المنتج الى حقيبة تسوقك!"
 
   
 }

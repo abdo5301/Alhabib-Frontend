@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mx-auto container flex-col justify-start">
+  <div v-if="products" class="flex mx-auto container flex-col justify-start">
     <h3 class="text-gray-900 text-xl lg:text-[28px] leading-4 font-bold lg:pb-9 pb-8">
       <slot />
     </h3>

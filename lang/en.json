@@ -114,8 +114,11 @@
   "cart_title":"Shopping Cart ",
   "sub_total":"Subtotal",
   "checkout_title":"Checkout",
+  "show_cart_title":"View bag",
+  "before_go_title":"Before you go!",
   "label_size":"Size",
-  "label_quantity":"Quantity"
+  "label_quantity":"Quantity",
+  "add_to_cart_success_alert":"The product has been successfully added to bag!"
 
 
   
