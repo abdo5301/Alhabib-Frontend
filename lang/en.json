@@ -118,8 +118,27 @@
   "before_go_title":"Before you go!",
   "label_size":"Size",
   "label_quantity":"Quantity",
-  "add_to_cart_success_alert":"The product has been successfully added to bag!"
+  "add_to_cart_success_alert":"The product has been successfully added to bag!",
+  "empty_cart_text": "Add the products you want to buy to your shopping cart before they run out!",
+  "favorite_title":"Favorite",
+  "cart_receive_form_shop_title":"Order and receive your order from store",
+  "cart_remaining_stock_1":" ",
+  "cart_remaining_stock_2":" remaining of this product",
+  "cart_totals_title":"Order summary",
+  "shipping_title":"Shipping",
+  "vat_title":"VAT 15%",
+  "total":"Total",
+  "cart_checkout_link":"Continue to Checkout",
+  "input_placeholder_discount_code":"Add Discount Code",
+  "btn_add":"Add",
+  "alert_discount_code_success":"The discount code has been activated!",
+  "alert_discount_code_error":"Sorry, the discount code is not active",
+  "cart_notes_shipping_title":"Delivery duration",
+  "cart_notes_shipping_content":"Delivery time is 3-8 working days within Saudi Arabia",
+  "cart_notes_return_title":"Exchange and return",
+  "cart_notes_return_content":"Within 7 days from the date of receipt, with the exchange and return policy applied",
+  "cart_notes_support_title":"Do you need help?",
+  "cart_notes_support_content":"You can contact customer service",
+  "cart_notes_support_link":"from here"
 
-
-  
 }

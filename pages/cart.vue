@@ -1,9 +1,117 @@
 <template>
-  <div class="flex items-center justify-center h-[300px] text-2xl text-black font-bold">
-    السلة فارغة!
+  <Title>{{ $t('cart_title') }} | {{ website_name }}</Title>
+  <div class="pb-[104px]">
+    <!-- Empty Cart -->
+    <CartPageEmpty v-if="!cart_data || cart_data.length == 0" />
+
+    <!-- Cart Content -->
+    <div v-else class="flex flex-col lg:flex-row gap-[10px] justify-start px-[9px] lg:px-0 lg:rtl:pr-7 lg:ltr:pl-7">
+
+      <!-- Cart Items -->
+      <div class="flex flex-1 flex-col">
+        <Breadcrumb :current="$t('cart_title')"></Breadcrumb>
+        <CartTitle :count="cart_count" />
+        <CartReceiveFromShop />
+        <div
+          class="w-full lg:bg-gray-50 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow no-scrollbar my-5 lg:my-10 lg:px-0 px-[6px] lg:py-0 py-5 flex flex-col justify-start items-start gap-6 lg:gap-10 lg:max-h-[800px] overflow-hidden hover:overflow-y-auto">
+          <CartPageProductItem />
+          <CartPageProductItem :stock="true" />
+          <CartPageProductItem :last_item="true" />
+        </div>
+      </div>
+
+      <!-- Cart Totals -->
+      <div
+        class="lg:w-[602px] w-full lg:bg-gray-100 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow flex-shrink-0 h-auto">
+        <div class="lg:pt-[120px] p-5 w-full flex flex-col gap-6 lg:gap-8 lg:px-14">
+          <!-- Title -->
+          <h4
+            class="lg:pt-[7px] lg:pb-[17px] py-[9px] flex items-center lg:justify-start justify-center text-gray-900 text-xl lg:font-bold font-semibold leading-5">
+            {{ $t('cart_totals_title') }}
+          </h4>
+
+          <!-- Totals -->
+          <CartPageTotals />
+          <!-- Tamara -->
+          <!-- Tabby -->
+
+          <!-- Free Shipping Alert -->
+          <div
+            class="bg-green-50 text-green-800 rounded-lg h-10 w-full flex items-center justify-center flex-shrink-0 text-base leading-5 font-semibold">
+            <span class="w-full flex items-center justify-center gap-[10px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M13 16V6C13 5.44772 12.5523 5 12 5H4C3.44772 5 3 5.44772 3 6V16C3 16.5523 3.44772 17 4 17H5M13 16C13 16.5523 12.5523 17 12 17H9M13 16L13 8C13 7.44772 13.4477 7 14 7H16.5858C16.851 7 17.1054 7.10536 17.2929 7.29289L20.7071 10.7071C20.8946 10.8946 21 11.149 21 11.4142V16C21 16.5523 20.5523 17 20 17H19M13 16C13 16.5523 13.4477 17 14 17H15M5 17C5 18.1046 5.89543 19 7 19C8.10457 19 9 18.1046 9 17M5 17C5 15.8954 5.89543 15 7 15C8.10457 15 9 15.8954 9 17M15 17C15 18.1046 15.8954 19 17 19C18.1046 19 19 18.1046 19 17M15 17C15 15.8954 15.8954 15 17 15C18.1046 15 19 15.8954 19 17"
+                  stroke="#047857" stroke-width="2" />
+              </svg>
+              {{ $t('cart_popup_alert_free_shipping') }}
+            </span>
+          </div>
+
+          <!-- Discount Code Form -->
+          <CartDiscountForm v-model="discount_code" @check-discount-code="reset_discount_alerts"
+            @submit-discount-code="submit_discount_code" :input_success="discount_input_success"
+            :input_error="discount_input_error" />
+
+          <!-- Checkout Link -->
+          <NuxtLink :to="localePath('/checkout')"
+            class="flex items-center justify-center h-[52px] shadow-sm text-base font-bold leading-5 rounded-md text-white bg-black">
+            {{ $t('cart_checkout_link') }}
+          </NuxtLink>
+
+          <!-- Desktop Notes & Support -->
+          <div class="hidden lg:flex">
+            <CartPageNotes />
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Mobile Notes & Support -->
+      <div class="lg:hidden flex px-[29px] py-5">
+        <CartPageNotes />
+      </div>
+    </div>
+
+    <!-- Favorite Products -->
+    <div class="hidden lg:flex justify-start w-full pt-16 px-9">
+      <ProductRelatedProducts :products="favorite_products.data">
+        {{ $t('favorite_title') }}
+      </ProductRelatedProducts>
+    </div>
+
   </div>
 </template>
 
 <script setup>
+import { initFlowbite } from 'flowbite'
+onMounted(() => {
+  initFlowbite();
+})
+
+const website_name = useState('website_name');
+const localePath = useLocalePath()
+const lang = useNuxtApp().$lang
+const { t } = useI18n()
+const currency = t('sar')
+
+const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=44')
+const cart_data = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=44')
+const cart_count = ref(cart_data.data && cart_data.data.length ? cart_data.data.length : 0)
+const discount_code = ref('');
+const discount_input_error = ref('')
+const discount_input_success = ref('')
+function reset_discount_alerts(code_value) {
+  discount_input_success.value = ''
+  discount_input_error.value = ''
+}
+function submit_discount_code(code_value) {
+  if (code_value == 'code') {
+    discount_input_success.value = t('alert_discount_code_success')
+  }
+  if (code_value.length && code_value !== 'code') {
+    discount_input_error.value = t('alert_discount_code_error')
+  }
+}
 
 </script>

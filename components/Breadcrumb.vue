@@ -9,7 +9,7 @@
         </svg>
       </NuxtLink>
     </li>
-    <li v-if="pages[0] && pages[0].name" v-for="page, index in pages" :key="index"
+    <li v-if="pages && pages[0] && pages[0].name" v-for="page, index in pages" :key="index"
       class="flex flex-shrink-0 items-center lg:gap-4 gap-[6px] empty:hidden">
       <svg v-if="lang.dir == 'rtl'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
         fill="none">
