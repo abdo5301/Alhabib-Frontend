@@ -1,14 +1,14 @@
 <template>
   <div v-if="shown" class="flex gap-3 border-b border-b-gray-200 pb-3">
     <!-- image -->
-    <div class="w-[188px] h-[188px] flex-shrink-0">
+    <div class="lg:w-[188px] w-[138px] h-[138px] lg:h-[188px] flex-shrink-0">
       <img class="w-full h-full rounded-md" src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop"
         alt="Alhabib-Shop">
     </div>
     <!-- details -->
-    <div class="flex flex-col justify-start gap-4 min-w-[330px] max-w-[315px]">
+    <div class="flex flex-col justify-start lg:gap-4 gap-2 lg:min-w-[330px] lg:max-w-[315px] max-w-full">
       <!-- name -->
-      <div class="text-gray-600 text-xs font-semibold leading-5 min-h-[30px] max-w-[298px]">
+      <div class="lg:text-gray-600 text-gray-900 text-xs font-semibold leading-5 lg:min-h-[30px] lg:max-w-[298px]">
         مفرش سياتل شتوي مفرد و نص مخمل لحمي عدد القطع 4
       </div>
       <!-- price -->
@@ -16,8 +16,8 @@
         370 ريال
       </div>
       <!-- Options -->
-      <div class="flex gap-12">
-        <div class="min-w-[148px]">
+      <div class="flex lg:gap-12 gap-2">
+        <div class="lg:min-w-[148px]">
           <label class="block pb-1 text-xs font-normal text-gray-900 leading-5">{{ $t('label_size') }}</label>
           <select
             class="bg-white cursor-pointer min-w-[120px] border flex items-center justify-between border-gray-300 text-gray-900 text-xs font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-full px-3">
@@ -49,7 +49,7 @@
       </button>
     </div>
     <!-- remove item -->
-    <div class="flex items items-start justify-end rtl:pl-1">
+    <div class="hidden lg:flex items items-start justify-end rtl:pl-1">
       <button type="button" @click="shown = false">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M5 15L15 5M5 5L15 15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"

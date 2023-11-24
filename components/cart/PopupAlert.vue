@@ -10,6 +10,16 @@
       {{ $t('cart_popup_alert_free_shipping') }}
     </span>
   </div>
+  <div v-if="alert_type == 'add-to-cart-success'"
+    class="lg:mt-8 rounded-t-md lg:rounded-t-none bg-green-50 text-green-800 h-10 w-full flex items-center justify-start flex-shrink-0 text-sm leading-5 font-semibold">
+    <span class="w-full flex items-center lg:justify-start justify-center lg:gap-6 gap-3 px-4">
+      <svg class="ring-1 rounded-[100%] ring-green-700" xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+        <path d="M7 13.3L9.85714 16.5L17 8.5" stroke="#047857" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      {{ $t('add_to_cart_success_alert') }}
+    </span>
+  </div>
 </template>
 
 <script setup>

@@ -115,8 +115,31 @@
   "cart_title":"حقيبة التسوق ",
   "sub_total":"المجموع الفرعي",
   "checkout_title":"إنهاء الطلب",
+  "show_cart_title":"عرض الحقيبة",
+  "before_go_title":"قبل لا تروح!",
   "label_size":"المقاس",
-  "label_quantity":"الكمية"
-
+  "label_quantity":"الكمية",
+  "add_to_cart_success_alert":"تم اضافة المنتج الى حقيبة تسوقك!",
+  "empty_cart_text":"أضف المنتجات التي ترغب بشرائها لسلة التسوق قبل نفادها!",
+  "favorite_title":"المفضلة",
+  "cart_receive_form_shop_title":"اطلب واستلم طلبك من الفرع",
+  "cart_remaining_stock_1":" متبقي ",
+  "cart_remaining_stock_2":" من هذا المنتج",
+  "cart_totals_title":"ملخص الطلب",
+  "shipping_title":"الشحن",
+  "vat_title":"ضريبة القيمة المضافة 15%",
+  "total":"المجموع",
+  "cart_checkout_link":"المتابعة لإنهاء الطلب",
+  "input_placeholder_discount_code":"إضافة كود الخصم",
+  "btn_add":"إضافة",
+  "alert_discount_code_success":"تم تفعيل كود الخصم!",
+  "alert_discount_code_error":"عذرًا، كود الخصم غير فعّال",
+  "cart_notes_shipping_title":"مدة التوصيل",
+  "cart_notes_shipping_content":"مدة التوصيل 3 - 8 أيام عمل داخل السعودية",
+  "cart_notes_return_title":"الاستبدال والاسترجاع",
+  "cart_notes_return_content":"خلال 7 أيام من تاريخ الاستلام مع تطبيق سياسة الاستبدال والاسترجاع",
+  "cart_notes_support_title":"هل تحتاج لمساعدة؟",
+  "cart_notes_support_content":" يمكنك التواصل مع خدمة العملاء",
+  "cart_notes_support_link":"من هنا"
   
 }
