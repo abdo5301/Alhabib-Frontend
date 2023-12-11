@@ -29,11 +29,8 @@
         <div>
           <label class="block pb-1 text-xs font-normal text-gray-900 leading-5">{{ $t('label_quantity') }}</label>
           <select
-            class="bg-white cursor-pointer border flex items-center justify-between border-gray-300 text-gray-900 text-xs font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
+            class="bg-white cursor-pointer border min-w-[60px] flex items-center justify-between border-gray-300 text-gray-900 text-xs font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3">
+            <option v-for="qty in 5" :value="qty"> {{ qty }} </option>
           </select>
         </div>
       </div>

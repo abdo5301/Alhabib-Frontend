@@ -74,11 +74,8 @@
           <div class="flex lg:flex-col flex-row gap-4 lg:gap-1 items-center lg:items-start">
             <label class="block pb-1 text-sm font-normal text-gray-900 leading-5">{{ $t('label_quantity') }}</label>
             <select
-              class="bg-white cursor-pointer shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3 lg:py-2 py-[6px]">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
+              class="bg-white cursor-pointer min-w-[60px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3 lg:py-2 py-[6px]">
+              <option v-for="qty in 7" :value="qty"> {{ qty }} </option>
             </select>
           </div>
         </div>

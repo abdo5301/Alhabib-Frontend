@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col divide-y divide-gray-200 text-base font-semibold leading-5 text-gray-600">
+  <div :class="[style_type == 'checkout_page'? 'text-sm' : 'text-base','flex flex-col divide-y text-gray-600 leading-5 font-semibold divide-gray-200']">
     <!-- Subtotal -->
     <div class="flex justify-between items center py-5">
       <span class="flex items-center justify-start">{{ $t('sub_total') }}</span>
@@ -22,3 +22,13 @@
     </div>
   </div>
 </template>
+
+
+<script setup>
+const props = defineProps({
+  style_type: {
+    type: String,
+    default:'cart_page'
+  }  
+})
+</script>

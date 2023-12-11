@@ -49,9 +49,7 @@
           </div>
 
           <!-- Discount Code Form -->
-          <CartDiscountForm v-model="discount_code" @check-discount-code="reset_discount_alerts"
-            @submit-discount-code="submit_discount_code" :input_success="discount_input_success"
-            :input_error="discount_input_error" />
+          <CartDiscountForm v-model="discount_code"/>
 
           <!-- Checkout Link -->
           <NuxtLink :to="localePath('/checkout')"
@@ -95,23 +93,10 @@ const lang = useNuxtApp().$lang
 const { t } = useI18n()
 const currency = t('sar')
 
-const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=44')
-const cart_data = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=44')
+const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
+const cart_data = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
 const cart_count = ref(cart_data.data && cart_data.data.length ? cart_data.data.length : 0)
 const discount_code = ref('');
-const discount_input_error = ref('')
-const discount_input_success = ref('')
-function reset_discount_alerts(code_value) {
-  discount_input_success.value = ''
-  discount_input_error.value = ''
-}
-function submit_discount_code(code_value) {
-  if (code_value == 'code') {
-    discount_input_success.value = t('alert_discount_code_success')
-  }
-  if (code_value.length && code_value !== 'code') {
-    discount_input_error.value = t('alert_discount_code_error')
-  }
-}
+
 
 </script>
