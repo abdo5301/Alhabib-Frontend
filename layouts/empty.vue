@@ -9,15 +9,12 @@
 </style>
 
 <template>
-  <div>
-    <Title>{{ title }}</Title>
-    <div class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div class="sm:mx-auto sm:w-full sm:max-w-md">
-         <NuxtLink :to="localePath('/')"><img class="mx-auto h-10 w-auto" src="/images/logo.svg" alt="Alhabib Shop" /></NuxtLink>       
+    <div class="bg-gray-50 flex min-h-full flex-1 flex-col h-screen">
+      <Title>{{ title }}</Title>
+      <div class="flex-grow">
+        <slot />
       </div>
-      <slot />
     </div>
-  </div>
 </template>
 
 <script setup>

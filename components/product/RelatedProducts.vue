@@ -3,7 +3,7 @@
     <h3 class="text-gray-900 text-xl lg:text-[28px] leading-4 font-bold lg:pb-9 pb-8">
       <slot />
     </h3>
-    <div dir="ltr"
+    <div
       class="overflow-hidden hover:overflow-x-auto flex w-full mx-auto items-stretch justify-start lg:gap-[44px] gap-5 pb-4">
 
       <HomeProductItem v-for="product in products"

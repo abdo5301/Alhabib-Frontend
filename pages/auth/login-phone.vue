@@ -17,7 +17,7 @@
               <span class="text-gray-500 text-base leading-5 font-semibold">{{ $t('label_email') }}</span>
             </NuxtLink> 
             
-            <Input v-model="phone" :label_name="$t('label_phone')" label_for="phone" input_id="input-phone" input_name="phone" input_type="text"  input_dir="ltr" :input_phone_country="true" input_placeholder="534398859"/>
+            <Input v-model="phone" :label_name="$t('label_phone')" label_for="phone" input_id="input-phone" input_name="phone" input_type="text"  input_dir="ltr" :input_phone_country="true" input_placeholder="534398859" @phone-country="getPhoneCountry"/>
          
             <div class="flex items-center justify-between mt-1">
                 <div class="flex items-center ">
@@ -53,6 +53,7 @@ const { $lang } = useNuxtApp()
 const localePath = useLocalePath()
 const phone = ref('');
 const remember = ref(true);
+const phone_country = ref('+966')
 
 const isLoading = ref(false);
 const router = useRouter();
@@ -62,8 +63,13 @@ const unDisabled = computed(()=>{
   return  phone.value.length > 0;
 })
 
+function getPhoneCountry(country_key){
+  phone_country.value = country_key
+}
+
 function login(){
   var formBody = {
+    phone_country: phone_country.value,
     phone: phone.value,
     remember: remember.value
   }
