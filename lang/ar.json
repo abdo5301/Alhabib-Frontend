@@ -170,6 +170,19 @@
   "label_main_address_select":"اختيار كعنوان أساسي",
   "label_address":"العنوان",
   "input_notes_address":"مثال: الحي، الشارع، أو أقرب معلم لعنوانك",
-  "checkout_success_page_title":"تم الطلب بنجاح"
+  "checkout_success_page_title":"تم الطلب بنجاح",
+  "validation_error_phone":"الرجاء كتابة رقم جوال صحيح",
+  "validation_login_phone_1":"رقم الجوال غير مسجل لدينا، قم",
+  "validation_login_phone_2":"بالتسجيل ",
+  "validation_login_email_1":"البريد الإلكتروني غير مسجل لدينا، قم",
+  "validation_login_email_2":"بالتسجيل ",
+  "validation_error_email":"البريد الإلكتروني أو كلمة المرور خاطئة",
+  "validation_login_to_many":"لقد استنفذت العدد المسموح من المحاولات !",
+  "validation_error_email_not_valid":"الرجاء كتابة بريد إلكتروني صحيح",
+  "validation_required_name":"ادخل الاسم كامل",
+  "validation_required_password":"الرجاء كتابة كلمة المرور",
+  "validation_error_password":"كلمة المرور يجب أن تكون أكثر من 5 أحرف",
+  "register_error_phone_exist":"يبدو أن لديك حساب مسجل مسبقًا على هذا الرقم،",
+  "register_error_email_exist":"يبدو أن لديك حساب مسجل مسبقًا على هذا البريد،"
 
 }

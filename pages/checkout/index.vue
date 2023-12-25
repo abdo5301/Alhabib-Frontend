@@ -77,8 +77,7 @@
 
 <script setup>
 import { initFlowbite } from 'flowbite'
-definePageMeta({ layout: 'empty' })
-
+definePageMeta({ layout: 'empty', middleware: ['auth'] })
 onMounted(() => {
   initFlowbite();
 })

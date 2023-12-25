@@ -41,15 +41,15 @@
       <!-- Colors -->
       <div v-if="related_products && related_products.length && color && color.hex"
         class="flex justify-start gap-[11px] flex-wrap">
-        <span class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[27px] lg:h-[27px] w-[23px] h-[23px] z-20">
+        <span class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[26px] lg:h-[26px] w-[22px] h-[22px] z-20">
           <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + color.hex]">
           </span>
         </span>
-        <NuxtLink :to="localePath('/product/' + related.id)" v-for="related, index in related_products"
+        <NuxtLink :to="localPath('/product/' + related.id)" v-for="related, index in related_products"
           :key="related.color.hex" class="empty:hidden">
           <span v-if="index < 5 && related.color.hex != color.hex"
             :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
-            <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + related.color.hex]">
+            <span :class="['rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40 border']" :style="['background-color:' + related.color.hex]">
             </span>
             <span v-if="related.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
           </span>
@@ -69,6 +69,7 @@
 <script setup>
 defineEmits(['favoriteClick'])
 const { $lang } = useNuxtApp()
+const localPath = useLocalePath()
 const props = defineProps({
   name: {
     type: String,

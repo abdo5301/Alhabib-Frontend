@@ -168,7 +168,19 @@
   "label_main_address_select":"Choose as primary address",
   "label_address":"Address",
   "input_notes_address":"Example: neighborhood, street, or landmark closest to your address",
-  "checkout_success_page_title":"Order done Successfully"
-
+  "checkout_success_page_title":"Order done Successfully",
+  "validation_error_phone":"Please enter a valid mobile number",
+  "validation_login_phone_1":"Your mobile number is not registered with us, ",
+  "validation_login_phone_2":"Register",
+  "validation_login_email_1":"Your E-mail is not registered with us, ",
+  "validation_login_email_2":"Register",
+  "validation_error_email":"Email or password are wrong",
+  "validation_login_to_many":"Too Many Attempts.",
+  "validation_error_email_not_valid":"Please enter a valid email",
+  "validation_required_name":"Please enter your full name",
+  "validation_required_password":"Please enter password",
+  "validation_error_password":"Password must be more than 5 digits",
+  "register_error_phone_exist":"It looks like you already registered with this number,",
+  "register_error_email_exist":"It looks like you already registered with this E-mail,"
 
 }

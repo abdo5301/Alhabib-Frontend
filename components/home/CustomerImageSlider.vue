@@ -9,7 +9,7 @@
     <NuxtLink dir="ltr" to="https://www.instagram.com/alhabib_shop/" class="flex items-center justify-center gap-2 lg:pb-9 pb-7">
       <img src="/images/insta_icon.svg" alt="" class="lg:w-[27px] lg:h-[26px] w-[23px]">  <span class="text-gray-600 text-base lg:text-xl font-semibold">@alhabib_shop</span> 
     </NuxtLink>
-    <div dir="ltr"
+    <div  
       class="overflow-hidden hover:overflow-x-auto flex w-full mx-auto items-center justify-start lg:gap-[34px] gap-5 pb-4">
       <div v-for="image in images" :key="image.id"
         class="relative flex flex-shrink-0 flex-col gap-5 items-center justify-center">

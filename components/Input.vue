@@ -31,7 +31,7 @@
       </div>
 
       <div v-if="input_phone_otp">
-        <button ref="resendOtp" v-if="!otpCountDown" @click="CountDown(20)" type="button"
+        <button ref="resendOtp" v-if="!otpCountDown" @click="CountDown(59)" type="button"
           :class="[('absolute rtl:left-0 ltr:-right-[0.5px] inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50')]">
           {{ $t('resend_otp') }}
           <ArrowsRightLeftIcon class="-ml-[2px] h-4 w-4 text-gray-900" aria-hidden="true" />
@@ -60,7 +60,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 const { t } = useI18n()
 const input = ref(props.modelValue);
 
-const emits = defineEmits(['update:modelValue', 'phoneCountry']);
+const emits = defineEmits(['update:modelValue', 'phoneCountry', 'resendOtp']);
 
 const passwordFieldType = ref('password');
 
@@ -73,13 +73,15 @@ const otpCountDown = ref(false);
 
 onMounted(() => {
   if (props.input_phone_otp) {
-    resendOtp.value.click();
+       CountDown(59,true)
+    //resendOtp.value.click();
   }
 })
 
 //otp count down //
+
 var otpInterVal;
-const CountDown = (duration) => {
+const CountDown = (duration, first_interval = false) => {
   resendOtp.value.disabled = true;
   clearInterval(otpInterVal);
   if (!isNaN(duration)) {
@@ -91,7 +93,12 @@ const CountDown = (duration) => {
       }
     }, 1000);
   }
+  if (!first_interval) {
+    emits('resendOtp')
+  }
 }
+
+
 
 function getPhoneCountry(country_key) {
   emits('phoneCountry', country_key)
@@ -160,7 +167,7 @@ const props = defineProps({
   },
   input_notes: {
     type: Boolean,
-    default:false
+    default: false
   },
   input_notes_style: {
     type: String,
