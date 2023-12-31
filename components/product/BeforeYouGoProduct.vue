@@ -21,15 +21,15 @@
     <!-- price -->
     <div v-if="special" class="flex gap-2 justify-start">
       <span class="text-red-600 font-bold text-xs">
-        {{ special }}
+        {{ priceFormate(special) }}
       </span>
       <del class="text-gray-900 font-normal text-xs">
-        {{ price }}
+        {{ priceFormate(price) }}
       </del>
     </div>
     <div v-else class="flex gap-2 justify-start">
       <span class="text-gray-900 font-bold text-xs leading-5">
-        {{ price }}
+        {{ priceFormate(price) }}
       </span>
     </div>
   </div>
@@ -46,10 +46,10 @@ const props = defineProps({
     type: String,
   },
   price: {
-    type: String,
+    type: Number,
   },
   special: {
-    type: String,
+    type: Number,
   },
   link: {
     type: String,

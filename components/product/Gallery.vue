@@ -23,7 +23,8 @@
     <button id="product-slider-previous" type="button"
       class="absolute lg:top-0 -top-[60px] lg:-left-7 -left-5 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none">
       <span class="inline-flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-[20px] lg:w-[44px] h-[55px] lg:h-[69px]" viewBox="0 0 44 69" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-[20px] lg:w-[44px] h-[55px] lg:h-[69px]" viewBox="0 0 44 69"
+          fill="none">
           <path fill-rule="evenodd" clip-rule="evenodd"
             d="M27.9555 18.2605C28.8147 19.6078 28.8147 21.7922 27.9555 23.1395L20.7112 34.5L27.9555 45.8605C28.8147 47.2078 28.8147 49.3922 27.9555 50.7395C27.0964 52.0868 25.7034 52.0868 24.8443 50.7395L16.0443 36.9395C15.1851 35.5922 15.1851 33.4078 16.0443 32.0605L24.8443 18.2605C25.7034 16.9132 27.0964 16.9132 27.9555 18.2605Z"
             fill="#6B7280" />
@@ -34,7 +35,8 @@
     <button id="product-slider-next" type="button"
       class="absolute lg:top-0 -top-[60px] lg:-right-7 -right-5 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none">
       <span class="inline-flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-[20px] lg:w-[44px] h-[55px] lg:h-[69px]" viewBox="0 0 44 69" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-[20px] lg:w-[44px] h-[55px] lg:h-[69px]" viewBox="0 0 44 69"
+          fill="none">
           <path fill-rule="evenodd" clip-rule="evenodd"
             d="M16.0445 18.2605C15.1853 19.6078 15.1853 21.7922 16.0445 23.1395L23.2888 34.5L16.0445 45.8605C15.1853 47.2078 15.1853 49.3922 16.0445 50.7395C16.9036 52.0868 18.2966 52.0868 19.1557 50.7395L27.9557 36.9395C28.8149 35.5922 28.8149 33.4078 27.9557 32.0605L19.1557 18.2605C18.2966 16.9132 16.9036 16.9132 16.0445 18.2605Z"
             fill="#6B7280" />
@@ -77,7 +79,6 @@
 
 <script setup>
 import { Carousel } from 'flowbite';
-
 const localePath = useLocalePath()
 const props = defineProps({
   images: {
@@ -91,6 +92,7 @@ const zoomModal = ref({})
 const zoomModalImage = ref('')
 onMounted(
   () => {
+    const carouselElement = document.getElementById('product-carousel');
     const sliders = []
     const indicators = []
     for (let index = 0; index < sliderRefs.value.length; index++) {
@@ -111,7 +113,7 @@ onMounted(
       );
     }
     const options = {
-      defaultPosition: 1,
+      defaultPosition: 0,
       interval: 3000,
       indicators: {
         activeClasses: 'opacity-1',
@@ -119,7 +121,7 @@ onMounted(
         items: indicators
       }
     };
-    const carousel = new Carousel(sliders, options);
+    const carousel = new Carousel(carouselElement, sliders, options);
     const $prevButton = document.getElementById('product-slider-previous');
     const $nextButton = document.getElementById('product-slider-next');
 
@@ -131,13 +133,11 @@ onMounted(
       carousel.next();
     });
 
-    carousel.slideTo(0)
-
     // Zoom Modal
     const zoomModalTarget = document.getElementById('image-zoom-modal');
     const $prevZoomModal = document.getElementById('image-zoom-previous');
     const $nextZoomModal = document.getElementById('image-zoom-next');
-    
+
     $prevZoomModal.addEventListener('click', () => {
       carousel.prev();
       zoomModalImage.value = carousel._getActiveItem().el.getElementsByTagName("img")[0].src
@@ -154,12 +154,10 @@ onMounted(
       closable: true,
     }
     zoomModal.value = new Modal(zoomModalTarget, zoomModalOptions);
+    carousel.slideTo(0)
   }
 
 )
-
-
-
 
 
 

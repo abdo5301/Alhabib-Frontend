@@ -10,7 +10,7 @@
        :key="product.id"
        :id="product.id"
        :name="product.name"
-       :image="product.media.images.length > 0 ? product.media.images[0].url : null"
+       :image="product.media.images && product.media.images.length > 0 ? product.media.images[0].url : null"
        :color="product.color"
        :price="product.started_price != null ? product.started_price + ' ' + currency: ''"
        :special="product.started_discounted_price != null ? product.started_discounted_price + ' ' + currency : ''"

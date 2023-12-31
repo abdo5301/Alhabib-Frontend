@@ -5,9 +5,10 @@
 <template>
   <div class="bg-gray-50 flex flex-col h-screen text-gray-900">
     <Title>{{ title }}</Title>
+    <NuxtLoadingIndicator color="#cccccc" :height="4" />
     <DefaultHeader></DefaultHeader>
     <div class="flex-grow">
-      <div v-if="route.path !='/' && route.path !='/en'" class="lg:h-[165px] h-[65px]"></div>
+      <div v-if="route.path != '/' && route.path != '/en'" class="lg:h-[165px] h-[65px]"></div>
       <slot />
     </div>
     <DefaultFooter></DefaultFooter>
@@ -23,7 +24,7 @@ const title = useState('website_name', () => t('company_name'));
 useHead({
   htmlAttrs: {
     lang: $lang.code,
-    dir:  $lang.dir,
+    dir: $lang.dir,
     class: 'h-full bg-gray-50'
   },
   bodyAttrs: {

@@ -183,6 +183,7 @@
   "validation_required_password":"الرجاء كتابة كلمة المرور",
   "validation_error_password":"كلمة المرور يجب أن تكون أكثر من 5 أحرف",
   "register_error_phone_exist":"يبدو أن لديك حساب مسجل مسبقًا على هذا الرقم،",
-  "register_error_email_exist":"يبدو أن لديك حساب مسجل مسبقًا على هذا البريد،"
+  "register_error_email_exist":"يبدو أن لديك حساب مسجل مسبقًا على هذا البريد،",
+  "free":"مجاني"
 
 }

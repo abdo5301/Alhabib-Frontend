@@ -1,10 +1,11 @@
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin(async nuxtApp => {
   const config = useRuntimeConfig()
   const headers = new Headers()
   headers.append('Content-Type', 'application/json')
   headers.append('Accept', 'application/json')
-  const user_token = useAuth().getUserToken()
-  if (user_token != null) {
+  const user_token = await useAuth().getUserToken()
+  if (user_token && user_token != null) {
+    //console.log('user token : '+user_token)
     headers.append('Authorization', 'Bearer ' + user_token)
   }
 
@@ -12,7 +13,7 @@ export default defineNuxtPlugin(nuxtApp => {
     'apiFetch',
     $fetch.create({
       baseURL: config.public.API_URL,
-      headers: { headers },
+      headers: headers ,
     })
   )
 })

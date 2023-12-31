@@ -43,7 +43,7 @@ export function useAuth() {
       const local_token = localStorage.getItem('user_token')
       if (local_token && local_token !== null) {
         //check server token
-        const user = await useNuxtApp().$apiFetch('/login')
+        const user = await useNuxtApp().$apiFetch('/customer/get')
         if (user.data && user.data.status == true) {
           return user.data.data
         }

@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     }
   },
   plugins: [                                                                  
-    '~/plugins/i18n.js',                                                  
+    '~/plugins/i18n.js'                                              
   ],
   
 })

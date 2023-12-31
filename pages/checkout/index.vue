@@ -68,7 +68,7 @@
         <CartDiscountForm v-model="discount_code" />
 
         <!-- Cart Products -->
-        <CheckoutCartProducts :count="cart_count" />
+        <CheckoutCartProducts/>
       </div>
     </div>
 

@@ -166,33 +166,9 @@
   <div id="cart-popup-menu" aria-labelledby="cart-popup-label"
     class="fixed top-0 rtl:left-0 ltr:right-0 z-[100] w-[600px] min-h-[700px] max-h-screen overflow-hidden hover:overflow-y-auto duration-700 transition-transform translate-x-1 -translate-y-full bg-white"
     tabindex="-1">
-    <h5 id="cart-popup-label"
-      class="flex justify-center items-center text-center pt-11 text-[#000] font-bold lg:text-2xl text-xl leading-6">
-      {{ $t('cart_title') }} ({{ cart_count }})
-    </h5>
-    <div class="border-b border-b-gray-200 pt-5 w-full"></div>
-    <CartPopupAlert alert_type="free-shipping"></CartPopupAlert>
-    <!-- Cart Items -->
-    <div
-      class="w-full px-4 no-scrollbar pt-12 flex flex-col justify-start items-start gap-6 max-h-[440px] overflow-hidden hover:overflow-y-auto">
-      <CartPopupProductItem />
-      <CartPopupProductItem />
-      <CartPopupProductItem />
-    </div>
-    <!-- Cart Total -->
-    <div class="w-full pt-12 flex justify-between items-center px-4">
-      <div class="w-full flex justify-between items-center border-b border-b-gray-200 pb-[18px]">
-        <span class="text-gray-900 text-base font-bold leading-5">{{ $t('sub_total') }}</span>
-        <span class="text-gray-600 text-sm font-bold leading-5 rtl:pl-4 ltr:pr-4">1156 ريال</span>
-      </div>
-    </div>
-    <!-- checkout Link -->
-    <div class="px-4 pt-12 pb-6">
-      <NuxtLink :to="localePath('/checkout')" @click="cartDrawer.hide()"
-        class="w-full bg-black rounded-md h-[62px] flex flex-shrink-0 items-center justify-center text-white text-xl font-bold leading-5">
-        {{ $t('checkout_title') }}
-      </NuxtLink>
-    </div>
+    <CartPopupContainer :key="cartPopUpKey" v-if="cartData && cartData.cart_items && cartData.cart_items.length"
+      :cart_data="cartData" @hide-popup="cartDrawer.hide()" />
+    <CartPopupEmpty v-else>{{ $t('empty_cart_text') }}</CartPopupEmpty>
   </div>
 </template>
 
@@ -205,8 +181,9 @@ const availableLocales = useNuxtApp().$all_lang
 const lang = useNuxtApp().$lang
 const route = useRoute()
 const cartDrawer = ref()
-const cart_count = ref(5)
-onMounted(() => {
+const { cartData, cartPopUpKey, setCartData } = useCart()
+const cart_data = ref([])
+onMounted(async () => {
   window.addEventListener("scroll", () => {
     var curr = window.scrollY;
     page_scrolled.value = true;
@@ -225,6 +202,11 @@ onMounted(() => {
     backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-50'
   };
   cartDrawer.value = new Drawer($cartPopupMenu, $cartPopupMenuOptions);
+
+  cart_data.value = await useCart().getAll()
+  if (cart_data.value && cart_data.value.id) {
+    setCartData(cart_data.value)
+  }
 })
 
 const search = ref('');

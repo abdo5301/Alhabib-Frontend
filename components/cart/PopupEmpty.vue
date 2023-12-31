@@ -1,6 +1,5 @@
 <template>
-  <Breadcrumb class="pb-[40px]" :current="$t('cart_title')"></Breadcrumb>
-  <div class="mt-12 flex flex-col items-center justify-center lg:gap-16 gap-12">
+  <div class="p-10 h-full flex flex-col items-center justify-center gap-10 min-h-[600px] max-h-screen">
     <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" width="154" height="148" viewBox="0 0 154 148"
       fill="none">
       <path
@@ -29,13 +28,8 @@
       <path d="M122.917 107.203L118.499 107.479L118.829 112.769L123.248 112.493L122.917 107.203Z" fill="#6B7280" />
       <path d="M120.397 67.1575L115.979 67.4336L118.107 101.456L122.526 101.18L120.397 67.1575Z" fill="#6B7280" />
     </svg>
-    <span
-      class="lg:w-[600px] w-[340px] text-center text-lg lg:text-[34px] lg:leading-[65px] leading-10 text-gray-500 font-bold lg:font-semibold">
-      <slot />
+    <span class="text-center text-3xl leading-[60px] text-gray-500 font-semibold">
+     <slot />
     </span>
   </div>
 </template>
-
-<script setup>
- 
-</script>
