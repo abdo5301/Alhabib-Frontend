@@ -3,20 +3,17 @@
     <div class="flex items-center justify-between h-[38px]">
       <!-- Cart Title -->
       <h3 class="text-gray-900 font-bold text-xl leading-5">
-        {{ $t('cart_title') }} ({{ count }})
+        {{ $t('cart_title') }} ({{ cartCount }})
       </h3>
       <NuxtLink :to="localePath('/cart')"
         class="h-full w-[75px] lg:mx-[30px] flex items-center justify-center shadow-sm ring-1 ring-gray-300 rounded-md bg-white text-gray-700 text-sm font-semibold leading-5">
         {{ $t('edit_btn') }}
       </NuxtLink>
     </div>
-    <div
+    <div v-if="cartItems && cartItems.length > 0"
       class="w-full no-scrollbar flex flex-col justify-start items-start gap-5 lg:max-h-[370px] overflow-hidden hover:overflow-y-auto">
       <!-- Looping here -->
-      <CheckoutCartProductItem />
-      <CheckoutCartProductItem />
-      <CheckoutCartProductItem />
-      <CheckoutCartProductItem />
+      <CheckoutCartProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item" />
     </div>
     <!-- Support -->
     <div class="w-full flex flex-col gap-.5 justify-start">
@@ -39,11 +36,6 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  count: {
-    type: Number
-  }
-})
-
 const localePath = useLocalePath()
+const { cartCount, cartItems } = useCart()
 </script>

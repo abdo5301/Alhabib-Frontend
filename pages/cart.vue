@@ -2,7 +2,7 @@
   <Title>{{ $t('cart_title') }} | {{ website_name }}</Title>
   <div class="pb-[104px]">
     <!-- Empty Cart -->
-    <CartPageEmpty v-if="!cart_data || cart_data.length == 0" />
+    <CartPageEmpty v-if="!cartData || !cartData.cart_items || !cartData.cart_items.length" />
 
     <!-- Cart Content -->
     <div v-else class="flex flex-col lg:flex-row gap-[10px] justify-start px-[9px] lg:px-0 lg:rtl:pr-7 lg:ltr:pl-7">
@@ -10,13 +10,12 @@
       <!-- Cart Items -->
       <div class="flex flex-1 flex-col">
         <Breadcrumb :current="$t('cart_title')"></Breadcrumb>
-        <CartTitle :count="cart_count" />
+        <CartTitle :count="cartCount" />
         <CartReceiveFromShop />
-        <div
+        <div v-if="cartItems && cartItems.length > 0"
           class="w-full lg:bg-gray-50 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow no-scrollbar my-5 lg:my-10 lg:px-0 px-[6px] lg:py-0 py-5 flex flex-col justify-start items-start gap-6 lg:gap-10 lg:max-h-[800px] overflow-hidden hover:overflow-y-auto">
-          <CartPageProductItem />
-          <CartPageProductItem :stock="true" />
-          <CartPageProductItem :last_item="true" />
+          <CartPageProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item"
+            :last_item="index + 1 == cartItems.length" :stock="item.quantity > item.product.quantity" />
         </div>
       </div>
 
@@ -49,7 +48,7 @@
           </div>
 
           <!-- Discount Code Form -->
-          <CartDiscountForm v-model="discount_code"/>
+          <CartDiscountForm v-model="discount_code" />
 
           <!-- Checkout Link -->
           <NuxtLink :to="localePath('/checkout')"
@@ -61,7 +60,7 @@
           <div class="hidden lg:flex">
             <CartPageNotes />
           </div>
-          
+
         </div>
       </div>
 
@@ -72,7 +71,7 @@
     </div>
 
     <!-- Favorite Products -->
-    <div class="hidden lg:flex justify-start w-full pt-16 px-9">
+    <div v-if="favorite_products.data" class="hidden lg:flex justify-start w-full pt-16 px-9">
       <ProductRelatedProducts :products="favorite_products.data">
         {{ $t('favorite_title') }}
       </ProductRelatedProducts>
@@ -83,20 +82,23 @@
 
 <script setup>
 import { initFlowbite } from 'flowbite'
-onMounted(() => {
-  initFlowbite();
-})
-
+definePageMeta({ middleware: ['auth'] })
+const cart_data = ref([])
+const { cartData, setCartData, cartCount, cartItems } = useCart()
+const emptyText = ref('')
 const website_name = useState('website_name');
 const localePath = useLocalePath()
-const lang = useNuxtApp().$lang
 const { t } = useI18n()
-const currency = t('sar')
-
-const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
-const cart_data = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
-const cart_count = ref(cart_data.data && cart_data.data.length ? cart_data.data.length : 0)
 const discount_code = ref('');
+onMounted(async () => {
+  initFlowbite();
 
-
+  cart_data.value = await useCart().getAll()
+  if (cart_data.value && cart_data.value.id) {
+    setCartData(cart_data.value)
+  }
+  
+  emptyText.value = t('empty_cart_text')
+})
+const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
 </script>

@@ -5,13 +5,13 @@
     </h1>
     <div class="container relative flex flex-col lg:flex-row justify-start mx-auto mb-24 bg-[#fff]">
       <div class="flex flex-shrink-0 font-semibold justify-start">
-        <img v-if="blog_data.image" :src="blog_data.image.url" class="flex-shrink-0 lg:w-[563px] lg:h-[347px] w-full h-auto" alt="Blog">
-        <img v-else src="/images/bedding-202.png" class="flex-shrink-0 lg:w-[563px] lg:h-[347px] w-full h-auto" alt="Blog">
+        <img v-if="blog_data.image" :src="blog_data.image.url" class="flex-shrink-0 lg:w-[563px] w-full h-full" alt="Blog">
+        <img v-else src="/images/bedding-202.png" class="flex-shrink-0 lg:w-[563px] w-full h-full" alt="Blog">
       </div>
       <ul v-if="blog_data.topics && blog_data.topics.length"
-        class="flex flex-col pt-6 lg:pt-[45px] gap-8 lg:gap-12 underline-offset-8 text-gray-600 lg:text-[#000] font-semibold text-base lg:text-2xl flex-1 w-full rtl:mr-5 ltr:ml-5 lg:rtl:mr-24 lg:ltr:ml-20">
-        <li v-for="topic, index in blog_data.topics" :key="index">
-          <NuxtLink :to="localPath('/')" class="underline">{{ topic.title }}</NuxtLink>
+        class="flex flex-col pt-6 pb-16 lg:pt-[45px] gap-8 lg:gap-12 underline-offset-8 text-gray-600 lg:text-[#000] font-semibold text-base lg:text-2xl flex-1 w-full rtl:mr-5 ltr:ml-5 lg:rtl:mr-24 lg:ltr:ml-20">
+        <li v-for="topic, index  in blog_data.topics" :key="index" class="empty:hidden">
+          <NuxtLink v-if="index <= 4" :to="localPath('/')" class="underline">{{ topic.title }}</NuxtLink>
         </li>
       </ul>
       <div

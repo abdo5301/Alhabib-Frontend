@@ -3,14 +3,14 @@
     <h3 class="text-gray-700 text-xl lg:text-[34px] leading-4 font-bold lg:pb-12 pb-4">
      <slot />
     </h3>
-    <div dir="ltr"
+    <div 
       class="overflow-hidden hover:overflow-x-auto flex w-full mx-auto justify-start lg:gap-[44px] gap-5 pb-4">
 
       <HomeProductItem v-for="product in products"
        :key="product.id"
        :id="product.id"
        :name="product.name"
-       :image="product.media.images.length > 0 ? product.media.images[0].url : null"
+       :image="product.media.images && product.media.images.length > 0 ? product.media.images[0].url : null"
        :color="product.color"
        :price="product.started_price != null ? product.started_price + ' ' + currency: ''"
        :special="product.started_discounted_price != null ? product.started_discounted_price + ' ' + currency : ''"

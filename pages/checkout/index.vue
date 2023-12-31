@@ -68,7 +68,7 @@
         <CartDiscountForm v-model="discount_code" />
 
         <!-- Cart Products -->
-        <CheckoutCartProducts :count="cart_count" />
+        <CheckoutCartProducts/>
       </div>
     </div>
 
@@ -77,8 +77,7 @@
 
 <script setup>
 import { initFlowbite } from 'flowbite'
-definePageMeta({ layout: 'empty' })
-
+definePageMeta({ layout: 'empty', middleware: ['auth'] })
 onMounted(() => {
   initFlowbite();
 })

@@ -15,6 +15,7 @@ import { initFlowbite } from 'flowbite'
 onMounted(() => {
     initFlowbite();
 })
-const home_data = await useNuxtApp().$apiFetch('/home')
+const home_fetch_data = await useNuxtApp().$apiFetch('/home')
+const home_data = home_fetch_data.status == true ? home_fetch_data.data : []
 // console.log(home_data)
 </script>
