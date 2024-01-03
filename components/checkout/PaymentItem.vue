@@ -6,13 +6,14 @@
       <div class="flex justify-start items-center gap-3">
         <!-- image -->
         <div class="flex-shrink-0">
-          <img class="lg:h-[50px] h-[54px] rounded-md"
-            src="/images/payment/cash.png" alt="Alhabib-Shop">
+          <img v-if="payment_method_image && payment_method_image != null" class="lg:h-[50px] h-[54px] rounded-md"
+            :src="payment_method_image" alt="Alhabib-Shop">
+          <img v-else class="lg:h-[50px] h-[54px] rounded-md" src="/images/payment/cash.png" alt="Alhabib-Shop">
         </div>
         <!-- Text -->
         <div class="flex flex-col justify-center items-start gap-3">
-          <span class="text-gray-600 leading-5 text-sm font-normal">{{ payment_method_value }}</span>
-          <span class="text-green-700 leading-4 text-xs font-semibold flex">
+          <span class="text-gray-600 leading-5 text-sm font-normal">{{ payment_method_name }}</span>
+          <span v-if="payment_method_discount" class="text-green-700 leading-4 text-xs font-semibold flex">
             {{ $t('payment_method_discount_text') }}
             <img class="w-4 h-4 mx-[3px]" src="/images/payment/ratio-sign.png" alt="Discount">
           </span>
@@ -34,15 +35,25 @@
 <script setup>
 const emits = defineEmits(['paymentValue'])
 const props = defineProps({
-  payment_method_value: {
+  payment_method_name: {
     type: String,
   },
-  payment_method_images: {
-    type: Object
+  payment_method_value: {
+    type: Number,
+  },
+  payment_method_image: {
+    type: String
+  },
+  payment_method_description: {
+    type: String
+  },
+  payment_method_discount: {
+    type: Boolean,
+    default: false
   },
   selected_payment: {
-    type: String,
-    default: ''
+    type: Number,
+    default: 0
   }
 })
 </script>

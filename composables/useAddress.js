@@ -157,7 +157,6 @@ export function useAddress() {
       if (address == false) {
         address = allAddresses[0]
       }
-      console.log(address)
       return address
     } else {
       return {}

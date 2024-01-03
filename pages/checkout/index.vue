@@ -100,13 +100,18 @@ function saveAddress(new_address_id) {
   address_id.value = new_address_id
 }
 
-function saveOrder(payment_method) {
+async function saveOrder(payment_method) {
   var order_data = {
     address_id: address_id.value,
-    payment_method: payment_method
+    payment_gateway_id: payment_method,
+    gifted: "0",
+    gift_phrase: ""
   }
-  console.log(order_data)
-  router.push(localePath('/checkout/success'))
+  //console.log(order_data)
+  const add_order = await useOrder().addOrder(order_data)
+  if (add_order && add_order.id) {
+    window.location.pathname = localePath('/checkout/success')
+  }
 }
 
 </script>
