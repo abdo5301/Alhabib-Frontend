@@ -1,7 +1,7 @@
 <template>
   <Title>{{ $t('checkout_title') }} | {{ website_name }}</Title>
   <!-- Page content -->
-  <div class="bg-gray-50 lg:bg-white flex flex-col lg:flex-row h-auto p-5 pt-[37px] lg:p-0">
+  <div class="bg-gray-50 lg:bg-white h-full flex flex-col lg:flex-row p-5 pt-[37px] lg:p-0">
     <!-- Mobile Page Logo -->
     <CheckoutLogo class="lg:hidden" />
 
@@ -46,7 +46,7 @@
       <div
         :class="[order_details ? 'rounded-lg' : 'border-t-0 rounded-b-lg', 'lg:w-[650px] w-full flex flex-col justify-start p-5 lg:p-[30px] bg-white border border-gray-200  lg:border-0 lg:rounded-none shadow lg:shadow-none']">
         <!-- Address -->
-        <CheckoutAddress :current_address_data="current_address_data" :current_customer_data="current_customer_data" :step="current_step" @next-step="getNextStep" @save-address="saveAddress"/>
+        <CheckoutAddress :step="current_step" @next-step="getNextStep" @save-address="saveAddress" />
         <!-- Payment -->
         <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" @submit="saveOrder" />
       </div>
@@ -68,7 +68,7 @@
         <CartDiscountForm v-model="discount_code" />
 
         <!-- Cart Products -->
-        <CheckoutCartProducts/>
+        <CheckoutCartProducts />
       </div>
     </div>
 
@@ -78,58 +78,34 @@
 <script setup>
 import { initFlowbite } from 'flowbite'
 definePageMeta({ layout: 'empty', middleware: ['auth'] })
-onMounted(() => {
-  initFlowbite();
-})
 const website_name = useState('website_name');
 const router = useRouter();
 const localePath = useLocalePath()
-const lang = useNuxtApp().$lang
-const { t } = useI18n()
-const currency = t('sar')
-
+onMounted(() => {
+  initFlowbite();
+})
 const order_details = ref(false) //For Mobile
 
-const current_step = ref('select_address')
-const current_customer_data = ref({
-  name: 'هيله عبدالرحمن',
-  phone: '+96653385466'
-})
-const current_address_data = ref({
-  address:'',
-  region:{
-    id:1,
-    name:'القصيم'
-  },
-  city:{
-    id:1,
-    name:'بريدة'
-  },
-  neighborhood:{
-    id:1,
-    name:'شارع الجريف'
-  }
-})
+const current_step = ref('add_address')
 
-const cart_data = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
-const cart_count = ref(cart_data.data && cart_data.data.length ? cart_data.data.length : 0)
 const discount_code = ref('')
+
+const address_id = ref('')
 
 function getNextStep(step) {
   current_step.value = step
 }
 
-function saveAddress(address_data){
-  current_address_data.value = address_data
+function saveAddress(new_address_id) {
+  address_id.value = new_address_id
 }
 
 function saveOrder(payment_method) {
-var order_data = {
-  customer:current_customer_data.value,
-  address:current_address_data.value,
-  payment_method:payment_method 
-}
-console.log(order_data)
+  var order_data = {
+    address_id: address_id.value,
+    payment_method: payment_method
+  }
+  console.log(order_data)
   router.push(localePath('/checkout/success'))
 }
 
