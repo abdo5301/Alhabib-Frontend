@@ -10,14 +10,15 @@
     <CheckoutWallet @wallet-status="getWalletStatus" />
 
     <!-- Payment Methods Container -->
-    <div class="flex flex-col gap-[15px]">
+    <div v-if="payment_methods_array && payment_methods_array.length > 0" class="flex flex-col gap-[15px]">
       <!-- Selected Item -->
-      <CheckoutPaymentItem payment_method_value="visa" :selected_payment="payment_method"
+      <CheckoutPaymentItem v-for="(method, index) in payment_methods_array" :key="index" :payment_method_value="method.id"
+        :payment_method_name="method.title" :payment_method_image="method.image"
+        :payment_method_description="method.description" :selected_payment="payment_method"
         @payment-value="getPaymentValue" />
-      <CheckoutPaymentItem payment_method_value="tamara" :selected_payment="payment_method"
-        @payment-value="getPaymentValue" />
-      <CheckoutPaymentItem payment_method_value="Stc Pay" :selected_payment="payment_method"
-        @payment-value="getPaymentValue" />
+    </div>
+    <div v-else class="flex items-center justify-center text-gray-700 text-2xl font-semibold">
+      {{ $t('text_empty_payment_methods') }}
     </div>
 
     <!-- Alrajhi Mokafaah Points -->
@@ -40,7 +41,11 @@ const props = defineProps({
   }
 })
 
-const payment_method = ref('')
+const { allPaymentMethods } = usePaymentMethod()
+
+const payment_methods_array = ref(await allPaymentMethods())
+
+const payment_method = ref(0)
 
 function getWalletStatus(status) {
   console.log('Wallet Status: ' + status)

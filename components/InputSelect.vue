@@ -4,7 +4,7 @@
       :class="['block text-sm lg:text-lg font-semibold text-gray-700 leading-5', label_style ? label_style : '']">
       <slot />
     </label>
-    <select :id="input_id" @change="$emit('update:modelValue', $event.target.value)"
+    <select :id="input_id" @change="$emit('update:modelValue', $event.target.value),$emit('selectCallBack',$event.target.value)"
       :class="['bg-white cursor-pointer min-w-[120px] border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-full px-3 py-2', input_style ? input_style : '']">
       <option v-for="option, index in select_data"
         :value="option_index_value ? option[option_index_value] : JSON.stringify(option)"
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue','selectCallBack'])
 const props = defineProps({
   select_data: {
     type: Object
@@ -61,7 +61,7 @@ const props = defineProps({
 const default_selected = ref('')
 if (!props.select_value && !props.option_index_value) { // no value and no index
   default_selected.value = JSON.stringify(props.select_data[0])
-} else if (!props.select_value && props.option_index_value) { //only index
+} else if (!props.select_value && props.option_index_value && props.select_data[0]) { //only index
   default_selected.value = props.select_data[0][props.option_index_value]
 } else { //value exist
   default_selected.value = props.select_value

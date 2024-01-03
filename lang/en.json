@@ -182,6 +182,7 @@
   "validation_error_password":"Password must be more than 5 digits",
   "register_error_phone_exist":"It looks like you already registered with this number,",
   "register_error_email_exist":"It looks like you already registered with this E-mail,",
-  "free":"Free"
+  "free":"Free",
+  "text_empty_payment_methods":"Sorry, payment methods are not available"
 
 }
