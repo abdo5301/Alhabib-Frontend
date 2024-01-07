@@ -16,9 +16,15 @@
         </svg>
       </button>
     </h2>
-    <div class="hidden" :id="'section-accordion-body-' + section_key" :aria-labelledby="'section-accordion-' + section_key">
-      <div class="pt-6 pb-1 text-base text-black font-medium leading-8" v-html="description">
-      </div>
+    <div class="hidden" :id="'section-accordion-body-' + section_key"
+      :aria-labelledby="'section-accordion-' + section_key">
+      <ClientOnly>
+        <div class="pt-6 pb-1 text-base text-black font-medium leading-8" v-html="decodeHtml(description)">
+        </div>
+        <template #fallback>
+          <InlineLoader />
+        </template>
+      </ClientOnly>
     </div>
   </div>
 </template>

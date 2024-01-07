@@ -39,7 +39,7 @@
           {{ related_products.title.length > 0 ? related_products.title : $t('before_go_title') }}
         </h6>
         <div
-          class="flex pb-2 lg:gap-7 gap-3 justify-start items-stretch overflow-hidden hover:overflow-x-auto w-full mx-auto">
+          class="flex pb-2 lg:gap-7 gap-3 justify-start items-stretch no-scrollbar overflow-x-auto w-full mx-auto">
           <ProductBeforeYouGoProduct v-for="(product, index) in related_products.products" :name="product.name"
             :key="index" :price="product.started_price" :special="product.started_discounted_price"
             :image="product.media && product.media.images && product.media.images.length > 0 ? product.media.images[0] : null"

@@ -189,8 +189,8 @@ const website_name = useState('website_name');
 const route = useRoute();
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
-const { t } = useI18n()
-const currency = t('sar')
+const { $i18n } = useNuxtApp();
+const t = $i18n.t;
 const disable_cart_btn = ref(true)
 const out_stock = ref(false)
 const out_stock_btn = ref(t('product_stock_notify_button'))
@@ -199,15 +199,20 @@ const disable_out_stock_btn = ref(false)
 const product_fetch_data = await useNuxtApp().$apiFetch('/master-products/get?master_product_id=' + route.params.id)
 const product_data = product_fetch_data.data ? product_fetch_data.data : []
 const selected_option = ref({})
+const price = ref(product_data.started_price !== null ? priceFormate(product_data.started_price) : null)
+const discount_price = ref(product_data.started_discounted_price !== null ? priceFormate(product_data.started_discounted_price) : null)
+const favorite = ref(product_data.favorite)
 
 function getSelectedOption(option_data) {
   selected_option.value = option_data
   out_stock_btn.value = t('product_stock_notify_button')
   disable_out_stock_btn.value = false
   disable_cart_btn.value = false
-  price.value = option_data.price + ' ' + currency
-  if (option_data.discounted_price) {
-    discount_price.value = option_data.discounted_price + ' ' + currency
+  if (selected_option.value.price) {
+    price.value = priceFormate(selected_option.value.price)
+  }
+  if (selected_option.value.discounted_price) {
+    discount_price.value = priceFormate(selected_option.value.discounted_price)
   } else {
     discount_price.value = 0;
   }
@@ -254,111 +259,6 @@ const breadcrumb = [
   }
 ]
 
-const fixed_product_data = {
-  id: 1,
-  name: 'مفرش فندقي نداف قطن موف فاتح 250 غرزة',
-  tags: [
-    {
-      'id': 1,
-      'name': '6 قطع'
-    }
-  ],
-  started_price: 200 + ' ' + currency,
-  started_discounted_price: 150 + ' ' + currency,
-  favorite: false,
-  color: {
-    name: 'بنفسجي',
-    hex: '#D8A8D0'
-  },
-  images: [
-    {
-      'id': 1,
-      'url': "/images/product/product-1.jpeg"
-    },
-    {
-      'id': 2,
-      'url': "/images/product/product-2.jpeg"
-    },
-    {
-      'id': 3,
-      'url': "/images/product/product-3.jpeg"
-    }
-  ],
-  "products": [
-    {
-      "id": 47,
-      "buyable_type": "App\\Models\\Product",
-      "sku": "81934",
-      "price": 1093,
-      "discounted_price": 978,
-      "quantity": 20,
-      "variation_option": {
-        "id": 10,
-        "value": "مزدوج ( 200 x 200 سم ) ",
-        "variation": {
-          "id": 3,
-          "name": "المقاس"
-        }
-      }
-    },
-    {
-      "id": 48,
-      "buyable_type": "App\\Models\\Product",
-      "sku": "85260",
-      "price": 939,
-      "discounted_price": 0,
-      "quantity": 10,
-      "variation_option": {
-        "id": 12,
-        "value": "مفرد ونص ( 200 x 200 سم ) ",
-        "variation": {
-          "id": 3,
-          "name": "المقاس"
-        }
-      }
-    },
-    {
-      "id": 49,
-      "buyable_type": "App\\Models\\Product",
-      "sku": "85260",
-      "price": 990,
-      "discounted_price": 800,
-      "quantity": 0,
-      "variation_option": {
-        "id": 12,
-        "value": "كوين ( 200 x 200 سم ) ",
-        "variation": {
-          "id": 3,
-          "name": "المقاس"
-        }
-      }
-    }
-  ],
-  related_class_products: [
-    {
-      "id": 10,
-      "name": "Cortney Gutkowski",
-      "slug": "voluptate-laboriosam-recusandae-harum-rem-nostrum-velit",
-      "started_price": 304,
-      "started_discounted_price": 466,
-      "color": "#17903e",
-      "returnable": 1
-    },
-    {
-      "id": 16,
-      "name": "Sandrine Lang",
-      "slug": "enim-saepe-impedit-harum-quisquam-quod-et",
-      "started_price": 390,
-      "started_discounted_price": 36,
-      "color": "#d343c9",
-      "returnable": 0
-    }
-  ]
-}
-
-const price = ref(product_data.started_price !== null ? product_data.started_price + ' ' + currency : null)
-const discount_price = ref(product_data.started_discounted_price !== null ? product_data.started_discounted_price + ' ' + currency : null)
-const favorite = ref(product_data.favorite)
 
 
 </script>
