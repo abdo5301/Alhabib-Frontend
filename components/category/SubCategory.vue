@@ -1,6 +1,6 @@
 <template>
   <div
-    class="overflow-hidden hover:overflow-x-auto flex w-full mx-auto items-start justify-start lg:gap-5 gap-[10px] pb-4">
+    class="no-scrollbar overflow-x-auto flex w-full mx-auto items-start justify-start lg:gap-5 gap-[10px] pb-4">
     <NuxtLink :to="localePath('/category/'+category.id)" v-for="category in categories" :key="category.id"
       class="relative flex flex-shrink-0 flex-col w-[73px] lg:w-[150px] lg:h-[150px] gap-1 items-center justify-start">
       <img v-if="category.image" class="rounded-[10px] lg:w-[150px] w-[73px] lg:h-[150px] h-[70px] object-cover" :src="category.image"

@@ -4,7 +4,7 @@
       <slot />
     </h3>
     <div
-      class="overflow-hidden hover:overflow-x-auto flex w-full mx-auto items-stretch justify-start lg:gap-[44px] gap-5 pb-4">
+      class="no-scrollbar overflow-x-auto flex w-full mx-auto items-stretch justify-start lg:gap-[44px] gap-5 pb-4">
 
       <HomeProductItem v-for="product in products"
        :key="product.id"

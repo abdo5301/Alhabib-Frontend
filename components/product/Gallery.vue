@@ -1,5 +1,6 @@
 <template>
-  <div class="flex relative container flex-col gap-12 justify-center items-center z-30 lg:px-5">
+  <div v-show="images && images.length > 1"
+    class="flex relative container flex-col gap-12 justify-center items-center z-30 lg:px-5">
     <!-- Slider -->
     <div id="product-carousel" class="block relative w-full ">
       <div class="relative overflow-hidden h-[377px] lg:h-[888px]">
@@ -46,10 +47,17 @@
     </button>
 
   </div>
+
+  <!-- Single Image -->
+  <div v-if="images && images.length == 1"
+    class="h-[377px] lg:h-[888px] flex relative container flex-col gap-12 justify-center items-center z-30 lg:px-5">
+    <img :src="images[0].url" @click="zoomModal.show(), zoomModalImage = images[0].url"
+      class="lg:max-w-5xl max-w-md flex-shrink-0 my-auto h-full w-full cursor-pointer" alt="product-image">
+  </div>
   <!-- Modal content -->
   <div id="image-zoom-modal" tabindex="-1"
     class="fixed top-0 left-0 right-0 z-50 hidden p-4 w-full overflow-x-hidden overflow-y-auto h-screen justify-center">
-    <button id="image-zoom-next" type="button"
+    <button v-show="images && images.length > 1" id="image-zoom-next" type="button"
       class="fixed right-5 flex items-center justify-center h-full cursor-pointer group focus:outline-none">
       <span class="inline-flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="44" height="69" viewBox="0 0 44 69" fill="none">
@@ -63,7 +71,7 @@
 
     <img :src="zoomModalImage" class="object-cover lg:max-w-5xl max-w-md flex-shrink-0 my-auto" alt="product-image">
 
-    <button id="image-zoom-previous" type="button"
+    <button v-show="images && images.length > 1" id="image-zoom-previous" type="button"
       class="fixed left-5 flex items-center justify-center h-full cursor-pointer group focus:outline-none">
       <span class="inline-flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="44" height="69" viewBox="0 0 44 69" fill="none">
