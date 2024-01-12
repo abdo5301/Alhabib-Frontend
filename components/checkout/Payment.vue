@@ -135,7 +135,7 @@ function applepay(){
 
   //this is the first event that apple triggers.
   //validate applepay session
-  applePaySession.onvalidatemerchant =  function (event) {
+  applePaySession.onvalidatemerchant = function(event){
     console.log(event)
     console.log('139')
     const theValidationURL = event.validationURL;
