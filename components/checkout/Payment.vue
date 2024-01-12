@@ -98,7 +98,7 @@
     <!-- Apple Pay  -->
     <div v-show="selectedApplePayMethod"
       class="w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center">
-      <div @click="applepay2" class="apple-pay-button apple-pay-button-black"></div>
+      <div @click="onApplePayButtonClicked" class="apple-pay-button apple-pay-button-black"></div>
     </div>
   </div>
 </template>
@@ -116,7 +116,6 @@ const { cartTotal } = useCart()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
 
-function applepay2(){
   function onApplePayButtonClicked() {
 
     if (!ApplePaySession) {
@@ -137,6 +136,7 @@ function applepay2(){
     const session = new ApplePaySession(6, request);
 
     console.table(session)
+    console.log('140')
 
     session.onvalidatemerchant = async event => {
       console.table(event)
@@ -175,7 +175,7 @@ function applepay2(){
 
     session.begin();
   }
-}
+
 function applepay(){
 
   let applePaySession = new ApplePaySession(6, {
