@@ -112,7 +112,7 @@ const props = defineProps({
   }
 })
 const localePath = useLocalePath()
-const { cartTotal: total } = useCart()
+const { cartTotal } = useCart()
 const selectedApplePayMethod = ref(false)
 onMounted(() => {
   //apple pay vars
@@ -124,7 +124,7 @@ onMounted(() => {
       currencyCode: 'SAR',
       supportedNetworks: ["visa", "masterCard", "amex", "discover", "mada"],
       merchantCapabilities: ["supports3DS"],
-      total: { label: "alhabibshop", amount: total }
+      total: { label: "alhabibshop", amount: cartTotal.value }
     });
 
     applePaySession.begin();
