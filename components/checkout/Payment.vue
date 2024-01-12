@@ -136,11 +136,11 @@ onMounted(() => {
 
     //this is the first event that apple triggers.
     //validate applepay session
-    applePaySession.onvalidatemerchant = function (event) {
+    applePaySession.onvalidatemerchant = async function (event) {
       console.log(event)
       console.log('139')
       const theValidationURL = event.validationURL;
-      validateTheSession(theValidationURL, function (merchantSession) {
+      await validateTheSession(theValidationURL, function (merchantSession) {
         console.log('before-validation')
         applePaySession.completeMerchantValidation(merchantSession);
       });
