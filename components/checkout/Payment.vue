@@ -144,7 +144,7 @@ function onApplePayButtonClicked() {
   };
 
   // Create ApplePaySession
-  const session = new ApplePaySession(6, request);
+  const session = new ApplePaySession(3, request);
 
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
