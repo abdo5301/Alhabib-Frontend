@@ -133,10 +133,11 @@ onMounted(() => {
     applePaySession.begin();
 
     //this is the first event that apple triggers.
-    //validate apple pay session
+    //validate applepay session
     applePaySession.onvalidatemerchant = function (event) {
+      console.log(event)
+      console.log('139')
       const theValidationURL = event.validationURL;
-      console.log('137')
       validateTheSession(theValidationURL, function (merchantSession) {
         console.log('before-validation')
         applePaySession.completeMerchantValidation(merchantSession);
