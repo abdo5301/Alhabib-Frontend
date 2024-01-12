@@ -124,8 +124,8 @@ function onApplePayButtonClicked() {
 
   // Define ApplePayPaymentRequest
   const request = {
-    "countryCode": "US",
-    "currencyCode": "USD",
+    "countryCode": "SA",
+    "currencyCode": "SAR",
     "merchantCapabilities": [
       "supports3DS"
     ],
@@ -133,22 +133,24 @@ function onApplePayButtonClicked() {
       "visa",
       "masterCard",
       "amex",
-      "discover"
+      "discover",
+      "mada"
     ],
     "total": {
-      "label": "Demo (Card is not charged)",
+      "label": "alhabibshop",
       "type": "final",
-      "amount": "1.99"
+      "amount": cartTotal.value
     }
   };
 
   // Create ApplePaySession
-  const session = new ApplePaySession(3, request);
+  const session = new ApplePaySession(6, request);
 
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
-    const merchantSession = await validateMerchant();
-    session.completeMerchantValidation(merchantSession);
+    await validateMerchant(event.theValidationURL ,function(merchantSession){
+      session.completeMerchantValidation(merchantSession);
+    });
   };
 
   session.onpaymentmethodselected = event => {
@@ -165,30 +167,6 @@ function onApplePayButtonClicked() {
     session.completeShippingMethodSelection(update);
   };
 
-  session.onshippingcontactselected = event => {
-    // Define ApplePayShippingContactUpdate based on the selected shipping contact.
-    const update = {
-      "newTotal": {
-        "label": "Demo (Card is not charged)",
-        "amount": "35.00"
-      },
-      "newLineItems": [
-        {
-          "label": "Subtotal",
-          "amount": "17.75"
-        },
-        {
-          "label": "Sales Tax",
-          "amount": "2.25"
-        },
-        {
-          "label": "Shipping",
-          "amount": "10.00"
-        }
-      ]
-    };
-    session.completeShippingContactSelection(update);
-  };
 
   session.onpaymentauthorized = event => {
     // Define ApplePayPaymentAuthorizationResult
@@ -281,7 +259,7 @@ function applepay(){
 }
 
 
-const validateTheSession = function (theValidationURL, callback) {
+const validateMerchant = function (theValidationURL, callback) {
   //we send the validation URL to our backend
   try {
     let resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
