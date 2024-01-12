@@ -113,6 +113,7 @@ const props = defineProps({
 })
 const localePath = useLocalePath()
 const { cartTotal } = useCart()
+const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
 onMounted(() => {
   //apple pay vars
@@ -135,7 +136,7 @@ onMounted(() => {
       const theValidationURL = event.validationURL;
 
       await validateTheSession(theValidationURL, function (merchantSession) {
-
+        console.log('before-validation')
         applePaySession.completeMerchantValidation(merchantSession);
       });
     };
@@ -143,10 +144,11 @@ onMounted(() => {
     //this is the trigger after the user confirmed the transaction with Touch ID or face ID
     //this  will contain the payment token
     applePaySession.onpaymentauthorized = async function (event) {
-
+      console.log('before-pay')
       const applePayToken = event.payment.token;
 
       await pay(applePayToken, function (outcome) {
+        
         if (outcome) {
           console.log(outcome)
           if (outcome.response_code == "14000") {
@@ -166,7 +168,7 @@ onMounted(() => {
   const validateTheSession = async function (theValidationURL, callback) {
     //we send the validation URL to our backend
     try {
-      const resp = await useNuxtApp().$apiFetch('/applepay/session-validation', {
+      const resp = await $fetch(config.public.API_URL + '/applepay/session-validation', {
         method: 'POST',
         body: {
           theValidationURL: theValidationURL,
@@ -174,9 +176,11 @@ onMounted(() => {
         headers: { "Access-Control-Allow-Origin": "*" }
       })
       if (resp.data) {
+        console.log('after-validation-success')
         callback(resp.data)
       }
     } catch (error) {
+      console.log('validation-error')
       console.log(error.data)
     }
 
@@ -184,7 +188,7 @@ onMounted(() => {
 
   const pay = async function (applePayToken, callback) {
     try {
-      const resp = await useNuxtApp().$apiFetch('/applepay/payment-completed', {
+      const resp = await $fetch(config.public.API_URL + '/applepay/payment-completed', {
         method: 'POST',
         body: {
           applePayToken: applePayToken,
@@ -192,9 +196,11 @@ onMounted(() => {
         headers: { "Access-Control-Allow-Origin": "*" }
       })
       if (resp.data) {
+        console.log('after-pay-success')
         callback(resp.data)
       }
     } catch (error) {
+      console.log('after-pay-error')
       console.log(error.data)
     }
   }
