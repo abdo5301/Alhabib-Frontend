@@ -139,7 +139,7 @@ function onApplePayButtonClicked() {
     "total": {
       "label": "alhabibshop",
       "type": "final",
-      "amount": cartTotal.value
+      "amount": "100"
     }
   };
 
