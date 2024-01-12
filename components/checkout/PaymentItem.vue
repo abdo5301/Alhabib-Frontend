@@ -1,5 +1,6 @@
 <template>
-  <div @click="$emit('paymentValue', payment_method_value)"
+  <div v-if="payment_method_code != 'applepay' || (payment_method_code == 'applepay' && availableApplePay)"
+    @click="$emit('paymentValue', payment_method_value),$emit('paymentCode', payment_method_code)"
     :class="[selected_payment == payment_method_value ? 'ring-gray-900' : 'ring-gray-300', 'w-full cursor-pointer ring-1 rounded-lg ps-[25px] pe-[17px] py-[17px]']">
     <div class="flex justify-between items-center w-full min-h-[50px]">
       <!-- Payment Content -->
@@ -33,13 +34,16 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['paymentValue'])
+const emits = defineEmits(['paymentValue','paymentCode'])
 const props = defineProps({
   payment_method_name: {
     type: String,
   },
   payment_method_value: {
     type: Number,
+  },
+  payment_method_code: {
+    type: String,
   },
   payment_method_image: {
     type: String
@@ -56,4 +60,17 @@ const props = defineProps({
     default: 0
   }
 })
+const MECHAT_ID = "merchant.com.alhabibshop.web.prod";
+const availableApplePay = ref(false)
+onMounted(() => {
+  if (
+    window.ApplePaySession &&
+    ApplePaySession.canMakePaymentsWithActiveCard(MECHAT_ID)
+
+  ) {
+    //show apple pay method
+    availableApplePay.value = true
+  }
+})
+
 </script>
