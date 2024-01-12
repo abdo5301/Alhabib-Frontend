@@ -115,10 +115,12 @@ const localePath = useLocalePath()
 const { cartTotal } = useCart()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
+
 onMounted(() => {
   //apple pay vars
   const appleButton = document.querySelector(".apple-pay-button")
   appleButton.addEventListener("click", function () {
+    console.log('123')
 
     const applePaySession = new ApplePaySession(6, {
       countryCode: 'SA',
@@ -134,7 +136,7 @@ onMounted(() => {
     //validate apple pay session
     applePaySession.onvalidatemerchant = function (event) {
       const theValidationURL = event.validationURL;
-
+      console.log('137')
       validateTheSession(theValidationURL, function (merchantSession) {
         console.log('before-validation')
         applePaySession.completeMerchantValidation(merchantSession);
