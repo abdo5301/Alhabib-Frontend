@@ -132,10 +132,10 @@ onMounted(() => {
 
     //this is the first event that apple triggers.
     //validate apple pay session
-    applePaySession.onvalidatemerchant = async function (event) {
+    applePaySession.onvalidatemerchant = function (event) {
       const theValidationURL = event.validationURL;
 
-      await validateTheSession(theValidationURL, function (merchantSession) {
+      validateTheSession(theValidationURL, function (merchantSession) {
         console.log('before-validation')
         applePaySession.completeMerchantValidation(merchantSession);
       });
@@ -143,12 +143,12 @@ onMounted(() => {
 
     //this is the trigger after the user confirmed the transaction with Touch ID or face ID
     //this  will contain the payment token
-    applePaySession.onpaymentauthorized = async function (event) {
+    applePaySession.onpaymentauthorized = function (event) {
       console.log('before-pay')
       const applePayToken = event.payment.token;
 
-      await pay(applePayToken, function (outcome) {
-        
+      pay(applePayToken, function (outcome) {
+
         if (outcome) {
           console.log(outcome)
           if (outcome.response_code == "14000") {
@@ -165,10 +165,10 @@ onMounted(() => {
     }
   });
 
-  const validateTheSession = async function (theValidationURL, callback) {
+  const validateTheSession = function (theValidationURL, callback) {
     //we send the validation URL to our backend
     try {
-      const resp = await $fetch(config.public.API_URL + '/applepay/session-validation', {
+      const resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
         method: 'POST',
         body: {
           theValidationURL: theValidationURL,
@@ -186,9 +186,9 @@ onMounted(() => {
 
   };
 
-  const pay = async function (applePayToken, callback) {
+  const pay = function (applePayToken, callback) {
     try {
-      const resp = await $fetch(config.public.API_URL + '/applepay/payment-completed', {
+      const resp = $fetch(config.public.API_URL + '/applepay/payment-completed', {
         method: 'POST',
         body: {
           applePayToken: applePayToken,
