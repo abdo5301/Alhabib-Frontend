@@ -124,7 +124,7 @@ onMounted(() => {
       currencyCode: 'SAR',
       supportedNetworks: ["visa", "masterCard", "amex", "discover", "mada"],
       merchantCapabilities: ["supports3DS"],
-      total: { label: "alhabibshop", amount: priceFormate(total) }
+      total: { label: "alhabibshop", amount: total }
     });
 
     applePaySession.begin();
