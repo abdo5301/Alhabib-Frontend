@@ -126,6 +126,7 @@ function applepay(){
     total: { label: "alhabibshop", amount: cartTotal.value }
   });
   console.log('132')
+  console.table(applePaySession)
 
   applePaySession.begin();
 
