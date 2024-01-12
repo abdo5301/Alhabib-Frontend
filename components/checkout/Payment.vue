@@ -98,7 +98,7 @@
     <!-- Apple Pay  -->
     <div v-show="selectedApplePayMethod"
       class="w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center">
-      <div class="apple-pay-button apple-pay-button-black"></div>
+      <div @click="applepay" class="apple-pay-button apple-pay-button-black"></div>
     </div>
   </div>
 </template>
@@ -116,100 +116,96 @@ const { cartTotal } = useCart()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
 
-onMounted(() => {
-  //apple pay vars
-  const appleButton = document.querySelector(".apple-pay-button")
-  appleButton.addEventListener("click", function () {
-    console.log('123')
+function applepay(){
 
-    const applePaySession = new ApplePaySession(6, {
-      countryCode: 'SA',
-      currencyCode: 'SAR',
-      supportedNetworks: ["visa", "masterCard", "amex", "discover", "mada"],
-      merchantCapabilities: ["supports3DS"],
-      total: { label: "alhabibshop", amount: cartTotal.value }
-    });
-    console.log('132')
-
-    applePaySession.begin();
-    console.log('135')
-
-    //this is the first event that apple triggers.
-    //validate applepay session
-    applePaySession.onvalidatemerchant = async function (event) {
-      console.log(event)
-      console.log('139')
-      const theValidationURL = event.validationURL;
-      await validateTheSession(theValidationURL, function (merchantSession) {
-        console.log('before-validation')
-        applePaySession.completeMerchantValidation(merchantSession);
-      });
-    };
-
-    //this is the trigger after the user confirmed the transaction with Touch ID or face ID
-    //this  will contain the payment token
-    applePaySession.onpaymentauthorized = function (event) {
-      console.log('before-pay')
-      const applePayToken = event.payment.token;
-
-      pay(applePayToken, function (outcome) {
-
-        if (outcome) {
-          console.log(outcome)
-          if (outcome.response_code == "14000") {
-            applePaySession.completePayment(applePaySession.STATUS_SUCCESS);
-            emits('submit', payment_method)//create order
-          } else {
-            applePaySession.completePayment(applePaySession.STATUS_FAILURE);
-          }
-        } else {
-          applePaySession.completePayment(applePaySession.STATUS_FAILURE);
-          alert('Server Error !');
-        }
-      })
-    }
+  const applePaySession = new ApplePaySession(6, {
+    countryCode: 'SA',
+    currencyCode: 'SAR',
+    supportedNetworks: ["visa", "masterCard", "amex", "discover", "mada"],
+    merchantCapabilities: ["supports3DS"],
+    total: { label: "alhabibshop", amount: cartTotal.value }
   });
+  console.log('132')
 
-  const validateTheSession = function (theValidationURL, callback) {
-    //we send the validation URL to our backend
-    try {
-      const resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
-        method: 'POST',
-        body: {
-          theValidationURL: theValidationURL,
-        },
-        headers: { "Access-Control-Allow-Origin": "*" }
-      })
-      if (resp.data) {
-        console.log('after-validation-success')
-        callback(resp.data)
-      }
-    } catch (error) {
-      console.log('validation-error')
-      console.log(error.data)
-    }
+  applePaySession.begin();
+  console.log('135')
 
+  //this is the first event that apple triggers.
+  //validate applepay session
+  applePaySession.onvalidatemerchant = async function (event) {
+    console.log(event)
+    console.log('139')
+    const theValidationURL = event.validationURL;
+    await validateTheSession(theValidationURL, function (merchantSession) {
+      console.log('before-validation')
+      applePaySession.completeMerchantValidation(merchantSession);
+    });
   };
 
-  const pay = function (applePayToken, callback) {
-    try {
-      const resp = $fetch(config.public.API_URL + '/applepay/payment-completed', {
-        method: 'POST',
-        body: {
-          applePayToken: applePayToken,
-        },
-        headers: { "Access-Control-Allow-Origin": "*" }
-      })
-      if (resp.data) {
-        console.log('after-pay-success')
-        callback(resp.data)
+  //this is the trigger after the user confirmed the transaction with Touch ID or face ID
+  //this  will contain the payment token
+  applePaySession.onpaymentauthorized = function (event) {
+    console.log('before-pay')
+    const applePayToken = event.payment.token;
+
+    pay(applePayToken, function (outcome) {
+
+      if (outcome) {
+        console.log(outcome)
+        if (outcome.response_code == "14000") {
+          applePaySession.completePayment(applePaySession.STATUS_SUCCESS);
+          emits('submit', payment_method)//create order
+        } else {
+          applePaySession.completePayment(applePaySession.STATUS_FAILURE);
+        }
+      } else {
+        applePaySession.completePayment(applePaySession.STATUS_FAILURE);
+        alert('Server Error !');
       }
-    } catch (error) {
-      console.log('after-pay-error')
-      console.log(error.data)
-    }
+    })
   }
-})
+}
+
+
+const validateTheSession = function (theValidationURL, callback) {
+  //we send the validation URL to our backend
+  try {
+    const resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
+      method: 'POST',
+      body: {
+        theValidationURL: theValidationURL,
+      },
+      headers: { "Access-Control-Allow-Origin": "*" }
+    })
+    if (resp.data) {
+      console.log('after-validation-success')
+      callback(resp.data)
+    }
+  } catch (error) {
+    console.log('validation-error')
+    console.log(error.data)
+  }
+
+};
+
+const pay = function (applePayToken, callback) {
+  try {
+    const resp = $fetch(config.public.API_URL + '/applepay/payment-completed', {
+      method: 'POST',
+      body: {
+        applePayToken: applePayToken,
+      },
+      headers: { "Access-Control-Allow-Origin": "*" }
+    })
+    if (resp.data) {
+      console.log('after-pay-success')
+      callback(resp.data)
+    }
+  } catch (error) {
+    console.log('after-pay-error')
+    console.log(error.data)
+  }
+}
 
 const { allPaymentMethods } = usePaymentMethod()
 
