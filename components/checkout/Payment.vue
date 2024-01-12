@@ -129,8 +129,10 @@ onMounted(() => {
       merchantCapabilities: ["supports3DS"],
       total: { label: "alhabibshop", amount: cartTotal.value }
     });
+    console.log('132')
 
     applePaySession.begin();
+    console.log('135')
 
     //this is the first event that apple triggers.
     //validate applepay session
