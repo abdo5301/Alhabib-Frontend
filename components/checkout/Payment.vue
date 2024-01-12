@@ -124,8 +124,8 @@ function onApplePayButtonClicked() {
 
   // Define ApplePayPaymentRequest
   const request = {
-    "countryCode": "US",
-    "currencyCode": "USD",
+    "countryCode": "SA",
+    "currencyCode": "SAR",
     "merchantCapabilities": [
       "supports3DS"
     ],
@@ -137,9 +137,9 @@ function onApplePayButtonClicked() {
       "mada"
     ],
     "total": {
-      "label": "Demo (Card is not charged)",
+      "label": "alhabibshop",
       "type": "final",
-      "amount": "1.99"
+      "amount": cartTotal.value
     }
   };
 
