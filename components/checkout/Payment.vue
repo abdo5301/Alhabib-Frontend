@@ -116,7 +116,7 @@ const { cartTotal } = useCart()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
 
-  function onApplePayButtonClicked() {
+const onApplePayButtonClicked = async () => {
 
     if (!ApplePaySession) {
       console.log('123');
