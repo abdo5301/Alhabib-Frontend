@@ -98,7 +98,7 @@
     <!-- Apple Pay  -->
     <div v-show="selectedApplePayMethod"
       class="w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center">
-      <div @click="applepay" class="apple-pay-button apple-pay-button-black"></div>
+      <div @click="applepay2" class="apple-pay-button apple-pay-button-black"></div>
     </div>
   </div>
 </template>
@@ -116,6 +116,62 @@ const { cartTotal } = useCart()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
 
+function applepay2(){
+  function onApplePayButtonClicked() {
+
+    if (!ApplePaySession) {
+      return;
+    }
+
+    // Define ApplePayPaymentRequest
+    const request = {
+      countryCode: 'SA',
+      currencyCode: 'SAR',
+      supportedNetworks: ["visa", "masterCard", "amex", "discover", "mada"],
+      merchantCapabilities: ["supports3DS"],
+      total: { label: "alhabibshop", amount: cartTotal.value }
+    };
+
+    // Create ApplePaySession
+    const session = new ApplePaySession(3, request);
+
+    session.onvalidatemerchant = async event => {
+      // Call your own server to request a new merchant session.
+      const merchantSession = await validateMerchant();
+      session.completeMerchantValidation(merchantSession);
+    };
+
+    session.onpaymentmethodselected = event => {
+      // Define ApplePayPaymentMethodUpdate based on the selected payment method.
+      // No updates or errors are needed, pass an empty object.
+      const update = {};
+      session.completePaymentMethodSelection(update);
+    };
+
+    session.onshippingmethodselected = event => {
+      // Define ApplePayShippingMethodUpdate based on the selected shipping method.
+      // No updates or errors are needed, pass an empty object.
+      const update = {};
+      session.completeShippingMethodSelection(update);
+    };
+
+
+    session.onpaymentauthorized = event => {
+      // Define ApplePayPaymentAuthorizationResult
+      const result = {
+        "status": ApplePaySession.STATUS_SUCCESS
+      };
+      session.completePayment(result);
+    };
+
+
+    session.oncancel = event => {
+      // Payment canceled by WebKit
+    };
+
+    session.begin();
+  }
+}
 function applepay(){
 
   let applePaySession = new ApplePaySession(6, {
