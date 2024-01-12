@@ -138,8 +138,15 @@ function applepay(){
   applePaySession.onvalidatemerchant = function(event){
     console.log(event)
     console.log('139')
+
+  };
+
+  applePaySession.onvalidatemerchant = event => {
+    // Call your own server to request a new merchant session.
+    console.log(event)
+    console.log('139')
     let theValidationURL = event.validationURL;
-     validateTheSession(theValidationURL, function (merchantSession) {
+    validateTheSession(theValidationURL, function (merchantSession) {
       console.log('before-validation')
       applePaySession.completeMerchantValidation(merchantSession);
     });
