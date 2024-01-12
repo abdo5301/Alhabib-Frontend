@@ -120,6 +120,7 @@ function applepay2(){
   function onApplePayButtonClicked() {
 
     if (!ApplePaySession) {
+      console.log('123');
       return;
     }
 
