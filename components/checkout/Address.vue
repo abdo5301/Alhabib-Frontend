@@ -264,7 +264,6 @@ async function submitAddress() {
     new_address.value = await editAddress(edit_address_data)
   }
   if (new_address.value && new_address.value.id) {//success
-    alert('success')
     address_data.value = await defaultAddress()
     emits('nextStep', 'select_payment')
     emits('saveAddress', address_data.value.id)
