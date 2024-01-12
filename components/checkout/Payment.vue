@@ -124,8 +124,8 @@ function onApplePayButtonClicked() {
 
   // Define ApplePayPaymentRequest
   const request = {
-    "countryCode": "SA",
-    "currencyCode": "SAR",
+    "countryCode": "US",
+    "currencyCode": "USD",
     "merchantCapabilities": [
       "supports3DS"
     ],
@@ -133,18 +133,17 @@ function onApplePayButtonClicked() {
       "visa",
       "masterCard",
       "amex",
-      "discover",
-      "mada"
+      "discover"
     ],
     "total": {
-      "label": "alhabibshop",
+      "label": "Demo (Card is not charged)",
       "type": "final",
-      "amount": cartTotal.value
+      "amount": "1.99"
     }
   };
 
   // Create ApplePaySession
-  const session = new ApplePaySession(6, request);
+  const session = new ApplePaySession(3, request);
 
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
@@ -165,7 +164,6 @@ function onApplePayButtonClicked() {
     const update = {};
     session.completeShippingMethodSelection(update);
   };
-
 
   session.onpaymentauthorized = event => {
     // Define ApplePayPaymentAuthorizationResult
