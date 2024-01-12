@@ -118,7 +118,7 @@ const selectedApplePayMethod = ref(false)
 
 function applepay(){
 
-  const applePaySession = new ApplePaySession(6, {
+  let applePaySession = new ApplePaySession(6, {
     countryCode: 'SA',
     currencyCode: 'SAR',
     supportedNetworks: ["visa", "masterCard", "amex", "discover", "mada"],
@@ -138,7 +138,7 @@ function applepay(){
   applePaySession.onvalidatemerchant = function(event){
     console.log(event)
     console.log('139')
-    const theValidationURL = event.validationURL;
+    let theValidationURL = event.validationURL;
      validateTheSession(theValidationURL, function (merchantSession) {
       console.log('before-validation')
       applePaySession.completeMerchantValidation(merchantSession);
@@ -149,7 +149,7 @@ function applepay(){
   //this  will contain the payment token
   applePaySession.onpaymentauthorized = function (event) {
     console.log('before-pay')
-    const applePayToken = event.payment.token;
+    let applePayToken = event.payment.token;
 
     pay(applePayToken, function (outcome) {
 
@@ -173,7 +173,7 @@ function applepay(){
 const validateTheSession = function (theValidationURL, callback) {
   //we send the validation URL to our backend
   try {
-    const resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
+    let resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
       method: 'POST',
       body: {
         theValidationURL: theValidationURL,
@@ -191,7 +191,7 @@ const validateTheSession = function (theValidationURL, callback) {
 
 };
 
-const pay = function (applePayToken, callback) {
+let pay = function (applePayToken, callback) {
   try {
     const resp = $fetch(config.public.API_URL + '/applepay/payment-completed', {
       method: 'POST',
