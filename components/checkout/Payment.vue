@@ -128,6 +128,8 @@ function applepay(){
   console.log('132')
 
   applePaySession.begin();
+
+  console.table(applePaySession)
   console.log('135')
 
   //this is the first event that apple triggers.
