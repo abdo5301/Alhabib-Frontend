@@ -133,7 +133,8 @@ function onApplePayButtonClicked() {
       "visa",
       "masterCard",
       "amex",
-      "discover"
+      "discover",
+      "mada"
     ],
     "total": {
       "label": "Demo (Card is not charged)",
@@ -171,21 +172,6 @@ function onApplePayButtonClicked() {
       "status": ApplePaySession.STATUS_SUCCESS
     };
     session.completePayment(result);
-  };
-
-  session.oncouponcodechanged = event => {
-    // Define ApplePayCouponCodeUpdate
-    const newTotal = calculateNewTotal(event.couponCode);
-    const newLineItems = calculateNewLineItems(event.couponCode);
-    const newShippingMethods = calculateNewShippingMethods(event.couponCode);
-    const errors = calculateErrors(event.couponCode);
-
-    session.completeCouponCodeChange({
-      newTotal: newTotal,
-      newLineItems: newLineItems,
-      newShippingMethods: newShippingMethods,
-      errors: errors,
-    });
   };
 
   session.oncancel = event => {
