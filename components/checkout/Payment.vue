@@ -250,7 +250,10 @@ const validateMerchant = validationURL => {
       body: {
         validationURL: validationURL,
       },
-      headers: { "Access-Control-Allow-Origin": "*" }
+      headers: { "Access-Control-Allow-Origin": "*",
+        "Accept": "application/json",
+        "Authorization":"Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34"
+      }
     })
     if (resp.data) {
       console.log('after-validation-success')
