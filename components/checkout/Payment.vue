@@ -152,26 +152,38 @@ function onApplePayButtonClicked() {
     session.completeMerchantValidation(merchantSession);
   };
 
-  session.onpaymentmethodselected = event => {
-    // Define ApplePayPaymentMethodUpdate based on the selected payment method.
-    // No updates or errors are needed, pass an empty object.
-    const update = {};
-    session.completePaymentMethodSelection(update);
-  };
-
-  session.onshippingmethodselected = event => {
-    // Define ApplePayShippingMethodUpdate based on the selected shipping method.
-    // No updates or errors are needed, pass an empty object.
-    const update = {};
-    session.completeShippingMethodSelection(update);
-  };
+  // session.onpaymentmethodselected = event => {
+  //   // Define ApplePayPaymentMethodUpdate based on the selected payment method.
+  //   // No updates or errors are needed, pass an empty object.
+  //   const update = {};
+  //   session.completePaymentMethodSelection(update);
+  // };
+  //
+  // session.onshippingmethodselected = event => {
+  //   // Define ApplePayShippingMethodUpdate based on the selected shipping method.
+  //   // No updates or errors are needed, pass an empty object.
+  //   const update = {};
+  //   session.completeShippingMethodSelection(update);
+  // };
 
   session.onpaymentauthorized = event => {
-    // Define ApplePayPaymentAuthorizationResult
-    const result = {
-      "status": ApplePaySession.STATUS_SUCCESS
-    };
-    session.completePayment(result);
+    let applePayToken = event.payment.token;
+
+    pay(applePayToken, function (outcome) {
+
+      if (outcome) {
+        console.log(outcome)
+        if (outcome.response_code === "14000") {
+          applePaySession.completePayment(applePaySession.STATUS_SUCCESS);
+          emits('submit', payment_method)//create order
+        } else {
+          applePaySession.completePayment(applePaySession.STATUS_FAILURE);
+        }
+      } else {
+        applePaySession.completePayment(applePaySession.STATUS_FAILURE);
+        alert('Server Error !');
+      }
+    })
   };
 
   session.oncancel = event => {
@@ -273,7 +285,10 @@ let pay = function (applePayToken, callback) {
       body: {
         applePayToken: applePayToken,
       },
-      headers: { "Access-Control-Allow-Origin": "*" }
+      headers: { "Access-Control-Allow-Origin": "*",
+        "Accept": "application/json",
+        "Authorization":"Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34"
+      }
     })
     if (resp.data) {
       console.log('after-pay-success')
