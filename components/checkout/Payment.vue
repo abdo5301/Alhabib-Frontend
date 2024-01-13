@@ -198,7 +198,7 @@ function onApplePayButtonClicked() {
         "Authorization":"Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34"
       }
     })
-    if (resp.data) {
+    if (resp) {
       console.log('after-validation-success')
       console.table(resp)
       console.log('after-validation-success2')
