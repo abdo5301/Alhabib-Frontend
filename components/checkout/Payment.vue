@@ -201,7 +201,9 @@ function onApplePayButtonClicked() {
       }
     })
     if (resp) {
-      callback(resp)
+      console.table(resp)
+      console.table(resp.data)
+      callback(resp.data)
     }
   } catch (error) {
     console.log('validation-error')
