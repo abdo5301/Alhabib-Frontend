@@ -204,7 +204,7 @@ function onApplePayButtonClicked() {
       console.log('after-validation-success2')
       console.table(resp['data'])
       console.log('after-validation-success3')
-      console.table(resp.data.data)
+      console.table(resp.data)
       console.log('after-validation-success4')
       console.table(resp['data'].data)
       console.log('after-validation-success5')
