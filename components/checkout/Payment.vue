@@ -209,7 +209,7 @@ function onApplePayButtonClicked() {
 
 
     if (resp) {
-      callback(resp)
+      callback(resp.data)
     }
 
   } catch (error) {
