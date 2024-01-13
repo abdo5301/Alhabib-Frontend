@@ -151,7 +151,7 @@ function onApplePayButtonClicked() {
     const merchantSession = await validateMerchant(event.validationURL);
     console.table(merchantSession);
     console.log('153');
-    session.completeMerchantValidation(merchantSession);
+    session.completeMerchantValidation(merchantSession.data);
   };
 
   session.onpaymentauthorized = event => {
@@ -209,7 +209,7 @@ function onApplePayButtonClicked() {
       console.table(resp['data'].data)
       console.log('after-validation-success5')
       console.table(resp.data.value)
-      return resp.data
+      return resp
     }
   } catch (error) {
     console.log('validation-error')
