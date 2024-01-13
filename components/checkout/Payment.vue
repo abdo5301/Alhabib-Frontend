@@ -63,7 +63,7 @@
 }
 </style>
 <template>
-  <div class="w-full flex flex-col gap-5 lg:gap-[30px] lg:pt-[50px] pt-10">
+  <div class='w-full flex flex-col gap-5 lg:gap-[30px] lg:pt-[50px] pt-10'>
     <!-- Payment Method Title -->
     <h4
       :class="['flex items-center justify-start lg:py-[9px] text-gray-500 lg:text-gray-900 font-bold leading-6 lg:leading-5 text-base lg:text-xl']">
@@ -71,17 +71,19 @@
     </h4>
 
     <!-- Wallet -->
-    <CheckoutWallet @wallet-status="getWalletStatus" />
+    <CheckoutWallet @wallet-status='getWalletStatus' />
 
     <!-- Payment Methods Container -->
-    <div v-if="payment_methods_array && payment_methods_array.length > 0" class="flex flex-col gap-[15px]">
+    <div v-if='payment_methods_array && payment_methods_array.length > 0' class='flex flex-col gap-[15px]'>
       <!-- Selected Item -->
-      <CheckoutPaymentItem v-for="(method, index) in payment_methods_array" :key="index" :payment_method_value="method.id"
-        :payment_method_name="method.title" :payment_method_image="method.image" :payment_method_code="method.code"
-        :payment_method_description="method.description" :selected_payment="payment_method"
-        @payment-value="getPaymentValue" @payment-code="getPaymentCode" />
+      <CheckoutPaymentItem v-for='(method, index) in payment_methods_array' :key='index'
+                           :payment_method_value='method.id'
+                           :payment_method_name='method.title' :payment_method_image='method.image'
+                           :payment_method_code='method.code'
+                           :payment_method_description='method.description' :selected_payment='payment_method'
+                           @payment-value='getPaymentValue' @payment-code='getPaymentCode' />
     </div>
-    <div v-else class="flex items-center justify-center text-gray-700 text-2xl font-semibold">
+    <div v-else class='flex items-center justify-center text-gray-700 text-2xl font-semibold'>
       {{ $t('text_empty_payment_methods') }}
     </div>
 
@@ -89,16 +91,16 @@
     <CheckoutAlrajhiPoints />
 
     <!-- Order Submit -->
-    <button v-if="!selectedApplePayMethod" id="order-save-btn" :disabled="!payment_method"
-      @click="$emit('submit', payment_method)"
-      class="w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed">
+    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method'
+            @click="$emit('submit', payment_method)"
+            class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
     </button>
 
     <!-- Apple Pay  -->
-    <div v-show="selectedApplePayMethod"
-      class="w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center">
-      <div @click="onApplePayButtonClicked" class="apple-pay-button apple-pay-button-black"></div>
+    <div v-show='selectedApplePayMethod'
+         class='w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center'>
+      <div @click='onApplePayButtonClicked' class='apple-pay-button apple-pay-button-black'></div>
     </div>
   </div>
 </template>
@@ -119,115 +121,100 @@ const selectedApplePayMethod = ref(false)
 function onApplePayButtonClicked() {
 
   if (!ApplePaySession) {
-    return;
+    return
   }
 
   // Define ApplePayPaymentRequest
   const request = {
-    "countryCode": "SA",
-    "currencyCode": "SAR",
-    "merchantCapabilities": [
-      "supports3DS"
+    'countryCode': 'SA',
+    'currencyCode': 'SAR',
+    'merchantCapabilities': [
+      'supports3DS'
     ],
-    "supportedNetworks": [
-      "visa",
-      "masterCard",
-      "amex",
-      "discover",
-      "mada"
+    'supportedNetworks': [
+      'visa',
+      'masterCard',
+      'amex',
+      'discover',
+      'mada'
     ],
-    "total": {
-      "label": "alhabibshop",
-      "type": "final",
-      "amount": String(cartTotal.value)
+    'total': {
+      'label': 'alhabibshop',
+      'type': 'final',
+      'amount': String(cartTotal.value)
     }
-  };
+  }
 
   // Create ApplePaySession
-  const session = new ApplePaySession(6, request);
-  session.begin();
+  const session = new ApplePaySession(6, request)
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
-    await validateMerchant(event.validationURL, function (merchantSession) {
-
-      console.table(merchantSession);
-      console.log('153');
-      session.completeMerchantValidation(merchantSession);
-    });
+    const merchantSession = await validateMerchant(event.validationURL);
+    session.completeMerchantValidation(merchantSession);
   };
 
   session.onpaymentauthorized = event => {
-    let applePayToken = event.payment.token;
-    console.table(applePayToken);
-    console.log('160');
+    let applePayToken = event.payment.token
+    console.table(applePayToken)
+    console.log('160')
 
-    pay(applePayToken, function (outcome) {
-      console.table(outcome);
-      console.log('164');
+    pay(applePayToken, function(outcome) {
+      console.table(outcome)
+      console.log('164')
 
       if (outcome) {
         console.log(outcome)
-        if (outcome.response_code === "14000") {
-          session.completePayment(session.STATUS_SUCCESS);
+        if (outcome.response_code === '14000') {
+          session.completePayment(session.STATUS_SUCCESS)
           emits('submit', payment_method)//create order
         } else {
-          session.completePayment(session.STATUS_FAILURE);
+          session.completePayment(session.STATUS_FAILURE)
         }
       } else {
-        session.completePayment(session.STATUS_FAILURE);
-        alert('Server Error !');
+        session.completePayment(session.STATUS_FAILURE)
+        alert('Server Error !')
       }
     })
-  };
+  }
 
   session.oncancel = event => {
     // Payment canceled by WebKit
-  };
+  }
 
-
+  session.begin()
 }
 
-  let validateMerchant = async function (validationURL, callback) {
+let validateMerchant = async validationURL => {
   //we send the validation URL to our backend
   try {
-    let resp = await $fetch(config.public.API_URL + '/applepay/session-validation', {
+    return await $fetch(config.public.API_URL + '/applepay/session-validation', {
       method: 'POST',
       body: {
-        validationURL: validationURL,
+        validationURL: validationURL
       },
-      headers: { "Access-Control-Allow-Origin": "*",
-        "Accept": "application/json",
-        "Authorization":"Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34"
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34'
       }
     })
-    console.log('203')
-    console.table(resp)
-    console.log('205')
-    console.log(resp)
-    console.log(resp.value)
-    console.log(resp.values)
-
-
-    if (resp) {
-      callback(resp.data)
-    }
 
   } catch (error) {
-    console.log('validation-error')
     console.log(error)
   }
-};
+}
 
-let pay = function (applePayToken, callback) {
+let pay = function(applePayToken, callback) {
   try {
     const resp = $fetch(config.public.API_URL + '/applepay/payment-completed', {
       method: 'POST',
       body: {
-        applePayToken: applePayToken,
+        applePayToken: applePayToken
       },
-      headers: { "Access-Control-Allow-Origin": "*",
-        "Accept": "application/json",
-        "Authorization":"Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34"
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34'
       }
     })
     if (resp.data) {
@@ -249,9 +236,11 @@ const payment_method = ref(0)
 function getWalletStatus(status) {
   console.log('Wallet Status: ' + status)
 }
+
 function getPaymentValue(value) {
   payment_method.value = value
 }
+
 function getPaymentCode(code) {
   if (code == 'applepay') {
     selectedApplePayMethod.value = true
