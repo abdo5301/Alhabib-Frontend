@@ -189,7 +189,7 @@ function onApplePayButtonClicked() {
 
   let validateMerchant = async function (validationURL, callback) {
   //we send the validation URL to our backend
-  try {
+  // try {
     let resp = await $fetch(config.public.API_URL + '/applepay/session-validation', {
       method: 'POST',
       body: {
@@ -204,12 +204,12 @@ function onApplePayButtonClicked() {
     console.table(resp.data)
 
     if (resp) {
-      callback(resp.data)
+      callback(resp)
     }
-  } catch (error) {
-    console.log('validation-error')
-    console.log(error)
-  }
+  // } catch (error) {
+  //   console.log('validation-error')
+  //   console.log(error)
+  // }
 };
 
 let pay = function (applePayToken, callback) {
