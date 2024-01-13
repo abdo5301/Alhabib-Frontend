@@ -203,7 +203,10 @@ function onApplePayButtonClicked() {
     console.log('203')
     console.table(resp)
     console.log('205')
-    console.table(resp.data)
+    console.log(resp)
+    console.log(resp.value)
+    console.log(resp.values)
+
 
     if (resp) {
       callback(resp)
