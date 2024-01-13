@@ -153,28 +153,23 @@ function onApplePayButtonClicked() {
     session.completeMerchantValidation(merchantSession);
   };
 
-  session.onpaymentauthorized = event => {
-    let applePayToken = event.payment.token
+  session.onpaymentauthorized = async event => {
     console.table(applePayToken)
     console.log('160')
 
-    pay(applePayToken, function(outcome) {
-      console.table(outcome)
-      console.log('164')
-
-      if (outcome) {
-        console.log(outcome)
-        if (outcome.response_code === '14000') {
-          session.completePayment(session.STATUS_SUCCESS)
-          emits('submit', payment_method)//create order
-        } else {
-          session.completePayment(session.STATUS_FAILURE)
-        }
+    const outcome = await pay(event.payment.token);
+    if (outcome) {
+      console.log(outcome)
+      if (outcome.response_code === '14000') {
+        session.completePayment(session.STATUS_SUCCESS)
+        emits('submit', payment_method)//create order
       } else {
         session.completePayment(session.STATUS_FAILURE)
-        alert('Server Error !')
       }
-    })
+    } else {
+      session.completePayment(session.STATUS_FAILURE)
+      alert('Server Error !')
+    }
   }
 
   session.oncancel = event => {
@@ -204,9 +199,9 @@ let validateMerchant = async validationURL => {
   }
 }
 
-let pay = function(applePayToken, callback) {
+let pay = async applePayToken => {
   try {
-    const resp = $fetch(config.public.API_URL + '/applepay/payment-completed', {
+    return await $fetch(config.public.API_URL + '/applepay/payment-completed', {
       method: 'POST',
       body: {
         applePayToken: applePayToken
@@ -217,13 +212,10 @@ let pay = function(applePayToken, callback) {
         'Authorization': 'Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34'
       }
     })
-    if (resp.data) {
-      console.log('after-pay-success')
-      callback(resp.data)
-    }
+
   } catch (error) {
     console.log('after-pay-error')
-    console.log(error.data)
+    console.log(error)
   }
 }
 
