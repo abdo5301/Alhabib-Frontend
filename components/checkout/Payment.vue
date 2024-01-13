@@ -200,9 +200,15 @@ function onApplePayButtonClicked() {
     })
     if (resp.data) {
       console.log('after-validation-success')
-      console.table(resp.data)
-      console.log('after-validation-success2')
       console.table(resp)
+      console.log('after-validation-success2')
+      console.table(resp['data'])
+      console.log('after-validation-success3')
+      console.table(respd.data.data)
+      console.log('after-validation-success4')
+      console.table(resp['data'].data)
+      console.log('after-validation-success5')
+      console.table(resp.data.value)
       return resp.data
     }
   } catch (error) {
