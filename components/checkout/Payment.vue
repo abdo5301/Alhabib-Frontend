@@ -145,7 +145,7 @@ function onApplePayButtonClicked() {
 
   // Create ApplePaySession
   const session = new ApplePaySession(6, request);
-
+  session.begin();
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
     await validateMerchant(event.validationURL, function (merchantSession) {
@@ -184,12 +184,12 @@ function onApplePayButtonClicked() {
     // Payment canceled by WebKit
   };
 
-  session.begin();
+
 }
 
   let validateMerchant = async function (validationURL, callback) {
   //we send the validation URL to our backend
-  // try {
+  try {
     let resp = await $fetch(config.public.API_URL + '/applepay/session-validation', {
       method: 'POST',
       body: {
@@ -204,12 +204,12 @@ function onApplePayButtonClicked() {
     console.table(resp.data)
 
     if (resp) {
-      callback(resp)
+      callback(resp.data)
     }
-  // } catch (error) {
-  //   console.log('validation-error')
-  //   console.log(error)
-  // }
+  } catch (error) {
+    console.log('validation-error')
+    console.log(error)
+  }
 };
 
 let pay = function (applePayToken, callback) {
