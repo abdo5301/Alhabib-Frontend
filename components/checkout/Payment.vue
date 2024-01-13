@@ -148,7 +148,7 @@ function onApplePayButtonClicked() {
 
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
-    validateMerchant(event.validationURL, function (merchantSession) {
+    await validateMerchant(event.validationURL, function (merchantSession) {
 
       console.table(merchantSession);
       console.log('153');
