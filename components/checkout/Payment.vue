@@ -185,7 +185,7 @@ function onApplePayButtonClicked() {
   session.begin();
 }
 
-const validateMerchant = validationURL => {
+  let validateMerchant = async validationURL => {
   //we send the validation URL to our backend
   try {
     let resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
