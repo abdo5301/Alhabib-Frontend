@@ -154,7 +154,6 @@ function onApplePayButtonClicked() {
   };
 
   session.onpaymentauthorized = async event => {
-    console.table(applePayToken)
     console.log('160')
 
     const outcome = await pay(event.payment.token);
