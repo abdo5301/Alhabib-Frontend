@@ -201,21 +201,11 @@ function onApplePayButtonClicked() {
       }
     })
     if (resp) {
-      console.log('after-validation-success')
-      console.table(resp)
-      console.log('after-validation-success2')
-      console.table(resp['data'])
-      console.log('after-validation-success3')
-      console.table(resp.data)
-      console.log('after-validation-success4')
-      console.table(resp['data'].data)
-      console.log('after-validation-success5')
-      console.table(resp.data.value)
       callback(resp)
     }
   } catch (error) {
     console.log('validation-error')
-    console.log(error.data)
+    console.log(error)
   }
 
 };
