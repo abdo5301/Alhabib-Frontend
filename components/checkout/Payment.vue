@@ -122,8 +122,6 @@ function onApplePayButtonClicked() {
     return;
   }
 
-  console.log(cartTotal.value)
-
   // Define ApplePayPaymentRequest
   const request = {
     "countryCode": "SA",
@@ -146,11 +144,11 @@ function onApplePayButtonClicked() {
   };
 
   // Create ApplePaySession
-  const session = new ApplePaySession(3, request);
+  const session = new ApplePaySession(6, request);
 
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
-    const merchantSession = await validateMerchant();
+    const merchantSession = await validateMerchant(event.theValidationURL);
     session.completeMerchantValidation(merchantSession);
   };
 
@@ -244,7 +242,7 @@ function applepay(){
 }
 
 
-const validateTheSession = function (theValidationURL, callback) {
+const validateMerchant = theValidationURL => {
   //we send the validation URL to our backend
   try {
     let resp = $fetch(config.public.API_URL + '/applepay/session-validation', {
@@ -256,7 +254,7 @@ const validateTheSession = function (theValidationURL, callback) {
     })
     if (resp.data) {
       console.log('after-validation-success')
-      callback(resp.data)
+      return resp.data
     }
   } catch (error) {
     console.log('validation-error')
