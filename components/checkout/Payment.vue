@@ -149,27 +149,19 @@ function onApplePayButtonClicked() {
   session.onvalidatemerchant = async event => {
     // Call your own server to request a new merchant session.
     const merchantSession = await validateMerchant(event.validationURL);
+    console.table(merchantSession);
+    console.log('153');
     session.completeMerchantValidation(merchantSession);
   };
 
-  // session.onpaymentmethodselected = event => {
-  //   // Define ApplePayPaymentMethodUpdate based on the selected payment method.
-  //   // No updates or errors are needed, pass an empty object.
-  //   const update = {};
-  //   session.completePaymentMethodSelection(update);
-  // };
-  //
-  // session.onshippingmethodselected = event => {
-  //   // Define ApplePayShippingMethodUpdate based on the selected shipping method.
-  //   // No updates or errors are needed, pass an empty object.
-  //   const update = {};
-  //   session.completeShippingMethodSelection(update);
-  // };
-
   session.onpaymentauthorized = event => {
     let applePayToken = event.payment.token;
+    console.table(applePayToken);
+    console.log('160');
 
     pay(applePayToken, function (outcome) {
+      console.table(outcome);
+      console.log('164');
 
       if (outcome) {
         console.log(outcome)
