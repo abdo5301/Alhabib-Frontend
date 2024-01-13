@@ -174,13 +174,13 @@ function onApplePayButtonClicked() {
       if (outcome) {
         console.log(outcome)
         if (outcome.response_code === "14000") {
-          applePaySession.completePayment(applePaySession.STATUS_SUCCESS);
+          session.completePayment(session.STATUS_SUCCESS);
           emits('submit', payment_method)//create order
         } else {
-          applePaySession.completePayment(applePaySession.STATUS_FAILURE);
+          session.completePayment(session.STATUS_FAILURE);
         }
       } else {
-        applePaySession.completePayment(applePaySession.STATUS_FAILURE);
+        session.completePayment(session.STATUS_FAILURE);
         alert('Server Error !');
       }
     })
@@ -192,67 +192,6 @@ function onApplePayButtonClicked() {
 
   session.begin();
 }
-
-function applepay(){
-
-  let applePaySession = new ApplePaySession(6, {
-    countryCode: 'SA',
-    currencyCode: 'SAR',
-    supportedNetworks: ["visa", "masterCard", "amex", "discover", "mada"],
-    merchantCapabilities: ["supports3DS"],
-    total: { label: "alhabibshop", amount: cartTotal.value }
-  });
-  console.log('132')
-  console.table(applePaySession)
-
-  applePaySession.begin();
-
-  console.table(applePaySession)
-  console.log('135')
-
-  //this is the first event that apple triggers.
-  //validate applepay session
-  applePaySession.onvalidatemerchant = function(event){
-    console.log(event)
-    console.log('139')
-
-  };
-
-  applePaySession.onvalidatemerchant = event => {
-    // Call your own server to request a new merchant session.
-    console.log(event)
-    console.log('139')
-    let theValidationURL = event.validationURL;
-    validateTheSession(theValidationURL, function (merchantSession) {
-      console.log('before-validation')
-      applePaySession.completeMerchantValidation(merchantSession);
-    });
-  };
-
-  //this is the trigger after the user confirmed the transaction with Touch ID or face ID
-  //this  will contain the payment token
-  applePaySession.onpaymentauthorized = function (event) {
-    console.log('before-pay')
-    let applePayToken = event.payment.token;
-
-    pay(applePayToken, function (outcome) {
-
-      if (outcome) {
-        console.log(outcome)
-        if (outcome.response_code == "14000") {
-          applePaySession.completePayment(applePaySession.STATUS_SUCCESS);
-          emits('submit', payment_method)//create order
-        } else {
-          applePaySession.completePayment(applePaySession.STATUS_FAILURE);
-        }
-      } else {
-        applePaySession.completePayment(applePaySession.STATUS_FAILURE);
-        alert('Server Error !');
-      }
-    })
-  }
-}
-
 
 const validateMerchant = validationURL => {
   //we send the validation URL to our backend
