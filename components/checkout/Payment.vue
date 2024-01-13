@@ -122,6 +122,8 @@ function onApplePayButtonClicked() {
     return;
   }
 
+  console.log(cartTotal.value)
+
   // Define ApplePayPaymentRequest
   const request = {
     "countryCode": "SA",
@@ -139,7 +141,7 @@ function onApplePayButtonClicked() {
     "total": {
       "label": "alhabibshop",
       "type": "final",
-      "amount": cartTotal.value.toString()
+      "amount": String(cartTotal.value)
     }
   };
 
