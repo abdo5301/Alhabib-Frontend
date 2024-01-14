@@ -159,7 +159,7 @@ function onApplePayButtonClicked() {
     const outcome = await pay(event.payment.token);
     if (outcome) {
       console.log(outcome)
-      if (outcome.response_code === '14000') {
+      if (outcome.response_code === 14000) {
         session.completePayment(session.STATUS_SUCCESS)
         emits('submit', payment_method)//create order
       } else {
