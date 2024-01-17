@@ -161,10 +161,9 @@ function onApplePayButtonClicked() {
       console.log(outcome)
       if (outcome.response_code === "14000") {
         session.completePayment(session.STATUS_SUCCESS)
-        emits('submit', payment_method)//client order
-
-        //setSuccessOrderId(outcome.order_id)//server order
-        //return navigateTo(localePath('/checkout/success'))
+       // emits('submit', payment_method)//client order
+        setSuccessOrderId(outcome.order_id)//server order
+        return navigateTo(localePath('/checkout/success'))
       } else {
         session.completePayment(session.STATUS_FAILURE)
         alert('Payment Failed!')
