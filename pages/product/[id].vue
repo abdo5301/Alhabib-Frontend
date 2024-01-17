@@ -199,8 +199,8 @@ const disable_out_stock_btn = ref(false)
 const product_fetch_data = await useNuxtApp().$apiFetch('/master-products/get?master_product_id=' + route.params.id)
 const product_data = product_fetch_data.data ? product_fetch_data.data : []
 const selected_option = ref({})
-const price = ref(product_data.started_price !== null ? priceFormate(product_data.started_price) : null)
-const discount_price = ref(product_data.started_discounted_price !== null ? priceFormate(product_data.started_discounted_price) : null)
+const price = ref(product_data.started_price ? priceFormate(product_data.started_price) : null)
+const discount_price = ref(product_data.started_discounted_price ? priceFormate(product_data.started_discounted_price) : null)
 const favorite = ref(product_data.favorite)
 
 function getSelectedOption(option_data) {

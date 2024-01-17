@@ -117,6 +117,7 @@ const localePath = useLocalePath()
 const { cartTotal } = useCart()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
+const user_token = await useAuth().getUserToken()
 
 function onApplePayButtonClicked() {
 
@@ -154,7 +155,7 @@ function onApplePayButtonClicked() {
   };
 
   session.onpaymentauthorized = async event => {
-    console.log('160')
+    //console.log('160')
 
     const outcome = await pay(event.payment.token);
     if (outcome) {
@@ -189,7 +190,7 @@ let validateMerchant = async validationURL => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',
-        'Authorization': 'Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34'
+        'Authorization': 'Bearer ' + user_token
       }
     })
 
@@ -208,7 +209,7 @@ let pay = async applePayToken => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',
-        'Authorization': 'Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34'
+        'Authorization': 'Bearer ' + user_token
       }
     })
 
