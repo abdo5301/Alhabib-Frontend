@@ -76,12 +76,10 @@
     <!-- Payment Methods Container -->
     <div v-if='payment_methods_array && payment_methods_array.length > 0' class='flex flex-col gap-[15px]'>
       <!-- Selected Item -->
-      <CheckoutPaymentItem v-for='(method, index) in payment_methods_array' :key='index'
-                           :payment_method_value='method.id'
-                           :payment_method_name='method.title' :payment_method_image='method.image'
-                           :payment_method_code='method.code'
-                           :payment_method_description='method.description' :selected_payment='payment_method'
-                           @payment-value='getPaymentValue' @payment-code='getPaymentCode' />
+      <CheckoutPaymentItem v-for='(method, index) in payment_methods_array' :key='index' :payment_method_value='method.id'
+        :payment_method_name='method.title' :payment_method_image='method.image' :payment_method_code='method.code'
+        :payment_method_description='method.description' :selected_payment='payment_method'
+        @payment-value='getPaymentValue' @payment-code='getPaymentCode' />
     </div>
     <div v-else class='flex items-center justify-center text-gray-700 text-2xl font-semibold'>
       {{ $t('text_empty_payment_methods') }}
@@ -92,14 +90,14 @@
 
     <!-- Order Submit -->
     <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method'
-            @click="$emit('submit', payment_method)"
-            class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
+      @click="$emit('submit', payment_method)"
+      class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
     </button>
 
     <!-- Apple Pay  -->
     <div v-show='selectedApplePayMethod'
-         class='w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center'>
+      class='w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center'>
       <div @click='onApplePayButtonClicked' class='apple-pay-button apple-pay-button-black'></div>
     </div>
   </div>
@@ -115,8 +113,10 @@ const props = defineProps({
 })
 const localePath = useLocalePath()
 const { cartTotal } = useCart()
+const { setSuccessOrderId } = useOrder()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
+const user_token = await useAuth().getUserToken()
 
 function onApplePayButtonClicked() {
 
@@ -154,16 +154,19 @@ function onApplePayButtonClicked() {
   };
 
   session.onpaymentauthorized = async event => {
-    console.log('160')
+    //console.log('160')
 
     const outcome = await pay(event.payment.token);
     if (outcome) {
       console.log(outcome)
       if (outcome.response_code === "14000") {
         session.completePayment(session.STATUS_SUCCESS)
-        emits('submit', payment_method)//create order
+       // emits('submit', payment_method)//client order
+        setSuccessOrderId(outcome.order_id)//server order
+        return navigateTo(localePath('/checkout/success'))
       } else {
         session.completePayment(session.STATUS_FAILURE)
+        alert('Payment Failed!')
       }
     } else {
       session.completePayment(session.STATUS_FAILURE)
@@ -189,7 +192,7 @@ let validateMerchant = async validationURL => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',
-        'Authorization': 'Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34'
+        'Authorization': 'Bearer ' + user_token
       }
     })
 
@@ -208,7 +211,7 @@ let pay = async applePayToken => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',
-        'Authorization': 'Bearer 14|c9nj2xOcbukjoeUJm3OKEMqDCZxptGpehhme1LNa65c08e34'
+        'Authorization': 'Bearer ' + user_token
       }
     })
 

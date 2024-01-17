@@ -1,4 +1,8 @@
 export function useOrder() {
+  const successOrderId = useState('success_order_id', () => 0)
+  const setSuccessOrderId = order_id => {
+    successOrderId.value = order_id
+  }
   async function addOrder(data) {
     try {
       const add_order = await useNuxtApp().$apiFetch('/customer/order/create', {
@@ -26,5 +30,26 @@ export function useOrder() {
     }
   }
 
-  return { addOrder }
+  async function getOrder(order_id) {
+    try {
+      const order_data = await useNuxtApp().$apiFetch(
+        '/customer/order/get?order_id=' + order_id
+      )
+      if (order_data.data && order_data.status) {
+        return order_data.data
+      }
+    } catch (error) {
+      console.log(error.data)
+      if (
+        error.data &&
+        error.data.message &&
+        error.data.message == 'Unauthenticated.'
+      ) {
+        unAuthenticated()
+      }
+      return []
+    }
+  }
+
+  return { successOrderId, setSuccessOrderId, addOrder, getOrder }
 }
