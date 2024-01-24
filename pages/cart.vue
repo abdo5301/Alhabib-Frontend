@@ -8,7 +8,7 @@
     </template>
     <div class="pb-[104px]">
       <!-- Empty Cart -->
-      <CartPageEmpty v-if="!cartCount">
+      <CartPageEmpty v-if="!cart_data.cart_items || !cart_data.cart_items.length">
         {{ $t('empty_cart_text') }}
       </CartPageEmpty>
 
@@ -110,5 +110,6 @@ onMounted(async () => {
 
   emptyText.value = t('empty_cart_text')
 })
+// console.log(cartCount.value)
 const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
 </script>
