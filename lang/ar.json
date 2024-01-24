@@ -185,6 +185,31 @@
   "register_error_phone_exist":"يبدو أن لديك حساب مسجل مسبقًا على هذا الرقم،",
   "register_error_email_exist":"يبدو أن لديك حساب مسجل مسبقًا على هذا البريد،",
   "free":"مجاني",
-  "text_empty_payment_methods":"عذراً، طرق الدفع غير متوفرة"
+  "text_empty_payment_methods":"عذراً، طرق الدفع غير متوفرة",
+  "text_thank_you":"شكرا لك!", 
+  "checkout_success_notes1":"تم استلام طلبك رقم ", 
+  "checkout_success_notes2":" بنجاح!", 
+  "checkout_success_notes3":" تفاصيل طلبك أرسلت على الإيميل",
+  "text_order_number":"رقم الطلب",
+  "text_order_date":"تاريخ الطلب",
+  "checkout_success_order_details_show":"إظهار التفاصيل",
+  "checkout_success_order_details_hide":"إخفاء التفاصيل",
+  "checkout_success_shipping_title":"متى سيصلك الطلب؟",
+  "checkout_success_shipping_details":"توصيل الطلبات يستغرق من 3 إلى 8 أيام عمل",
+  "checkout_success_shipping_tracking_title":"كيف تتبع شحنتك؟",
+  "checkout_success_shipping_tracking_subtitle":"يمكنك تتبعها عن طريق:",
+  "checkout_success_shipping_tracking_step1_title":"الضغط على زر ",
+  "checkout_success_shipping_tracking_step1_notes":"يمكنك العثور عليه دائما في موقعنا وتطبيقنا بصفحة حسابي > الطلبات",
+  "checkout_success_shipping_tracking_step2_title1":"رسائل الواتساب",
+  "checkout_success_shipping_tracking_step2_title2":"في حال اشتراكك:",
+  "checkout_success_support_title":"تحتاج لمساعدة اخرى؟",
+  "text_subscription":"اشتراك",
+  "text_track":"تتبع الشحنة",
+  "text_order_details":"تفاصيل الطلب",
+  "text_personal_info":"المعلومات الشخصية",
+  "products_title":"المنتجات ",
+  "text_tax_invoice":"فاتورة ضريبية مبسطة",
+  "text_copy":"نسخ"
+
 
 }
