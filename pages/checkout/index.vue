@@ -54,7 +54,7 @@
           <!-- Address -->
           <CheckoutAddress :step="current_step" @next-step="getNextStep" @save-address="saveAddress" />
           <!-- Payment -->
-          <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" @submit="saveOrder" />
+          <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" :address_id="address_id" @submit="saveOrder" />
         </div>
       </div>
 

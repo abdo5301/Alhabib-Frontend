@@ -109,6 +109,9 @@ const props = defineProps({
   step: {
     type: String,
     default: 'add_address'
+  },
+  address_id: {
+    type: Number
   }
 })
 const localePath = useLocalePath()
@@ -117,7 +120,26 @@ const { setSuccessOrderId } = useOrder()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
 const user_token = await useAuth().getUserToken()
+const payment_method = ref(0)
+const { allPaymentMethods } = usePaymentMethod()
+const payment_methods_array = ref(await allPaymentMethods())
 
+function getWalletStatus(status) {
+  console.log('Wallet Status: ' + status)
+}
+
+function getPaymentValue(value) {
+  payment_method.value = value
+}
+
+function getPaymentCode(code) {
+  if (code == 'applepay') {
+    selectedApplePayMethod.value = true
+  } else {
+    selectedApplePayMethod.value = false
+  }
+}
+// Apple Pay Select
 function onApplePayButtonClicked() {
 
   if (!ApplePaySession) {
@@ -161,7 +183,7 @@ function onApplePayButtonClicked() {
       console.log(outcome)
       if (outcome.response_code === "14000") {
         session.completePayment(session.STATUS_SUCCESS)
-       // emits('submit', payment_method)//client order
+        // emits('submit', payment_method)//client order
         setSuccessOrderId(outcome.order_id)//server order
         return navigateTo(localePath('/checkout/success'))
       } else {
@@ -180,7 +202,7 @@ function onApplePayButtonClicked() {
 
   session.begin()
 }
-
+// Apple Pay Validation
 let validateMerchant = async validationURL => {
   //we send the validation URL to our backend
   try {
@@ -200,13 +222,17 @@ let validateMerchant = async validationURL => {
     console.log(error)
   }
 }
-
+// Apple Pay Confirm 
 let pay = async applePayToken => {
   try {
     return await $fetch(config.public.API_URL + '/applepay/payment-completed', {
       method: 'POST',
       body: {
-        applePayToken: applePayToken
+        applePayToken: applePayToken,
+        address_id: props.address_id,
+        payment_gateway_id: payment_method.value,
+        gifted: "0",
+        gift_phrase: ""
       },
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -216,30 +242,8 @@ let pay = async applePayToken => {
     })
 
   } catch (error) {
-    console.log('after-pay-error')
     console.log(error)
   }
 }
 
-const { allPaymentMethods } = usePaymentMethod()
-
-const payment_methods_array = ref(await allPaymentMethods())
-
-const payment_method = ref(0)
-
-function getWalletStatus(status) {
-  console.log('Wallet Status: ' + status)
-}
-
-function getPaymentValue(value) {
-  payment_method.value = value
-}
-
-function getPaymentCode(code) {
-  if (code == 'applepay') {
-    selectedApplePayMethod.value = true
-  } else {
-    selectedApplePayMethod.value = false
-  }
-}
 </script>

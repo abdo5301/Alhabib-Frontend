@@ -57,7 +57,7 @@
       </div>
       <!-- Card -->
       <div v-if="cart_btn" class="w-full flex flex-col justify-end flex-1">
-        <Button type="button" color="black"
+        <Button type="button" color="black" @click="navigateTo(localPath('/product/'+id))"
           class="items-center justify-center font-extrabold lg:text-sm text-xs shadow-sm text-white">{{
             $t('home_products_cart_btn') }}</Button>
       </div>
