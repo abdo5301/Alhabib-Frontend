@@ -9,7 +9,7 @@ module.exports = {
       // script: './.output/server/index.mjs'
       script: './start.js',
       env: {
-        HOST: 'localhost',
+        HOST: '127.0.0.1',
         PORT: 3000
       }
     }
