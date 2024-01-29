@@ -6,11 +6,6 @@ module.exports = {
       exec_mode: 'cluster',
       instances: 'max',
       script: './.output/server/index.mjs'
-      // script: './start.js',
-      // env: {
-      //   HOST: 'localhost',
-      //   PORT: 3000
-      // }
     }
   ]
 }
