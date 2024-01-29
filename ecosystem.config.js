@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'frontend.alhabibshop.com',
+      name: 'test.front.alhabibshop.com',
       port: '3000',
       exec_mode: 'cluster',
       instances: 'max',
