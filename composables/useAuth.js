@@ -52,6 +52,30 @@ export function useAuth() {
     return false
   }
 
+  async function userLogout() {
+    const nuxt = useNuxtApp()
+    if (process.client) {
+      try {
+        await useNuxtApp().$apiFetch('/customer/logout', {
+          method: 'POST',
+        })
+      } catch (error) {
+        console.log(error.data)
+        if (
+          error.data &&
+          error.data.message &&
+          error.data.message == 'Unauthenticated.'
+        ) {
+          unAuthenticated()
+        }
+        return []
+      } finally {
+        removeUser()
+        window.location.pathname = nuxt.$localePath('/auth/login-phone')
+      }
+    }
+  }
+
   function removeUser() {
     if (process.client) {
       localStorage.removeItem('user_token')
@@ -73,6 +97,7 @@ export function useAuth() {
     removeUser,
     getUserData,
     setUserOTP,
+    userLogout,
     isLoggedIn,
   }
 }
