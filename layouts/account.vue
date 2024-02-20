@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700&display=swap');
 
 input[type='password'] {
-  font-family: 'Verdana';
-  font-size: 16px;
-  font-weight: 700;
+  font-family: 'Inter';
+  font-size: 12px;
+  font-weight: 400;
   letter-spacing: 0;
 }
 </style>

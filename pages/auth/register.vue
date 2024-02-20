@@ -38,7 +38,7 @@
           @phone-country="getPhoneCountry" :error_text="phone_error" input_aria_describedby="input-phone-error" />
         <Input v-model="email" :label_name="$t('label_email')" label_for="input-email" input_id="input-email"
           input_name="email" input_type="email" input_dir="ltr" input_placeholder="e.g.you@gmail.com"
-          :error_text="email_error" input_aria_describedby="input-phone-error" />
+          :error_text="email_error" input_aria_describedby="input-email-error" />
         <Input v-model="password" :label_name="$t('label_password')" :label_notes="$t('label_password_notes')"
           label_for="input-password" input_id="input-password" input_name="password" input_type="password"
           :input_password="true" :error_text="password_error" input_aria_describedby="input-password-error" />

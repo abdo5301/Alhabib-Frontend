@@ -54,15 +54,14 @@
 <script setup>
 import { initFlowbite } from 'flowbite'
 definePageMeta({ layout: 'account', middleware: ['auth'] })
+const website_name = useState('website_name')
+const localePath = useLocalePath()
 const { setActiveSection } = useAccount()
+const newsletter_sub = ref("no")
+const whatsapp_sub = ref("no")
 onMounted(() => {
   initFlowbite()
   setActiveSection('subscribe')
 })
-const website_name = useState('website_name')
-const route = useRoute()
-const localePath = useLocalePath()
-const newsletter_sub = ref("no")
-const whatsapp_sub = ref("no")
 
 </script>

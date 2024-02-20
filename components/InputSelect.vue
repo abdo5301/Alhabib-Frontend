@@ -1,11 +1,11 @@
 <template>
-  <div class="w-full flex flex-col gap-2.5 lg:gap-3">
-    <label :for="input_id"
+  <div class="flex flex-col gap-2.5 lg:gap-3">
+    <label v-if="label_show" :for="input_id"
       :class="['block text-sm lg:text-lg font-semibold text-gray-700 leading-5', label_style ? label_style : '']">
       <slot />
     </label>
     <select :id="input_id" @change="$emit('update:modelValue', $event.target.value),$emit('selectCallBack',$event.target.value)"
-      :class="['bg-white cursor-pointer min-w-[120px] border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-full px-3 py-2', input_style ? input_style : '']">
+      :class="['bg-white cursor-pointer border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-full min-w-[120px] px-3 py-2', input_style ? input_style : '']">
       <option v-for="option, index in select_data"
         :value="option_index_value ? option[option_index_value] : JSON.stringify(option)"
         :selected="(default_selected == option[option_index_value] || default_selected == JSON.stringify(option)) ? default_selected : false"
@@ -46,6 +46,10 @@ const props = defineProps({
   label_style: {
     type: String
   },
+  label_show: {
+    type: Boolean,
+    default: true
+  },
   select_notes: {
     type: Boolean,
     default: false
@@ -54,6 +58,9 @@ const props = defineProps({
     type: String
   },
   error_text: {
+    type: String
+  },
+  error_text_style: {
     type: String
   },
 })

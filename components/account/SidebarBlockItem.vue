@@ -18,10 +18,10 @@
   </NuxtLink>
   <!-- Delete Account Popup -->
   <AccountPopup popup_id="delete-account-popup-modal" popup_type="confirm" popup_data_type="delete"
-    :popup_title="$t('popup_delete_account_confirm')" :popup_confirm_accept="$t('delete_account_title')"
-    :popup_confirm_reject="$t('popup_back_title')" @accept-confirm="console.log('customer deleted !')">
+    :popup_confirm_accept="$t('delete_account_title')" :popup_confirm_reject="$t('popup_back_title')"
+    @accept-confirm="console.log('customer deleted !')">
     {{ $t('popup_delete_account_confirm') }}
-    </AccountPopup>
+  </AccountPopup>
 </template>
 
 <script setup>

@@ -10,8 +10,8 @@
             <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
           </div>
         </template>
-        <AccountDashboardBlock :block_type="'address'" :block_title="$t('text_personal_info')"
-          :block_edit_link="localePath('/account')">
+        <AccountDashboardBlock :block_type="'info'" :block_title="$t('text_personal_info')"
+          :block_edit_link="localePath('/account/info')">
           <div class="w-full flex flex-1 flex-col justify-start gap-y-5">
             <AccountDashboardBlockItem v-if="customerName" :item_title="$t('label_full_name')"
               :item_content="customerName" />

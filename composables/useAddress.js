@@ -69,23 +69,25 @@ export function useAddress() {
   }
 
   async function getAddress(address_id) {
-    try {
-      const address = await useNuxtApp().$apiFetch(
-        '/customer/address/get?address_id=' + address_id
-      )
-      if (address.data && address.status) {
-        return address.data
+    if (process.client) {
+      try {
+        const address = await useNuxtApp().$apiFetch(
+          '/customer/address/get?address_id=' + address_id
+        )
+        if (address.data && address.status) {
+          return address.data
+        }
+      } catch (error) {
+        console.log(error.data)
+        if (
+          error.data &&
+          error.data.message &&
+          error.data.message == 'Unauthenticated.'
+        ) {
+          localStorage.removeItem('user_token')
+        }
+        return []
       }
-    } catch (error) {
-      console.log(error.data)
-      if (
-        error.data &&
-        error.data.message &&
-        error.data.message == 'Unauthenticated.'
-      ) {
-        unAuthenticated()
-      }
-      return []
     }
   }
 
@@ -150,6 +152,27 @@ export function useAddress() {
     }
   }
 
+  async function deleteAddress(address_id) {
+    try {
+      const delete_address = await useNuxtApp().$apiFetch(
+        '/customer/address/delete?address_id='+address_id,
+        {
+          method: 'Delete',
+        }
+      )
+    } catch (error) {
+      console.log(error.data)
+      if (
+        error.data &&
+        error.data.message &&
+        error.data.message == 'Unauthenticated.'
+      ) {
+        unAuthenticated()
+      }
+      return []
+    }
+  }
+
   async function defaultAddress() {
     const allAddresses = await getAllAddresses()
     if (allAddresses && allAddresses.length > 0) {
@@ -183,6 +206,7 @@ export function useAddress() {
     getAddress,
     addAddress,
     editAddress,
+    deleteAddress,
     defaultAddress,
     getAreaId,
   }

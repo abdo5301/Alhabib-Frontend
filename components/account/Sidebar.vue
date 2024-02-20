@@ -26,6 +26,7 @@ const { activeSection } = useAccount()
 const localePath = useLocalePath()
 const { $i18n } = useNuxtApp();
 const t = $i18n.t
+
 const sidebar_array = [
   {
     title: '',
@@ -34,13 +35,13 @@ const sidebar_array = [
       {
         name: t('rewards_title'),
         key: 'rewards',
-        link: localePath('/account'),
+        link: localePath('/account/rewards'),
         icon: '/images/account/brand-icon.png'
       },
       {
         name: t('wallet_title'),
         key: 'wallet',
-        link: localePath('/account'),
+        link: localePath('/account/wallet'),
         icon: '/images/account/wallet-icon.png'
       }
     ]
@@ -58,7 +59,7 @@ const sidebar_array = [
       {
         name: t('return_title'),
         key: 'return',
-        link: localePath('/account'),
+        link: localePath('/account/return'),
         icon: '/images/account/return-icon.png'
       }
     ]
@@ -70,19 +71,19 @@ const sidebar_array = [
       {
         name: t('text_personal_info'),
         key: 'edit_personal_info',
-        link: localePath('/account'),
+        link: localePath('/account/info'),
         icon: '/images/account/user-icon.png'
       },
       {
         name: t('edit_password_title'),
         key: 'edit_password',
-        link: localePath('/account'),
+        link: localePath('/account/password'),
         icon: '/images/account/password-icon.png'
       },
       {
         name: t('address_directory_title'),
         key: 'address',
-        link: localePath('/account'),
+        link: localePath('/account/address'),
         icon: '/images/account/address-icon.png'
       }
     ]

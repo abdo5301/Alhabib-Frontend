@@ -27,7 +27,7 @@ export function useCustomer() {
 
   async function editCustomer(data) {
     try {
-      await useNuxtApp().$apiFetch('/customer/edit', {
+      return await useNuxtApp().$apiFetch('/customer/edit', {
         method: 'PATCH',
         body: {
           name: data.name,
@@ -37,12 +37,25 @@ export function useCustomer() {
       })
     } catch (error) {
       console.log(error.data)
-      if (
-        error.data &&
-        error.data.message &&
-        error.data.message == 'Unauthenticated.'
-      ) {
-        unAuthenticated()
+      if (error.data) {
+        return error.data
+      }
+    }
+  }
+
+  async function editPassword(data) {
+    try {
+      return await useNuxtApp().$apiFetch('/customer/edit', {
+        method: 'PATCH',
+        body: {
+          password: data.password,
+          password_confirmation: data.confirm_password,
+        },
+      })
+    } catch (error) {
+      console.log(error.data)
+      if (error.data) {
+        return error.data
       }
     }
   }
@@ -99,6 +112,7 @@ export function useCustomer() {
     getCustomer,
     editCustomer,
     deleteCustomer,
+    editPassword,
     customerName,
     customerEmail,
     customerMobile,
