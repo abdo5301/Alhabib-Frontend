@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mx-auto container flex-col justify-center items-center px-[22px] lg:px-[75px] pb-20">
+  <div class="flex mx-auto container flex-col justify-center items-center px-[22px] lg:px-[75px] pb-20 pt-8">
     <h3 class="text-gray-700 text-xl lg:text-[34px] leading-4 font-bold lg:pb-9 pb-3">
       {{ $t('home_customer_image_title') }}
     </h3>

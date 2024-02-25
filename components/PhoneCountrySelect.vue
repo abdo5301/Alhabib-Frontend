@@ -48,10 +48,6 @@ const countries = [
   {
     'key': '+966',
     'img': '/images/ar-flag.svg'
-  },
-  {
-    'key': '+9665',
-    'img': '/images/ar-flag.svg'
   }
 ]
 const { t } = useI18n()

@@ -49,7 +49,7 @@
       :class="['w-full pt-[10px] flex items-center justify-start text-[#6C6C6C] text-sm lg:text-base font-normal tracking-tight', input_notes_style ? input_notes_style : '']">
       <slot />
     </span>
-    <p v-if="error_text && input_aria_describedby" class="mt-2 text-sm text-red-600" :id="input_aria_describedby">{{
+    <p v-if="error_text && input_aria_describedby" :class="['mt-2 text-sm text-red-600',error_text_style ? error_text_style : '']" :id="input_aria_describedby">{{
       error_text }}</p>
   </div>
 </template>
@@ -73,7 +73,7 @@ const otpCountDown = ref(false);
 
 onMounted(() => {
   if (props.input_phone_otp) {
-       CountDown(59,true)
+    CountDown(59, true)
     //resendOtp.value.click();
   }
 })
@@ -173,6 +173,10 @@ const props = defineProps({
     type: String,
   },
   error_text: {
+    type: String,
+    default: null
+  },
+  error_text_style: {
     type: String,
     default: null
   }

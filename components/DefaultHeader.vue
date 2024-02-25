@@ -24,7 +24,7 @@
 
             <!-- Right Section -->
             <div class="flex items-center w-1/3">
-              <MobileNavbarMenu :menu_data="navigation">
+              <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
               </MobileNavbarMenu>
 
               <div class="hidden lg:flex lg:items-center">
@@ -134,7 +134,7 @@
 
           </div>
 
-          <DesktopNavbarMenu :menu_data="navigation"></DesktopNavbarMenu>
+          <DesktopNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation"></DesktopNavbarMenu>
 
           <!-- Mobile DropDown Menu Search -->
           <div id="mobileDropdownSearch"
@@ -173,7 +173,7 @@
 </template>
 
 <script setup>
-import { Drawer } from 'flowbite';
+import { Drawer, initFlowbite } from 'flowbite';
 const page_scrolled = ref(false);
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -183,6 +183,7 @@ const route = useRoute()
 const cartDrawer = ref()
 const { cartData, cartPopUpKey, setCartData } = useCart()
 const cart_data = ref([])
+const navigation = ref([])
 onMounted(async () => {
   window.addEventListener("scroll", () => {
     var curr = window.scrollY;
@@ -208,7 +209,11 @@ onMounted(async () => {
     setCartData(cart_data.value)
   }
 })
+try {
+  navigation.value = await useNuxtApp().$apiFetch('/categories')
+} catch (error) {
+  console.log(error.data)
+}
 
 const search = ref('');
-const navigation = await useNuxtApp().$apiFetch('/categories')
 </script>
