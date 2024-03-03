@@ -1,3 +1,5 @@
+import registerVue from '~/pages/auth/register.vue'
+
 export function useOrder() {
   const successOrderId = useState('success_order_id', () => 0)
   const setSuccessOrderId = order_id => {
@@ -31,12 +33,68 @@ export function useOrder() {
   }
 
   async function getOrder(order_id) {
+    if (process.client) {
+      try {
+        const order_data = await useNuxtApp().$apiFetch(
+          '/customer/order/get?order_id=' + order_id
+        )
+        if (order_data.data && order_data.status) {
+          return order_data.data
+        }
+      } catch (error) {
+        console.log(error.data)
+        if (
+          error.data &&
+          error.data.message &&
+          error.data.message == 'Unauthenticated.'
+        ) {
+          unAuthenticated()
+        }
+        return []
+      }
+    }
+  }
+
+  async function getAllOrders(type = 'all') {
+    if (process.client) {
+      var url = '/customer/order/get-all'
+      if (type == 'current') {
+        url =
+          '/customer/order/get-all?state[]=payment_verification&state[]=pending&state[]=processing&state[]=ready_to_ship&state[]=review&state[]=branch_review&state[]=shipped'
+      } else if (type == 'previous') {
+        url =
+          '/customer/order/get-all?state[]=branch_order&state[]=completed&state[]=canceled&state[]=refunded'
+      } else {
+        url = '/customer/order/get-all'
+      }
+      try {
+        const orders = await useNuxtApp().$apiFetch(url)
+        if (orders.data) {
+          return orders.data
+        }
+      } catch (error) {
+        console.log(error.data)
+        if (
+          error.data &&
+          error.data.message &&
+          error.data.message == 'Unauthenticated.'
+        ) {
+          localStorage.removeItem('user_token')
+        }
+        return []
+      }
+    }
+  }
+
+  async function cancelOrder(order_id) {
     try {
-      const order_data = await useNuxtApp().$apiFetch(
-        '/customer/order/get?order_id=' + order_id
+      const response = await useNuxtApp().$apiFetch(
+        '/customer/order/cancel?order_id=' + order_id
       )
-      if (order_data.data && order_data.status) {
-        return order_data.data
+      if (response.status == true) {
+        return true
+      } else {
+        return false
       }
     } catch (error) {
       console.log(error.data)
@@ -47,9 +105,16 @@ export function useOrder() {
       ) {
         unAuthenticated()
       }
-      return []
+      return false
     }
   }
 
-  return { successOrderId, setSuccessOrderId, addOrder, getOrder }
+  return {
+    successOrderId,
+    setSuccessOrderId,
+    addOrder,
+    getOrder,
+    getAllOrders,
+    cancelOrder,
+  }
 }

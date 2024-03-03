@@ -2,15 +2,16 @@
   <div class="relative w-full py-[5px] px-[7px] flex gap-16 justify-start items-center bg-[#FBFBFB] rounded-lg">
     <div class="flex justify-start items-center gap-3 lg:w-[300px] w-[150px]">
       <img :src="item_icon" class="w-[36px] h-[36px]" alt="wallet-transaction">
-      <span :class="['text-gray-700 lg:text-sm text-xs font-bold leading-5',item_expire_date ? 'lg:mb-0 mb-3' : '']">{{ item_name }}</span>
+      <span :class="['text-gray-700 lg:text-sm text-xs font-bold leading-5', item_expire_date ? 'lg:mb-0 mb-3' : '']">{{
+        item_name }}</span>
     </div>
     <div class="flex-1 flex justify-between items-center">
       <span class="text-gray-700 text-xs lg:text-sm leading-5 font-normal">
-        {{ item_date }}
+        {{ format(new Date(item_date), "yyyy/MM/dd") }}
       </span>
       <span dir="ltr"
-        :class="['flex gap-1 text-sm font-bold leading-5', item_addition == 'plus' ? 'text-[#00AB77]' : 'text-[#C72929]']">
-        <span>{{ item_addition == 'plus' ? '+' : '-' }}</span><span>{{ item_amount }}</span>
+        :class="['flex gap-1 text-sm font-bold leading-5', item_type == 'add' ? 'text-[#00AB77]' : 'text-[#C72929]']">
+        <span>{{ item_type == 'add' ? '+' : '-' }}</span><span>{{ item_amount }}</span>
       </span>
     </div>
     <div v-if="item_expire_date"
@@ -19,13 +20,14 @@
         {{ $t('wallet_valid_until') }}
       </span>
       <span class="font-semibold">
-        {{ item_expire_date }}
+        {{ format(new Date(item_expire_date), "yyyy/MM/dd") }}
       </span>
     </div>
   </div>
 </template>
 
 <script setup>
+import { format } from "date-fns";
 const props = defineProps({
   item_id: {
     type: Number,
@@ -36,43 +38,42 @@ const props = defineProps({
   item_date: {
     type: String,
   },
+  item_class: {
+    type: String,
+  },
   item_type: {
     type: String,
+    default: 'add'
   },
   item_expire_date: {
     type: String,
   }
 })
 const { t } = useI18n()
-const item_name = ref('---')
-const item_addition = ref('plus')
+const item_name = ref(props.item_class)
 const item_icon = ref('/images/icons/cube-dark.png')
 onMounted(() => {
-  switch (props.item_type) {
-    case 'credit_added':
-      item_name.value = t('wallet_added_balance_title')
-      item_addition.value = 'plus'
-      item_icon.value = '/images/icons/plus-green.png'
+  switch (props.item_class) {
+    case 'credit':
+      if (props.item_type == 'add') {
+        item_name.value = t('wallet_added_balance_title')
+        item_icon.value = '/images/icons/plus-green.png'
+      }else{
+        item_name.value = t('wallet_discount_balance_title')
+        item_icon.value = '/images/icons/cube-dark.png'
+      }
       break;
-    case 'buy':
+    case 'purchase':
       item_name.value = t('wallet_buy_process_title')
-      item_addition.value = 'minus'
       item_icon.value = '/images/icons/cube-dark.png'
       break;
-    case 'alrajhi':
+    case 'alrajhi_mokafaa_credit':
       item_name.value = t('wallet_alrjhi_mokafaa_title')
-      item_addition.value = 'plus'
       item_icon.value = '/images/icons/alrajhi-blue.png'
       break;
-    case 'temporary':
+    case 'temporary_credit':
       item_name.value = t('wallet_temporary_balance_title')
-      item_addition.value = 'plus'
       item_icon.value = '/images/icons/gift-red.png'
-      break;
-    case 'credit_discount':
-      item_name.value = t('wallet_discount_balance_title')
-      item_addition.value = 'mins'
-      item_icon.value = '/images/icons/cube-dark.png'
       break;
     default:
       break;

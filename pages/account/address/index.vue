@@ -18,9 +18,10 @@
         <!-- View All -->
         <div :key="items_key" class="w-full flex flex-col lg:gap-[25px] gap-10">
           <!-- Addresses Items -->
-          <AccountAddressItem @change-default="refresh_items" v-if="all_addresses.length" v-for="(item, index) in all_addresses"
-            :key="index" :item_id="item.id" :item_country="item.country" :item_region="item.region" :item_city="item.city"
-            :item_neighborhood="item.neighborhood" :item_street="item.street" :item_default="item.default">
+          <AccountAddressItem @change-default="refresh_items" v-if="all_addresses.length"
+            v-for="(item, index) in all_addresses" :key="index" :item_id="item.id" :item_country="item.country"
+            :item_region="item.region" :item_city="item.city" :item_neighborhood="item.neighborhood"
+            :item_street="item.street" :item_default="item.default">
             <!-- Delete Address Confirm Popup -->
             <AccountPopup v-if="!item.default" :popup_id="'delete-address-popup-modal-' + item.id" popup_type="confirm"
               popup_data_type="cancel-warning" :popup_confirm_accept="$t('popup_delete_address_title')"
@@ -52,7 +53,7 @@
             <img class="w-12 h-12px" src="/images/icons/true-green.png" alt="success">
             <!-- title -->
             <h3 class="text-gray-900 font-medium text-lg leading-9">
-              {{ $t('popup_delete_address_confirm') }}
+              {{ $t('popup_delete_address_success') }}
             </h3>
           </div>
         </div>
@@ -89,15 +90,6 @@ onMounted(async () => {
     backdropClasses:
       'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
     closable: true,
-    onHide: () => {
-      console.log('modal is hidden');
-    },
-    onShow: () => {
-      console.log('modal is shown');
-    },
-    onToggle: () => {
-      console.log('modal has been toggled');
-    },
   };
   delete_success_modal.value = new Modal($delete_success_popup, delete_success_popup_options);
 })
@@ -111,6 +103,6 @@ async function delete_address(address_id) {
 const items_key = ref(256)
 async function refresh_items() {
   all_addresses.value = await useAddress().getAllAddresses()
-  items_key.value +=21
+  items_key.value += 21
 }
 </script>

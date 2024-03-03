@@ -272,5 +272,17 @@
   "order_cancel_date_notes":"تم إلغاء الطلب في ",
   "order_complete_date_notes":"تم تسليمه في ",
   "order_return_btn":"إسترجاع منتج",
-  "order_product_evaluation_btn":"تقييم المنتجات"
+  "order_product_evaluation_btn":"تقييم المنتجات",
+  "order_details_title":"تفاصيل الطلب",
+  "order_status_title":"حالة الطلب",
+  "shipping_company_title":"شركة الشحن",
+  "shipping_number_title":"رقم الشحنة",
+  "shipping_contact_title":"رقم التواصل",
+  "order_total_title":"مجموع الطلب",
+  "wallet_credit_title":"رصيد المحفظة",
+  "details_title":"التفاصيل",
+  "popup_cancel_order_confirm":"هل انت متأكد من رغبتك في إلغاء هذا الطلب؟",
+  "popup_cancel_order_success":"تم الغاء الطلب بنجاح",
+  "popup_cancel_order_success_notes":"نرجو منك مراجعة بريدك الإلكتروني، سوف يتم تواصل خدمة العملاء معك لإرجاع قيمة الطلب إلى حسابك البنكي"
+
 }

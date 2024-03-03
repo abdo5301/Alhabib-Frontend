@@ -1,12 +1,10 @@
 <template>
   <Title>{{ $t('cart_title') }} | {{ website_name }}</Title>
-  <ClientOnly>
-    <template #fallback>
-      <div class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
-        <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[110px]" />
-      </div>
-    </template>
-    <div class="pb-[104px]">
+  <div v-if="data_loader" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
+    <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[110px]" />
+  </div>
+  <div v-show="!data_loader" class="pb-[104px]">
+    <ClientOnly>
       <!-- Empty Cart -->
       <CartPageEmpty v-if="!cart_data.cart_items || !cart_data.cart_items.length">
         {{ $t('empty_cart_text') }}
@@ -79,15 +77,13 @@
       </div>
 
       <!-- Favorite Products -->
-      <div v-if="favorite_products.data" class="hidden lg:flex justify-start w-full pt-16 px-9">
+      <div v-if="favorite_products.data && favorite_products.data.length" class="hidden lg:flex justify-start w-full pt-16 px-9">
         <ProductRelatedProducts :products="favorite_products.data">
           {{ $t('favorite_title') }}
         </ProductRelatedProducts>
       </div>
-
-    </div>
-    
-  </ClientOnly>
+    </ClientOnly>
+  </div>
 </template>
 
 <script setup>
@@ -100,16 +96,20 @@ const website_name = useState('website_name');
 const localePath = useLocalePath()
 const { t } = useI18n()
 const discount_code = ref('');
+const data_loader = ref(true)
 onMounted(async () => {
   initFlowbite();
 
   cart_data.value = await useCart().getAll()
   if (cart_data.value && cart_data.value.id) {
     setCartData(cart_data.value)
-  } 
+  }
 
   emptyText.value = t('empty_cart_text')
+
+  data_loader.value = false
 })
 // console.log(cartCount.value)
 const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
+console.log(favorite_products)
 </script>

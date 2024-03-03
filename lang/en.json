@@ -269,5 +269,17 @@
   "order_cancel_date_notes":"The order has been cancelled at ",
   "order_complete_date_notes":"It was delivered in ",
   "order_return_btn":"Return product",
-  "order_product_evaluation_btn":"Product evaluation"
+  "order_product_evaluation_btn":"Product evaluation",
+  "order_details_title":"Order Details",
+  "order_status_title":"Order Status",
+  "shipping_company_title":"Shipping Company",
+  "shipping_number_title":"Shipping Number",
+  "shipping_contact_title":"Shipping Phone",
+  "order_total_title":"Order Total",
+  "wallet_credit_title":"Wallet Credit",
+  "details_title":"Details",
+  "popup_cancel_order_confirm":"Are you sure you want to cancel this order?",
+  "popup_cancel_order_success":"Order successfully cancelled",
+  "popup_cancel_order_success_notes":"Please check your email. Customer Service will contact you to return the order value to your bank account"
+
 }
