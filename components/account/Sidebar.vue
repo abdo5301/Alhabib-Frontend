@@ -4,11 +4,11 @@
     <!-- Title -->
     <h2 class="text-black lg:text-3xl text-2xl font-bold leading-6">{{ $t('account_title') }}</h2>
     <!-- Welcome -->
-    <div class="flex justify-start items-center gap-[5px] lg:gap-3 text-black text-xl lg:text-2xl">
+    <div v-if="customer && customer.name" class="flex justify-start items-center gap-[5px] lg:gap-3 text-black text-xl lg:text-2xl">
       <span class="font-semibold lg:font-medium">
         {{ $t('account_text_welcome') }}
       </span>
-      <span class="font-bold"> عبدالرحمن </span>
+      <span class="font-bold"> {{ customer.name }} </span>
     </div>
     <!-- Sidebar Links -->
     <div class="flex flex-col lg:gap-7 gap-[22px] w-full py-[30px] bg-white rounded-md shadow-lg">
@@ -26,7 +26,11 @@ const { activeSection } = useAccount()
 const localePath = useLocalePath()
 const { $i18n } = useNuxtApp();
 const t = $i18n.t
-
+const props = defineProps({
+  customer: {
+    type: Object
+  }
+})
 const sidebar_array = [
   {
     title: '',

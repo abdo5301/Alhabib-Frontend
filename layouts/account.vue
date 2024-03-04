@@ -19,7 +19,7 @@ input[type='password'] {
       <div class="w-full flex justify-center">
         <div
           class="lg:my-[55px] my-5 flex flex-col lg:flex-row lg:gap-[100px] justify-start h-auto w-full max-w-[1260px]">
-          <AccountSidebar :key="'AccountSideKey-' + sideBarKey" />
+          <AccountSidebar :customer="customerData" :key="'AccountSideKey-' + sideBarKey" />
           <!-- Page Content -->
           <slot />
         </div>
