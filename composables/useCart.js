@@ -150,6 +150,12 @@ export function useCart() {
     return cartData.value && cartData.value.tax ? cartData.value.tax : 0
   })
 
+  const cartWalletCredit = computed(() => {
+    return cartData.value && cartData.value.wallet_credit
+      ? cartData.value.wallet_credit
+      : 0
+  })
+
   return {
     getAll,
     addItem,
@@ -165,5 +171,6 @@ export function useCart() {
     cartSubtotal,
     cartShipping,
     cartTax,
+    cartWalletCredit,
   }
 }

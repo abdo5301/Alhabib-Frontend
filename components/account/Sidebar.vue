@@ -59,7 +59,7 @@ const sidebar_array = [
       {
         name: t('return_title'),
         key: 'return',
-        link: localePath('/account/return'),
+        link: localePath('/account/order'),
         icon: '/images/account/return-icon.png'
       }
     ]
