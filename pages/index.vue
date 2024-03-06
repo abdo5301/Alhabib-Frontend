@@ -19,7 +19,7 @@
 
 <script setup>
 import { initFlowbite } from 'flowbite'
-const home_fetch_data = ref('')
+const home_fetch_data = ref({})
 onMounted(async () => {
   initFlowbite()
 })
@@ -28,6 +28,6 @@ try {
 } catch (error) {
   console.log(error.data)
 }
-const home_data = home_fetch_data.status && home_fetch_data.status == true ? home_fetch_data.data : []
-// console.log(home_data)
+const home_data = home_fetch_data.value.status && home_fetch_data.value.status == true ? home_fetch_data.value.data : []
+// console.log(home_fetch_data.value)
 </script>
