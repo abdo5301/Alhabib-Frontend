@@ -54,8 +54,9 @@ export default defineNuxtConfig({
     public: {
       // BASE_URL:'',
       // API_URL: 'https://backend.alhabibshop.com/api/v1',//Production
-      API_URL: 'https://test.admin.alhabibshop.com/api/v1',//Test
-      TAPPY_PUBLIC_KEY: 'pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d',//tabby p_k
+      API_URL: process.env.NUXT_API_BASE,//Test
+      TAPPY_PUBLIC_KEY: process.env.NUXT_TAPPY_PUBLIC_KEY,//tabby p_k
+      TAPPY_SECRET_KEY: process.env.NUXT_TAPPY_SECRET_KEY,//tabby s_k
     }
   },
 
