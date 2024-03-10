@@ -30,7 +30,7 @@ useHead({
   bodyAttrs: {
     class: 'h-full',
 
-  }
+  },
+  script: [{ src: "https://checkout.tabby.ai/tabby-promo.js" }],
 })
 </script>
-

@@ -269,7 +269,8 @@
             </h4>
             <CartPageTotals style_type="checkout_success"
               :wallet_credit="order_data.wallet_credit ? order_data.wallet_credit : 0" :subtotal="order_data.subtotal"
-              :shipping="order_data.shipping" :tax="order_data.tax" :total="order_data.total" />
+              :shipping="order_data.shipping" :tax="order_data.tax" :total="order_data.total"
+              :totals="order_data.totals" />
           </div>
           <!-- Divider -->
           <div

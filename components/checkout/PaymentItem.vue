@@ -1,6 +1,6 @@
 <template>
   <div v-if="payment_method_code != 'applepay' || (payment_method_code == 'applepay' && availableApplePay)"
-    @click="$emit('paymentValue', payment_method_value),$emit('paymentCode', payment_method_code)"
+    @click="$emit('paymentValue', payment_method_value), $emit('paymentCode', payment_method_code)"
     :class="[selected_payment == payment_method_value ? 'ring-gray-900' : 'ring-gray-300', 'w-full cursor-pointer ring-1 rounded-lg ps-[25px] pe-[17px] py-[17px]']">
     <div class="flex justify-between items-center w-full min-h-[50px]">
       <!-- Payment Content -->
@@ -30,11 +30,13 @@
         <span v-else class="rounded-lg ring-1 ring-gray-300 bg-white w-4 h-4"></span>
       </div>
     </div>
+
   </div>
 </template>
 
 <script setup>
-const emits = defineEmits(['paymentValue','paymentCode'])
+const lang = useNuxtApp().$lang
+const emits = defineEmits(['paymentValue', 'paymentCode'])
 const props = defineProps({
   payment_method_name: {
     type: String,

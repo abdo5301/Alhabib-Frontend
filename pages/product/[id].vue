@@ -1,4 +1,5 @@
 <template>
+
   <Title>{{ product_data.name }} | {{ website_name }}</Title>
   <Breadcrumb class="lg:pb-[80px] pb-6" :current="product_data.name" :pages=breadcrumb></Breadcrumb>
   <div
@@ -36,9 +37,8 @@
         </span>
       </div>
       <!-- Tabby -->
-      <div
-        class="w-full font-semibold px-5 py-6 flex items-center justify-center bg-white ring-1 ring-gray-300 rounded-md flex-shrink-0">
-        Tabby Banner
+      <div id="tabbyPromo"
+        class="w-full font-semibold flex items-center justify-center bg-white rounded-md flex-shrink-0">
       </div>
       <!-- Tamara -->
       <div
@@ -55,7 +55,8 @@
           class="flex justify-start gap-[5px] flex-wrap">
           <span
             class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[27px] lg:h-[27px] w-[23px] h-[23px] z-20">
-            <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + product_data.color.hex]">
+            <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40"
+              :style="['background-color:' + product_data.color.hex]">
             </span>
           </span>
           <NuxtLink :to="localePath('/product/' + related.id)"
@@ -184,6 +185,18 @@ onMounted(() => {
     backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-50'
   };
   addCartDrawer.value = new Drawer($cartPopupMenu, $cartPopupMenuOptions);
+
+  // Tabby 
+  new TabbyPromo({
+    selector: '#tabbyPromo', //selector
+    currency: 'SAR', // required 
+    price: discount_price.value ? parseFloat(discount_price.value) : parseFloat(price.value),// required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+    installmentsCount: 4,
+    lang: lang.code,
+    source: 'product', 
+    publicKey: 'pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d',// required
+    merchantCode: 'tabby'// required
+  });
 })
 const website_name = useState('website_name');
 const route = useRoute();

@@ -26,7 +26,7 @@
               stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <span class="text-gray-700 text-xs font-normal">{{ order_details ?
-            $t('checkout_order_details_hide') : $t('checkout_order_details_show') }}</span>
+    $t('checkout_order_details_hide') : $t('checkout_order_details_show') }}</span>
           <svg v-if="!order_details" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
             fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -54,7 +54,8 @@
           <!-- Address -->
           <CheckoutAddress :step="current_step" @next-step="getNextStep" @save-address="saveAddress" />
           <!-- Payment -->
-          <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" :address_id="address_id" @submit="saveOrder" />
+          <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" :address_id="address_id"
+            @submit="saveOrder" />
         </div>
       </div>
 
@@ -86,11 +87,11 @@
 import { initFlowbite } from 'flowbite'
 definePageMeta({ layout: 'empty', middleware: ['auth'] })
 const website_name = useState('website_name');
+const lang = useNuxtApp().$lang
 const router = useRouter();
 const localePath = useLocalePath()
-const { setSuccessOrderId } = useOrder()
-const { getAll, cartTotal } = useCart()
-
+const { setSuccessOrderId, saveOrderAddress, saveOrderPayment } = useOrder()
+const { getAll, cartTotal, setCartData } = useCart()
 onMounted(async () => {
   initFlowbite();
   const cart_data = await getAll()
@@ -106,18 +107,23 @@ const discount_code = ref('')
 
 const address_id = ref('')
 
+const payment_id = ref('')
+
 function getNextStep(step) {
   current_step.value = step
 }
 
-function saveAddress(new_address_id) {
+async function saveAddress(new_address_id) {
   address_id.value = new_address_id
+  const new_cart = await saveOrderAddress(new_address_id)
+  setCartData(new_cart.data)
 }
 
 async function saveOrder(payment_method) {
+  payment_id.value = payment_method
   var order_data = {
     address_id: address_id.value,
-    payment_gateway_id: payment_method,
+    payment_gateway_id: payment_id.value,
     gifted: "0",
     gift_phrase: ""
   }

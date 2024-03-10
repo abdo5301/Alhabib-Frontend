@@ -1,6 +1,6 @@
 <template>
   <Breadcrumb class="pb-[40px]" :current="$t('cart_title')"></Breadcrumb>
-  <div class="mt-12 flex flex-col items-center justify-center lg:gap-16 gap-12">
+  <div class="my-12 flex flex-col items-center justify-center lg:gap-16 gap-12">
     <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" width="154" height="148" viewBox="0 0 154 148"
       fill="none">
       <path

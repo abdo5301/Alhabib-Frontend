@@ -3,7 +3,7 @@
   <div v-if="data_loader" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
     <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[110px]" />
   </div>
-  <div v-show="!data_loader" class="pb-[104px]">
+  <div v-show="!data_loader" :class="[favorite_products.data && favorite_products.data.length ? 'pb-[104px]': '']">
     <ClientOnly>
       <!-- Empty Cart -->
       <CartPageEmpty v-if="!cart_data.cart_items || !cart_data.cart_items.length">
@@ -38,8 +38,9 @@
             <!-- Totals -->
             <CartPageTotals />
             <!-- Tamara -->
-            <!-- Tabby -->
 
+            <!-- Tabby -->
+            <div id="tabbyPromo"></div>
             <!-- Free Shipping Alert -->
             <div
               class="bg-green-50 text-green-800 rounded-lg h-10 w-full flex items-center justify-center flex-shrink-0 text-base leading-5 font-semibold">
@@ -77,7 +78,8 @@
       </div>
 
       <!-- Favorite Products -->
-      <div v-if="favorite_products.data && favorite_products.data.length" class="hidden lg:flex justify-start w-full pt-16 px-9">
+      <div v-if="favorite_products.data && favorite_products.data.length"
+        class="hidden lg:flex justify-start w-full pt-16 px-9">
         <ProductRelatedProducts :products="favorite_products.data">
           {{ $t('favorite_title') }}
         </ProductRelatedProducts>
@@ -86,11 +88,13 @@
   </div>
 </template>
 
+
 <script setup>
 import { initFlowbite } from 'flowbite'
 definePageMeta({ middleware: ['auth'] })
+const lang = useNuxtApp().$lang
 const cart_data = ref([])
-const { cartData, setCartData, cartCount, cartItems } = useCart()
+const { cartData, setCartData, cartCount, cartItems, cartTotal } = useCart()
 const emptyText = ref('')
 const website_name = useState('website_name');
 const localePath = useLocalePath()
@@ -107,9 +111,20 @@ onMounted(async () => {
 
   emptyText.value = t('empty_cart_text')
 
+  // Tabby 
+  new TabbyPromo({
+    selector: '#tabbyPromo', //selector
+    currency: 'SAR', // required
+    price: parseFloat(cartTotal.value),// required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+    installmentsCount: 4,
+    lang: lang.code,
+    source: 'cart', //cart or product
+    publicKey: 'pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d',// required
+    merchantCode: 'tabby'// required
+  });
   data_loader.value = false
 })
 // console.log(cartCount.value)
 const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
-console.log(favorite_products)
+//console.log(favorite_products)
 </script>

@@ -156,6 +156,10 @@ export function useCart() {
       : 0
   })
 
+  const cartTotals = computed(() => {
+    return cartData.value && cartData.value.totals ? cartData.value.totals : []
+  })
+
   return {
     getAll,
     addItem,
@@ -172,5 +176,6 @@ export function useCart() {
     cartShipping,
     cartTax,
     cartWalletCredit,
+    cartTotals,
   }
 }
