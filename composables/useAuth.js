@@ -82,6 +82,8 @@ export function useAuth() {
       localStorage.removeItem('otp_phone')
       localStorage.removeItem('otp_redirect_back')
       localStorage.removeItem('login_redirect')
+      localStorage.removeItem('success_order_id')
+      localStorage.removeItem('tabby_payment_id')
     }
   }
 

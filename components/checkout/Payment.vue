@@ -62,6 +62,7 @@
   }
 }
 </style>
+
 <template>
   <div class='w-full flex flex-col gap-5 lg:gap-[30px] lg:pt-[50px] pt-10'>
     <!-- Payment Method Title -->
@@ -76,10 +77,10 @@
     <!-- Payment Methods Container -->
     <div v-if='payment_methods_array && payment_methods_array.length > 0' class='flex flex-col gap-[15px]'>
       <!-- Selected Item -->
-      <CheckoutPaymentItem v-for='(method, index) in payment_methods_array' :key='index' :payment_method_value='method.id'
-        :payment_method_name='method.title' :payment_method_image='method.image' :payment_method_code='method.code'
-        :payment_method_description='method.description' :selected_payment='payment_method'
-        @payment-value='getPaymentValue' @payment-code='getPaymentCode' />
+      <CheckoutPaymentItem v-for='(method, index) in payment_methods_array' :key='index'
+        :payment_method_value='method.id' :payment_method_name='method.title' :payment_method_image='method.image'
+        :payment_method_code='method.code' :payment_method_description='method.description'
+        :selected_payment='payment_method_id' @payment-value='getPaymentValue' @payment-code='getPaymentCode' />
     </div>
     <div v-else class='flex items-center justify-center text-gray-700 text-2xl font-semibold'>
       {{ $t('text_empty_payment_methods') }}
@@ -89,8 +90,7 @@
     <CheckoutAlrajhiPoints />
 
     <!-- Order Submit -->
-    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method'
-      @click="$emit('submit', payment_method)"
+    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id' @click="submitOrder()"
       class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
     </button>
@@ -104,7 +104,8 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['submit', 'walletStatus'])
+import { format } from "date-fns";
+const emits = defineEmits(['submit', 'savePayment', 'walletStatus'])
 const props = defineProps({
   step: {
     type: String,
@@ -114,25 +115,41 @@ const props = defineProps({
     type: Number
   }
 })
+const route = useRoute()
 const localePath = useLocalePath()
-const { cartTotal } = useCart()
-const { setSuccessOrderId } = useOrder()
+const lang = useNuxtApp().$lang
+const { cartTotal, setCartData } = useCart()
+const { setSuccessOrderId, saveOrderPayment, cancelOrder, addOrder, getOrder } = useOrder()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
 const user_token = await useAuth().getUserToken()
-const payment_method = ref(0)
+const payment_method_id = ref(0) //payment_id
+const payment_method_code = ref(0) //payment_code
 const { allPaymentMethods } = usePaymentMethod()
 const payment_methods_array = ref(await allPaymentMethods())
-
+//Tabby
+const tabby_session = ref({})
+const tabby_pay_id = ref(0)
+const tabby_pay_url = ref('')
 function getWalletStatus(status) {
   console.log('Wallet Status: ' + status)
 }
 
-function getPaymentValue(value) {
-  payment_method.value = value
+async function getPaymentValue(value) {//change payment_id
+  if (payment_method_id.value == value) {
+    return;
+  }
+  payment_method_id.value = 0
+  const new_cart = await saveOrderPayment(value)
+  setCartData(new_cart.data)
+  payment_method_id.value = value
 }
 
-function getPaymentCode(code) {
+function getPaymentCode(code) { //change payment_code
+  if (payment_method_code.value == code) {
+    return;
+  }
+  payment_method_code.value = code
   if (code == 'applepay') {
     selectedApplePayMethod.value = true
   } else {
@@ -230,7 +247,7 @@ let pay = async applePayToken => {
       body: {
         applePayToken: applePayToken,
         address_id: props.address_id,
-        payment_gateway_id: payment_method.value,
+        payment_gateway_id: payment_method_id.value,
         gifted: "0",
         gift_phrase: ""
       },
@@ -243,6 +260,154 @@ let pay = async applePayToken => {
 
   } catch (error) {
     console.log(error)
+  }
+}
+
+//Tabby Session
+async function createTabbySession() {
+  var new_order_data = {
+    address_id: props.address_id,
+    payment_gateway_id: payment_method_id.value,
+    gifted: "0",
+    gift_phrase: ""
+  }
+  const create_tabby_order = await addOrder(new_order_data)
+  if (!create_tabby_order || !create_tabby_order.id) {
+    return;
+  }
+  const tabby_order_data = await getOrder(create_tabby_order.id)
+  if (!tabby_order_data || !tabby_order_data.id) {
+    return;
+  }
+  setSuccessOrderId(tabby_order_data.id)
+  const tabby_order_items = []
+  tabby_order_data.order_items.forEach((item) => {
+    var new_tabby_item = {
+      "reference_id": String(item.id),
+      "title": item.name,//required
+      "description": "string",
+      "quantity": item.quantity,//required
+      "unit_price": priceFormate(item.total / item.quantity, false),//required
+      "discount_amount": "0",
+      "category": "Padding",//required
+      "image_url": item.image ? item.image : "",
+      "product_url": localePath("/product/" + item.id),
+      "gender": "Male",
+      "color": "string",
+      "product_material": "string",
+      "size_type": "string",
+      "size": "string",
+      "brand": "string"
+    }
+    tabby_order_items.push(new_tabby_item);
+  });
+  const tabby_session_data = {
+    "payment": {
+      "amount": priceFormate(tabby_order_data.total, false),
+      "currency": "SAR",
+      "description": "string",
+      "buyer": {
+        "phone": '500000001',//String(tabby_order_data.customer_mobile),
+        "email": 'card.success@tabby.ai',//String(tabby_order_data.customer_email),
+        "name": 'Tester',//String(tabby_order_data.customer_name),
+        "dob": "2019-08-24"
+      },
+      "shipping_address": {
+        "city": String(tabby_order_data.customer_region),
+        "address": String(tabby_order_data.customer_city + ',' + tabby_order_data.customer_street),
+        "zip": "12271" //Riyadh Postal Code
+      },
+      "order": {
+        "tax_amount": priceFormate(tabby_order_data.tax, false),
+        "shipping_amount": priceFormate(tabby_order_data.shipping, false),
+        "discount_amount": "0",
+        "updated_at": "2019-08-24T14:15:22Z",//"2019-08-24T14:15:22Z",
+        "reference_id": String(tabby_order_data.id),
+        "items": tabby_order_items
+      },
+      "buyer_history": {
+        "registered_since": "2019-08-24T14:15:22Z",
+        "loyalty_level": 0,
+        "wishlist_count": 0,
+        "is_social_networks_connected": true,
+        "is_phone_number_verified": true,
+        "is_email_verified": true
+      },
+      "order_history": [
+        {
+          "purchased_at": "2019-08-24T14:15:22Z",//"2019-08-24T14:15:22Z",
+          "amount": priceFormate(tabby_order_data.total, false),
+          "payment_method": "card",
+          "status": "new",
+          "buyer": {
+            "phone": '500000001',//String(tabby_order_data.customer_mobile),
+            "email": 'card.success@tabby.ai',//String(tabby_order_data.customer_email),
+            "name": 'Tester',//String(tabby_order_data.customer_name),
+            "dob": "2019-08-24"
+          },
+          "shipping_address": {
+            "city": String(tabby_order_data.customer_region),
+            "address": String(tabby_order_data.customer_city + ',' + tabby_order_data.customer_street),
+            "zip": "12271" //Riyadh Postal Code
+          }
+        }
+      ],
+      "meta": {
+        "order_id": "#1234",
+        "customer": "#customer-id"
+      },
+      "attachment": {
+        "body": "{\"flight_reservation_details\": {\"pnr\": \"TR9088999\",\"itinerary\": [...],\"insurance\": [...],\"passengers\": [...],\"affiliate_name\": \"some affiliate\"}}",
+        "content_type": "application/vnd.tabby.v1+json"
+      }
+    },
+    "lang": lang.code,
+    "merchant_code": "sa",
+    "merchant_urls": {
+      "success": config.public.BASE_URL + localePath("/checkout/from-tabby"),
+      "cancel": config.public.BASE_URL + localePath("/checkout/from-tabby"),
+      "failure": config.public.BASE_URL + localePath("/checkout/from-tabby"),
+    }
+  }
+  try {
+    tabby_session.value = await $fetch('/tabby/api/v2/checkout', {
+      method: 'POST',
+      body: tabby_session_data,
+      headers: {
+        'Authorization': 'Bearer ' + config.public.TAPPY_PUBLIC_KEY
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function submitOrder() {
+  if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
+    if (!tabby_session.value || !tabby_session.value.length) {
+      await createTabbySession()
+    }
+    console.log(tabby_session.value)
+    if (tabby_session.value && tabby_session.value.payment) {
+      setSuccessOrderId(tabby_session.value.payment.order.reference_id)
+      if (tabby_session.value.status == "created") {
+        tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
+        tabby_pay_id.value = tabby_session.value.payment.id
+        localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
+        return navigateTo(tabby_pay_url.value, {
+          external: true,
+        })
+      } else if (tabby_session.value.status == "authorized") {//success
+        return navigateTo(localePath("/checkout/success"))
+      } else {//expired or rejected or closed
+        await cancelOrder(tabby_session.value.payment.order.reference_id)
+        const tabby_error = tabby_session.value.configuration.products.installments[0].rejection_reason
+        console.log(tabby_error)
+      }
+    }
+
+  } else { //Any payment else
+    emits('submit', payment_method_id.value)
   }
 }
 

@@ -1,14 +1,12 @@
-
 <template>
   <Title>{{ $t('checkout_success_page_title') }} | {{ website_name }}</Title>
   <!-- Page content -->
-  <ClientOnly>
-    <template #fallback>
-      <div class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
-        <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[110px]" />
-      </div>
-    </template>
-    <div class="bg-gray-50 lg:bg-white h-full flex flex-col lg:flex-row p-5 pt-[37px] lg:p-0">
+  <div v-if="data_loader" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
+    <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[110px]" />
+  </div>
+
+  <div v-else class="bg-gray-50 lg:bg-white h-full flex flex-col lg:flex-row p-5 pt-[37px] lg:p-0">
+    <ClientOnly>
       <!-- Mobile Page Logo -->
       <CheckoutLogo class="lg:hidden" />
       <!-- Success Notes Right Section -->
@@ -53,11 +51,13 @@
               :product="item" />
           </div>
           <!-- Payment -->
-          <LazyCheckoutSuccessPaymentMethod v-if="order_data.payment_gateway" :method_data="order_data.payment_gateway" />
+          <LazyCheckoutSuccessPaymentMethod v-if="order_data.payment_gateway"
+            :method_data="order_data.payment_gateway" />
           <!-- Totals -->
           <div class="flex flex-col lg:p-[30px] lg:pb-0 lg:pt-0 lg:pe-16">
-            <CartPageTotals style_type="checkout_success" :subtotal="order_data.subtotal" :shipping="order_data.shipping"
-              :tax="order_data.tax" :total="order_data.total" />
+            <CartPageTotals style_type="checkout_success" :subtotal="order_data.subtotal"
+              :shipping="order_data.shipping" :tax="order_data.tax" :total="order_data.total"
+              :totals="order_data.totals" />
           </div>
           <!-- Mobile Tax Invoice Link -->
           <div class="lg:hidden flex justify-center items-center lg:p-[30px] lg:pb-0 lg:pt-0">
@@ -77,8 +77,9 @@
       <div :class="['lg:hidden shadow bg-white mt-5 order-3 w-full rounded-b-lg flex-shrink-0']">
         <CheckoutSuccessPageNotes />
       </div>
-    </div>
-  </ClientOnly>
+    </ClientOnly>
+  </div>
+
 </template>
 
 <script setup>
@@ -91,22 +92,26 @@ const { setCartData } = useCart()
 const order_details = ref(false) //For Mobile
 const order_data = ref([])
 const cart_data = ref([])
-if (!successOrderId.value) {
-  navigateTo(localePath('/cart'))
-}
-
+const data_loader = ref(true)
 onMounted(async () => {
   initFlowbite();
   //console.log(successOrderId.value)
   if (successOrderId.value) {
     order_data.value = await getOrder(successOrderId.value)
     //console.log(order_data.value)
+  }else{
+    navigateTo(localePath('/cart'))
   }
-
+  
   cart_data.value = await useCart().getAll()
   if (cart_data.value && cart_data.value.id) {
     setCartData(cart_data.value)
   }
+
+  //Empty saved tabby payment id
+  localStorage.removeItem('tabby_payment_id')
+
+  data_loader.value = false
 })
 
 </script>

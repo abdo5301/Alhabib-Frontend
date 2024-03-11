@@ -1,9 +1,15 @@
 import registerVue from '~/pages/auth/register.vue'
 
 export function useOrder() {
-  const successOrderId = useState('success_order_id', () => 0)
+  const successOrderId = computed(() => {
+    if (process.client) {
+      return localStorage.getItem('success_order_id')
+    }
+  })
   const setSuccessOrderId = order_id => {
-    successOrderId.value = order_id
+    if (process.client) {
+      localStorage.setItem('success_order_id', order_id)
+    }
   }
   async function addOrder(data) {
     try {
@@ -109,6 +115,56 @@ export function useOrder() {
     }
   }
 
+  async function saveOrderPayment(payment_id) {
+    try {
+      const save_data = await useNuxtApp().$apiFetch(
+        '/customer/cart/payment-gateway/add',
+        {
+          method: 'POST',
+          body: {
+            payment_gateway_id: payment_id,
+          },
+        }
+      )
+      return save_data
+    } catch (error) {
+      console.log(error.data)
+      if (
+        error.data &&
+        error.data.message &&
+        error.data.message == 'Unauthenticated.'
+      ) {
+        unAuthenticated()
+      }
+      return error.data
+    }
+  }
+
+  async function saveOrderAddress(address_id) {
+    try {
+      const save_data = await useNuxtApp().$apiFetch(
+        '/customer/cart/address/add',
+        {
+          method: 'POST',
+          body: {
+            address_id: address_id,
+          },
+        }
+      )
+      return save_data
+    } catch (error) {
+      console.log(error.data)
+      if (
+        error.data &&
+        error.data.message &&
+        error.data.message == 'Unauthenticated.'
+      ) {
+        unAuthenticated()
+      }
+      return error.data
+    }
+  }
+
   return {
     successOrderId,
     setSuccessOrderId,
@@ -116,5 +172,7 @@ export function useOrder() {
     getOrder,
     getAllOrders,
     cancelOrder,
+    saveOrderPayment,
+    saveOrderAddress,
   }
 }
