@@ -31,7 +31,7 @@ const website_name = useState('website_name')
 const config = useRuntimeConfig()
 const localePath = useLocalePath()
 const tabby_payment = ref('')
-const { successOrderId, cancelOrder } = useOrder()
+const { setSuccessOrderId, successOrderId, cancelOrder } = useOrder()
 const tabby_payment_id = ref(null)
 const notes = ref('')
 const image = ref('')
@@ -54,6 +54,8 @@ onMounted(async () => {
     }
 
     if (tabby_payment.value && tabby_payment.value.status) {
+      const tabby_order_id = tabby_payment.value.order.reference_id
+      setSuccessOrderId(tabby_order_id)
       switch (tabby_payment.value.status) {
         case 'CREATED':
           redirect.value = localePath('/checkout')
