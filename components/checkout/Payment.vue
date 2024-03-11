@@ -115,6 +115,7 @@ const props = defineProps({
     type: Number
   }
 })
+const route = useRoute()
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
 const { cartTotal, setCartData } = useCart()
@@ -270,11 +271,11 @@ async function createTabbySession() {
     gifted: "0",
     gift_phrase: ""
   }
-  // const create_tabby_order = await addOrder(new_order_data)
-  // if (!create_tabby_order || !create_tabby_order.id) {
-  //   return;
-  // }
-  const tabby_order_data = await getOrder(13122231)
+  const create_tabby_order = await addOrder(new_order_data)
+  if (!create_tabby_order || !create_tabby_order.id) {
+    return;
+  }
+  const tabby_order_data = await getOrder(create_tabby_order.id)
   if (!tabby_order_data || !tabby_order_data.id) {
     return;
   }
@@ -282,12 +283,12 @@ async function createTabbySession() {
   const tabby_order_items = []
   tabby_order_data.order_items.forEach((item) => {
     var new_tabby_item = {
-      "reference_id": item.id,
+      "reference_id": String(item.id),
       "title": item.name,//required
       "description": "string",
       "quantity": item.quantity,//required
-      "unit_price": String(item.total / item.quantity),//required
-      "discount_amount": "0.00",
+      "unit_price": priceFormate(item.total / item.quantity, false),//required
+      "discount_amount": "0",
       "category": "Padding",//required
       "image_url": item.image ? item.image : "",
       "product_url": localePath("/product/" + item.id),
@@ -302,13 +303,13 @@ async function createTabbySession() {
   });
   const tabby_session_data = {
     "payment": {
-      "amount": String(tabby_order_data.total),
+      "amount": priceFormate(tabby_order_data.total, false),
       "currency": "SAR",
       "description": "string",
       "buyer": {
-        "phone": String(tabby_order_data.customer_mobile),
-        "email": String(tabby_order_data.customer_email),
-        "name": String(tabby_order_data.customer_name),
+        "phone": '500000001',//String(tabby_order_data.customer_mobile),
+        "email": 'card.success@tabby.ai',//String(tabby_order_data.customer_email),
+        "name": 'Tester',//String(tabby_order_data.customer_name),
         "dob": "2019-08-24"
       },
       "shipping_address": {
@@ -317,10 +318,10 @@ async function createTabbySession() {
         "zip": "12271" //Riyadh Postal Code
       },
       "order": {
-        "tax_amount": String(tabby_order_data.tax),
-        "shipping_amount": String(tabby_order_data.shipping),
-        "discount_amount": "0.00",
-        "updated_at": format(new Date(tabby_order_data.updated_at), "yyyy-MM-ddTHH:mm:ss"),//"2019-08-24T14:15:22Z",
+        "tax_amount": priceFormate(tabby_order_data.tax, false),
+        "shipping_amount": priceFormate(tabby_order_data.shipping, false),
+        "discount_amount": "0",
+        "updated_at": "2019-08-24T14:15:22Z",//"2019-08-24T14:15:22Z",
         "reference_id": String(tabby_order_data.id),
         "items": tabby_order_items
       },
@@ -334,14 +335,14 @@ async function createTabbySession() {
       },
       "order_history": [
         {
-          "purchased_at": format(new Date(tabby_order_data.created_at), "yyyy-MM-ddTHH:mm:ss"),//"2019-08-24T14:15:22Z",
-          "amount": String(tabby_order_data.total),
+          "purchased_at": "2019-08-24T14:15:22Z",//"2019-08-24T14:15:22Z",
+          "amount": priceFormate(tabby_order_data.total, false),
           "payment_method": "card",
           "status": "new",
           "buyer": {
-            "phone": String(tabby_order_data.customer_mobile),
-            "email": String(tabby_order_data.customer_email),
-            "name": String(tabby_order_data.customer_name),
+            "phone": '500000001',//String(tabby_order_data.customer_mobile),
+            "email": 'card.success@tabby.ai',//String(tabby_order_data.customer_email),
+            "name": 'Tester',//String(tabby_order_data.customer_name),
             "dob": "2019-08-24"
           },
           "shipping_address": {
@@ -352,8 +353,8 @@ async function createTabbySession() {
         }
       ],
       "meta": {
-        "order_id": null,
-        "customer": null
+        "order_id": "#1234",
+        "customer": "#customer-id"
       },
       "attachment": {
         "body": "{\"flight_reservation_details\": {\"pnr\": \"TR9088999\",\"itinerary\": [...],\"insurance\": [...],\"passengers\": [...],\"affiliate_name\": \"some affiliate\"}}",
@@ -361,29 +362,21 @@ async function createTabbySession() {
       }
     },
     "lang": lang.code,
-    "merchant_code": "tabby",
+    "merchant_code": "sa",
     "merchant_urls": {
-      "success": localePath("/checkout/success/"),//"https://your-store/success",
-      "cancel": localePath("/checkout"), //"https://your-store/cancel",
-      "failure": localePath("/checkout"),//"https://your-store/failure"
-    },
-    "create_token": false,
-    "token": null
+      "success": config.public.BASE_URL + localePath("/checkout/from-tabby"),
+      "cancel": config.public.BASE_URL + localePath("/checkout/from-tabby"),
+      "failure": config.public.BASE_URL + localePath("/checkout/from-tabby"),
+    }
   }
   try {
-    const tabby_session_response = await $fetch("https://api.tabby.ai/api/v2/checkout", {
+    tabby_session.value = await $fetch('/tabby/api/v2/checkout', {
       method: 'POST',
       body: tabby_session_data,
-      // mode: "no-cors",
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d'
+        'Authorization': 'Bearer ' + config.public.TAPPY_PUBLIC_KEY
       }
     })
-    if(tabby_session_response){
-      tabby_session.value = JSON.parse(tabby_session_response)
-    }
-    
   } catch (error) {
     console.log(error)
   }
@@ -395,23 +388,21 @@ async function submitOrder() {
       await createTabbySession()
     }
     console.log(tabby_session.value)
-    if (tabby_session.value && tabby_session.value.length) {
+    if (tabby_session.value && tabby_session.value.payment) {
       if (tabby_session.value.status == "created") {
-        tabby_pay_url.value = tabby_session.value.configuration.available_products.installments.web_url
+        tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
         tabby_pay_id.value = tabby_session.value.payment.id
-        localStorage.setItem('tabby_payment_id', tabby_pay_id)
-        return navigateTo(tabby_pay_url, {
+        setSuccessOrderId(tabby_session.value.payment.order.reference_id)
+        localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
+        return navigateTo(tabby_pay_url.value, {
           external: true,
-          open: {
-            target: "_blank",
-          },
         })
       } else if (tabby_session.value.status == "authorized") {//success
         setSuccessOrderId(tabby_session.value.payment.order.reference_id)
         return navigateTo(localePath("/checkout/success"))
       } else {//expired or rejected or closed
         await cancelOrder(tabby_session.value.payment.order.reference_id)
-        const tabby_error = tabby_session.value.configuration.products.installments.rejection_reason
+        const tabby_error = tabby_session.value.configuration.products.installments[0].rejection_reason
         console.log(tabby_error)
       }
     }

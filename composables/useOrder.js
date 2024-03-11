@@ -1,9 +1,15 @@
 import registerVue from '~/pages/auth/register.vue'
 
 export function useOrder() {
-  const successOrderId = useState('success_order_id', () => 0)
+  const successOrderId = computed(() => {
+    if (process.client) {
+      return localStorage.getItem('success_order_id')
+    }
+  })
   const setSuccessOrderId = order_id => {
-    successOrderId.value = order_id
+    if (process.client) {
+      localStorage.setItem('success_order_id', order_id)
+    }
   }
   async function addOrder(data) {
     try {
@@ -146,7 +152,7 @@ export function useOrder() {
         }
       )
       return save_data
-    } catch (error) {   
+    } catch (error) {
       console.log(error.data)
       if (
         error.data &&
