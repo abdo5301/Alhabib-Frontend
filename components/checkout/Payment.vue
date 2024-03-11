@@ -389,16 +389,15 @@ async function submitOrder() {
     }
     console.log(tabby_session.value)
     if (tabby_session.value && tabby_session.value.payment) {
+      setSuccessOrderId(tabby_session.value.payment.order.reference_id)
       if (tabby_session.value.status == "created") {
         tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
         tabby_pay_id.value = tabby_session.value.payment.id
-        setSuccessOrderId(tabby_session.value.payment.order.reference_id)
         localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
         return navigateTo(tabby_pay_url.value, {
           external: true,
         })
       } else if (tabby_session.value.status == "authorized") {//success
-        setSuccessOrderId(tabby_session.value.payment.order.reference_id)
         return navigateTo(localePath("/checkout/success"))
       } else {//expired or rejected or closed
         await cancelOrder(tabby_session.value.payment.order.reference_id)

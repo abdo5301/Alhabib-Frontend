@@ -31,7 +31,7 @@ const website_name = useState('website_name')
 const config = useRuntimeConfig()
 const localePath = useLocalePath()
 const tabby_payment = ref('')
-const { successOrderId } = useOrder()
+const { successOrderId, cancelOrder } = useOrder()
 const tabby_payment_id = ref(null)
 const notes = ref('')
 const image = ref('')
@@ -68,6 +68,9 @@ onMounted(async () => {
           image.value = '/images/icons/x-red.png'
           redirect.value = localePath('/checkout')
           localStorage.removeItem('tabby_payment_id')
+          if (successOrderId.value) {
+            await cancelOrder(successOrderId.value)
+          }
           break;
         case 'REJECTED':
         case 'CLOSED':
@@ -75,6 +78,9 @@ onMounted(async () => {
           image.value = '/images/icons/x-red.png'
           redirect.value = localePath('/checkout')
           localStorage.removeItem('tabby_payment_id')
+          if (successOrderId.value) {
+            await cancelOrder(successOrderId.value)
+          }
           break;
         default:
           break;
