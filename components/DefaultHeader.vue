@@ -164,7 +164,8 @@
             </svg>
           </span>
           <!-- Search Input -->
-          <input v-model="search" id="search" name="search" type="text" ref="search_input" @input="getSearch()"
+          <input v-model="search" id="search" name="search" type="text" ref="search_input"
+            @input="getSearch(), search_loader = true"
             class="block w-full max-w-full rounded-md border-0 bg-white py-4 ps-8 pe-3 text-gray-900 placeholder:text-gray-500 focus:ring-0 text-base"
             :placeholder="$t('header_search_placeholder')" />
           <!-- Search Clear -->
@@ -179,11 +180,11 @@
         </div>
       </form>
       <!-- Search Result -->
-      <div v-if="search.length > 2" class="w-full border-t border-gray-200 py-5 overflow-y-auto max-h-screen">
+      <div v-if="search.length > 0" class="w-full border-t border-gray-200 py-5 overflow-y-auto max-h-screen">
         <div v-if="search_loader" class="flex items-center justify-center h-[40px] max-h-screen w-full mx-auto pb-4">
           <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
         </div>
-        <div v-if="!search_loader && search.length > 2 && search_result.length > 0"
+        <div v-if="!search_loader && search.length > 0 && search_result.length > 0"
           class="w-full flex flex-col gap-4 justify-start px-5">
           <!-- Search Item -->
           <NuxtLink v-for="(search_item, index) in search_result" :key="index" @click="search_popup.hide()"
@@ -192,7 +193,7 @@
             {{ search_item.name }}
           </NuxtLink>
         </div>
-        <div v-if="!search_loader && search.length > 2 && search_result.length == 0"
+        <div v-if="!search_loader && search.length > 0 && search_result.length == 0"
           class="w-full flex flex-wrap justify-center items-center text-lg font-medium text-gray-700 px-5">
           <span class="flex-shrink-0"> {{ $t('header_search_popup_no_result') }} &nbsp;</span>
           <span class="flex max-w-full">
@@ -206,6 +207,7 @@
 
 <script setup>
 import { Drawer, Modal } from 'flowbite';
+import { debounce } from 'lodash-es'
 const page_scrolled = ref(false);
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -269,16 +271,11 @@ try {
   console.log(error.data)
 }
 
-async function getSearch() {
-  if (search.value && search.value.length > 2) {
-    search_loader.value = true
+const getSearch = debounce(async function (event) {
+  if (search.value && search.value.length > 0) {
     try {
       const search_fetch_data = await useNuxtApp().$apiFetch('/search?query=' + search.value)
-      if (search_fetch_data.status) {
-        search_result.value = search_fetch_data.data
-      } else {
-        search_result.value = []
-      }
+      search_result.value = search_fetch_data.data
     } catch (error) {
       search_result.value = []
       console.log(error.data)
@@ -288,6 +285,6 @@ async function getSearch() {
     search_result.value = []
   }
   search_loader.value = false
-}
+}, 500)
 
 </script>
