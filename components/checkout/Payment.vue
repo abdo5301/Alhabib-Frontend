@@ -289,7 +289,7 @@ async function createTabbySession() {
       "quantity": item.quantity,//required
       "unit_price": priceFormate(item.total / item.quantity, false),//required
       "discount_amount": "0",
-      "category": "Padding",//required
+      "category": String(item.category),//required
       "image_url": item.image ? item.image : "",
       "product_url": localePath("/product/" + item.id),
       "gender": "Male",
@@ -307,10 +307,10 @@ async function createTabbySession() {
       "currency": "SAR",
       "description": "string",
       "buyer": {
-        "phone": '500000001',//String(tabby_order_data.customer_mobile),
-        "email": 'card.success@tabby.ai',//String(tabby_order_data.customer_email),
-        "name": 'Tester',//String(tabby_order_data.customer_name),
-        "dob": "2019-08-24"
+        "phone": String(tabby_order_data.customer_mobile),//'500000001',
+        "email": String(tabby_order_data.customer_email),//'card.success@tabby.ai',
+        "name": String(tabby_order_data.customer_name),//'Tester',
+        "dob": null
       },
       "shipping_address": {
         "city": String(tabby_order_data.customer_region),
@@ -321,12 +321,12 @@ async function createTabbySession() {
         "tax_amount": priceFormate(tabby_order_data.tax, false),
         "shipping_amount": priceFormate(tabby_order_data.shipping, false),
         "discount_amount": "0",
-        "updated_at": "2019-08-24T14:15:22Z",//"2019-08-24T14:15:22Z",
+        "updated_at": tabby_order_data.created_at_raw,//"2019-08-24T14:15:22Z",
         "reference_id": String(tabby_order_data.id),
         "items": tabby_order_items
       },
       "buyer_history": {
-        "registered_since": "2019-08-24T14:15:22Z",
+        "registered_since": null,//"2019-08-24T14:15:22Z",
         "loyalty_level": 0,
         "wishlist_count": 0,
         "is_social_networks_connected": true,
@@ -335,15 +335,15 @@ async function createTabbySession() {
       },
       "order_history": [
         {
-          "purchased_at": "2019-08-24T14:15:22Z",//"2019-08-24T14:15:22Z",
+          "purchased_at": tabby_order_data.created_at_raw,//"2019-08-24T14:15:22Z",
           "amount": priceFormate(tabby_order_data.total, false),
           "payment_method": "card",
           "status": "new",
           "buyer": {
-            "phone": '500000001',//String(tabby_order_data.customer_mobile),
-            "email": 'card.success@tabby.ai',//String(tabby_order_data.customer_email),
-            "name": 'Tester',//String(tabby_order_data.customer_name),
-            "dob": "2019-08-24"
+            "phone": String(tabby_order_data.customer_mobile),
+            "email": String(tabby_order_data.customer_email),
+            "name": String(tabby_order_data.customer_name),
+            "dob": null
           },
           "shipping_address": {
             "city": String(tabby_order_data.customer_region),
@@ -353,7 +353,7 @@ async function createTabbySession() {
         }
       ],
       "meta": {
-        "order_id": "#1234",
+        "order_id": "#" + tabby_order_data.id,
         "customer": "#customer-id"
       },
       "attachment": {
