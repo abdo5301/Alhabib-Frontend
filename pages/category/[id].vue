@@ -216,9 +216,14 @@ const breadcrumb = category_data.value.data && category_data.value.data.length ?
 
 
 const sub_category = category_data.value.data.length && category_data.value.data[0].category.subcategory && category_data.value.data[0].category.subcategory.length ? category_data.value.data[0].category.subcategory : []
-
-const filter_sorting_fetch = await useNuxtApp().$apiFetch('/filter-and-sort/get')
-const filter_fetch_data = filter_sorting_fetch.status == true ? filter_sorting_fetch.data : []
+const filter_sorting_fetch = ref([])
+try {
+  filter_sorting_fetch.value = await useNuxtApp().$apiFetch('/filter-and-sort/get')
+} catch (error) {
+  console.log(error.data)
+}
+ 
+const filter_fetch_data = filter_sorting_fetch.value.status == true ? filter_sorting_fetch.value.data : []
 const filter_data = filter_fetch_data.filter && filter_fetch_data.filter.length ? filter_fetch_data.filter : []
 const sorting_data = filter_fetch_data.sorting && filter_fetch_data.sorting.length ? filter_fetch_data.sorting : []
 

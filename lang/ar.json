@@ -283,6 +283,6 @@
   "details_title":"التفاصيل",
   "popup_cancel_order_confirm":"هل انت متأكد من رغبتك في إلغاء هذا الطلب؟",
   "popup_cancel_order_success":"تم الغاء الطلب بنجاح",
-  "popup_cancel_order_success_notes":"نرجو منك مراجعة بريدك الإلكتروني، سوف يتم تواصل خدمة العملاء معك لإرجاع قيمة الطلب إلى حسابك البنكي"
-
+  "popup_cancel_order_success_notes":"نرجو منك مراجعة بريدك الإلكتروني، سوف يتم تواصل خدمة العملاء معك لإرجاع قيمة الطلب إلى حسابك البنكي",
+  "header_search_popup_no_result": "لا توجد نتائج بحث عن "
 }

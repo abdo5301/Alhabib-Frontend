@@ -281,6 +281,7 @@
   "details_title":"Details",
   "popup_cancel_order_confirm":"Are you sure you want to cancel this order?",
   "popup_cancel_order_success":"Order successfully cancelled",
-  "popup_cancel_order_success_notes":"Please check your email. Customer Service will contact you to return the order value to your bank account"
+  "popup_cancel_order_success_notes":"Please check your email. Customer Service will contact you to return the order value to your bank account",
+  "header_search_popup_no_result": "No results for "
 
 }

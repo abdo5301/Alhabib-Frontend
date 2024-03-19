@@ -23,7 +23,7 @@
           <div class="flex w-full content-center">
 
             <!-- Right Section -->
-            <div class="flex items-center w-1/3">
+            <div class="flex lg:gap-6 items-center w-1/3">
               <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
               </MobileNavbarMenu>
 
@@ -36,9 +36,8 @@
                   :title="locale.name">{{ locale.list_name }}</a>
               </div>
 
-              <!-- Search -->
-              <div id="mobileDropdownSearchButton" data-dropdown-toggle="mobileDropdownSearch"
-                data-dropdown-placement="bottom"
+              <!-- Mobile Search Trigger -->
+              <div @click="search_popup.show(), search_input.focus()"
                 class="flex items-end rtl:mt-[6.5px] ltr:mt-[4px] lg:hidden rtl:pr-[9px] ltr:pl-[9px] cursor-pointer">
                 <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="24" height="20"
                   viewBox="0 0 24 23" fill="none">
@@ -53,23 +52,19 @@
                 </svg>
               </div>
 
-              <div class="hidden lg:flex w-full items-center px-6">
-                <div class="w-full">
-                  <label for="search" class="sr-only">Search</label>
-                  <div class="relative">
-                    <div
-                      class="pointer-events-none absolute inset-y-0 rtl:right-0 ltr:left-0 flex items-center rtl:pr-3 ltr:pl-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                          d="M9.6 4.59999C6.94904 4.59999 4.80002 6.65948 4.80002 9.19999C4.80002 11.7405 6.94904 13.8 9.6 13.8C12.251 13.8 14.4 11.7405 14.4 9.19999C14.4 6.65948 12.251 4.59999 9.6 4.59999ZM2.40002 9.19999C2.40002 5.38922 5.62356 2.29999 9.6 2.29999C13.5764 2.29999 16.8 5.38922 16.8 9.19999C16.8 10.6902 16.307 12.0701 15.4689 13.198L21.2485 18.7368C21.7171 19.1859 21.7171 19.9141 21.2485 20.3632C20.7799 20.8123 20.0201 20.8123 19.5514 20.3632L13.7718 14.8243C12.5949 15.6276 11.155 16.1 9.6 16.1C5.62356 16.1 2.40002 13.0108 2.40002 9.19999Z"
-                          fill="#1F2937" />
-                      </svg>
-                    </div>
-                    <input v-model="search" id="search" name="search"
-                      class="block w-full rounded-md border-0 bg-white py-2 ltr:pl-11 ltr:pr-3 rtl:pr-11 rtl:pl-3 text-gray-900 ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6"
-                      :placeholder="$t('header_search_placeholder')" type="search" />
-                  </div>
-                </div>
+              <!-- Desktop Search Trigger -->
+              <div class="hidden lg:flex relative w-full justify-start items-center flex-col">
+                <button @click="search_popup.show(), search_input.focus()"
+                  class="w-full flex lg:gap-3 rounded-md border-0 bg-white py-2 ps-3 pe-1 text-gray-900 ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-gray-500 hover:bg-gray-100 focus:bg-gray-100 text-sm leading-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M9.6 4.59999C6.94904 4.59999 4.80002 6.65948 4.80002 9.19999C4.80002 11.7405 6.94904 13.8 9.6 13.8C12.251 13.8 14.4 11.7405 14.4 9.19999C14.4 6.65948 12.251 4.59999 9.6 4.59999ZM2.40002 9.19999C2.40002 5.38922 5.62356 2.29999 9.6 2.29999C13.5764 2.29999 16.8 5.38922 16.8 9.19999C16.8 10.6902 16.307 12.0701 15.4689 13.198L21.2485 18.7368C21.7171 19.1859 21.7171 19.9141 21.2485 20.3632C20.7799 20.8123 20.0201 20.8123 19.5514 20.3632L13.7718 14.8243C12.5949 15.6276 11.155 16.1 9.6 16.1C5.62356 16.1 2.40002 13.0108 2.40002 9.19999Z"
+                      fill="#1F2937" />
+                  </svg>
+                  <span class="line-clamp-1">
+                    {{ $t('header_search_placeholder') }}
+                  </span>
+                </button>
               </div>
             </div>
 
@@ -134,28 +129,8 @@
 
           </div>
 
-          <DesktopNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation"></DesktopNavbarMenu>
-
-          <!-- Mobile DropDown Menu Search -->
-          <div id="mobileDropdownSearch"
-            class="transition-transform translate-y-1/2 duration-500 z-10 hidden bg-white rounded-lg shadow w-full dark:bg-gray-700">
-            <div class="p-3">
-              <label for="input-group-search" class="sr-only">Search</label>
-              <div class="relative">
-                <div
-                  class="pointer-events-none absolute inset-y-0 rtl:right-0 ltr:left-0 flex items-center rtl:pr-3 ltr:pl-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M9.6 4.59999C6.94904 4.59999 4.80002 6.65948 4.80002 9.19999C4.80002 11.7405 6.94904 13.8 9.6 13.8C12.251 13.8 14.4 11.7405 14.4 9.19999C14.4 6.65948 12.251 4.59999 9.6 4.59999ZM2.40002 9.19999C2.40002 5.38922 5.62356 2.29999 9.6 2.29999C13.5764 2.29999 16.8 5.38922 16.8 9.19999C16.8 10.6902 16.307 12.0701 15.4689 13.198L21.2485 18.7368C21.7171 19.1859 21.7171 19.9141 21.2485 20.3632C20.7799 20.8123 20.0201 20.8123 19.5514 20.3632L13.7718 14.8243C12.5949 15.6276 11.155 16.1 9.6 16.1C5.62356 16.1 2.40002 13.0108 2.40002 9.19999Z"
-                      fill="#1F2937" />
-                  </svg>
-                </div>
-                <input v-model="search" id="mobile-search" name="search"
-                  class="block w-full rounded-md border-0 bg-white py-2 ltr:pl-11 ltr:pr-3 rtl:pr-11 rtl:pl-3 text-gray-900 ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6"
-                  :placeholder="$t('header_search_placeholder')" type="search" />
-              </div>
-            </div>
-          </div>
+          <DesktopNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
+          </DesktopNavbarMenu>
 
         </div>
       </nav>
@@ -170,10 +145,67 @@
       :cart_data="cartData" @hide-popup="cartDrawer.hide()" />
     <CartPopupEmpty v-else>{{ $t('empty_cart_text') }}</CartPopupEmpty>
   </div>
+
+  <!-- Search Popup Content -->
+  <div id="search-popup-menu" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed z-50 top-0 right-0 left-0 justify-center items-start w-full h-[calc(100%-3rem)] lg:h-[calc(100%-1rem)] max-h-full">
+    <div
+      class="relative lg:w-[700px] w-full lg:max-w-[700px] mt-10 mb-1 max-w-[90%] max-h-full flex flex-col items-center justify-center bg-white rounded-lg shadow-xl">
+      <!-- Search Form -->
+      <form @submit.prevent="" class="w-full px-5">
+        <label for="search" class="sr-only">Search</label>
+        <div class="relative">
+          <!-- Search Icon -->
+          <span class="pointer-events-none absolute inset-y-0 start-0 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 23" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M9.6 4.59999C6.94904 4.59999 4.80002 6.65948 4.80002 9.19999C4.80002 11.7405 6.94904 13.8 9.6 13.8C12.251 13.8 14.4 11.7405 14.4 9.19999C14.4 6.65948 12.251 4.59999 9.6 4.59999ZM2.40002 9.19999C2.40002 5.38922 5.62356 2.29999 9.6 2.29999C13.5764 2.29999 16.8 5.38922 16.8 9.19999C16.8 10.6902 16.307 12.0701 15.4689 13.198L21.2485 18.7368C21.7171 19.1859 21.7171 19.9141 21.2485 20.3632C20.7799 20.8123 20.0201 20.8123 19.5514 20.3632L13.7718 14.8243C12.5949 15.6276 11.155 16.1 9.6 16.1C5.62356 16.1 2.40002 13.0108 2.40002 9.19999Z"
+                fill="#1F2937" />
+            </svg>
+          </span>
+          <!-- Search Input -->
+          <input v-model="search" id="search" name="search" type="text" ref="search_input" @input="getSearch()"
+            class="block w-full max-w-full rounded-md border-0 bg-white py-4 ps-8 pe-3 text-gray-900 placeholder:text-gray-500 focus:ring-0 text-base"
+            :placeholder="$t('header_search_placeholder')" />
+          <!-- Search Clear -->
+          <span v-if="search.length > 0" title="Clear search" @click="search = '', search_input.focus()"
+            class="cursor-pointer absolute inset-y-0 end-0 flex items-center">
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <path d="M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z"
+                stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+              </path>
+            </svg>
+          </span>
+        </div>
+      </form>
+      <!-- Search Result -->
+      <div v-if="search.length > 2" class="w-full border-t border-gray-200 py-5 overflow-y-auto max-h-screen">
+        <div v-if="search_loader" class="flex items-center justify-center h-[40px] max-h-screen w-full mx-auto pb-4">
+          <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
+        </div>
+        <div v-if="!search_loader && search.length > 2 && search_result.length > 0"
+          class="w-full flex flex-col gap-4 justify-start px-5">
+          <!-- Search Item -->
+          <NuxtLink v-for="(search_item, index) in search_result" :key="index" @click="search_popup.hide()"
+            :to="localePath('/product/' + search_item.id)"
+            class="flex justify-start items-center p-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-600 hover:text-white shadow-md">
+            {{ search_item.name }}
+          </NuxtLink>
+        </div>
+        <div v-if="!search_loader && search.length > 2 && search_result.length == 0"
+          class="w-full flex flex-wrap justify-center items-center text-lg font-medium text-gray-700 px-5">
+          <span class="flex-shrink-0"> {{ $t('header_search_popup_no_result') }} &nbsp;</span>
+          <span class="flex max-w-full">
+            "<span class="font-bold flex-wrap line-clamp-2">&nbsp;{{ search }}&nbsp;</span>"
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { Drawer, initFlowbite } from 'flowbite';
+import { Drawer, Modal } from 'flowbite';
 const page_scrolled = ref(false);
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -184,6 +216,12 @@ const cartDrawer = ref()
 const { cartData, cartPopUpKey, setCartData } = useCart()
 const cart_data = ref([])
 const navigation = ref([])
+//search
+const search = ref('')
+const search_input = ref()
+const search_popup = ref({})
+const search_result = ref([])
+const search_loader = ref(false)
 onMounted(async () => {
   window.addEventListener("scroll", () => {
     var curr = window.scrollY;
@@ -200,9 +238,25 @@ onMounted(async () => {
     bodyScrolling: false,
     edge: false,
     edgeOffset: '',
-    backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-50'
+    backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-40'
   };
   cartDrawer.value = new Drawer($cartPopupMenu, $cartPopupMenuOptions);
+
+  // set search popup
+  const search_popup_menu = document.getElementById('search-popup-menu');
+
+  // search popup options 
+  const search_popup_options = {
+    placement: 'top-right',
+    backdrop: 'dynamic',
+    backdropClasses:
+      'bg-gray-900/50 fixed inset-0 z-40',
+    closable: true,
+    onShow: () => {
+      search.value = ''
+    }
+  };
+  search_popup.value = new Modal(search_popup_menu, search_popup_options);
 
   cart_data.value = await useCart().getAll()
   if (cart_data.value && cart_data.value.id) {
@@ -215,5 +269,25 @@ try {
   console.log(error.data)
 }
 
-const search = ref('');
+async function getSearch() {
+  if (search.value && search.value.length > 2) {
+    search_loader.value = true
+    try {
+      const search_fetch_data = await useNuxtApp().$apiFetch('/search?query=' + search.value)
+      if (search_fetch_data.status) {
+        search_result.value = search_fetch_data.data
+      } else {
+        search_result.value = []
+      }
+    } catch (error) {
+      search_result.value = []
+      console.log(error.data)
+      search_loader.value = false
+    }
+  } else {
+    search_result.value = []
+  }
+  search_loader.value = false
+}
+
 </script>
