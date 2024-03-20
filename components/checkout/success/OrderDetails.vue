@@ -1,13 +1,13 @@
 <template>
   <div class="hidden lg:flex flex-col p-[30px] pb-0">
     <h5 class=" pb-[30px] text-gray-900 text-xl font-bold leading-5">{{ $t('text_order_details') }}</h5>
-    <div class="flex justify-start items-start gap-[50px]">
+    <div class="flex justify-start items-start gap-5 lg:gap-[30px]">
       <div class="flex flex-col gap-3 text-gray-900 text-base">
         <span class="font-semibold leading-[15px] uppercase">
           {{ $t('text_order_number') }}
         </span>
-        <div class="flex gap-[5px] justify-center items-center font-bold leading-4 uppercase">
-          <span>
+        <div class="flex gap-[5px] justify-center items-center">
+          <span class="text-gray-900 text-xs lg:text-sm font-bold leading-[15px] lg:leading-[15px] uppercase">
             #{{ order_id }}
           </span>
           <span class="cursor-pointer"  @click="copyText(order_id)" :title="$t('text_copy')">
@@ -23,8 +23,8 @@
         <span class="font-semibold text-gray-900 uppercase">
           {{ $t('text_order_date') }}
         </span>
-        <span dir="ltr" class="flex justify-center items-center text-sm text-gray-500 font-semibold uppercase max-w-[90px]">
-          {{ order_date }}
+        <span dir="ltr" class="flex justify-center items-center text-sm text-gray-500 font-semibold uppercase">
+           {{ format(new Date(order_date), "dd MMM, yyyy") }}
           <!-- 22 feb, 2020 -->
         </span>
       </div>
@@ -46,6 +46,7 @@
 </template>
 
 <script setup>
+import { format } from "date-fns";
 const localePath = useLocalePath()
 const props = defineProps({
   order_id: {
