@@ -24,7 +24,7 @@
     title }}</span>
   <div :id="'filter-accordion-body-' + filter_key" :aria-labelledby="'filter-accordion-' + filter_key">
     <ul :class="[filter_key == 'pieces' ? 'flex items-center justify-start flex-wrap gap-y-[18px] w-full gap-2 lg:pt-[18px] pt-5 px-3 pb-6 text-base text-gray-900 font-normal leading-5' :
-      filter_key == 'color' ? 'flex items-stretch justify-start flex-wrap gap-y-4 gap-8 w-full lg:pt-[18px] pt-5 pb-6 text-base text-gray-900 font-normal leading-5 px-3' :
+      filter_key == 'colors' ? 'flex items-stretch justify-start flex-wrap gap-y-4 gap-8 w-full lg:pt-[18px] pt-5 pb-6 text-base text-gray-900 font-normal leading-5 px-3' :
         'space-y-3 lg:pt-3 pt-5 px-3 pb-6 text-base text-gray-900 font-normal','max-h-[300px] overflow-hidden  hover:overflow-y-auto']">
       <CategoryFilterItem v-for="item, index in filter_array" :key="filter_key + '-' + index" :filter_type="filter_key"
         :selected_filter_array="selected_filter_array" :filter_item_data="item" :mobile_filter="mobile_filter" @filter-value="updateFilterValue" />

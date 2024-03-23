@@ -10,7 +10,7 @@
       {{ filter_name }}
     </label>
   </li>
-  <li v-else-if="filter_type == 'color'">
+  <li v-else-if="filter_type == 'colors'">
     <!-- Input -->
     <input @change="(selected = !selected), $emit('filterValue', filter_object_value)" type="checkbox"
       :id="'checkbox-item-' + filter_id" :value="filter_name" class="hidden peer"
