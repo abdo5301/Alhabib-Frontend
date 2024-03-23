@@ -76,6 +76,10 @@ const props = defineProps({
   }
 })
 const { cartTotal, cartSubtotal, cartTax, cartShipping, cartWalletCredit, cartTotals } = useCart()
+const totals_array = ref([])
 
-const totals_array = props.totals && props.totals.length ? props.totals : cartTotals
+onMounted(() => {
+  totals_array.value = props.totals ? props.totals : cartTotals
+})
+
 </script>

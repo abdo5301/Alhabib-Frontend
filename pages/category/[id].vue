@@ -237,13 +237,13 @@ async function updateProductsCollection() {
           data_url.value += '&min_price=' + filter_object.value.min
           data_url.value += '&max_price=' + filter_object.value.max
           break;
-        case 'color':
+        case 'colors':
           data_url.value += '&colors[]=' + filter_object.value
           break;
         case 'pieces':
           data_url.value += '&pieces[]=' + filter_object.value
           break;
-        case 'size':
+        case 'sizes':
           data_url.value += '&sizes[]=' + filter_object.value
           break;
         default:

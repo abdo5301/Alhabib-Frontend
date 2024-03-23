@@ -23,7 +23,7 @@
           {{ $t('text_order_date') }}
         </span>
         <span dir="ltr" class="text-gray-500 font-semibold leading-4 uppercase max-w-[95px]">
-          {{ order_date }}
+          {{ format(new Date(order_date), "dd MMM, yyyy") }}
         </span>
       </div>
     </div>
@@ -63,6 +63,7 @@
 </template>
 
 <script setup>
+import { format } from "date-fns";
 const props = defineProps({
   order_details: {
     type: Boolean,
