@@ -97,20 +97,22 @@
           {{ $t('home_products_cart_btn') }}
         </button>
         <!-- favorite -->
-        <button type="button" @click="favorite = !favorite" data-dropdown-toggle="favoriteAlert"
+        <button type="button" @click="toggleFavoriteCall()" data-dropdown-toggle="favoriteAlert"
           :data-dropdown-placement="lang.dir == 'rtl' ? 'right' : 'left'"
           class="w-14 lg:h-12 h-[52px] flex justify-center items-center flex-shrink-0 rounded-md ring-1 ring-gray-400 bg-white">
-          <svg v-if="favorite" xmlns="http://www.w3.org/2000/svg" width="42" height="43" viewBox="0 0 42 43"
-            fill="#A30000">
-            <path
-              d="M7.55653 11.4366C4.48116 14.5227 4.48116 19.5263 7.55653 22.6124L21.0001 36.1028L34.4435 22.6124C37.5188 19.5263 37.5188 14.5227 34.4435 11.4366C31.3681 8.35055 26.3819 8.35055 23.3065 11.4366L21.0001 13.7513L18.6935 11.4366C15.6181 8.35055 10.6319 8.35055 7.55653 11.4366Z"
-              stroke="#A30000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="42" height="43" viewBox="0 0 42 43" fill="none">
-            <path
-              d="M7.55653 11.4366C4.48116 14.5227 4.48116 19.5263 7.55653 22.6124L21.0001 36.1028L34.4435 22.6124C37.5188 19.5263 37.5188 14.5227 34.4435 11.4366C31.3681 8.35055 26.3819 8.35055 23.3065 11.4366L21.0001 13.7513L18.6935 11.4366C15.6181 8.35055 10.6319 8.35055 7.55653 11.4366Z"
-              stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          <ClientOnly>
+            <svg v-if="favorite" xmlns="http://www.w3.org/2000/svg" width="42" height="43" viewBox="0 0 42 43"
+              fill="#A30000">
+              <path
+                d="M7.55653 11.4366C4.48116 14.5227 4.48116 19.5263 7.55653 22.6124L21.0001 36.1028L34.4435 22.6124C37.5188 19.5263 37.5188 14.5227 34.4435 11.4366C31.3681 8.35055 26.3819 8.35055 23.3065 11.4366L21.0001 13.7513L18.6935 11.4366C15.6181 8.35055 10.6319 8.35055 7.55653 11.4366Z"
+                stroke="#A30000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="42" height="43" viewBox="0 0 42 43" fill="none">
+              <path
+                d="M7.55653 11.4366C4.48116 14.5227 4.48116 19.5263 7.55653 22.6124L21.0001 36.1028L34.4435 22.6124C37.5188 19.5263 37.5188 14.5227 34.4435 11.4366C31.3681 8.35055 26.3819 8.35055 23.3065 11.4366L21.0001 13.7513L18.6935 11.4366C15.6181 8.35055 10.6319 8.35055 7.55653 11.4366Z"
+                stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </ClientOnly>
         </button>
         <!-- Out stock alert -->
         <div id="stockNotifyAlert" class="hidden top-0 left-0 z-10 transition-transform -translate-x-full duration-300">
@@ -121,9 +123,11 @@
         <!-- Favorite alert -->
         <div id="favoriteAlert"
           class="hidden top-0 rtl:left-0 ltr:right-0 z-10 transition-transform rtl:-translate-x-full ltr:translate-x-full duration-300">
-          <Alert color="green" :alert_icon="true">
-            {{ favorite ? $t('product_add_favorite_alert') : $t('product_remove_favorite_alert') }}
-          </Alert>
+          <ClientOnly>
+            <Alert color="green" :alert_icon="true">
+              {{ favorite ? $t('product_add_favorite_alert') : $t('product_remove_favorite_alert') }}
+            </Alert>
+          </ClientOnly>
         </div>
       </div>
       <!-- Receive From Shop -->
@@ -162,7 +166,7 @@ import { Drawer } from 'flowbite';
 const addCartDrawer = ref()
 const addCartSuccess = ref({})
 const addCartKey = ref(1)
-const { cartData, setCartData } = useCart()
+const { setCartData } = useCart()
 const isMobile = ref(false)
 onMounted(() => {
   initFlowbite();
@@ -193,7 +197,7 @@ onMounted(() => {
     price: discount_price.value ? parseFloat(discount_price.value) : parseFloat(price.value),// required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
     installmentsCount: 4,
     lang: lang.code,
-    source: 'product', 
+    source: 'product',
     publicKey: 'pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d',// required
     merchantCode: 'tabby'// required
   });
@@ -272,6 +276,12 @@ const breadcrumb = [
   }
 ]
 
-
+const { toggleFavorite } = useFavorite()
+async function toggleFavoriteCall() {
+  const toggle = await toggleFavorite(product_data.id)
+  if (toggle.status) {
+    favorite.value = !favorite.value
+  }
+}
 
 </script>

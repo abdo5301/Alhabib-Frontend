@@ -284,5 +284,14 @@
   "popup_cancel_order_confirm":"هل انت متأكد من رغبتك في إلغاء هذا الطلب؟",
   "popup_cancel_order_success":"تم الغاء الطلب بنجاح",
   "popup_cancel_order_success_notes":"نرجو منك مراجعة بريدك الإلكتروني، سوف يتم تواصل خدمة العملاء معك لإرجاع قيمة الطلب إلى حسابك البنكي",
-  "header_search_popup_no_result": "لا توجد نتائج بحث عن "
+  "header_search_popup_no_result": "لا توجد نتائج بحث عن ",
+  "text_view_all":"عرض الكل",
+  "text_available":"متوفر",
+  "text_out_stock":"نافد",
+  "text_empty_products": "لا توجد منتجات !",
+  "text_count_of_products": "من المنتجات",
+  "text_empty_favorites_title":"نرضي عينك ونكمّل لك غرفتك!",
+  "text_empty_favorites_sub_title":"احفظ منتجاتك المفضلة هنا وجهّز لغرفة المستقبل.",
+  "similar_products_title":"منتجات متشابهه",
+  "error_page_not_found":"عذرًا، الصفحه التي تحاول الوصول لها غير موجوده حاليًا !"
 }
