@@ -7,9 +7,10 @@
           d="M8.29578 14.3996C11.8416 14.3996 14.7161 11.5342 14.7161 7.99961C14.7161 4.46499 11.8416 1.59961 8.29578 1.59961C4.74995 1.59961 1.87549 4.46499 1.87549 7.99961C1.87549 11.5342 4.74995 14.3996 8.29578 14.3996ZM9.09832 4.79961C9.09832 4.35778 8.73901 3.99961 8.29578 3.99961C7.85255 3.99961 7.49325 4.35778 7.49325 4.79961V7.99961C7.49325 8.21178 7.5778 8.41526 7.7283 8.56529L9.99822 10.828C10.3116 11.1405 10.8198 11.1405 11.1332 10.828C11.4466 10.5156 11.4466 10.0091 11.1332 9.69666L9.09832 7.66824V4.79961Z"
           fill="#E11D48" />
       </svg>
-      <span class="text-rose-600 text-xs font-normal leading-5">{{ $t('cart_remaining_stock_1') }} {{ product.quantity }}
+      <span class="text-rose-600 text-xs font-normal leading-5">{{ $t('cart_remaining_stock_1') }} {{ product.quantity
+        }}
         {{
-          $t('cart_remaining_stock_2') }}</span>
+    $t('cart_remaining_stock_2') }}</span>
     </div>
 
     <!-- Product Data -->
@@ -44,9 +45,9 @@
             <div class="flex-1 leading-5">
               <div class="inline-flex gap-1" v-if="product.discounted_price">
                 <span class="text-red-600 font-bold lg:text-base text-sm">{{ priceFormate(product.discounted_price)
-                }}</span>
+                  }}</span>
                 <span class="text-gray-900 font-normal line-through lg:text-base text-sm">{{ priceFormate(product.price)
-                }}</span>
+                  }}</span>
               </div>
               <div class="text-[#000] font-bold text-base" v-else>
                 {{ priceFormate(product.price) }}
@@ -76,12 +77,14 @@
             </select>
           </div>
           <!-- Quantity -->
-          <div class="flex lg:flex-col flex-row gap-4 lg:gap-1 items-center lg:items-start" v-if="cart_item.quantity > 0">
+          <div class="flex lg:flex-col flex-row gap-4 lg:gap-1 items-center lg:items-start"
+            v-if="cart_item.quantity > 0">
             <label class="block pb-1 text-sm font-normal text-gray-900 leading-5">{{ $t('label_quantity') }}</label>
             <select v-model="quantity" @change="updateCartItem()"
               class="bg-white cursor-pointer min-w-[60px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3 lg:py-2 py-[6px]">
-              <option v-for="(qty, index) in product.quantity" :value="qty" :selected="qty == cart_item.quantity"> {{ qty
-              }}
+              <option v-for="(qty, index) in product.quantity" :value="qty" :selected="qty == cart_item.quantity"> {{
+    qty
+  }}
               </option>
             </select>
           </div>
@@ -98,8 +101,8 @@
             {{ product.quantity }} {{ $t('cart_remaining_stock_2') }}</span>
         </div>
         <!-- Desktop Favorite -->
-        <div class="hidden lg:flex flex-col flex-1 justify-end lg:pb-1">
-          <button
+        <div v-if="!favorite" class="hidden lg:flex flex-col flex-1 justify-end lg:pb-1">
+          <button @click.prevent="toggleFavoriteCall()"
             class="max-w-[148px] py-2 px-3 flex items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md shadow-sm ring-1 ring-gray-300 text-gray-900 text-sm font-semibold">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path
@@ -114,7 +117,7 @@
     </div>
 
     <!-- Mobile Favorite -->
-    <button
+    <button v-if="!favorite" @click.prevent="toggleFavoriteCall()"
       class="lg:hidden flex max-w-[141px] py-2 px-3 shadow-sm  items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md ring-1 ring-gray-300 text-gray-900 text-sm font-semibold">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path
@@ -175,6 +178,15 @@ async function deleteCartItem() {
       setCartData(refresh_cart)
       shown.value = false
     }
+  }
+}
+
+const favorite = ref(props.cart_item.product.favorite)
+const { toggleFavorite } = useFavorite()
+async function toggleFavoriteCall() {
+  const toggle = await toggleFavorite(props.cart_item.product.id)
+  if (toggle.status) {
+    favorite.value = !favorite.value
   }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
-  <ol class="mt-[35px] lg:mt-[63px] mx-7 lg:gap-4 gap-[6px] flex items-center flex-wrap">
+  <ol
+    :class="['mt-[35px] lg:mt-[63px] mx-7 lg:gap-4 gap-[6px] flex items-center flex-wrap', list_style ? list_style : '']">
     <li class="flex items-center lg:gap-4 gap-[6px] flex-shrink-0">
       <NuxtLink class="flex items-center" :to="localePath('/')">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -53,6 +54,9 @@ defineProps({
     type: Object,
   },
   current: {
+    type: String
+  },
+  list_style: {
     type: String
   }
 });

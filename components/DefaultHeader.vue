@@ -116,7 +116,7 @@
               </div>
               <!-- Favorite -->
               <div class="flex">
-                <NuxtLink to="#" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
+                <NuxtLink :to="localePath('/favorite')" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
                   <span class="sr-only">Favorite Products</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24" fill="none">
                     <path

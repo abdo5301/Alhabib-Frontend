@@ -3,7 +3,7 @@
     <NuxtLink :to="link" class="relative w-full">
       <img class="w-full lg:h-[267px] h-[170px]"
         :src="image != null ? image : 'https://via.placeholder.com/640x480.png/D9D9D9?text=Alhabib-Shop'">
-      <button @click.prevent="$emit('favoriteClick', favorite = !favorite)"
+      <button @click.prevent="toggleFavoriteCall()"
         class="absolute bg-[#f9fafb9e] lg:p-2 p-1 rounded-full lg:bottom-[12px] bottom-[7px] lg:right-[12px] right-[10px] text-gray-700 text-base lg:text-xl font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
           :fill="favorite ? '#A30000' : 'none'">
@@ -67,7 +67,7 @@
 
 
 <script setup>
-defineEmits(['favoriteClick'])
+const emits = defineEmits(['favoriteClick'])
 const { $lang } = useNuxtApp()
 const localPath = useLocalePath()
 const props = defineProps({
@@ -107,4 +107,13 @@ const props = defineProps({
   }
 });
 
+const favorite = ref(props.favorite)
+const { toggleFavorite } = useFavorite()
+async function toggleFavoriteCall() {
+  const toggle = await toggleFavorite(props.id)
+  if (toggle.status) {
+    favorite.value = !favorite.value
+    emits('favoriteClick')
+  }
+}
 </script>

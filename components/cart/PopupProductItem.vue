@@ -4,8 +4,8 @@
     <div class="lg:w-[188px] w-[138px] h-[138px] lg:h-[188px] flex-shrink-0">
       <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-md"
         :src="product.buyable_image" alt="Alhabib-Shop">
-      <img v-else class="w-full h-full rounded-md" src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop"
-        alt="Alhabib-Shop">
+      <img v-else class="w-full h-full rounded-md"
+        src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop" alt="Alhabib-Shop">
     </div>
     <!-- details -->
     <div class="flex flex-col justify-start lg:gap-4 gap-2 lg:min-w-[330px] lg:max-w-[315px] min-w-full w-full">
@@ -32,13 +32,14 @@
           <label class="block pb-1 text-xs font-normal text-gray-900 leading-5">{{ $t('label_quantity') }}</label>
           <select v-model="quantity" @change="updateCartItem()"
             class="bg-white cursor-pointer border min-w-[60px] flex items-center justify-between border-gray-300 text-gray-900 text-xs font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3">
-            <option v-for="(qty, index) in product.quantity" :value="qty" :selected="qty == cart_item.quantity"> {{ qty }}
+            <option v-for="(qty, index) in product.quantity" :value="qty" :selected="qty == cart_item.quantity"> {{ qty
+              }}
             </option>
           </select>
         </div>
       </div>
       <!-- Favorite -->
-      <button
+      <button v-if="!favorite" @click.prevent="toggleFavoriteCall()"
         class="max-w-[110px] py-2 px-2 flex items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md shadow ring-1 ring-gray-300 text-gray-900 text-[10px] font-semibold">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
           <path
@@ -50,7 +51,7 @@
     </div>
     <!-- remove item -->
     <div class="hidden lg:flex items items-start justify-end rtl:pl-1">
-      <button type="button" @click="deleteCartItem">
+      <button type="button" @click.prevent="deleteCartItem">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M5 15L15 5M5 5L15 15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />
@@ -96,6 +97,15 @@ async function deleteCartItem() {
       setCartData(refresh_cart)
       shown.value = false
     }
+  }
+}
+
+const favorite = ref(props.cart_item.product.favorite)
+const { toggleFavorite } = useFavorite()
+async function toggleFavoriteCall() {
+  const toggle = await toggleFavorite(props.cart_item.product.id)
+  if (toggle.status) {
+    favorite.value = !favorite.value
   }
 }
 </script>

@@ -282,6 +282,14 @@
   "popup_cancel_order_confirm":"Are you sure you want to cancel this order?",
   "popup_cancel_order_success":"Order successfully cancelled",
   "popup_cancel_order_success_notes":"Please check your email. Customer Service will contact you to return the order value to your bank account",
-  "header_search_popup_no_result": "No results for "
-
+  "header_search_popup_no_result": "No results for ",
+  "text_view_all":"View All",
+  "text_available":"Available",
+  "text_out_stock":"Out Of Stock",
+  "text_empty_products":"No Products Found !",
+  "text_count_of_products": "products",
+  "text_empty_favorites_title":"We satisfy your eye and complete your room!",
+  "text_empty_favorites_sub_title":"Save your favorite products here and prepare for the future room.",
+  "similar_products_title":"Similar products",
+  "error_page_not_found":"Sorry, the page you are trying to reach does not currently exist !"
 }
