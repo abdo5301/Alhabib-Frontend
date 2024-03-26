@@ -72,7 +72,7 @@
     </h4>
 
     <!-- Wallet -->
-    <CheckoutWallet @wallet-status='getWalletStatus' />
+    <CheckoutWallet :credit="wallet_credit" @wallet-status='toggleWalletStatus' />
 
     <!-- Payment Methods Container -->
     <div v-if='payment_methods_array && payment_methods_array.length > 0' class='flex flex-col gap-[15px]'>
@@ -130,12 +130,30 @@ const user_token = await useAuth().getUserToken()
 const payment_method_id = ref(0) //payment_id
 const payment_method_code = ref(0) //payment_code
 const { allPaymentMethods } = usePaymentMethod()
+const { getWalletData, toggleWalletCart } = useWallet()
 const payment_methods_array = ref(await allPaymentMethods())
+
+//Wallet
+const wallet_credit = ref(0)
+const wallet_status = ref(false)
+
 //Tabby
 const tabby_session = ref({})
 const tabby_pay_id = ref(0)
 const tabby_pay_url = ref('')
-function getWalletStatus(status) {
+
+onMounted(async () => {
+  const wallet_data = await getWalletData()
+  if (wallet_data.id && wallet_data.credit) {
+    wallet_credit.value = wallet_data.credit
+  }
+
+})
+
+async function toggleWalletStatus(status) {
+  const new_cart = await toggleWalletCart(status)
+  setCartData(new_cart.data)
+  wallet_status.value = status
   console.log('Wallet Status: ' + status)
 }
 

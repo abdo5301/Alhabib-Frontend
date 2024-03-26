@@ -41,5 +41,31 @@ export function useWallet() {
       }
     }
   }
-  return { getWalletData, getWalletTransactions }
+
+  async function toggleWalletCart(wallet_status = true) {
+    const wallet_action = ref('add')
+    if (wallet_status != true) {
+      wallet_action.value = 'remove'
+    }
+    try {
+      const save_data = await useNuxtApp().$apiFetch(
+        '/customer/cart/wallet-credit/' + wallet_action.value,
+        {
+          method: 'POST',
+        }
+      )
+      return save_data
+    } catch (error) {
+      console.log(error.data)
+      if (
+        error.data &&
+        error.data.message &&
+        error.data.message == 'Unauthenticated.'
+      ) {
+        unAuthenticated()
+      }
+      return error.data
+    }
+  }
+  return { getWalletData, getWalletTransactions, toggleWalletCart }
 }

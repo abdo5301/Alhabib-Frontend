@@ -4,7 +4,7 @@
       <!-- Wallet Text -->
       <div class="flex justify-start items-center gap-3 leading-5 text-sm lg:font-bold font-semibold">
         <span class="text-gray-700">{{ $t('wallet_payment_text') }}</span>
-        <span class="text-gray-500">(... {{ $t('sar') }})</span>
+        <span class="text-gray-500">( {{ priceFormate(credit) }} )</span>
       </div>
       <!-- Wallet Toggle Switch -->
       <div class="flex items-center justify-center">
