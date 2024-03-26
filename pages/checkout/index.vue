@@ -55,7 +55,7 @@
           <CheckoutAddress :step="current_step" @next-step="getNextStep" @save-address="saveAddress" />
           <!-- Payment -->
           <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" :address_id="address_id"
-            @submit="saveOrder" />
+            @submit="saveOrder" :disable_checkout="disable_checkout"/>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
           <CartDiscountForm v-model="discount_code" />
 
           <!-- Cart Products -->
-          <CheckoutCartProducts />
+          <CheckoutCartProducts @product-has-error="disable_checkout = true" />
         </div>
       </div>
 
@@ -92,6 +92,7 @@ const router = useRouter();
 const localePath = useLocalePath()
 const { setSuccessOrderId, saveOrderAddress, saveOrderPayment } = useOrder()
 const { getAll, cartTotal, setCartData } = useCart()
+const disable_checkout = ref(false)
 onMounted(async () => {
   initFlowbite();
   const cart_data = await getAll()
@@ -120,19 +121,21 @@ async function saveAddress(new_address_id) {
 }
 
 async function saveOrder(payment_method) {
-  payment_id.value = payment_method
-  var order_data = {
-    address_id: address_id.value,
-    payment_gateway_id: payment_id.value,
-    gifted: "0",
-    gift_phrase: ""
-  }
-  // console.log(order_data)
-  const add_order = await useOrder().addOrder(order_data)
-  if (add_order && add_order.id) {
-    setSuccessOrderId(add_order.id)
-    return navigateTo(localePath('/checkout/success'))
-    //window.location.pathname = localePath('/checkout/success')
+  if (disable_checkout == false) {
+    payment_id.value = payment_method
+    var order_data = {
+      address_id: address_id.value,
+      payment_gateway_id: payment_id.value,
+      gifted: "0",
+      gift_phrase: ""
+    }
+    // console.log(order_data)
+    const add_order = await useOrder().addOrder(order_data)
+    if (add_order && add_order.id) {
+      setSuccessOrderId(add_order.id)
+      return navigateTo(localePath('/checkout/success'))
+      //window.location.pathname = localePath('/checkout/success')
+    }
   }
 }
 

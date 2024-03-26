@@ -90,7 +90,8 @@
     <CheckoutAlrajhiPoints />
 
     <!-- Order Submit -->
-    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id' @click="submitOrder()"
+    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id || disable_checkout'
+      @click="submitOrder()"
       class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
     </button>
@@ -104,7 +105,6 @@
 </template>
 
 <script setup>
-import { format } from "date-fns";
 const emits = defineEmits(['submit', 'savePayment', 'walletStatus'])
 const props = defineProps({
   step: {
@@ -113,6 +113,10 @@ const props = defineProps({
   },
   address_id: {
     type: Number
+  },
+  disable_checkout: {
+    type: Boolean,
+    default: false
   }
 })
 const route = useRoute()
@@ -383,31 +387,33 @@ async function createTabbySession() {
 }
 
 async function submitOrder() {
-  if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
-    if (!tabby_session.value || !tabby_session.value.length) {
-      await createTabbySession()
-    }
-    console.log(tabby_session.value)
-    if (tabby_session.value && tabby_session.value.payment) {
-      setSuccessOrderId(tabby_session.value.payment.order.reference_id)
-      if (tabby_session.value.status == "created") {
-        tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
-        tabby_pay_id.value = tabby_session.value.payment.id
-        localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
-        return navigateTo(tabby_pay_url.value, {
-          external: true,
-        })
-      } else if (tabby_session.value.status == "authorized") {//success
-        return navigateTo(localePath("/checkout/success"))
-      } else {//expired or rejected or closed
-        await cancelOrder(tabby_session.value.payment.order.reference_id)
-        const tabby_error = tabby_session.value.configuration.products.installments[0].rejection_reason
-        console.log(tabby_error)
+  if (props.disable_checkout == false) {
+    if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
+      if (!tabby_session.value || !tabby_session.value.length) {
+        await createTabbySession()
       }
-    }
+      console.log(tabby_session.value)
+      if (tabby_session.value && tabby_session.value.payment) {
+        setSuccessOrderId(tabby_session.value.payment.order.reference_id)
+        if (tabby_session.value.status == "created") {
+          tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
+          tabby_pay_id.value = tabby_session.value.payment.id
+          localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
+          return navigateTo(tabby_pay_url.value, {
+            external: true,
+          })
+        } else if (tabby_session.value.status == "authorized") {//success
+          return navigateTo(localePath("/checkout/success"))
+        } else {//expired or rejected or closed
+          await cancelOrder(tabby_session.value.payment.order.reference_id)
+          const tabby_error = tabby_session.value.configuration.products.installments[0].rejection_reason
+          console.log(tabby_error)
+        }
+      }
 
-  } else { //Any payment else
-    emits('submit', payment_method_id.value)
+    } else { //Any payment else
+      emits('submit', payment_method_id.value)
+    }
   }
 }
 
