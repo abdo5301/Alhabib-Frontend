@@ -36,7 +36,7 @@
             </h4>
 
             <!-- Totals -->
-            <CartPageTotals :totals="cartTotals" />
+            <CartPageTotals :totals="cartTotals" :key="totals_key" />
             <!-- Tamara -->
 
             <!-- Tabby -->
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Discount Code Form -->
-            <CartDiscountForm v-model="discount_code" />
+            <CartDiscountForm v-model="discount_code" @submit-discount-code="resetTotals()" />
 
             <!-- Checkout Link -->
             <NuxtLink :to="localePath('/checkout')"
@@ -103,6 +103,7 @@ const favorite_products_fetch = ref({})
 const favorite_products = ref([])
 const data_loader = ref(true)
 const disable_checkout = ref(false)
+const totals_key = ref(123)
 onMounted(async () => {
   initFlowbite();
 
@@ -136,7 +137,7 @@ onMounted(async () => {
     favorite_products.value = favorite_products_fetch.value.data
   }
 })
-// console.log(cartCount.value)
-
-//console.log(favorite_products)
+function resetTotals() {
+  totals_key.value += 11
+}
 </script>

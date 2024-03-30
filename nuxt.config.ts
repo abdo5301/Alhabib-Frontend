@@ -52,8 +52,7 @@ export default defineNuxtConfig({
     //  baseUrl: '/api',
     // Config within public will be also exposed to the client
     public: {
-      API_URL: 'https://backend.alhabibshop.com/api/v1',//Production
-      // API_URL: process.env.NUXT_API_URL,//Test
+      API_URL: process.env.NUXT_API_URL,
       BASE_URL: process.env.NUXT_BASE_URL,
       TAPPY_PUBLIC_KEY: process.env.NUXT_TAPPY_PUBLIC_KEY,//tabby p_k
       TAPPY_SECRET_KEY: process.env.NUXT_TAPPY_SECRET_KEY,//tabby s_k
