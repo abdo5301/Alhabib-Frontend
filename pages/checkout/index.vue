@@ -55,7 +55,8 @@
           <CheckoutAddress :step="current_step" @next-step="getNextStep" @save-address="saveAddress" />
           <!-- Payment -->
           <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" :address_id="address_id"
-            @submit="saveOrder" :disable_checkout="disable_checkout"/>
+            @submit="saveOrder" :disable_checkout="disable_checkout" @wallet-status="totals_key += 1"
+            @save-payment="totals_key += 1" />
         </div>
       </div>
 
@@ -69,7 +70,7 @@
             {{ $t('cart_totals_title') }}
           </h4>
           <!-- Totals -->
-          <CartPageTotals style_type="checkout_page" />
+          <CartPageTotals :key="totals_key" :totals="cartTotals" style_type="checkout_page" />
 
           <!-- Discount Code Form -->
           <CartDiscountForm v-model="discount_code" />
@@ -91,14 +92,25 @@ const lang = useNuxtApp().$lang
 const router = useRouter();
 const localePath = useLocalePath()
 const { setSuccessOrderId, saveOrderAddress, saveOrderPayment } = useOrder()
-const { getAll, cartTotal, setCartData } = useCart()
+const { getAll, cartTotal, setCartData, cartTotals } = useCart()
 const disable_checkout = ref(false)
+const totals_key = ref(123)
 onMounted(async () => {
   initFlowbite();
   const cart_data = await getAll()
   if (!cart_data.id || !cart_data.cart_items || !cart_data.cart_items.length) {
     navigateTo(localePath('/cart'))
   }
+  //if totals not loaded we refresh cart 
+  if (cartTotals.value.length == 0) {
+    setTimeout(async () => {
+      const cart_data = await getAll()
+      setCartData(cart_data)
+      totals_key.value += 1
+      console.log(cart_data.totals)
+    }, 2000)
+  }
+  totals_key.value += 1
 })
 const order_details = ref(false) //For Mobile
 
@@ -118,6 +130,7 @@ async function saveAddress(new_address_id) {
   address_id.value = new_address_id
   const new_cart = await saveOrderAddress(new_address_id)
   setCartData(new_cart.data)
+  totals_key.value += 1
 }
 
 async function saveOrder(payment_method) {

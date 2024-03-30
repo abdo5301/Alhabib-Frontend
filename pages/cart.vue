@@ -36,7 +36,7 @@
             </h4>
 
             <!-- Totals -->
-            <CartPageTotals />
+            <CartPageTotals :totals="cartTotals" />
             <!-- Tamara -->
 
             <!-- Tabby -->
@@ -93,7 +93,7 @@ import { initFlowbite } from 'flowbite'
 definePageMeta({ middleware: ['auth'] })
 const lang = useNuxtApp().$lang
 const cart_data = ref([])
-const { cartData, setCartData, cartCount, cartItems, cartTotal } = useCart()
+const { cartData, setCartData, cartCount, cartItems, cartTotal, cartTotals } = useCart()
 const emptyText = ref('')
 const website_name = useState('website_name');
 const localePath = useLocalePath()

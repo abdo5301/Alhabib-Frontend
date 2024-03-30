@@ -245,7 +245,7 @@
           </div>
           <!-- Products -->
           <div v-if="order_data && order_data.order_items && order_data.order_items.length > 0"
-            class="flex justify-start flex-col gap-[30px] no-scrollbar lg:max-h-[600px] overflow-hidden hover:overflow-y-auto">
+            class="flex justify-start flex-col gap-[30px] ">
             <div class="flex flex-col justify-start">
               <h4 class="text-gray-900 text-base lg:text-lg font-bold leading-5 pt-2 pb-5">
                 {{ $t('products_title') }}
@@ -254,7 +254,8 @@
                 {{ $t('label_quantity') }} &nbsp;{{ order_quantity }}
               </span>
             </div>
-            <div class="flex justify-start flex-col gap-[30px]">
+            <div
+              class="flex justify-start flex-col gap-[30px] no-scrollbar lg:max-h-[600px] overflow-hidden hover:overflow-y-auto">
               <AccountOrderProductItem v-for="(item, index) in order_data.order_items" :key="index" :product="item" />
             </div>
             <!-- Divider -->
@@ -267,10 +268,7 @@
             <h4 class="text-gray-900 text-base font-bold leading-5 pt-2 pb-5">
               {{ $t('order_total_title') }}
             </h4>
-            <CartPageTotals style_type="checkout_success"
-              :wallet_credit="order_data.wallet_credit ? order_data.wallet_credit : 0" :subtotal="order_data.subtotal"
-              :shipping="order_data.shipping" :tax="order_data.tax" :total="order_data.total"
-              :totals="order_data.totals" />
+            <CartPageTotals style_type="checkout_success" :totals="order_data.totals" />
           </div>
           <!-- Divider -->
           <div

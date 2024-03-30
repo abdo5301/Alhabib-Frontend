@@ -10,7 +10,7 @@
       <div class="flex items-center justify-center">
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" v-model="use_wallet" @change="$emit('walletStatus', use_wallet)"
-            class="sr-only peer" :checked="use_wallet">
+            class="sr-only peer" :checked="use_wallet" :disabled="!credit > 0">
           <div
             class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all peer-checked:bg-gray-900">
           </div>
@@ -26,8 +26,11 @@ const props = defineProps({
   credit: {
     type: Number,
     default: 0
-  }
+  },
+  wallet_status: {
+    type: Boolean,
+    default: false
+  },
 })
-const use_wallet = ref(false)
-
+const use_wallet = ref(props.wallet_status)
 </script>

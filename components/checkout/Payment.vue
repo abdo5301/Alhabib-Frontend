@@ -72,7 +72,7 @@
     </h4>
 
     <!-- Wallet -->
-    <CheckoutWallet :credit="wallet_credit" @wallet-status='toggleWalletStatus' />
+    <CheckoutWallet :credit="wallet_credit" :wallet_status="wallet_status" @wallet-status='toggleWalletStatus' />
 
     <!-- Payment Methods Container -->
     <div v-if='payment_methods_array && payment_methods_array.length > 0' class='flex flex-col gap-[15px]'>
@@ -122,7 +122,7 @@ const props = defineProps({
 const route = useRoute()
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
-const { cartTotal, setCartData } = useCart()
+const { cartTotal, setCartData, cartWalletCredit } = useCart()
 const { setSuccessOrderId, saveOrderPayment, cancelOrder, addOrder, getOrder } = useOrder()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
@@ -135,7 +135,7 @@ const payment_methods_array = ref(await allPaymentMethods())
 
 //Wallet
 const wallet_credit = ref(0)
-const wallet_status = ref(false)
+const wallet_status = ref(cartWalletCredit.value && cartWalletCredit.value > 0 ? true : false)
 
 //Tabby
 const tabby_session = ref({})
@@ -147,13 +147,13 @@ onMounted(async () => {
   if (wallet_data.id && wallet_data.credit) {
     wallet_credit.value = wallet_data.credit
   }
-
 })
 
 async function toggleWalletStatus(status) {
   const new_cart = await toggleWalletCart(status)
   setCartData(new_cart.data)
   wallet_status.value = status
+  emits('walletStatus')
   console.log('Wallet Status: ' + status)
 }
 
@@ -164,6 +164,7 @@ async function getPaymentValue(value) {//change payment_id
   payment_method_id.value = 0
   const new_cart = await saveOrderPayment(value)
   setCartData(new_cart.data)
+  emits('savePayment')
   payment_method_id.value = value
 }
 
