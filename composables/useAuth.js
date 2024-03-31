@@ -52,6 +52,61 @@ export function useAuth() {
     return false
   }
 
+  async function forgotPassword(email) {
+    try {
+      return await useNuxtApp().$apiFetch('/forgot-password', {
+        method: 'POST',
+        body: {
+          email: email,
+        },
+      })
+    } catch (error) {
+      console.log(error.data)
+      if (error.data) {
+        return error.data
+      }
+    }
+  }
+
+  async function resetPassword(data) {
+    const localePath = useLocalePath()
+
+    try {
+      const reset_password = await useNuxtApp().$apiFetch('/reset-password', {
+        method: 'POST',
+        body: {
+          token: data.token,
+          email: data.email,
+          password: data.password,
+        },
+      })
+      //login and save user token
+      if (reset_password.status && reset_password.status == true) {
+        const auth_token = await useNuxtApp().$apiFetch('/login', {
+          method: 'POST',
+          body: {
+            email: data.email,
+            password: data.password,
+          },
+        })
+        if (auth_token.data && auth_token.data.access_token) {
+          //login success
+          setUser(auth_token.data.access_token)
+          return { status: true, message: 'success' }
+        } else {
+          return { message: 'Token not found..Please try again' }
+        }
+      } else {
+        return reset_password
+      }
+    } catch (error) {
+      console.log(error.data)
+      if (error.data) {
+        return error.data
+      }
+    }
+  }
+
   async function userLogout() {
     const nuxt = useNuxtApp()
     if (process.client) {
@@ -99,6 +154,8 @@ export function useAuth() {
     removeUser,
     getUserData,
     setUserOTP,
+    forgotPassword,
+    resetPassword,
     userLogout,
     isLoggedIn,
   }
