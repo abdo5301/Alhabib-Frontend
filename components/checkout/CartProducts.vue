@@ -13,7 +13,9 @@
     <div v-if="cartItems && cartItems.length > 0"
       class="w-full no-scrollbar flex flex-col justify-start items-start gap-5 lg:max-h-[370px] overflow-hidden hover:overflow-y-auto">
       <!-- Looping here -->
-      <CheckoutCartProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item" />
+      <CheckoutCartProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item"
+      @product-has-error="triggerProductError()"
+      />
     </div>
     <!-- Support -->
     <div class="w-full flex flex-col gap-.5 justify-start">
@@ -36,6 +38,11 @@
 </template>
 
 <script setup>
+const emits = defineEmits(['productHasError'])
 const localePath = useLocalePath()
 const { cartCount, cartItems } = useCart()
+
+function triggerProductError(){
+  emits('productHasError')
+}
 </script>

@@ -72,7 +72,7 @@
     </h4>
 
     <!-- Wallet -->
-    <CheckoutWallet @wallet-status='getWalletStatus' />
+    <CheckoutWallet :credit="wallet_credit" :wallet_status="wallet_status" @wallet-status='toggleWalletStatus' />
 
     <!-- Payment Methods Container -->
     <div v-if='payment_methods_array && payment_methods_array.length > 0' class='flex flex-col gap-[15px]'>
@@ -90,7 +90,8 @@
     <CheckoutAlrajhiPoints />
 
     <!-- Order Submit -->
-    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id' @click="submitOrder()"
+    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id || disable_checkout'
+      @click="submitOrder()"
       class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
     </button>
@@ -104,7 +105,6 @@
 </template>
 
 <script setup>
-import { format } from "date-fns";
 const emits = defineEmits(['submit', 'savePayment', 'walletStatus'])
 const props = defineProps({
   step: {
@@ -113,12 +113,16 @@ const props = defineProps({
   },
   address_id: {
     type: Number
+  },
+  disable_checkout: {
+    type: Boolean,
+    default: false
   }
 })
 const route = useRoute()
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
-const { cartTotal, setCartData } = useCart()
+const { cartTotal, setCartData, cartWalletCredit } = useCart()
 const { setSuccessOrderId, saveOrderPayment, cancelOrder, addOrder, getOrder } = useOrder()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
@@ -126,12 +130,30 @@ const user_token = await useAuth().getUserToken()
 const payment_method_id = ref(0) //payment_id
 const payment_method_code = ref(0) //payment_code
 const { allPaymentMethods } = usePaymentMethod()
+const { getWalletData, toggleWalletCart } = useWallet()
 const payment_methods_array = ref(await allPaymentMethods())
+
+//Wallet
+const wallet_credit = ref(0)
+const wallet_status = ref(cartWalletCredit.value && cartWalletCredit.value > 0 ? true : false)
+
 //Tabby
 const tabby_session = ref({})
 const tabby_pay_id = ref(0)
 const tabby_pay_url = ref('')
-function getWalletStatus(status) {
+
+onMounted(async () => {
+  const wallet_data = await getWalletData()
+  if (wallet_data.id && wallet_data.credit) {
+    wallet_credit.value = wallet_data.credit
+  }
+})
+
+async function toggleWalletStatus(status) {
+  const new_cart = await toggleWalletCart(status)
+  setCartData(new_cart.data)
+  wallet_status.value = status
+  emits('walletStatus')
   console.log('Wallet Status: ' + status)
 }
 
@@ -142,6 +164,7 @@ async function getPaymentValue(value) {//change payment_id
   payment_method_id.value = 0
   const new_cart = await saveOrderPayment(value)
   setCartData(new_cart.data)
+  emits('savePayment')
   payment_method_id.value = value
 }
 
@@ -383,31 +406,33 @@ async function createTabbySession() {
 }
 
 async function submitOrder() {
-  if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
-    if (!tabby_session.value || !tabby_session.value.length) {
-      await createTabbySession()
-    }
-    console.log(tabby_session.value)
-    if (tabby_session.value && tabby_session.value.payment) {
-      setSuccessOrderId(tabby_session.value.payment.order.reference_id)
-      if (tabby_session.value.status == "created") {
-        tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
-        tabby_pay_id.value = tabby_session.value.payment.id
-        localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
-        return navigateTo(tabby_pay_url.value, {
-          external: true,
-        })
-      } else if (tabby_session.value.status == "authorized") {//success
-        return navigateTo(localePath("/checkout/success"))
-      } else {//expired or rejected or closed
-        await cancelOrder(tabby_session.value.payment.order.reference_id)
-        const tabby_error = tabby_session.value.configuration.products.installments[0].rejection_reason
-        console.log(tabby_error)
+  if (props.disable_checkout == false) {
+    if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
+      if (!tabby_session.value || !tabby_session.value.length) {
+        await createTabbySession()
       }
-    }
+      console.log(tabby_session.value)
+      if (tabby_session.value && tabby_session.value.payment) {
+        setSuccessOrderId(tabby_session.value.payment.order.reference_id)
+        if (tabby_session.value.status == "created") {
+          tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
+          tabby_pay_id.value = tabby_session.value.payment.id
+          localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
+          return navigateTo(tabby_pay_url.value, {
+            external: true,
+          })
+        } else if (tabby_session.value.status == "authorized") {//success
+          return navigateTo(localePath("/checkout/success"))
+        } else {//expired or rejected or closed
+          await cancelOrder(tabby_session.value.payment.order.reference_id)
+          const tabby_error = tabby_session.value.configuration.products.installments[0].rejection_reason
+          console.log(tabby_error)
+        }
+      }
 
-  } else { //Any payment else
-    emits('submit', payment_method_id.value)
+    } else { //Any payment else
+      emits('submit', payment_method_id.value)
+    }
   }
 }
 

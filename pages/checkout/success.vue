@@ -55,9 +55,7 @@
             :method_data="order_data.payment_gateway" />
           <!-- Totals -->
           <div class="flex flex-col lg:p-[30px] lg:pb-0 lg:pt-0 lg:pe-16">
-            <CartPageTotals style_type="checkout_success" :subtotal="order_data.subtotal"
-              :shipping="order_data.shipping" :tax="order_data.tax" :total="order_data.total"
-              :totals="order_data.totals" />
+            <CartPageTotals style_type="checkout_success" :totals="order_data.totals" />
           </div>
           <!-- Mobile Tax Invoice Link -->
           <div class="lg:hidden flex justify-center items-center lg:p-[30px] lg:pb-0 lg:pt-0">
@@ -95,14 +93,16 @@ const cart_data = ref([])
 const data_loader = ref(true)
 onMounted(async () => {
   initFlowbite();
-  //console.log(successOrderId.value)
   if (successOrderId.value) {
-    order_data.value = await getOrder(successOrderId.value)
-    //console.log(order_data.value)
-  }else{
+    try {
+      order_data.value = await getOrder(successOrderId.value)
+    } catch (error) {
+      console.log(error.data)
+    }
+  } else {
     navigateTo(localePath('/cart'))
   }
-  
+
   cart_data.value = await useCart().getAll()
   if (cart_data.value && cart_data.value.id) {
     setCartData(cart_data.value)

@@ -58,7 +58,7 @@
                   $t('label_remember') }}</label>
             </div>
             <div class="text-sm">
-              <NuxtLink :to="localePath('/auth/reset-password')"
+              <NuxtLink :to="localePath('/auth/forgot-password')"
                 class="font-bold text-xs text-gray-900 hover:text-gray-600">{{ $t('forget_password_link') }}</NuxtLink>
             </div>
           </div>

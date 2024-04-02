@@ -98,7 +98,7 @@ export function useCart() {
 
   async function addCoupon(discount_coupon) {
     try {
-      await useNuxtApp().$apiFetch('/customer/cart/coupon/add', {
+      return await useNuxtApp().$apiFetch('/customer/cart/coupon/add', {
         method: 'POST',
         body: {
           code: discount_coupon,
@@ -156,6 +156,10 @@ export function useCart() {
       : 0
   })
 
+  const cartCoupon = computed(() => {
+    return cartData.value && cartData.value.coupon ? cartData.value.coupon : 0
+  })
+
   const cartTotals = computed(() => {
     return cartData.value && cartData.value.totals ? cartData.value.totals : []
   })
@@ -176,6 +180,7 @@ export function useCart() {
     cartShipping,
     cartTax,
     cartWalletCredit,
+    cartCoupon,
     cartTotals,
   }
 }

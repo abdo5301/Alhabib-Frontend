@@ -3,7 +3,7 @@
   <div v-if="data_loader" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
     <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[110px]" />
   </div>
-  <div v-show="!data_loader" :class="[favorite_products.data && favorite_products.data.length ? 'pb-[104px]': '']">
+  <div v-show="!data_loader" :class="[favorite_products.data && favorite_products.data.length ? 'pb-[104px]' : '']">
     <ClientOnly>
       <!-- Empty Cart -->
       <CartPageEmpty v-if="!cart_data.cart_items || !cart_data.cart_items.length">
@@ -21,7 +21,7 @@
           <div v-if="cartItems && cartItems.length > 0"
             class="w-full lg:bg-gray-50 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow no-scrollbar my-5 lg:my-10 lg:px-0 px-[6px] lg:py-0 py-5 flex flex-col justify-start items-start gap-6 lg:gap-10 lg:max-h-[800px] overflow-hidden hover:overflow-y-auto">
             <CartPageProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item"
-              :last_item="index + 1 == cartItems.length" :stock="item.quantity > item.product.quantity" />
+              :last_item="index + 1 == cartItems.length" @product-has-error="disable_checkout = true" />
           </div>
         </div>
 
@@ -36,7 +36,7 @@
             </h4>
 
             <!-- Totals -->
-            <CartPageTotals />
+            <CartPageTotals :totals="cartTotals" :key="totals_key" />
             <!-- Tamara -->
 
             <!-- Tabby -->
@@ -55,11 +55,11 @@
             </div>
 
             <!-- Discount Code Form -->
-            <CartDiscountForm v-model="discount_code" />
+            <CartDiscountForm v-model="discount_code" @submit-discount-code="resetTotals()" />
 
             <!-- Checkout Link -->
             <NuxtLink :to="localePath('/checkout')"
-              class="flex items-center justify-center h-[52px] shadow-sm text-base font-bold leading-5 rounded-md text-white bg-black">
+              :class="['flex items-center justify-center h-[52px] shadow-sm text-base font-bold leading-5 rounded-md text-white bg-black', disable_checkout ? 'bg-gray-300 pointer-events-none cursor-not-allowed' : '']">
               {{ $t('cart_checkout_link') }}
             </NuxtLink>
 
@@ -78,9 +78,8 @@
       </div>
 
       <!-- Favorite Products -->
-      <div v-if="favorite_products.data && favorite_products.data.length"
-        class="hidden lg:flex justify-start w-full pt-16 px-9">
-        <ProductRelatedProducts :products="favorite_products.data">
+      <div v-if="favorite_products.length" class="hidden lg:flex justify-start w-full pt-16 px-9">
+        <ProductRelatedProducts :products="favorite_products">
           {{ $t('favorite_title') }}
         </ProductRelatedProducts>
       </div>
@@ -94,13 +93,17 @@ import { initFlowbite } from 'flowbite'
 definePageMeta({ middleware: ['auth'] })
 const lang = useNuxtApp().$lang
 const cart_data = ref([])
-const { cartData, setCartData, cartCount, cartItems, cartTotal } = useCart()
+const { cartData, setCartData, cartCount, cartItems, cartTotal, cartTotals } = useCart()
 const emptyText = ref('')
 const website_name = useState('website_name');
 const localePath = useLocalePath()
 const { t } = useI18n()
 const discount_code = ref('');
+const favorite_products_fetch = ref({})
+const favorite_products = ref([])
 const data_loader = ref(true)
+const disable_checkout = ref(false)
+const totals_key = ref(123)
 onMounted(async () => {
   initFlowbite();
 
@@ -123,8 +126,18 @@ onMounted(async () => {
     merchantCode: 'tabby'// required
   });
   data_loader.value = false
+
+  //Favorites
+  try {
+    favorite_products_fetch.value = await useFavorite().getFavorites('/customer/favorites/get-available')
+  } catch (error) {
+    console.log(error.data)
+  }
+  if (favorite_products_fetch.value.data) {
+    favorite_products.value = favorite_products_fetch.value.data
+  }
 })
-// console.log(cartCount.value)
-const favorite_products = await useNuxtApp().$apiFetch('/master-products/of-category?category_id=53')
-//console.log(favorite_products)
+function resetTotals() {
+  totals_key.value += 11
+}
 </script>
