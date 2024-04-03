@@ -176,7 +176,7 @@ export function useAddress() {
   async function defaultAddress() {
     const allAddresses = await getAllAddresses()
     if (allAddresses && allAddresses.length > 0) {
-      const address = arrayFilter(allAddresses, 'default', 1)
+      let address = arrayFilter(allAddresses, 'default', 1)
       if (address == false) {
         address = allAddresses[0]
       }

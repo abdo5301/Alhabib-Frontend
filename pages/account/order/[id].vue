@@ -193,25 +193,31 @@
             class="flex flex-col justify-start gap-5">
             <div class="flex flex-col justify-start gap-2">
               <div class="flex justify-start items-center gap-[15px]">
-                <h3 class="text-gray-900 font-extrabold lg:font-bold text-sm lg:text-lg leading-5">{{
-    $t('whatsapp_title')
-  }}
+                <h3 class="text-gray-900 font-extrabold lg:font-bold text-sm lg:text-lg leading-5">
+                  {{ $t('whatsapp_title') }}
                 </h3>
                 <img src="/images/icons/phone-gray.png" class="w-9 h-9" alt="Whatsapp">
               </div>
+              <Alert v-if="whatsapp_sub_success" class="my-3" :dismiss="true" color="green" :alert_icon="true">
+                {{ whatsapp_sub_success }}
+              </Alert>
+              <Alert v-if="whatsapp_sub_error" class="my-3" :dismiss="true" color="red" :alert_icon="true">
+                {{ whatsapp_sub_error }}
+              </Alert>
               <div class="h-[38px] flex justify-start items-center">
                 <span class="text-gray-600 text-sm lg:text-base font-semibold leading-5">
                   {{ $t('account_whatsapp_notes') }}
                 </span>
               </div>
             </div>
+
             <InputRadio v-model="whatsapp_sub" input_id="input-account-whatsapp-subscribe"
               label_style="lg:text-sm flex items-center" input_name="account_whatsapp_subscribe" input_value="yes"
-              :input_checked="whatsapp_sub == 'yes' ? true : false" @call-back="console.log(whatsapp_sub)">
+              :input_checked="whatsapp_sub == 'yes' ? true : false" @call-back="toggleSub(true)">
               {{ $t('text_subscription') }}
             </InputRadio>
             <InputRadio v-model="whatsapp_sub" input_id="input-account-whatsapp-unsubscribe"
-              label_style="lg:text-sm flex items-center" @call-back="console.log(whatsapp_sub)"
+              label_style="lg:text-sm flex items-center" @call-back="toggleSub(false)"
               input_name="account_whatsapp_subscribe" input_value="no"
               :input_checked="whatsapp_sub == 'no' ? true : false">
               {{ $t('text_unsubscribe') }}
@@ -377,12 +383,15 @@ definePageMeta({ layout: 'account', middleware: ['auth'] })
 const website_name = useState('website_name')
 const localePath = useLocalePath()
 const { setActiveSection } = useAccount()
+const { getCustomer, subscribeToggle } = useCustomer()
 const route = useRoute()
 const { t } = useI18n()
 const { getOrder } = useOrder()
 const order_status = ref('')
 const order_quantity = ref(0)
 const whatsapp_sub = ref('no')
+const whatsapp_sub_success = ref('')
+const whatsapp_sub_error = ref('')
 const order_id = ref(0)
 const order_data = ref([])
 const pending_status = ["payment_verification", "pending", "ready_to_ship", "review", "branch_review"]
@@ -408,6 +417,12 @@ onMounted(async () => {
     order_data.value.order_items.forEach((value, index) => {
       order_quantity.value += parseInt(value.quantity);
     });
+  }
+  const customer_data = await getCustomer()
+  if (customer_data.whatsapp_subscription == true) {
+    whatsapp_sub.value = 'yes'
+  } else {
+    whatsapp_sub.value = 'no'
   }
 
   data_loader.value = false
@@ -462,6 +477,26 @@ async function cancelAction() {
     data_loader.value = false
   } else {
     alert("Server Error!..Please Try Again Later.")
+  }
+}
+
+//Whatsapp Subscription
+async function toggleSub(sub_action) {
+  whatsapp_sub_success.value = ''
+  whatsapp_sub_error.value = ''
+  var sub_data = {
+    type: 'whatsapp',
+    subscribe: sub_action,
+  }
+  const subscribe_response = await subscribeToggle(sub_data)
+  if (subscribe_response.status && subscribe_response.status == true) {
+    if (sub_action == true) {
+      whatsapp_sub_success.value = t('text_subscribe_success')
+    } else {
+      whatsapp_sub_success.value = t('text_unsubscribe_success')
+    }
+  } else {
+    whatsapp_sub_error.value = 'Server Error..Please Try Again Later'
   }
 }
 

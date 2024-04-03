@@ -293,5 +293,7 @@
   "text_empty_favorites_title":"We satisfy your eye and complete your room!",
   "text_empty_favorites_sub_title":"Save your favorite products here and prepare for the future room.",
   "similar_products_title":"Similar products",
-  "error_page_not_found":"Sorry, the page you are trying to reach does not currently exist !"
+  "error_page_not_found":"Sorry, the page you are trying to reach does not currently exist !",
+  "text_subscribe_success":"You have subscribed successfully",
+  "text_unsubscribe_success":"Subscription has been canceled successfully"
 }
