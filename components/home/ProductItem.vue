@@ -2,7 +2,7 @@
   <div class="flex flex-shrink-0 flex-col justify-start lg:w-[268px] w-[175px]">
     <NuxtLink :to="link" class="relative w-full">
       <img class="w-full lg:h-[267px] h-[170px]"
-        :src="image != null ? image : 'https://via.placeholder.com/640x480.png/D9D9D9?text=Alhabib-Shop'">
+        :src="image != null ? image.url : 'https://via.placeholder.com/640x480.png/D9D9D9?text=Alhabib-Shop'">
       <button @click.prevent="toggleFavoriteCall()"
         class="absolute bg-[#f9fafb9e] lg:p-2 p-1 rounded-full lg:bottom-[12px] bottom-[7px] lg:right-[12px] right-[10px] text-gray-700 text-base lg:text-xl font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
