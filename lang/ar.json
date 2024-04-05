@@ -295,5 +295,7 @@
   "text_empty_favorites_title":"نرضي عينك ونكمّل لك غرفتك!",
   "text_empty_favorites_sub_title":"احفظ منتجاتك المفضلة هنا وجهّز لغرفة المستقبل.",
   "similar_products_title":"منتجات متشابهه",
-  "error_page_not_found":"عذرًا، الصفحه التي تحاول الوصول لها غير موجوده حاليًا !"
+  "error_page_not_found":"عذرًا، الصفحه التي تحاول الوصول لها غير موجوده حاليًا !",
+  "text_subscribe_success":"تم الاشتراك بنجاح ",
+  "text_unsubscribe_success":"تم الغاء الاشتراك بنجاح "
 }

@@ -30,7 +30,7 @@
           <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + color.hex]">
           </span>
         </span>
-        <NuxtLink :to="localePath('/product/' + related.id)" v-for="related, index in related_products"
+        <NuxtLink :to="localePath('/' + related.slug)" v-for="related, index in related_products"
           :key="'related-color-' + index" class="empty:hidden">
           <span v-if="related.color && index < 5 && related.color.hex != color.hex"
             :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
@@ -74,7 +74,7 @@
 
 <script setup>
 const localePath = useLocalePath()
-defineEmits(['favoriteClick'])
+const emits = defineEmits(['favoriteClick'])
 const { $lang } = useNuxtApp()
 const { t } = useI18n()
 const currency = t('sar')

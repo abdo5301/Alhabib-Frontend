@@ -144,7 +144,7 @@ async function saveAddress(new_address_id) {
 }
 
 async function saveOrder(payment_method) {
-  if (disable_checkout == false) {
+  if (disable_checkout.value == false) {
     payment_id.value = payment_method
     var order_data = {
       address_id: address_id.value,

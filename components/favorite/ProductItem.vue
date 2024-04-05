@@ -29,7 +29,7 @@
           <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + color.hex]">
           </span>
         </span>
-        <NuxtLink :to="localePath('/product/' + related.id)" v-for="(related, index) in related_products"
+        <NuxtLink :to="localePath('/' + related.slug)" v-for="(related, index) in related_products"
           :key="'related-color-' + index" class="empty:hidden">
           <span v-if="related.color && index < 5 && related.color.hex != color.hex"
             :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
@@ -69,7 +69,7 @@
       </div>
       <!-- Card -->
       <div v-if="cart_btn" class="w-full flex flex-col justify-end flex-1">
-        <Button v-if="available" type="button" color="black" @click="navigateTo(localePath('/product/' + id))"
+        <Button v-if="available" type="button" color="black" @click="navigateTo(localePath('/' + slug))"
           class="items-center justify-center font-extrabold lg:text-sm text-xs shadow-sm text-white">
           {{ $t('home_products_cart_btn') }}
         </Button>
@@ -130,6 +130,9 @@ const props = defineProps({
     type: Object,
   },
   link: {
+    type: String,
+  },
+  slug: {
     type: String,
   },
   favorite: {

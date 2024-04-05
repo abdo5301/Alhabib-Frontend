@@ -30,9 +30,6 @@
 </template>
 
 <script setup>
-
-const active_section = ref(props.opened)
-
 const props = defineProps({
   title: {
     type: String
@@ -54,4 +51,6 @@ const props = defineProps({
     type: String
   }
 });
+
+const active_section = ref(props.opened)
 </script>

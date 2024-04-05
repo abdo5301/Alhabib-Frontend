@@ -84,7 +84,8 @@
                 <span class="text-[13px] lg:text-sm font-normal text-black flex-1">{{ $t('footer_download_app') }}
                 </span>
                 <span>
-                  <svg v-if="$lang.code=='ar'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <svg v-if="$lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 20 20" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
                       fill="#6B7280" />
@@ -101,11 +102,11 @@
             <div class="flex gap-[14px]">
               <NuxtLink target="_blank"
                 to="https://apps.apple.com/sa/app/%D9%85%D9%81%D8%A7%D8%B1%D8%B4-%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8/id1420285929">
-                <img v-if="$lang.dir =='rtl'" src="/images/download-app/app-store-ar.svg" alt="App Store">
+                <img v-if="$lang.dir == 'rtl'" src="/images/download-app/app-store-ar.svg" alt="App Store">
                 <img v-else src="/images/download-app/app-store-en.svg" alt="App Store">
               </NuxtLink>
               <NuxtLink target="_blank" to="https://play.google.com/store/apps/details?id=com.alhabibshop.android">
-                <img v-if="$lang.dir =='rtl'" src="/images/download-app/google-play-ar.svg" alt="Google Play">
+                <img v-if="$lang.dir == 'rtl'" src="/images/download-app/google-play-ar.svg" alt="Google Play">
                 <img v-else src="/images/download-app/google-play-en.svg" alt="App Store">
               </NuxtLink>
             </div>
@@ -135,11 +136,14 @@
               {{ $t('footer_newsletter_description') }}</p>
             <div class="w-full order-1 lg:order-3">
               <form class="w-full flex gap-3 items-center max-w-full" action="#" @submit.prevent="subscribe_newsletter">
-                <Input v-model="newsletter_email" input_type="email" class="w-3/4"
-                  input_style="h-[38px] placeholder:text-sm" input_name="newsletter"
-                  :input_placeholder="$t('footer_newsletter_placeholder')" />
+                <Input v-model="newsletter_email" input_id="footer-newsletter" input_type="email" class="w-3/4"
+                  input_style="h-[40px] placeholder:text-sm" input_name="newsletter"
+                  :input_placeholder="$t('footer_newsletter_placeholder')" :error_text="newsletter_error"
+                  input_aria_describedby="footer-newsletter-error" />
                 <Button type="submit" color="black"
-                  class="flex px-2 mt-1 w-[115px] lg:w-[129px]  h-[38px] justify-center font-extrabold text-xs lg:text-sm">{{ $t('footer_newsletter_submit') }}</Button>
+                  class="flex mt-1 px-2 w-[115px] lg:w-[129px] h-[38px] justify-center font-extrabold text-xs lg:text-sm">
+                  {{ $t('footer_newsletter_submit') }}
+                </Button>
               </form>
             </div>
           </div>
@@ -153,7 +157,7 @@
               class="flex items-center  font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-help" data-collapse-toggle="dropdown-help">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
-                $t('footer_help_menu_title') }}</span>
+              $t('footer_help_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -187,7 +191,7 @@
               class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-information" data-collapse-toggle="dropdown-information">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
-                $t('footer_info_menu_title') }}</span>
+              $t('footer_info_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -215,7 +219,7 @@
               class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-branches" data-collapse-toggle="dropdown-branches">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
-                $t('footer_branches_menu_title') }}</span>
+              $t('footer_branches_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -347,6 +351,7 @@
 <script setup>
 const { $lang } = useNuxtApp()
 const newsletter_email = ref('')
+const newsletter_error = ref('')
 
 function subscribe_newsletter() {
   var formBody = {

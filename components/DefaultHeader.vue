@@ -24,8 +24,11 @@
 
             <!-- Right Section -->
             <div class="flex lg:gap-6 items-center w-1/3">
-              <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
-              </MobileNavbarMenu>
+              <ClientOnly>
+                <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
+                </MobileNavbarMenu>
+              </ClientOnly>
+
 
               <div class="hidden lg:flex lg:items-center">
                 <!-- Language -->
@@ -188,7 +191,7 @@
           class="w-full flex flex-col gap-4 justify-start px-5">
           <!-- Search Item -->
           <NuxtLink v-for="(search_item, index) in search_result" :key="index" @click="search_popup.hide()"
-            :to="localePath('/product/' + search_item.id)"
+            :to="localePath('/' + search_item.slug)"
             class="flex justify-start items-center p-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-600 hover:text-white shadow-md">
             {{ search_item.name }}
           </NuxtLink>

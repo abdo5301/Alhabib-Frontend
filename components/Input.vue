@@ -58,7 +58,6 @@
 import { ExclamationCircleIcon, ArrowsRightLeftIcon, ClockIcon } from '@heroicons/vue/20/solid'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 const { t } = useI18n()
-const input = ref(props.modelValue);
 
 const emits = defineEmits(['update:modelValue', 'phoneCountry', 'resendOtp']);
 
@@ -183,6 +182,6 @@ const props = defineProps({
 
 });
 
-
+const input = ref(props.modelValue);
 
 </script>

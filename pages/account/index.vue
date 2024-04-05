@@ -24,8 +24,9 @@
           </div>
         </AccountDashboardBlock>
         <!-- Address -->
-        <AccountDashboardBlock :block_type="'address'" :block_title="$t('account_default_address_title')"
-          :block_edit_link="localePath('/account/address/edit/'+address_data.id)">
+        <AccountDashboardBlock v-if="address_data && address_data.id" :block_type="'address'"
+          :block_title="$t('account_default_address_title')"
+          :block_edit_link="localePath('/account/address/edit/' + address_data.id)">
           <div class="w-full flex flex-1 flex-col justify-start gap-y-5">
             <AccountDashboardBlockItem :item_title="$t('label_country')" :item_content="address_data.country" />
             <AccountDashboardBlockItem :item_title="$t('label_city')" :item_content="address_data.city" />
@@ -47,7 +48,7 @@ const website_name = useState('website_name')
 const localePath = useLocalePath()
 const { setActiveSection } = useAccount()
 const { customerName, customerEmail, customerMobile } = useCustomer()
-const address_data = ref([])
+const address_data = ref({})
 onMounted(async () => {
   initFlowbite()
   setActiveSection('account')

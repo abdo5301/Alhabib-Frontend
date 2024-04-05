@@ -54,8 +54,9 @@
               class="flex items-center justify-start lg:text-gray-500 text-gray-400 font-normal lg:font-semibold leading-5 lg:text-base text-sm">
               {{ $t('shipping_time_title') }}
             </h6>
-            <span class="flex items-center justify-start text-gray-500 text-sm font-normal leading-5">{{
-        $t('shipping_time_content') }}</span>
+            <span class="flex items-center justify-start text-gray-500 text-sm font-normal leading-5">
+              {{ $t('shipping_time_content') }}
+            </span>
           </div>
         </div>
 

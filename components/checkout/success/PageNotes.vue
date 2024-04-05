@@ -12,7 +12,8 @@
         <span>{{ $t('checkout_success_shipping_title') }}</span>
       </h5>
       <!-- Content -->
-      <p class="text-black font-normal text-sm lg:text-base leading-[30px]">{{ $t('checkout_success_shipping_details') }}
+      <p class="text-black font-normal text-sm lg:text-base leading-[30px]">{{ $t('checkout_success_shipping_details')
+        }}
       </p>
     </div>
 
@@ -33,9 +34,10 @@
         <h6 class="hidden lg:block">
           {{ $t('checkout_success_shipping_tracking_subtitle') }}
         </h6>
+        <!-- Tracking Link -->
         <div class="flex justify-start items-center gap-[5px]">
           <span>1. {{ $t('checkout_success_shipping_tracking_step1_title') }}</span>
-          <NuxtLink :to="tracking_url ? tracking_url :''" target="_blank"
+          <NuxtLink :to="tracking_url ? tracking_url : ''" target="_blank"
             class="flex justify-center items-center gap-[8px] w-[123px] h-[34px] rounded-md bg-white shadow-sm ring-1 ring-gray-300">
             <span>{{ $t('text_track') }}</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -49,7 +51,7 @@
           </NuxtLink>
         </div>
         <span class="text-gray-500 text-sm -mt-1.5">{{ $t('checkout_success_shipping_tracking_step1_notes') }}</span>
-
+        <!-- Whatsapp -->
         <div class="flex justify-start items-center gap-[5px] mt-1.5">
           <span>2. {{ $t('checkout_success_shipping_tracking_step2_title1') }}</span>
           <span class="flex items-center justify-center flex-shrink-0 w-5 h-5 rounded-full bg-green-400">
@@ -62,10 +64,13 @@
           <span>{{ $t('checkout_success_shipping_tracking_step2_title2') }}</span>
         </div>
         <div class="flex justify-start items-center gap-2 -mt-1.5">
-          <input v-model="subscribe_whatsapp" id="whatsapp-sub" name="whatsapp-sub" type="checkbox" checked="checked"
-            class="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-transparent cursor-pointer" />
-          <label for="whatsapp-sub" class="block font-normal text-sm leading-5 text-gray-900 cursor-pointer">{{
-            $t('text_subscription') }}</label>
+          <ClientOnly>
+            <input v-model="whatsapp_sub" id="whatsapp-sub" name="whatsapp-sub" type="checkbox" :checked="whatsapp_sub"
+              @change="toggleSub"
+              class="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-transparent cursor-pointer" />
+            <label for="whatsapp-sub" class="block font-normal text-sm leading-5 text-gray-900 cursor-pointer">{{
+          $t('text_subscription') }}</label>
+          </ClientOnly>
         </div>
 
       </div>
@@ -94,11 +99,42 @@
 
 <script setup>
 const localePath = useLocalePath()
+const { getCustomer, subscribeToggle } = useCustomer()
+const whatsapp_sub = ref(true)
+const whatsapp_sub_success = ref('')
+const whatsapp_sub_error = ref('')
+const { t } = useI18n()
 const props = defineProps({
   tracking_url: {
     type: String,
   }
 })
 
-const subscribe_whatsapp = ref(false)
+onMounted(async () => {
+  const customer_data = await getCustomer()
+  whatsapp_sub.value = customer_data.whatsapp_subscription
+})
+
+//Whatsapp Subscription
+async function toggleSub() {
+
+  whatsapp_sub_success.value = ''
+  whatsapp_sub_error.value = ''
+  var sub_data = {
+    type: 'whatsapp',
+    subscribe: whatsapp_sub.value,
+  }
+  const subscribe_response = await subscribeToggle(sub_data)
+  if (subscribe_response.status && subscribe_response.status == true) {
+    if (whatsapp_sub.value == true) {
+      whatsapp_sub_success.value = t('text_subscribe_success')
+    } else {
+      whatsapp_sub_success.value = t('text_unsubscribe_success')
+    }
+    alert(whatsapp_sub_success.value)
+  } else {
+    whatsapp_sub_error.value = 'Server Error..Please Try Again Later'
+  }
+  console.log(subscribe_response)
+}
 </script>
