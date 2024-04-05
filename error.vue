@@ -1,4 +1,5 @@
 <template>
+  <div>
   <NuxtLayout name="default">
     <div class="flex justify-center items-center flex-col gap-[35px] lg:gap-[63px] h-[258px] lg:h-[558px] bg-gray-50">
       <img src="/images/error-for-page.png" alt="Error" class="w-[276px] lg:w-[335px] ">
@@ -11,7 +12,7 @@
       </div>
     </div>
   </NuxtLayout>
-
+</div>
 </template>
 <script setup>
 import { initFlowbite } from 'flowbite'

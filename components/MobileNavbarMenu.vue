@@ -77,7 +77,7 @@
                 stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-          <NuxtLink v-else :to="localePath('/category/'+category.id)" data-drawer-hide="mobile-main-menu"
+          <NuxtLink v-else :to="localePath('/' + category.slug)" data-drawer-hide="mobile-main-menu"
             class="bg-transparent rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               category.name }}</span>
@@ -101,27 +101,27 @@
           fill="none">
           <path d="M19.24 7.90674L27.3333 16.0001L19.24 24.0934" stroke="#6B7280" stroke-width="1.5"
             stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M4.66675 16H27.1067" stroke="#6B7280" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-            stroke-linejoin="round" />
+          <path d="M4.66675 16H27.1067" stroke="#6B7280" stroke-width="1.5" stroke-miterlimit="10"
+            stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
           <path d="M12.76 7.90674L4.66668 16.0001L12.76 24.0934" stroke="#6B7280" stroke-width="1.5"
             stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M27.3333 16H4.89334" stroke="#6B7280" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-            stroke-linejoin="round" />
+          <path d="M27.3333 16H4.89334" stroke="#6B7280" stroke-width="1.5" stroke-miterlimit="10"
+            stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span class="sr-only">Close menu</span>
       </button>
       <ul class="flex flex-col gap-7 pt-4 rtl:pr-4 rtl:pl-[22px] ltr:pr-[22px] ltr:pl-4">
         <li class="border-b border-gray-300 pb-4 pt-3">
-          <NuxtLink :to="localePath('/category/'+category.id)" :data-drawer-hide="'mobile-menu-' + category.id"
+          <NuxtLink :to="localePath('/' + category.slug)" :data-drawer-hide="'mobile-menu-' + category.id"
             class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{ $t('header_mobile_menu_view_all') }}</span>
           </NuxtLink>
         </li>
 
         <li v-for="sub_category in category.subcategory" :key="sub_category.id" class="border-b border-gray-300 pb-4">
-          <NuxtLink :to="localePath('/category/'+sub_category.id)" :data-drawer-hide="'mobile-menu-' + category.id"
+          <NuxtLink :to="localePath('/' + sub_category.slug)" :data-drawer-hide="'mobile-menu-' + category.id"
             class="bg-transparent text-gray-600 rounded-lg w-full flex justify-between px-2">
             <span class="text-gray-600 text-base font-semibold">{{
               sub_category.name }}</span>

@@ -16,7 +16,7 @@
               :name="product.name"
               :image="product.media.images && product.media.images.length ? product.media.images[0] : null"
               :color="product.color" :price="product.started_price" :special="product.started_discounted_price"
-              :link="localePath('/product/' + product.id)" :favorite="product.favorite" :tags="product.tags"
+              :link="localePath('/' + product.slug)" :favorite="product.favorite" :tags="product.tags"
               :related_products="product.related_class_products" @favorite-click="product.favorite = !product.favorite"
               :available="product.availability" />
           </div>

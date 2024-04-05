@@ -5,11 +5,13 @@
 <template>
   <div class="bg-gray-50 flex flex-col h-screen text-gray-900">
     <Title>{{ title }}</Title>
-    <NuxtLoadingIndicator color="#cccccc" :height="4" />
+    <NuxtLoadingIndicator color="#cccccc" :height="3" />
     <DefaultHeader></DefaultHeader>
     <div class="flex-grow">
       <div v-if="route.path != '/' && route.path != '/en'" class="lg:h-[165px] h-[65px]"></div>
-      <slot />
+      <suspense>
+        <slot />
+      </suspense>
     </div>
     <DefaultFooter></DefaultFooter>
   </div>

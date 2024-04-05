@@ -28,6 +28,7 @@
     "@headlessui/vue": "^1.7.13",
     "@heroicons/vue": "^2.0.18",
     "date-fns": "^3.3.1",
-    "flowbite": "2.2"
+    "flowbite": "2.2",
+    "vue": "^3.4.8"
   }
 }

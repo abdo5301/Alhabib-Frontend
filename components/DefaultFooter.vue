@@ -351,6 +351,7 @@
 <script setup>
 const { $lang } = useNuxtApp()
 const newsletter_email = ref('')
+const newsletter_error = ref('')
 
 function subscribe_newsletter() {
   var formBody = {
