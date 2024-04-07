@@ -111,7 +111,7 @@ const website_name = useState('website_name');
 const route = useRoute();
 const localePath = useLocalePath()
 const category_url_id = route.params && route.params.id ? route.params.id : route.name
-const data_url = ref('/master-products/of-category?category_id=' + category_url_id)
+const data_url = ref('/master-products/of-category?category_q=' + category_url_id)
 const sorting_value = ref()
 const listing_type = ref('list')
 const current_page = ref(1)
@@ -234,7 +234,7 @@ function updateSortingValue(new_sorting_value) {
 
 async function updateProductsCollection() {
   current_page.value = 1
-  data_url.value = '/master-products/of-category?category_id=' + route.params.id
+  data_url.value = '/master-products/of-category?category_q=' + route.params.id
   //filtering
   if (filter_array.value.length > 0) {
     for (let index = 0; index < filter_array.value.length; index++) {

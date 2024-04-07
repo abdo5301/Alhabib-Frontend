@@ -183,7 +183,7 @@ const out_stock = ref(false)
 const out_stock_btn = ref(t('product_stock_notify_button'))
 const disable_out_stock_btn = ref(false)
 const url_product_id = route.params && route.params.id ? route.params.id : route.name
-const product_fetch_data = await useNuxtApp().$apiFetch('/master-products/get?master_product_id=' + url_product_id)
+const product_fetch_data = await useNuxtApp().$apiFetch('/master-products/get?master_product_q=' + url_product_id)
 const product_data = product_fetch_data.data ? product_fetch_data.data : []
 const selected_option = ref({})
 const price = ref(product_data.started_price ? priceFormate(product_data.started_price) : null)
