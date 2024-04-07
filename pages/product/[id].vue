@@ -42,10 +42,10 @@
           class="w-full font-semibold flex items-center justify-center bg-white rounded-md flex-shrink-0">
         </div>
         <!-- Tamara -->
-        <div
+        <!-- <div
           class="w-full font-semibold px-5 py-6 flex items-center justify-center bg-white ring-1 ring-gray-300 rounded-md flex-shrink-0">
           Tamara Banner
-        </div>
+        </div> -->
         <!-- Colors -->
         <div v-if="product_data.color">
           <h4 class="pb-2 text-gray-900 text-lg font-bold leading-5">
@@ -183,7 +183,7 @@ const out_stock = ref(false)
 const out_stock_btn = ref(t('product_stock_notify_button'))
 const disable_out_stock_btn = ref(false)
 const url_product_id = route.params && route.params.id ? route.params.id : route.name
-const product_fetch_data = await useNuxtApp().$apiFetch('/master-products/get?master_product_id=' + url_product_id)
+const product_fetch_data = await useNuxtApp().$apiFetch('/master-products/get?master_product_q=' + url_product_id)
 const product_data = product_fetch_data.data ? product_fetch_data.data : []
 const selected_option = ref({})
 const price = ref(product_data.started_price ? priceFormate(product_data.started_price) : null)

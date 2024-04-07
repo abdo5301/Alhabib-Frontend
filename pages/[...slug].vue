@@ -34,15 +34,15 @@ onMounted(async () => {
     switch (slug_type) {
       case "App\\Models\\Category":
         router.addRoute({
-          name: slug_id, path: new_path, component: () => import("@/pages/category/[id].vue"),
+          name: slug_name, path: new_path, component: () => import("@/pages/category/[id].vue"),
         })
-        await router.replace({ name: slug_id })
+        await router.replace({ name: slug_name })
         break;
       case "App\\Models\\MasterProduct":
         router.addRoute({
-          name: slug_id, path: new_path, component: () => import("@/pages/product/[id].vue"),
+          name: slug_name, path: new_path, component: () => import("@/pages/product/[id].vue"),
         })
-        await router.replace({ name: slug_id })
+        await router.replace({ name: slug_name })
         break;
       default:
         break;
