@@ -42,10 +42,10 @@
           class="w-full font-semibold flex items-center justify-center bg-white rounded-md flex-shrink-0">
         </div>
         <!-- Tamara -->
-        <div
+        <!-- <div
           class="w-full font-semibold px-5 py-6 flex items-center justify-center bg-white ring-1 ring-gray-300 rounded-md flex-shrink-0">
           Tamara Banner
-        </div>
+        </div> -->
         <!-- Colors -->
         <div v-if="product_data.color">
           <h4 class="pb-2 text-gray-900 text-lg font-bold leading-5">

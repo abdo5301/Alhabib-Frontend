@@ -234,7 +234,7 @@ function updateSortingValue(new_sorting_value) {
 
 async function updateProductsCollection() {
   current_page.value = 1
-  data_url.value = '/master-products/of-category?category_q=' + route.params.id
+  data_url.value = '/master-products/of-category?category_q=' + category_url_id
   //filtering
   if (filter_array.value.length > 0) {
     for (let index = 0; index < filter_array.value.length; index++) {
