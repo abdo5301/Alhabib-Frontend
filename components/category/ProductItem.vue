@@ -3,7 +3,7 @@
     :class="[list_type == 'solo' ? 'w-full' : 'w-[175px]', 'flex flex-shrink-0 flex-col lg:gap-3 gap-[10px] justify-start lg:w-[318px]']">
     <NuxtLink :to="link" class="relative w-full">
       <img :class="[list_type == 'solo' ? 'h-[377px]' : 'h-[175px]', 'w-full lg:h-[304px] rounded-lg object-cover']"
-        :src="image ? image : '/images/product/product-2.jpeg'">
+        :src="image ? image : '/images/placeholder-logo.png'">
       <span v-if="available == false"
         class="absolute top-0 rounded-lg bg-opacity-60 h-full w-full bg-[#F0EBEB] flex justify-center items-center">
         <span class="!opacity-100 text-gray-900 text-sm lg:text-base font-semibold">{{ $t('product_size_stock_alert')

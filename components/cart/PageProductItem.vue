@@ -32,7 +32,7 @@
         <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-lg"
           :src="product.buyable_image" alt="Alhabib-Shop">
         <img v-else class="w-full h-full rounded-lg"
-          src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop" alt="Alhabib-Shop">
+          src="/images/placeholder-logo.png" alt="Alhabib-Shop">
       </div>
       <!-- details -->
       <div class="flex flex-col justify-start gap-2 flex-1">

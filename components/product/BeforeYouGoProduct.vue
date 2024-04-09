@@ -3,7 +3,7 @@
     <!-- image -->
     <NuxtLink :to="link" class="relative w-full">
       <img class="w-full lg:h-[168px] h-[119px]"
-        :src="image != null ? image : 'https://via.placeholder.com/640x480.png/D9D9D9?text=Alhabib-Shop'">
+        :src="image != null ? image : '/images/placeholder-logo.png'">
       <button @click.prevent="toggleFavoriteCall()"
         class="absolute bg-[#f9fafb9e] p-1 rounded-full lg:bottom-[11px] bottom-[7px] lg:right-[5px] right-[5px] text-gray-700 text-base lg:text-xl font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
