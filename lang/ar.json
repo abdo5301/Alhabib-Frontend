@@ -297,5 +297,6 @@
   "similar_products_title":"منتجات متشابهه",
   "error_page_not_found":"عذرًا، الصفحه التي تحاول الوصول لها غير موجوده حاليًا !",
   "text_subscribe_success":"تم الاشتراك بنجاح ",
-  "text_unsubscribe_success":"تم الغاء الاشتراك بنجاح "
+  "text_unsubscribe_success":"تم الغاء الاشتراك بنجاح ",
+  "text_active_discount_code":" كود الخصم الفعال"
 }

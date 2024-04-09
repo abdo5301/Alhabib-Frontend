@@ -295,5 +295,6 @@
   "similar_products_title":"Similar products",
   "error_page_not_found":"Sorry, the page you are trying to reach does not currently exist !",
   "text_subscribe_success":"You have subscribed successfully",
-  "text_unsubscribe_success":"Subscription has been canceled successfully"
+  "text_unsubscribe_success":"Subscription has been canceled successfully",
+  "text_active_discount_code":"Active Discount Code "
 }

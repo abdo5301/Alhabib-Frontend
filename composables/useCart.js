@@ -118,6 +118,25 @@ export function useCart() {
     }
   }
 
+  async function deleteCoupon() {
+    try {
+      return await useNuxtApp().$apiFetch('/customer/cart/coupon/remove', {
+        method: 'DELETE',
+      })
+    } catch (error) {
+      console.log(error.data)
+      if (error.data && error.data.message) {
+        if (error.data.message == 'Unauthenticated.') {
+          unAuthenticated()
+        } else if (error.data.errors && error.data.errors.code) {
+          return 'invalid_code'
+        } else {
+          return error.data.message
+        }
+      }
+    }
+  }
+
   const cartItems = computed(() => {
     return cartData.value && cartData.value.cart_items
       ? cartData.value.cart_items
@@ -160,6 +179,12 @@ export function useCart() {
     return cartData.value && cartData.value.coupon ? cartData.value.coupon : 0
   })
 
+  const cartCouponCode = computed(() => {
+    return cartData.value && cartData.value.coupon_code
+      ? cartData.value.coupon_code
+      : null
+  })
+
   const cartTotals = computed(() => {
     return cartData.value && cartData.value.totals ? cartData.value.totals : []
   })
@@ -170,6 +195,7 @@ export function useCart() {
     editItem,
     deleteItem,
     addCoupon,
+    deleteCoupon,
     setCartData,
     cartData,
     cartPopUpKey,
@@ -181,6 +207,7 @@ export function useCart() {
     cartTax,
     cartWalletCredit,
     cartCoupon,
+    cartCouponCode,
     cartTotals,
   }
 }
