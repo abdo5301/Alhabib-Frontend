@@ -63,6 +63,7 @@
 
 <script setup>
 let shown = ref(true);
+const emits = defineEmits('RemoveItem')
 const props = defineProps({
   cart_item: {
     type: Object
@@ -95,6 +96,7 @@ async function deleteCartItem() {
     const refresh_cart = await useCart().getAll()
     if (refresh_cart.id) {
       setCartData(refresh_cart)
+      emits('RemoveItem')
       shown.value = false
     }
   }

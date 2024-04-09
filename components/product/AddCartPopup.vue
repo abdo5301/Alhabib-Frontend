@@ -11,7 +11,7 @@
       <!-- Cart Items -->
       <div v-if="product"
         class="w-full px-4 no-scrollbar lg:pt-12 pt-5 flex flex-col justify-start items-start gap-6 max-h-[440px] overflow-hidden hover:overflow-y-auto">
-        <CartPopupProductItem :cart_item="add_cart_data"/>
+        <CartPopupProductItem :cart_item="add_cart_data" @remove-item="$emit('hidePopup')"/>
       </div>
       <!-- Cart Total -->
       <div class="w-full lg:pt-12 pt-5 flex justify-between items-center px-6">

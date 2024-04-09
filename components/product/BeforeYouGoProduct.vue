@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col justify-start lg:gap-4 gap-3 lg:w-[168px] w-[130px] flex-shrink-0">
     <!-- image -->
-    <NuxtLink :to="link" class="relative w-full">
+    <NuxtLink :to="link" target="_blank" class="relative w-full">
       <img class="w-full lg:h-[168px] h-[119px]"
         :src="image != null ? image : '/images/placeholder-logo.png'">
       <button @click.prevent="toggleFavoriteCall()"
@@ -16,7 +16,7 @@
       </button>
     </NuxtLink>
     <!-- name -->
-    <NuxtLink :to="link" class="line-clamp-2 text-xs text-gray-900 font-normal leading-[22px]">
+    <NuxtLink :to="link" target="_blank" class="line-clamp-2 text-xs text-gray-900 font-normal leading-[22px]">
       {{ name }}
     </NuxtLink>
     <!-- price -->

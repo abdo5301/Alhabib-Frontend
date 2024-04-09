@@ -60,8 +60,8 @@
                 :style="['background-color:' + product_data.color.hex]">
               </span>
             </span>
-            <NuxtLink :to="localePath('/' + related.slug)"
-              v-for="related, index in product_data.related_class_products" :key="related.color" class="empty:hidden">
+            <NuxtLink :to="localePath('/' + related.slug)" v-for="related, index in product_data.related_class_products"
+              :key="related.color" class="empty:hidden">
               <span v-if="index < 5 && related.color.hex != product_data.color.hex"
                 :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
                 <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40"
@@ -134,7 +134,7 @@
           </div>
         </div>
         <!-- Receive From Shop -->
-        <ProductReceiveFromShop />
+        <!-- <ProductReceiveFromShop /> -->
         <!-- Details -->
         <div class="w-full bg-[#F9FAFB] max-h-[300px] overflow-y-auto no-scrollbar" id="product-details-accordion"
           data-active-classes="py-[1px]" data-inactive-classes="py-[1px]" data-accordion="open">
@@ -229,8 +229,6 @@ onMounted(() => {
 function getSelectedOption(option_data) {
   selected_option.value = option_data
   out_stock_btn.value = t('product_stock_notify_button')
-  disable_out_stock_btn.value = false
-  disable_cart_btn.value = false
   if (selected_option.value.price) {
     price.value = priceFormate(selected_option.value.price)
   }
@@ -245,7 +243,8 @@ function getSelectedOption(option_data) {
   } else {
     out_stock.value = false
   }
-
+  disable_out_stock_btn.value = false
+  disable_cart_btn.value = false
 }
 
 function outStockNotify() {
@@ -255,6 +254,7 @@ function outStockNotify() {
 
 
 async function addToCart() {
+  disable_cart_btn.value = true
   addCartSuccess.value = {}
   const add_cart_data = {
     item_type: selected_option.value.buyable_type,
@@ -271,6 +271,7 @@ async function addToCart() {
     addCartSuccess.value = add_cart
     addCartKey.value += 1
     addCartDrawer.value.show()
+    disable_cart_btn.value = false
     //console.log(addCartSuccess.value)
   }
 }
