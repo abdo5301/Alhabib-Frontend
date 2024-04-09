@@ -208,7 +208,7 @@ async function deleteCartItem() {
   }
 }
 
-const favorite = ref(props.cart_item.product.favorite)
+const favorite = ref(props.cart_item.favorite)
 const { toggleFavorite } = useFavorite()
 async function toggleFavoriteCall() {
   const toggle = await toggleFavorite(props.cart_item.product.id)
