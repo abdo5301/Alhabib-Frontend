@@ -5,7 +5,7 @@
       <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-md"
         :src="product.buyable_image" alt="Alhabib-Shop">
       <img v-else class="w-full h-full rounded-md"
-        src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop" alt="Alhabib-Shop">
+        src="/images/placeholder-logo.png" alt="Alhabib-Shop">
     </div>
     <!-- details -->
     <div class="flex flex-col justify-start lg:gap-4 gap-2 lg:min-w-[330px] lg:max-w-[315px] min-w-full w-full">
@@ -63,6 +63,7 @@
 
 <script setup>
 let shown = ref(true);
+const emits = defineEmits('RemoveItem')
 const props = defineProps({
   cart_item: {
     type: Object
@@ -95,12 +96,13 @@ async function deleteCartItem() {
     const refresh_cart = await useCart().getAll()
     if (refresh_cart.id) {
       setCartData(refresh_cart)
+      emits('RemoveItem')
       shown.value = false
     }
   }
 }
 
-const favorite = ref(props.cart_item.product.favorite)
+const favorite = ref(props.cart_item.favorite)
 const { toggleFavorite } = useFavorite()
 async function toggleFavoriteCall() {
   const toggle = await toggleFavorite(props.cart_item.product.id)

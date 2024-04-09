@@ -60,7 +60,7 @@
           <div :class="[listing_type == 'solo' ? 'gap-[18px]' : 'gap-y-[45px] gap-x-[27px]',
             'flex flex-wrap items-stretch justify-start gap-[42px] lg:gap-y-[55px]']">
             <CategoryProductItem v-for="product in products" :key="product.id" :id="product.id" :name="product.name"
-              :image="product.media.images && product.media.images.length ? product.media.images[0] : null"
+              :image="product.media.images && product.media.images.length ? product.media.images[0].url : null"
               :color="product.color" :price="product.started_price" :special="product.started_discounted_price"
               :link="localePath('/' + product.slug)" :favorite="product.favorite" :tags="product.tags"
               :related_products="product.related_class_products" @favorite-click="product.favorite = !product.favorite"

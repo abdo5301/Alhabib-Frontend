@@ -44,7 +44,18 @@ onMounted(async () => {
         })
         await router.replace({ name: slug_name })
         break;
+      case "App\\Models\\Page":
+        router.addRoute({
+          name: slug_name, path: new_path, component: () => import("@/pages/page/[slug].vue"),
+        })
+        await router.replace({ name: slug_name })
+        break;
       default:
+      throw createError({
+          statusCode: 404,
+          statusMessage: 'page_not_found',
+          fatal: true
+        })
         break;
     }
     if (locale.value && locale.value != lang.code) {

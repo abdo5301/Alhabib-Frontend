@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     asyncEntry:true,
   },
   i18n: {
+    baseUrl:process.env.NUXT_BASE_URL,
     vueI18n: './i18n.config.ts',
     defaultLocale: 'ar',
     lazy: true,

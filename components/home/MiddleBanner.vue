@@ -1,7 +1,7 @@
 <template>
   <div class="flex mx-auto container flex-col gap-12 justify-center items-center px-[22px] lg:px-[75px]">
     <!-- IF Image Banner -->
-    <NuxtLink :to="localePath('/')" v-if="slider_banner == 'image'" class="w-full">
+    <NuxtLink :to="localePath('/')" v-if="banner_type == 'fixed'" class="w-full">
       <img src="/images/banner/slider-banner-1.png" alt="Alhabib-Shop"
         class="relative hidden lg:block h-[348px] mx-auto w-full">
 
@@ -11,7 +11,7 @@
 
 
     <!-- IF Desktop Slider Banner -->
-    <div dir="ltr" v-if="slider_banner == 'slider'" id="default-carousel" class="hidden lg:block relative w-full" data-carousel="slide">
+    <div dir="ltr" v-if="banner_type == 'slider'" id="default-carousel" class="hidden lg:block relative w-full" data-carousel="slide">
       <div class="relative overflow-hidden h-[348px]">
         <!-- Item -->
         <NuxtLink :to="localePath(item.slug)" v-for="item, index in banners" :key="index" class="hidden duration-700 ease-in-out"
@@ -27,9 +27,8 @@
       </div>
     </div>
 
-
     <!-- IF Mobile Slider Banner -->
-    <div dir="ltr" v-if="slider_banner == 'slider'" id="default-carousel" class="lg:hidden relative w-full"
+    <div dir="ltr" v-if="banner_type == 'slider'" id="default-carousel" class="lg:hidden relative w-full"
       data-carousel="slide">
       <div class="relative overflow-hidden h-[395px]">
         <!--Mobile Item -->
@@ -51,11 +50,19 @@
 
 <script setup>
 const localePath = useLocalePath()
-const slider_banner = ref('slider')
+const banner_type = ref('static')
 const props = defineProps({
-  banners: {
+  banner_data: {
     type: Object
   }
 })
+
+if (props.banner_data && props.banner_data[1].data.length > 0) {
+  banner_type.value = 'slider'
+} 
+
+if (props.banner_data && props.banner_data[0].data.length > 0) {
+  banner_type.value = 'fixed'
+}
 
 </script>

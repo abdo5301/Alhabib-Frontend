@@ -17,7 +17,7 @@
         <div class="flex flex-1 flex-col">
           <Breadcrumb :current="$t('cart_title')"></Breadcrumb>
           <CartTitle :count="cartCount" />
-          <CartReceiveFromShop />
+          <!-- <CartReceiveFromShop /> -->
           <div v-if="cartItems && cartItems.length > 0"
             class="w-full lg:bg-gray-50 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow no-scrollbar my-5 lg:my-10 lg:px-0 px-[6px] lg:py-0 py-5 flex flex-col justify-start items-start gap-6 lg:gap-10 lg:max-h-[800px] overflow-hidden hover:overflow-y-auto">
             <CartPageProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item"

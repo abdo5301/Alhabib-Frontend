@@ -9,19 +9,24 @@
             <h2 class="text-xl font-extrabold text-gray-600 uppercase">{{ $t('footer_help_menu_title') }}</h2>
             <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4">
               <li>
-                <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_contact') }}</NuxtLink>
+                <NuxtLink :to="localePath('/contact-us')" class="hover:underline text-base">{{
+                  $t('footer_help_menu_contact') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_faq') }}</NuxtLink>
+                <NuxtLink :to="localePath('/Quiz')" class="hover:underline text-base">{{ $t('footer_help_menu_faq') }}
+                </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_shipping') }}</NuxtLink>
+                <NuxtLink :to="localePath('/shipping')" class="hover:underline">{{ $t('footer_help_menu_shipping') }}
+                </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return') }}</NuxtLink>
+                <NuxtLink :to="localePath('/return')" class="hover:underline">{{ $t('footer_help_menu_return') }}
+                </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return_ticket') }}</NuxtLink>
+                <NuxtLink :to="localePath('account/order')" class="hover:underline">{{
+                  $t('footer_help_menu_return_ticket') }}</NuxtLink>
               </li>
             </ul>
           </div>
@@ -29,13 +34,14 @@
             <h2 class="text-xl font-extrabold text-gray-600 uppercase">{{ $t('footer_info_menu_title') }}</h2>
             <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4">
               <li>
-                <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_info_menu_about') }}</NuxtLink>
+                <NuxtLink :to="localePath('/about-us')" class="hover:underline text-base">{{
+                  $t('footer_info_menu_about') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_blog') }}</NuxtLink>
+                <NuxtLink :to="localePath('/blog')" class="hover:underline">{{ $t('footer_info_menu_blog') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
+                <NuxtLink :to="localePath('/')" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
               </li>
             </ul>
           </div>
@@ -157,7 +163,7 @@
               class="flex items-center  font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-help" data-collapse-toggle="dropdown-help">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
-              $t('footer_help_menu_title') }}</span>
+                $t('footer_help_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -169,19 +175,24 @@
             <div id="dropdown-help" class="hidden pt-4">
               <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4 items-center">
                 <li>
-                  <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_contact') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/contact-us')" class="hover:underline text-base">{{
+                    $t('footer_help_menu_contact') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_help_menu_faq') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/Quiz')" class="hover:underline text-base">{{ $t('footer_help_menu_faq') }}
+                  </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_shipping') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/shipping')" class="hover:underline">{{ $t('footer_help_menu_shipping') }}
+                  </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/return')" class="hover:underline">{{ $t('footer_help_menu_return') }}
+                  </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_help_menu_return_ticket') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/account/order')" class="hover:underline">{{
+                    $t('footer_help_menu_return_ticket') }}</NuxtLink>
                 </li>
               </ul>
             </div>
@@ -191,7 +202,7 @@
               class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-information" data-collapse-toggle="dropdown-information">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
-              $t('footer_info_menu_title') }}</span>
+                $t('footer_info_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -203,13 +214,16 @@
             <div id="dropdown-information" class="hidden pt-4">
               <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4 items-center">
                 <li>
-                  <NuxtLink to="#" class="hover:underline text-base">{{ $t('footer_info_menu_about') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/about-us')" class="hover:underline text-base">{{
+                    $t('footer_info_menu_about') }}</NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_blog') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/blog')" class="hover:underline">{{ $t('footer_info_menu_blog') }}
+                  </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="#" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
+                  <NuxtLink :to="localePath('/')" class="hover:underline">{{ $t('footer_info_menu_site_map') }}
+                  </NuxtLink>
                 </li>
               </ul>
             </div>
@@ -219,7 +233,7 @@
               class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
               aria-controls="dropdown-branches" data-collapse-toggle="dropdown-branches">
               <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
-              $t('footer_branches_menu_title') }}</span>
+                $t('footer_branches_menu_title') }}</span>
               <span class="rtl:ml-4 ltr:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
                   <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
@@ -352,7 +366,7 @@
 const { $lang } = useNuxtApp()
 const newsletter_email = ref('')
 const newsletter_error = ref('')
-
+const localePath = useLocalePath()
 function subscribe_newsletter() {
   var formBody = {
     subscribe_email: newsletter_email.value

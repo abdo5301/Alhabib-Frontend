@@ -229,7 +229,7 @@ import { format } from "date-fns";
 const localePath = useLocalePath()
 const pending_status = ["payment_verification", "pending", "ready_to_ship", "review", "branch_review", "shipped"]
 const completed_status = ["completed", "branch_order", "refunded", "canceled"]
-const image_placeholder = 'https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop'
+const image_placeholder = '/images/placeholder-logo.png'
 defineEmits(['triggerCancelOrder'])
 const props = defineProps({
   item_id: {

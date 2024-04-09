@@ -7,7 +7,7 @@
         <img class="w-full h-full rounded-md" v-if="product.buyable_image && product.buyable_image != null"
           :src="product.buyable_image" alt="Alhabib-Shop">
         <img class="w-full h-full rounded-md" v-else
-          src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop" alt="Alhabib-Shop">
+          src="/images/placeholder-logo.png" alt="Alhabib-Shop">
       </div>
       <!-- details -->
       <div class="flex flex-col justify-start gap-[10px] py-1 xl:max-w-[268px] max-w-[190px]">

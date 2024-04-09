@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col justify-start lg:gap-4 gap-3 lg:w-[168px] w-[130px] flex-shrink-0">
     <!-- image -->
-    <NuxtLink :to="link" class="relative w-full">
+    <NuxtLink :to="link" target="_blank" class="relative w-full">
       <img class="w-full lg:h-[168px] h-[119px]"
-        :src="image != null ? image : 'https://via.placeholder.com/640x480.png/D9D9D9?text=Alhabib-Shop'">
+        :src="image != null ? image : '/images/placeholder-logo.png'">
       <button @click.prevent="toggleFavoriteCall()"
         class="absolute bg-[#f9fafb9e] p-1 rounded-full lg:bottom-[11px] bottom-[7px] lg:right-[5px] right-[5px] text-gray-700 text-base lg:text-xl font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
@@ -16,7 +16,7 @@
       </button>
     </NuxtLink>
     <!-- name -->
-    <NuxtLink :to="link" class="line-clamp-2 text-xs text-gray-900 font-normal leading-[22px]">
+    <NuxtLink :to="link" target="_blank" class="line-clamp-2 text-xs text-gray-900 font-normal leading-[22px]">
       {{ name }}
     </NuxtLink>
     <!-- price -->
