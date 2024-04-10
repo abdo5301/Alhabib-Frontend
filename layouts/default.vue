@@ -22,6 +22,7 @@
 const { $lang } = useNuxtApp()
 const route = useRoute()
 const { t } = useI18n()
+const config = useRuntimeConfig()
 const title = useState('website_name', () => t('company_name'));
 useHead({
   htmlAttrs: {
@@ -31,8 +32,30 @@ useHead({
   },
   bodyAttrs: {
     class: 'h-full',
-
   },
-  script: [{ src: "https://checkout.tabby.ai/tabby-promo.js" }],
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  ],
+  script: [
+    { src: "https://checkout.tabby.ai/tabby-promo.js" },
+    { src: "https://www.googletagmanager.com/gtag/js?id=G-X65QTT0G8K", async: true }],
+})
+
+useSeoMeta({
+  title: title.value,
+  ogTitle: title.value,
+  description: title.value,
+  ogDescription: title.value,
+  ogImage: config.public.BASE_URL + '/images/placeholder-log.png',
+  ogImageAlt: 'Alhabib-Bedding main page'
+})
+
+onMounted(() => {
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-X65QTT0G8K');
 })
 </script>

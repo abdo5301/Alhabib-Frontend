@@ -167,6 +167,7 @@
 
 <script setup>
 import { initFlowbite, Drawer } from 'flowbite';
+const config = useRuntimeConfig()
 const addCartDrawer = ref()
 const addCartSuccess = ref({})
 const addCartKey = ref(1)
@@ -189,6 +190,15 @@ const selected_option = ref({})
 const price = ref(product_data.started_price ? priceFormate(product_data.started_price) : null)
 const discount_price = ref(product_data.started_discounted_price ? priceFormate(product_data.started_discounted_price) : null)
 const favorite = ref(product_data.favorite)
+useSeoMeta({
+  title: product_data.name + ' | ' + website_name.value,
+  ogTitle: product_data.name + ' | ' + website_name.value,
+  description: product_data.name,
+  ogDescription: product_data.name,
+  ogImage: product_data.media.images[0] ? product_data.media.images[0].url : config.public.BASE_URL + '/images/placeholder-logo.png',
+  ogImageAlt: product_data.name,
+  ogUrl: localePath('/' + product_data.slug)
+})
 onMounted(() => {
   initFlowbite();
   // window.history.pushState({ "id": product_data.id }, product_data.name, "/" + product_data.slug); //slug edit

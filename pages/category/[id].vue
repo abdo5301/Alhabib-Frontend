@@ -108,6 +108,7 @@
 <script setup>
 import { initFlowbite } from 'flowbite'
 const website_name = useState('website_name');
+const config = useRuntimeConfig()
 const route = useRoute();
 const localePath = useLocalePath()
 const category_url_id = route.params && route.params.id ? route.params.id : route.name
@@ -186,6 +187,16 @@ onMounted(async () => {
       fatal: true
     })
   }
+
+  useSeoMeta({
+    title: category_title.value +' | '+ website_name.value,
+    ogTitle: category_title.value +' | '+ website_name.value,
+    description: category_bottom_content.value,
+    ogDescription: category_bottom_content.value,
+    ogImage: config.public.BASE_URL + '/images/placeholder-logo.png',
+    ogImageAlt: category_title.value,
+    ogUrl: localePath('/' + category_data.value.data[0].category.slug) 
+  })
   data_loader.value = false
 })
 

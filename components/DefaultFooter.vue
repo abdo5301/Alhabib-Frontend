@@ -41,7 +41,7 @@
                 <NuxtLink :to="localePath('/blog')" class="hover:underline">{{ $t('footer_info_menu_blog') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink :to="localePath('/')" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
+                <NuxtLink to="/sitemap.html" target="_blank" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
               </li>
             </ul>
           </div>
@@ -222,7 +222,7 @@
                   </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink :to="localePath('/')" class="hover:underline">{{ $t('footer_info_menu_site_map') }}
+                  <NuxtLink to="/sitemap.html" target="_blank" class="hover:underline">{{ $t('footer_info_menu_site_map') }}
                   </NuxtLink>
                 </li>
               </ul>
