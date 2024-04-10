@@ -189,8 +189,8 @@ onMounted(async () => {
   }
 
   useSeoMeta({
-    title: category_title.value | website_name.value,
-    ogTitle: category_title.value | website_name.value,
+    title: category_title.value +' | '+ website_name.value,
+    ogTitle: category_title.value +' | '+ website_name.value,
     description: category_bottom_content.value,
     ogDescription: category_bottom_content.value,
     ogImage: config.public.BASE_URL + '/images/placeholder-logo.png',

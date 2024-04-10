@@ -191,8 +191,8 @@ const price = ref(product_data.started_price ? priceFormate(product_data.started
 const discount_price = ref(product_data.started_discounted_price ? priceFormate(product_data.started_discounted_price) : null)
 const favorite = ref(product_data.favorite)
 useSeoMeta({
-  title: product_data.name | website_name.value,
-  ogTitle: product_data.name | website_name.value,
+  title: product_data.name + ' | ' + website_name.value,
+  ogTitle: product_data.name + ' | ' + website_name.value,
   description: product_data.name,
   ogDescription: product_data.name,
   ogImage: product_data.media.images[0] ? product_data.media.images[0].url : config.public.BASE_URL + '/images/placeholder-logo.png',

@@ -1,13 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/i18n', 'nuxt-lodash',
-   ['@nuxtjs/robots', { 
-    /* module options */
-      UserAgent : '*' ,
-      Disallow: '/' ,
-      BlankLine: true ,
-      Sitemap: `${process.env.NUXT_BASE_URL}/sitemap.xml` 
-    }]],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/i18n', 'nuxt-lodash',['@nuxtjs/robots', { configPath: "~/config/robots.config" }]],
   experimental: {
     viewTransition: true,
     asyncEntry:true,

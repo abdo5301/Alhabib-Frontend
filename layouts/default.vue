@@ -44,9 +44,9 @@ useHead({
 
 useSeoMeta({
   title: title.value,
-  ogTitle: `${route.meta.title}`,
+  ogTitle: title.value,
   description: title.value,
-  ogDescription: `${route.meta.description}`,
+  ogDescription: title.value,
   ogImage: config.public.BASE_URL + '/images/placeholder-log.png',
   ogImageAlt: 'Alhabib-Bedding main page'
 })
