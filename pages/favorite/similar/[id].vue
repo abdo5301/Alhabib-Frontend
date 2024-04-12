@@ -11,7 +11,7 @@
       <ClientOnly>
         <div v-if="!data_loader" class="flex justify-start flex-col lg:gap-[52px] gap-[38px] lg:mt-2 mt-5 w-full">
           <div v-if="!empty_data"
-            :class="['flex flex-wrap gap-y-[45px] gap-x-[27px] items-stretch justify-start gap-[42px] lg:gap-y-[55px]']">
+            :class="['flex flex-wrap gap-y-4 lg:gap-x-[27px] gap-x-3 items-stretch lg:justify-start justify-between gap-[42px] lg:gap-y-[55px]']">
             <CategoryProductItem v-for="product in similar_products" :key="product.id" :id="product.id"
               :name="product.name"
               :image="product.media.images && product.media.images.length ? product.media.images[0].url : null"

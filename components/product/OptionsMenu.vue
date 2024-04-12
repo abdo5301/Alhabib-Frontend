@@ -18,11 +18,12 @@
 
   <!-- Select menu -->
   <div id="productOptionsDropdown"
-    :class="['z-30 hidden bg-white shadow border border-gray-300 rounded-md productOptionsDropdown']">
+    :class="['lg:max-w-[48%] max-w-full z-30 hidden bg-white shadow border border-gray-300 rounded-md productOptionsDropdown']">
     <ul class="lg:text-lg text-base leading-5 justify-start font-medium text-gray-700 divide-y divide-gray-300">
       <li @click="dropdown.hide()" v-for="option, index in options" :key="option.id">
         <NuxtLink @click="$emit('updateOptionValue', option), menu_title = option.variation_option.value"
-          to="javascript:void(0)" class="block px-5 py-5 hover:bg-gray-100">{{ option.variation_option.value }}</NuxtLink>
+          to="javascript:void(0)" class="block px-5 py-5 hover:bg-gray-100">{{ option.variation_option.value }}
+        </NuxtLink>
       </li>
     </ul>
   </div>
@@ -61,9 +62,12 @@ onMounted(
       },
     };
     dropdown.value = new Dropdown($menu, $button, options);
-    const btn_style = window.getComputedStyle($button);
-    const btn_width = btn_style.getPropertyValue('width');
-    $menu.style.width = btn_width;
+    setTimeout(() => {
+      const btn_style = window.getComputedStyle($button);
+      const btn_width = btn_style.getPropertyValue('width');
+      $menu.style.width = btn_width;
+    }, 3000)
+
   }
 )
 </script>
