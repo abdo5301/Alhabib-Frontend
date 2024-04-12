@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <div class="bg-gray-50 flex flex-col h-screen text-gray-900">
+  <div class="bg-gray-50 flex flex-col h-screen text-gray-900 max-w-full">
     <Title>{{ title }}</Title>
     <NuxtLoadingIndicator color="#cccccc" :height="3" />
     <DefaultHeader></DefaultHeader>
