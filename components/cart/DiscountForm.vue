@@ -24,13 +24,13 @@
     </div>
   </form>
   <div v-else
-    class="w-full h-[50px] flex justify-between items-center mt-1 px-[13px] bg-green-50  rounded-md shadow-sm">
-    <div class="flex-1 flex gap-2 justify-start items-center relative text-green-500">
+    class="w-full h-[40px] lg:h-[50px] flex justify-between items-center mt-1 px-[13px] bg-green-50  rounded-md shadow-sm">
+    <div class="flex-1 flex gap-2 justify-start items-center relative text-xs lg:text-sm text-green-500">
       <span>{{ $t('text_active_discount_code') }}</span>
       <span class="font-bold">{{ cartCouponCode }}</span>
       <span class="font-bold">( {{ priceFormate(cartCoupon) }} )</span>
     </div>
-    <div class="text-red-500 font-semibold text-sm">
+    <div class="text-red-500 font-semibold text-xs lg:text-sm">
       <button type="button" @click="delete_discount_code">
         {{ $t('delete_btn') }}
       </button>

@@ -12,12 +12,12 @@
       </div>
       <input :dir="input_dir" :type="input_password ? passwordFieldType : input_type" :name="input_name" :id="input_id"
         :class="[(input_phone_otp && !otpCountDown ? 'rtl:pl-[95px] ltr:pr-[120px]' : ''),
-        (input_phone_otp && otpCountDown ? 'rtl:pl-[202px] ltr:pr-[225px]' : ''),
+        (input_phone_otp && otpCountDown ? 'rtl:lg:pl-[202px] ltr:lg:pr-[225px] rtl:ps-[185px]' : ''),
         (error_text ? 'block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6'
           : 'block w-full rounded-md border-0 py-1.5 text-gray-900  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-300  sm:text-sm sm:leading-6'),
         (input_phone_country ? 'pl-[110px]' : ''), (input_style ? input_style : '')]" :placeholder="input_placeholder"
         :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :aria-invalid="input_aria_invalid"
-        :aria-describedby="input_aria_describedby" ref="input" />
+        :aria-describedby="input_aria_describedby" ref="input" :autocomplete="input_phone_otp == true ? 'one-time-code' : input_autocomplete ? input_autocomplete : 'on'"/>
 
       <div v-if="error_text"
         :class="[(input_phone_otp && otpCountDown ? 'rtl:ml-[202px] ltr:mr-[195px]' : ''), (input_phone_otp && !otpCountDown ? 'rtl:ml-[90px] ltr:mr-[90px]' : ''), 'pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3']">
@@ -32,12 +32,12 @@
 
       <div v-if="input_phone_otp">
         <button ref="resendOtp" v-if="!otpCountDown" @click="CountDown(59)" type="button"
-          :class="[('absolute rtl:left-0 ltr:-right-[0.5px] inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50')]">
+          :class="[('absolute rtl:left-0 ltr:-right-[0.5px] inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 h-full lg:text-sm text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50')]">
           {{ $t('resend_otp') }}
           <ArrowsRightLeftIcon class="-ml-[2px] h-4 w-4 text-gray-900" aria-hidden="true" />
         </button>
         <div v-if="otpCountDown"
-          :class="[('absolute rtl:left-0 ltr:right-0 inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 pb-[8px] pt-[6px] m-[1px] text-sm font-semibold bg-gray-50 text-gray-500 ring-1 ring-inset ring-gray-300')]">
+          :class="[('absolute rtl:left-0 ltr:right-0 inline-flex items-center gap-x-[6px] rounded-md shadow-sm px-4 h-full lg:text-sm text-xs font-semibold bg-gray-50 text-gray-500 ring-1 ring-inset ring-gray-300')]">
           {{ otpCountDown }}
           <ClockIcon class="-ml-[2px] h-5 w-5 text-gray-400" aria-hidden="true" />
         </div>
@@ -159,6 +159,9 @@ const props = defineProps({
     default: false
   },
   input_style: {
+    type: String,
+  },
+  input_autocomplete: {
     type: String,
   },
   label_style: {

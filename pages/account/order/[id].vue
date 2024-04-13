@@ -12,14 +12,14 @@
         <ClientOnly>
           <!-- Order Data -->
           <div class="w-full flex justify-between">
-            <div class="flex-1 flex justify-start lg:items-start gap-5 lg:gap-[50px]">
+            <div class="flex-1 flex justify-start lg:items-start gap-3 lg:gap-[50px]">
               <!-- ID -->
               <div class="flex flex-col gap-2 lg:gap-3 justify-start items-start">
-                <span class="text-gray-900 text-xs lg:text-base font-semibold leading-[15px] lg:leading-[15px]">
+                <span class="text-gray-900 text-[10px] lg:text-base font-semibold leading-[15px] lg:leading-[15px]">
                   {{ $t('text_order_number') }}
                 </span>
                 <div
-                  class="text-gray-900 flex gap-[5px] text-xs lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
+                  class="text-gray-900 flex gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
                   <span>
                     #{{ order_data.id }}
                   </span>
@@ -34,11 +34,11 @@
               </div>
               <!-- Date -->
               <div v-if="order_data.created_at" class="flex flex-col gap-2 lg:gap-3 justify-start items-start">
-                <span class="font-semibold text-xs lg:text-base text-gray-900 leading-[15px] lg:leading-[15px]">
+                <span class="font-semibold text-[10px] lg:text-base text-gray-900 leading-[15px] lg:leading-[15px]">
                   {{ $t('text_order_date') }}
                 </span>
                 <span dir="ltr"
-                  class="flex justify-center items-center text-xs gap-[5px] lg:text-base lg:leading-[15px] leading-[15px] text-gray-500 font-semibold uppercase max-w-[150px]">
+                  class="flex justify-center items-center text-[10px] gap-[5px] lg:text-base lg:leading-[15px] leading-[15px] text-gray-500 font-semibold uppercase max-w-[150px]">
                   {{ format(new Date(order_data.created_at), "dd MMM, yyyy") }}
                 </span>
               </div>
@@ -228,8 +228,8 @@
             <div class="border-b border-b-gray-200 w-full"></div>
           </div>
           <!-- Shipping Address -->
-          <ul class="flex justify-start flex-col gap-7 py-2 text-gray-600 text-base font-semibold leading-5">
-            <li class="text-gray-900 text-base lg:text-lg font-bold leading-5">{{ $t('shipping_address_title') }}</li>
+          <ul class="flex justify-start flex-col gap-7 py-2 text-gray-600 lg:text-base text-sm font-semibold leading-5">
+            <li class="text-gray-900 text-sm lg:text-lg font-bold leading-5">{{ $t('shipping_address_title') }}</li>
             <li>{{ order_data.customer_name }}</li>
             <li>{{ order_data.customer_country }}</li>
             <li>{{ order_data.customer_region + '، ' }} {{ order_data.customer_city }}</li>
@@ -241,8 +241,8 @@
           </div>
           <!-- Payment Method -->
           <ul v-if="order_data.payment_gateway && order_data.payment_gateway.title"
-            class="flex justify-start flex-col gap-7 py-2 text-gray-600 text-base font-semibold leading-5">
-            <li class="text-gray-900 text-base lg:text-lg font-bold leading-5">{{ $t('payment_method_title') }}</li>
+            class="flex justify-start flex-col gap-7 py-2 text-gray-600 lg:text-base text-sm font-semibold leading-5">
+            <li class="text-gray-900 text-sm lg:text-lg font-bold leading-5">{{ $t('payment_method_title') }}</li>
             <li>{{ order_data.payment_gateway.title }}</li>
           </ul>
           <!-- Divider -->
@@ -253,10 +253,10 @@
           <div v-if="order_data && order_data.order_items && order_data.order_items.length > 0"
             class="flex justify-start flex-col gap-[30px] ">
             <div class="flex flex-col justify-start">
-              <h4 class="text-gray-900 text-base lg:text-lg font-bold leading-5 pt-2 pb-5">
+              <h4 class="text-gray-900 text-sm lg:text-lg font-bold leading-5 pt-2 pb-5">
                 {{ $t('products_title') }}
               </h4>
-              <span class="text-gray-500 text-base font-normal leading-5">
+              <span class="text-gray-500 lg:text-base text-sm font-normal leading-5">
                 {{ $t('label_quantity') }} &nbsp;{{ order_quantity }}
               </span>
             </div>

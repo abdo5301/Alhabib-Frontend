@@ -1,8 +1,8 @@
 <template>
-  <footer class="bg-gray-200">
-    <div class="mx-auto w-full max-w-screen-2xl bg-gray-200">
+  <footer class="bg-gray-200 w-full max-w-full">
+    <div class="mx-auto lg:w-[90%] w-full bg-gray-200 overflow-x-hidden lg:block flex flex-col justify-center items-center">
       <div
-        class="flex flex-col lg:flex-row items-center lg:items-start justify-between pt-[58px] lg:pt-[73px] p-4 w-full">
+        class="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-center pt-[40px] lg:px-4 lg:pt-[73px] w-full">
         <!--Start Right Section -->
         <div class="hidden lg:flex gap-5 items-start justify-between py-2 mx-20">
           <div class="flex flex-col gap-4 w-44">
@@ -105,7 +105,7 @@
                 <span class="hidden lg:flex px-1"></span>
               </div>
             </div>
-            <div class="flex gap-[14px]">
+            <div class="flex gap-[14px] w-full">
               <NuxtLink target="_blank"
                 to="https://apps.apple.com/sa/app/%D9%85%D9%81%D8%A7%D8%B1%D8%B4-%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8/id1420285929">
                 <img v-if="$lang.dir == 'rtl'" src="/images/download-app/app-store-ar.svg" alt="App Store">
@@ -120,7 +120,7 @@
           <!--End Download App Section -->
 
           <!--Start Newsletter Section -->
-          <div class="pt-2 flex flex-col gap-5 w-full">
+          <div class="pt-2 flex flex-col gap-5 w-full max-w-full">
             <div class="flex gap-1 px-[10px] lg:px-0 order-2 lg:order-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 26 24" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -147,7 +147,7 @@
                   :input_placeholder="$t('footer_newsletter_placeholder')" :error_text="newsletter_error"
                   input_aria_describedby="footer-newsletter-error" />
                 <Button type="submit" color="black"
-                  class="flex mt-1 px-2 w-[115px] lg:w-[129px] h-[38px] justify-center font-extrabold text-xs lg:text-sm">
+                  class="flex mt-[4.5px] w-[110px] lg:w-[129px] h-[38px] justify-center font-extrabold text-[12px] lg:text-[14px] leading-4">
                   {{ $t('footer_newsletter_submit') }}
                 </Button>
               </form>
@@ -267,7 +267,7 @@
 
       <hr class="hidden lg:block mb-5 mt-8 w-full border-black sm:mx-auto" />
 
-      <div class="flex flex-col lg:flex-row gap-8 items-center justify-between w-full pb-3 px-10 pt-7 lg:pt-0">
+      <div class="flex flex-col lg:flex-row gap-8 items-center justify-between w-full max-w-full pb-3 lg:px-10 px-3 pt-7 lg:pt-0">
         <!--Copy Rights Section -->
         <span class="text-sm font-normal text-gray-700 order-2">
           {{ $t('footer_copy_right') }}

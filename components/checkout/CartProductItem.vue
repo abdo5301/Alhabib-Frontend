@@ -10,13 +10,13 @@
           src="/images/placeholder-logo.png" alt="Alhabib-Shop">
       </div>
       <!-- details -->
-      <div class="flex flex-col justify-start gap-[10px] py-1 xl:max-w-[268px] max-w-[190px]">
+      <div class="flex flex-col justify-start gap-[10px] py-1 xl:max-w-[268px] max-w-[130px]">
         <!-- name -->
-        <span class="text-gray-500 text-sm font-normal leading-5">
+        <span class="text-gray-500 lg:text-sm text-xs font-normal leading-5">
           {{ product.buyable_name }}
         </span>
         <!-- quantity -->
-        <span class="text-gray-500 text-sm font-normal leading-5">
+        <span class="text-gray-500 lg:text-sm text-xs font-normal leading-5">
           {{ $t('label_quantity') }}: {{ cart_item.quantity }}
         </span>
       </div>
@@ -26,7 +26,7 @@
           <span class="text-red-600 font-bold text-sm">{{ priceFormate(product.discount_price) }}</span>
           <span class="text-gray-900 font-normal line-through text-sm">{{ priceFormate(product.price) }}</span>
         </div>
-        <div class="text-[#000] font-bold text-sm">
+        <div class="text-[#000] font-bold lg:text-sm text-xs">
           {{ priceFormate(product.price) }}
         </div>
       </div>

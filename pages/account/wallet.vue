@@ -64,7 +64,7 @@
           <div v-if="wallet_transactions.data && wallet_transactions.data.length"
             class="flex justify-start flex-col gap-5">
             <!-- Item -->
-            <AccountWalletTransactionItem v-for="(item, index) in wallet_transactions.data" :key="index"
+            <AccountWalletTransactionItem v-for="(item, index) in transactions_paginate" :key="index"
               :item_id="item.id" :item_date="item.created_at" :item_amount="item.amount" :item_type="item.type"
               :item_class="item.class" :item_expire_date="item.expiry_date ? item.expiry_date : null" />
             <!-- Load  More -->
@@ -123,10 +123,10 @@ onMounted(async () => {
 
 async function loadMore() {
   infinite_scroll_loading.value = true
-  if (current_page.value > 1 && data_url.value.includes('&page=')) {
-    data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value + 1))
+  if (current_page.value > 1 && data_url.value.includes('?page=')) {
+    data_url.value = data_url.value.replace('?page=' + current_page.value, '?page=' + (current_page.value + 1))
   } else {
-    data_url.value += '&page=' + (current_page.value + 1)
+    data_url.value += '?page=' + (current_page.value + 1)
   }
 
   wallet_transactions.value = await getWalletTransactions(data_url.value)

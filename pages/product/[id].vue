@@ -3,16 +3,13 @@
     <Title>{{ product_data.name }} | {{ website_name }}</Title>
     <Breadcrumb class="lg:pb-[80px] pb-6" :current="product_data.name" :pages=breadcrumb></Breadcrumb>
     <div
-      class="w-full lg:pb-20 pb-3 lg:px-[70px] px-[23px] lg:gap-[100px] gap-10 flex flex-col lg:flex-row justify-start flex-grow">
+      class="w-full lg:pb-20 pb-3 lg:px-[70px] px-[23px] lg:gap-[100px] gap-10 flex flex-col lg:flex-row justify-start max-w-full">
       <!-- Images -->
-      <div
-        :class="[(product_data.media && product_data.media.images && product_data.media.images.length) || (product_data.media && product_data.media.videos && product_data.media.videos.length) ? 'basis-1/2' : 'hidden']">
-        <LazyProductGallery
-          v-if="(product_data.media && product_data.media.images && product_data.media.images.length) || (product_data.media && product_data.media.videos && product_data.media.videos.length)"
-          :images="product_data.media.images" />
+      <div :class="[product_images.length || product_videos.length ? 'basis-1/2' : 'hidden','lg:max-w-[50%] max-w-full']">
+        <LazyProductGallery v-if="product_images.length || product_videos.length" :images="product_images" :videos="product_videos"/>
       </div>
       <div
-        :class="[product_data.media.images.length || product_data.media.videos.length ? 'basis-1/2' : 'basis-full', ' flex justify-start items-start flex-col gap-6 max-w-xl']">
+        :class="[product_images.length || product_videos.length ? 'basis-1/2' : 'basis-full max-w-full', ' flex justify-start items-start flex-col gap-6 lg:max-w-[660px] md:max-w-[660px]']">
         <!-- Title -->
         <h3
           class="h-16 flex items-start justify-start text-gray-900 lg:font-bold font-semibold lg:text-xl text-base leading-8">
@@ -39,7 +36,7 @@
         </div>
         <!-- Tabby -->
         <div id="tabbyPromo"
-          class="w-full font-semibold flex items-center justify-center bg-white rounded-md flex-shrink-0">
+          class="!w-full font-semibold flex rounded-md flex-shrink-0">
         </div>
         <!-- Tamara -->
         <!-- <div
@@ -190,6 +187,8 @@ const selected_option = ref({})
 const price = ref(product_data.started_price ? priceFormate(product_data.started_price) : null)
 const discount_price = ref(product_data.started_discounted_price ? priceFormate(product_data.started_discounted_price) : null)
 const favorite = ref(product_data.favorite)
+const product_images = ref([])
+const product_videos = ref([])
 useSeoMeta({
   title: product_data.name + ' | ' + website_name.value,
   ogTitle: product_data.name + ' | ' + website_name.value,
@@ -234,6 +233,13 @@ onMounted(() => {
     publicKey: 'pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d',// required
     merchantCode: 'tabby'// required
   });
+
+  if (product_data.media && product_data.media.images && product_data.media.images.length) {
+    product_images.value = product_images.value.concat(product_data.media.images)
+  }
+  if (product_data.media && product_data.media.videos && product_data.media.videos.length) {
+    product_videos.value = product_videos.value.concat(product_data.media.videos)
+  }
 })
 
 function getSelectedOption(option_data) {

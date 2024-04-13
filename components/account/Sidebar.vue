@@ -1,5 +1,5 @@
 <template>
-  <div :class="['w-full lg:w-[400px] min-w-[400px] h-auto px-[27px] py-[30px] flex-col gap-[20px] lg:gap-12',
+  <div :class="['w-full lg:w-[400px] lg:min-w-[400px] h-auto px-[27px] py-[30px] flex-col gap-[20px] lg:gap-12',
     activeSection != 'account' ? 'hidden lg:flex' : 'flex']">
     <!-- Title -->
     <h2 class="text-black lg:text-3xl text-2xl font-bold leading-6">{{ $t('account_title') }}</h2>

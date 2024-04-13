@@ -1,7 +1,7 @@
 <template>
   <div v-if="payment_method_code != 'applepay' || (payment_method_code == 'applepay' && availableApplePay)"
     @click="$emit('paymentValue', payment_method_value), $emit('paymentCode', payment_method_code)"
-    :class="[selected_payment == payment_method_value ? 'ring-gray-900' : 'ring-gray-300', 'w-full cursor-pointer ring-1 rounded-lg ps-[25px] pe-[17px] py-[17px]']">
+    :class="[selected_payment == payment_method_value ? 'ring-gray-900' : 'ring-gray-300', 'w-full cursor-pointer ring-1 rounded-lg lg:ps-[25px] lg:pe-[17px] px-4 lg:py-[17px] py-3']">
     <div class="flex justify-between items-center w-full min-h-[50px]">
       <!-- Payment Content -->
       <div class="flex justify-start items-center gap-3">
@@ -13,7 +13,7 @@
         </div>
         <!-- Text -->
         <div class="flex flex-col justify-center items-start gap-3">
-          <span class="text-gray-600 leading-5 text-sm font-normal">{{ payment_method_name }}</span>
+          <span class="text-gray-600 leading-5 text-xs lg:text-sm font-normal">{{ payment_method_name }}</span>
           <span v-if="payment_method_discount" class="text-green-700 leading-4 text-xs font-semibold flex">
             {{ $t('payment_method_discount_text') }}
             <img class="w-4 h-4 mx-[3px]" src="/images/payment/ratio-sign.png" alt="Discount">
