@@ -21,7 +21,7 @@
           <div v-if="cartItems && cartItems.length > 0"
             class="w-full lg:bg-gray-50 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow no-scrollbar my-5 lg:my-10 lg:px-0 px-[6px] lg:py-0 py-5 flex flex-col justify-start items-start gap-6 lg:gap-10 lg:max-h-[800px] overflow-hidden hover:overflow-y-auto">
             <CartPageProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item"
-              :last_item="index + 1 == cartItems.length" @product-has-error="disable_checkout = true" />
+              :last_item="index + 1 == cartItems.length" @product-has-error="disable_checkout = true" @refresh-cart="resetTotals()" @empty-cart="reloadNuxtApp()"/>
           </div>
         </div>
 
@@ -36,14 +36,14 @@
             </h4>
 
             <!-- Totals -->
-            <CartPageTotals :totals="cartTotals" :key="totals_key" />
+            <CartPageTotals :totals="cartTotals"  :key="totals_key" />
             <!-- Tamara -->
 
             <!-- Tabby -->
             <div id="tabbyPromo"></div>
             <!-- Free Shipping Alert -->
             <div
-              class="bg-green-50 text-green-800 rounded-lg h-10 w-full flex items-center justify-center flex-shrink-0 text-base leading-5 font-semibold">
+              class="bg-green-50 text-green-800 rounded-lg h-10 w-full flex items-center justify-center flex-shrink-0 lg:text-base text-sm leading-5 font-semibold">
               <span class="w-full flex items-center justify-center gap-[10px]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path

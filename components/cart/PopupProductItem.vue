@@ -1,16 +1,31 @@
 <template>
   <div v-if="shown" class="w-full flex gap-3 border-b border-b-gray-200 pb-3">
-    <!-- image -->
-    <div class="lg:w-[188px] w-[138px] h-[138px] lg:h-[188px] flex-shrink-0">
-      <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-md"
-        :src="product.buyable_image" alt="Alhabib-Shop">
-      <img v-else class="w-full h-full rounded-md"
-        src="/images/placeholder-logo.png" alt="Alhabib-Shop">
+
+    <div class="flex flex-col gap-3">
+      <!-- image -->
+      <div class="lg:w-[188px] w-[138px] h-[138px] lg:h-[188px] flex-shrink-0">
+        <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-md"
+          :src="product.buyable_image" alt="Alhabib-Shop">
+        <img v-else class="w-full h-full rounded-md" src="/images/placeholder-logo.png" alt="Alhabib-Shop">
+      </div>
+      <!-- Favorite -->
+      <button v-if="!favorite" @click.prevent="toggleFavoriteCall()"
+        class="max-w-full py-2 px-2 flex items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md shadow ring-1 ring-gray-300 text-gray-900 text-xs font-semibold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
+          <path
+            d="M3.19876 3.94876C2.10041 5.04711 2.10041 6.82789 3.19876 7.92624L8.00003 12.7275L12.8012 7.92624C13.8996 6.82789 13.8996 5.04711 12.8012 3.94876C11.7029 2.85041 9.92211 2.85041 8.82376 3.94876L8.00003 4.77256L7.17624 3.94876C6.07789 2.85041 4.29711 2.85041 3.19876 3.94876Z"
+            stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        {{ $t('cart_popup_add_favorite_btn') }}
+      </button>
     </div>
+
     <!-- details -->
-    <div class="flex flex-col justify-start lg:gap-4 gap-2 lg:min-w-[330px] lg:max-w-[315px] min-w-full w-full">
+    <div
+      class="flex flex-col justify-start lg:gap-4 gap-2 lg:min-w-[330px] lg:max-w-[315px] min-w-full max-w-[150px] w-full">
       <!-- name -->
-      <div class="lg:text-gray-600 text-gray-900 text-xs font-semibold leading-5 lg:min-h-[30px] lg:max-w-[298px]">
+      <div
+        class="lg:text-gray-600 text-gray-900 text-xs font-semibold leading-5 lg:min-h-[30px] lg:max-w-[298px] max-w-[160px]">
         {{ product.buyable_name }}
       </div>
       <!-- price -->
@@ -18,8 +33,8 @@
         {{ priceFormate(product.discounted_price ? product.discounted_price : product.price ? product.price : 0) }}
       </div>
       <!-- Options -->
-      <div class="flex lg:gap-12 gap-2" v-if="product.variation_option">
-        <div class="lg:min-w-[148px]">
+      <div class="flex lg:flex-row flex-col lg:gap-12 gap-2" v-if="product.variation_option">
+        <div class="lg:min-w-[148px] lg:max-w-full max-w-[100px]">
           <label class="block pb-1 text-xs font-normal text-gray-900 leading-5">{{ $t('label_size') }}</label>
           <select
             class="bg-white cursor-pointer lg:min-w-[190px] min-w-[140px] border flex items-center justify-between border-gray-300 text-gray-900 text-xs font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-full px-3">
@@ -38,16 +53,7 @@
           </select>
         </div>
       </div>
-      <!-- Favorite -->
-      <button v-if="!favorite" @click.prevent="toggleFavoriteCall()"
-        class="max-w-[110px] py-2 px-2 flex items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md shadow ring-1 ring-gray-300 text-gray-900 text-[10px] font-semibold">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
-          <path
-            d="M3.19876 3.94876C2.10041 5.04711 2.10041 6.82789 3.19876 7.92624L8.00003 12.7275L12.8012 7.92624C13.8996 6.82789 13.8996 5.04711 12.8012 3.94876C11.7029 2.85041 9.92211 2.85041 8.82376 3.94876L8.00003 4.77256L7.17624 3.94876C6.07789 2.85041 4.29711 2.85041 3.19876 3.94876Z"
-            stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        {{ $t('cart_popup_add_favorite_btn') }}
-      </button>
+
     </div>
     <!-- remove item -->
     <div class="hidden lg:flex items items-start justify-end rtl:pl-1">

@@ -9,7 +9,7 @@
       </div>
       <!-- Mokafaa Logo -->
       <div
-        class="absolute rtl:left-[75px] ltr:right-[75px] top-4 flex flex-col items-start justify-between h-8 text-white font-bold text-[10px]">
+        class="absolute lg:end-[75px] end-[10px] lg:top-4 top-2 flex flex-col items-start justify-between h-8 text-white font-bold text-[10px]">
         <span>مكافأة</span>
         <span>mokafaah</span>
       </div>

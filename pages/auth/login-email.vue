@@ -6,7 +6,7 @@
       <div class="mb-6">
         <div class="mb-2 font-sans-serif text-base font-bold leading-6 text-center text-gray-500">{{
           $t('login_card_title') }}</div>
-        <div class="font-sans-serif text-base font-normal leading-6 text-center text-gray-500">{{
+        <div class="font-sans-serif lg:text-base text-sm font-normal leading-6 text-center text-gray-500">{{
           $t('login_card_description') }}</div>
       </div>
 
@@ -15,11 +15,11 @@
 
           <NuxtLink :to="localePath('/auth/login-phone')"
             class="absolute bg-white flex px-4 py-[7px] top-0 rtl:right-0 ltr:left-0 transform -translate-x-0 -translate-y-10">
-            <span class="text-gray-500 text-base leading-5 font-semibold">{{ $t('label_phone') }}</span>
+            <span class="text-gray-500 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_phone') }}</span>
           </NuxtLink>
           <div
             class="absolute bg-white flex px-4 ltr:px-9 py-[9px] top-0 left-1/2 transform rtl:sm:-translate-x-[58px] ltr:-translate-x-[75px] -translate-y-[63px] -translate-x-[60%] border rounded-t-md border-gray-300 border-b-white ">
-            <span class="text-gray-700 text-base leading-5 font-semibold">{{ $t('label_email') }}</span>
+            <span class="text-gray-700 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_email') }}</span>
           </div>
 
           <Alert class="h-[29px] flex items-center" color="red" v-if="login_error" :alert_icon="true">

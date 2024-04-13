@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full ring-1 ring-gray-300 rounded-lg ps-[25px] pe-[17px] py-[17px]">
+  <div class="w-full ring-1 ring-gray-300 rounded-lg lg:ps-[25px] lg:pe-[17px] px-4 lg:py-[17px] py-3">
     <div class="flex justify-between items-center w-full lg:h-10">
       <!-- Wallet Text -->
-      <div class="flex justify-start items-center gap-3 leading-5 text-sm lg:font-bold font-semibold">
+      <div class="flex justify-start items-center lg:gap-3 gap-2 leading-5 text-xs lg:text-sm lg:font-bold font-semibold">
         <span class="text-gray-700">{{ $t('wallet_payment_text') }}</span>
         <span class="text-gray-500">( {{ priceFormate(credit) }} )</span>
       </div>

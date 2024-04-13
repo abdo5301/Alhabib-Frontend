@@ -9,7 +9,7 @@
         <LazyProductGallery v-if="product_images.length || product_videos.length" :images="product_images" :videos="product_videos"/>
       </div>
       <div
-        :class="[product_images.length || product_videos.length ? 'basis-1/2 lg:max-w-[660px] md:max-w-[660px]' : 'basis-full max-w-full', ' flex justify-start items-start flex-col gap-6 ']">
+        :class="[product_images.length || product_videos.length ? 'basis-1/2' : 'basis-full max-w-full', ' flex justify-start items-start flex-col gap-6 lg:max-w-[660px] md:max-w-[660px]']">
         <!-- Title -->
         <h3
           class="h-16 flex items-start justify-start text-gray-900 lg:font-bold font-semibold lg:text-xl text-base leading-8">

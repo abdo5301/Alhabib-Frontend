@@ -2,7 +2,7 @@
   <div class="flex flex-col justify-start lg:gap-4 gap-3 lg:w-[168px] w-[130px] flex-shrink-0">
     <!-- image -->
     <NuxtLink :to="link" target="_blank" class="relative w-full">
-      <img class="w-full lg:h-[168px] h-[119px]"
+      <img class="w-full lg:h-[168px] h-[119px] rounded-md"
         :src="image != null ? image : '/images/placeholder-logo.png'">
       <button @click.prevent="toggleFavoriteCall()"
         class="absolute bg-[#f9fafb9e] p-1 rounded-full lg:bottom-[11px] bottom-[7px] lg:right-[5px] right-[5px] text-gray-700 text-base lg:text-xl font-bold">
