@@ -1,22 +1,41 @@
 <template>
   <div v-show="images && images.length > 1"
-    class="flex relative container flex-col gap-12 justify-center items-center z-30 lg:px-5">
+    class="flex relative container flex-col gap-12 justify-center items-center z-30 lg:px-5 w-full">
     <!-- Slider -->
     <div id="product-carousel" class="block relative w-full ">
-      <div class="relative overflow-hidden h-[377px] lg:h-[888px]">
+      <div class="relative overflow-hidden h-[377px] lg:h-[700px]">
         <!-- Slider items -->
-        <div :id="'product-carousel-' + index" ref="sliderRefs" v-for="item, index in images" :key="index"
-          class="hidden duration-700 ease-in-out cursor-pointer" @click="zoomModal.show(), zoomModalImage = item.url">
+        <div :id="'product-carousel-' + index" ref="sliderImagesRefs" v-for="item, index in images" :key="index"
+          class="hidden duration-700 ease-in-out cursor-pointer"
+          @click="zoomModal.show(), zoomModalImage = item.url, zoomModalType = 'image'">
           <img loading="lazy" :src="item.url"
-            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Alhabib-Shop">
+            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="image">
+        </div>
+        <div :id="'video-product-carousel-' + Number(index + images.length)" ref="sliderVideosRefs" v-for="item, index in videos" :key="index"
+          class="hidden duration-700 ease-in-out cursor-pointer"
+          @click="zoomModal.show(), zoomModalImage = item.url, zoomModalType = 'video'">
+          <img loading="lazy" :src="item.url"
+            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="video">
         </div>
       </div>
 
       <!-- Slider indicators -->
-      <div class="relative z-30 flex justify-start lg:gap-6 gap-[9px] lg:mt-5 mt-3">
-        <div class="lg:w-[123px] w-[77px] lg:h-[118px] h-[72px] cursor-pointer flex items-center" ref="indicatorRefs"
-          :id="'product-carousel-indicator-' + index" v-for="item, index in images" :key="index">
-          <img loading="lazy" class="w-full h-full" :src="item.url" alt="">
+      <div
+        class="relative z-30 flex flex-shrink-0 justify-start lg:gap-4 gap-[9px] lg:mt-5 mt-3 overflow-x-auto w-full">
+        <div class="flex-shrink-0 lg:w-[123px] w-[77px] lg:h-[118px] h-[72px] cursor-pointer flex items-center"
+          ref="indicatorImagesRefs" :id="'product-carousel-indicator-' + index" v-for="item, index in images"
+          :key="index">
+          <img loading="lazy" class="lg:w-[123px] w-[77px] lg:h-[118px] h-[72px]" :src="item.url" alt="">
+        </div>
+        <div class="flex-shrink-0 lg:w-[123px] w-[77px] lg:h-[118px] h-[72px] cursor-pointer flex items-center relative"
+          ref="indicatorVideosRefs" :id="'video-product-carousel-indicator-' + Number(index + images.length)" v-for="item, index in videos"
+          :key="index">
+          <img loading="lazy" class="lg:w-[123px] w-[77px] lg:h-[118px] h-[72px]" :src="item.url" alt="">
+          <span class="absolute w-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53" fill="none">
+              <path d="M52.0578 26.5772L0.984641 52.7799L1.11791 0.116332L52.0578 26.5772Z" fill="#E5E7EB" />
+            </svg>
+          </span>
         </div>
       </div>
     </div>
@@ -69,8 +88,10 @@
       </span>
     </button>
 
-    <img :src="zoomModalImage" class="object-cover lg:max-w-5xl max-w-md flex-shrink-0 my-auto" alt="product-image">
-
+    <img v-if="zoomModalType == 'image'" :src="zoomModalImage"
+      class="object-cover lg:max-w-5xl max-w-md flex-shrink-0 my-auto" alt="product-image">
+    <!-- <iframe v-else class="lg:w-[800px] lg:h-[600px] w-[81%] h-[300px]" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe> -->
+    <iframe v-else width="420" height="315" :src="zoomModalImage"></iframe>
     <button v-show="images && images.length > 1" id="image-zoom-previous" type="button"
       class="fixed left-5 flex items-center justify-center h-full cursor-pointer group focus:outline-none">
       <span class="inline-flex items-center justify-center">
@@ -91,19 +112,25 @@ const localePath = useLocalePath()
 const props = defineProps({
   images: {
     type: Object
+  },
+  videos: {
+    type: Object
   }
 })
 
-const sliderRefs = ref([])
-const indicatorRefs = ref([])
+const sliderImagesRefs = ref([])
+const sliderVideosRefs = ref([])
+const indicatorImagesRefs = ref([])
+const indicatorVideosRefs = ref([])
 const zoomModal = ref({})
 const zoomModalImage = ref('')
+const zoomModalType = ref('image')
 onMounted(
   () => {
     const carouselElement = document.getElementById('product-carousel');
     const sliders = []
     const indicators = []
-    for (let index = 0; index < sliderRefs.value.length; index++) {
+    for (let index = 0; index < sliderImagesRefs.value.length; index++) {
       sliders.push(
         {
           position: index,
@@ -111,8 +138,16 @@ onMounted(
         }
       );
     }
+    for (let index = 0; index < sliderVideosRefs.value.length; index++) {
+      sliders.push(
+        {
+          position: Number(index + props.images.length),
+          el: document.getElementById('video-product-carousel-' + Number(index + props.images.length))
+        }
+      );
+    }
 
-    for (let index = 0; index < indicatorRefs.value.length; index++) {
+    for (let index = 0; index < indicatorImagesRefs.value.length; index++) {
       indicators.push(
         {
           position: index,
@@ -120,6 +155,16 @@ onMounted(
         }
       );
     }
+    for (let index = 0; index < indicatorVideosRefs.value.length; index++) {
+      indicators.push(
+        {
+          position: Number(index + props.images.length),
+          el: document.getElementById('video-product-carousel-indicator-' + Number(index + props.images.length))
+        }
+      );
+    }
+
+
     const options = {
       defaultPosition: 0,
       interval: 3000,
@@ -149,11 +194,13 @@ onMounted(
     $prevZoomModal.addEventListener('click', () => {
       carousel.prev();
       zoomModalImage.value = carousel._getActiveItem().el.getElementsByTagName("img")[0].src
+      zoomModalType.value = carousel._getActiveItem().el.getElementsByTagName("img")[0].alt
     });
 
     $nextZoomModal.addEventListener('click', () => {
       carousel.next();
       zoomModalImage.value = carousel._getActiveItem().el.getElementsByTagName("img")[0].src
+      zoomModalType.value = carousel._getActiveItem().el.getElementsByTagName("img")[0].alt
     });
     const zoomModalOptions = {
       placement: 'center',

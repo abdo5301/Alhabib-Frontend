@@ -32,7 +32,7 @@
   "footer_newsletter_description":"سجّل بنشرتنا البريدية وتابع أحدث المنتجات وجديد العروض والتخفيضات!",
   "footer_newsletter_placeholder":"أدخل بريدك الإلكتروني..",
   "footer_newsletter_submit":"اشتراك بالنشرة",
-  "footer_copy_right":"جميع الحقوق محفوظة. مفارش الحبيب © 2023",
+  "footer_copy_right":"جميع الحقوق محفوظة. مفارش الحبيب © 2024",
   "login_title":"تسجيل الدخول",
   "login_card_title":"أهلا بك مجددًا!",
   "login_card_description":"قم بتسجيل الدخول عن طريق رقم الجوال أو البريد الإلكتروني ",
@@ -295,5 +295,10 @@
   "text_empty_favorites_title":"نرضي عينك ونكمّل لك غرفتك!",
   "text_empty_favorites_sub_title":"احفظ منتجاتك المفضلة هنا وجهّز لغرفة المستقبل.",
   "similar_products_title":"منتجات متشابهه",
-  "error_page_not_found":"عذرًا، الصفحه التي تحاول الوصول لها غير موجوده حاليًا !"
+  "error_page_not_found":"عذرًا، الصفحه التي تحاول الوصول لها غير موجوده حاليًا !",
+  "text_subscribe_success":"تم الاشتراك بنجاح ",
+  "text_unsubscribe_success":"تم الغاء الاشتراك بنجاح ",
+  "text_active_discount_code":" كود الخصم الفعال",
+  "blog_title":"المدونة",
+  "btn_read_more":"إقرأ اكثر"
 }

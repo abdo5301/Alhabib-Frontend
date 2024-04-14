@@ -48,8 +48,11 @@
 </template>
 
 <script setup>
+onMounted( () => {
+  initFlowbite();
 
-defineProps({
+})  
+const props = defineProps({
   filter_data: {
     type: Object
   },

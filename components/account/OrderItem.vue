@@ -8,7 +8,7 @@
     class="w-full flex flex-col gap-[25px] flex-shrink-0 bg-white py-[23px] px-5 lg:py-[23px] lg:px-[30px] rounded-md shadow-md">
     <!-- Order Info -->
     <div class="w-full flex justify-between">
-      <div class="flex-1 flex justify-start lg:items-start gap-5 lg:gap-8">
+      <div class="flex-1 flex justify-start lg:items-start gap-2 lg:gap-8">
         <img v-if="pending_status.includes(item_status)" src="/images/icons/cube-green.png"
           class="w-[35px] lg:w-[45px] h-[35px] lg:h-[45px]" alt="Order">
         <img v-else-if="item_status == 'canceled'" src="/images/icons/cube-red.png"
@@ -18,7 +18,7 @@
         <div class="flex flex-col gap-[5px] lg:gap-3 justify-start items-start">
           <span class="text-gray-900 text-[10px] lg:text-sm font-semibold leading-[15px]">{{ $t('text_order_number')
           }}</span>
-          <div class="text-gray-900 flex gap-[5px] text-base justify-center items-center font-bold leading-[15px] ">
+          <div class="text-gray-900 flex gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] ">
             <span>
               #{{ item_id }}
             </span>
@@ -37,22 +37,22 @@
             {{ $t('text_order_date') }}
           </span>
           <span dir="ltr"
-            class="flex justify-center items-center text-xs gap-[5px] lg:text-base lg:leading-[15px] leading-[15px] text-gray-500 font-semibold uppercase max-w-[150px]">
+            class="flex justify-center items-center text-[10px] gap-[5px] lg:text-base lg:leading-[15px] leading-[15px] text-gray-500 font-semibold uppercase max-w-[150px]">
             {{ format(new Date(item_create_date), "dd MMM, yyyy") }}
           </span>
         </div>
       </div>
-      <div class="flex justify-center items-center">
+      <div class="flex lg:flex-row flex-col lg:justify-center justify-end items-center">
         <button v-if="item_status == 'pending'" type="button" @click="$emit('triggerCancelOrder', item_id)"
-          class="w-[100px] h-[28px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md bg-white">
+          class="w-[65px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm lg:rounded-md rounded bg-white">
           <span class="text-gray-700 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('cancel_order_btn') }}</span>
         </button>
         <div v-else-if="item_status == 'canceled'"
-          class="w-[100px] h-[28px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-red-200 shadow-sm rounded-md bg-red-100">
+          class="w-[65px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-red-200 shadow-sm lg:rounded-md rounded bg-red-100">
           <span class="text-red-700 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('order_canceled_text') }}</span>
         </div>
         <div v-else
-          class="w-[100px] h-[28px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-200 shadow-sm rounded-md bg-gray-100">
+          class="w-[65px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-200 shadow-sm lg:rounded-md rounded bg-gray-100">
           <span class="text-gray-400 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('cancel_order_btn') }}</span>
         </div>
       </div>
@@ -87,7 +87,7 @@
         </div>
       </div>
       <!-- Mobile Images -->
-      <div class="flex lg:hidden justify-start items-center gap-5">
+      <div class="flex lg:hidden justify-start items-center gap-2">
         <div v-for="(item, index) in item_products" :key="index"
           class="relative w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-md">
           <div v-if="index < 1" class="relative w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-md">
@@ -113,8 +113,8 @@
       <div v-if="(item_status == 'shipped' || item_status == 'ready_to_ship') && item_tracking_link"
         class="flex flex-col justify-end items-end">
         <NuxtLink :to="item_tracking_link" target="_blank"
-          class="w-[100px] h-[28px] lg:w-[126px] lg:h-[34px] flex justify-center items-center gap-2 rounded-md bg-black shadow-sm">
-          <span class="text-white text-xs lg:text-base font-semibold leading-4">{{ $t('text_track') }}</span>
+          class="w-[80px] h-[26px] lg:w-[126px] lg:h-[34px] flex justify-center items-center gap-2 rounded-md bg-black shadow-sm">
+          <span class="text-white text-[10px] lg:text-base font-semibold leading-4">{{ $t('text_track') }}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
             <path
               d="M8.80002 3.04883C8.3582 3.04883 8.00002 3.407 8.00002 3.84883C8.00002 4.29066 8.3582 4.64883 8.80002 4.64883H10.8687L5.83434 9.68314C5.52192 9.99556 5.52192 10.5021 5.83434 10.8145C6.14676 11.1269 6.65329 11.1269 6.96571 10.8145L12 5.7802V7.84883C12 8.29066 12.3582 8.64883 12.8 8.64883C13.2419 8.64883 13.6 8.29066 13.6 7.84883V3.84883C13.6 3.407 13.2419 3.04883 12.8 3.04883H8.80002Z"
@@ -129,13 +129,13 @@
       <div v-if="item_status == 'complete'"
         class="flex lg:hidden flex-col lg:flex-row justify-end items-center gap-3 lg:gap-[17px]">
         <NuxtLink :to="localePath('/account/return/' + item_id)"
-          class="flex justify-center items-center gap-2 w-[100px] h-[28px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm rounded-md ring-1 ring-gray-300">
+          class="flex justify-center items-center lg:gap-2 gap-1 w-[85px] h-[28px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm rounded-md ring-1 ring-gray-300">
           <img src="/images/icons/return.png" class="w-4 h-4 lg:w-5 lg:h-5" alt="return product">
           <span class="text-gray-700 text-[10px] lg:text-sm font-medium lg:font-semibold leading-5">{{
             $t('order_return_btn') }}</span>
         </NuxtLink>
         <NuxtLink :to="localePath('/account/order/review/' + item_id)"
-          class="flex justify-center items-center gap-2 w-[100px] h-[28px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm rounded-md ring-1 ring-gray-300">
+          class="flex justify-center items-center lg:gap-2 gap-1 w-[85px] h-[28px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm rounded-md ring-1 ring-gray-300">
           <img src="/images/icons/edit.png" class="w-4 h-4 lg:w-5 lg:h-5" alt="return product">
           <span class="text-gray-700 text-[10px] lg:text-sm font-medium lg:font-semibold leading-5">{{
             $t('order_product_evaluation_btn') }}</span>
@@ -147,7 +147,7 @@
       <div class="border-b border-b-[#F3F4F6] w-full"></div>
     </div>
     <!-- Progress bar -->
-    <div v-if="pending_status.includes(item_status)" class="w-full flex flex-col justify-start gap-[14px]">
+    <div v-if="pending_status.includes(item_status)" class="w-full flex flex-col justify-start lg:gap-[14px] gap-2">
       <div class="w-full bg-gray-200 rounded-[10px] h-[11px]">
         <div v-if="pending_status.includes(item_status) && item_status != 'shipped'"
           class="bg-green-500 h-2.5 rounded-[10px]" style="width: 35%"></div>
@@ -155,11 +155,11 @@
           class="bg-green-500 h-2.5 rounded-[10px]" style="width: 60%"></div>
       </div>
       <div class="w-full flex justify-between items-center">
-        <span class="text-green-600 text-xs lg:text-sm font-bold leading-4">{{ $t('order_status_pending') }}</span>
+        <span class="text-green-600 text-[10px] lg:text-sm font-bold leading-4">{{ $t('order_status_pending') }}</span>
         <span
-          :class="['text-xs lg:text-sm leading-4', item_status == 'shipped' ? 'text-green-600 font-bold' : 'text-gray-500 font-semibold']">{{
+          :class="['text-[10px] lg:text-sm leading-4', item_status == 'shipped' ? 'text-green-600 font-bold' : 'text-gray-500 font-semibold']">{{
             $t('order_status_shipped') }}</span>
-        <span class="text-gray-500 text-xs lg:text-sm font-semibold leading-4">{{ $t('order_status_complete') }}</span>
+        <span class="text-gray-500 text-[10px] lg:text-sm font-semibold leading-4">{{ $t('order_status_complete') }}</span>
       </div>
     </div>
     <!-- Desktop Complete Actions -->
@@ -179,7 +179,7 @@
       </NuxtLink>
     </div>
     <!-- Notes -->
-    <div class="flex justify-start items-center gap-[5px] text-gray-500 font-semibold text-xs lg:text-sm leading-[15px]">
+    <div class="flex justify-start items-center gap-[5px] text-gray-500 font-semibold text-[10px] lg:text-sm leading-[15px]">
       <!-- Shipping or Pending -->
       <span class="flex-1" v-if="pending_status.includes(item_status)">
         {{ $t('order_shipping_time_notes') }}
@@ -216,7 +216,7 @@
       <span v-else></span>
       <div class="flex justify-end items-end">
         <NuxtLink :to="localePath('/account/order/' + item_id)"
-          class="w-[100px] h-[28px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md bg-white">
+          class="w-[85px] h-[28px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md bg-white">
           <span class="text-gray-700 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('details_title') }}</span>
         </NuxtLink>
       </div>
@@ -229,7 +229,7 @@ import { format } from "date-fns";
 const localePath = useLocalePath()
 const pending_status = ["payment_verification", "pending", "ready_to_ship", "review", "branch_review", "shipped"]
 const completed_status = ["completed", "branch_order", "refunded", "canceled"]
-const image_placeholder = 'https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop'
+const image_placeholder = '/images/placeholder-logo.png'
 defineEmits(['triggerCancelOrder'])
 const props = defineProps({
   item_id: {

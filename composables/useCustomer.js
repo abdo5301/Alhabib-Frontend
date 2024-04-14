@@ -80,6 +80,28 @@ export function useCustomer() {
     }
   }
 
+  async function subscribeToggle(data) {
+    try {
+      return await useNuxtApp().$apiFetch('/subscription/toggle', {
+        method: 'POST',
+        body: {
+          channel: data.type,
+          subscribe: data.subscribe,
+        },
+      })
+    } catch (error) {
+      console.log(error.data)
+      if (
+        error.data &&
+        error.data.message &&
+        error.data.message == 'Unauthenticated.'
+      ) {
+        unAuthenticated()
+      }
+      return error.data
+    }
+  }
+
   const customerName = computed(() => {
     return customerData.value && customerData.value.name
       ? customerData.value.name
@@ -106,6 +128,18 @@ export function useCustomer() {
       : ''
   })
 
+  const customerEmailSubscribe = computed(() => {
+    return customerData.value && customerData.value.email_subscription
+      ? customerData.value.email_subscription
+      : false
+  })
+
+  const customerWhatsappSubscribe = computed(() => {
+    return customerData.value && customerData.value.whatsapp_subscription
+      ? customerData.value.whatsapp_subscription
+      : false
+  })
+
   return {
     customerData,
     setCustomerData,
@@ -113,10 +147,13 @@ export function useCustomer() {
     editCustomer,
     deleteCustomer,
     editPassword,
+    subscribeToggle,
     customerName,
     customerEmail,
     customerMobile,
     customerGender,
     customerBirthDate,
+    customerEmailSubscribe,
+    customerWhatsappSubscribe,
   }
 }

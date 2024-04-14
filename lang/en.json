@@ -31,7 +31,7 @@
   "footer_newsletter_description":"Subscribe to our newsletter for the latest products and special offers ",
   "footer_newsletter_placeholder":"Type your email.....",
   "footer_newsletter_submit":"Subscribe",
-  "footer_copy_right":"Copyright Al Habib Bedding © 2023",
+  "footer_copy_right":"Copyright Al Habib Bedding © 2024",
   "login_title":"Log in",
   "login_card_title":"Welcome again!",
   "login_card_description":"Log in with your Telephone or Email",
@@ -293,5 +293,10 @@
   "text_empty_favorites_title":"We satisfy your eye and complete your room!",
   "text_empty_favorites_sub_title":"Save your favorite products here and prepare for the future room.",
   "similar_products_title":"Similar products",
-  "error_page_not_found":"Sorry, the page you are trying to reach does not currently exist !"
+  "error_page_not_found":"Sorry, the page you are trying to reach does not currently exist !",
+  "text_subscribe_success":"You have subscribed successfully",
+  "text_unsubscribe_success":"Subscription has been canceled successfully",
+  "text_active_discount_code":"Active Discount Code ",
+  "blog_title":"Blog",
+  "btn_read_more":"Read More"
 }

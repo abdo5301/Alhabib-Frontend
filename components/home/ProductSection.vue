@@ -14,7 +14,7 @@
        :color="product.color"
        :price="product.started_price ? priceFormate(product.started_price) : null"
        :special="product.started_discounted_price ? priceFormate(product.started_discounted_price) : null"
-       :link="localPath('/product/'+product.id)"
+       :link="localPath('/'+product.slug)"
        :favorite="product.favorite"
        :tags="product.tags"
        :related_products="product.related_class_products"

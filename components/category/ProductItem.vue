@@ -1,9 +1,9 @@
 <template>
   <div
-    :class="[list_type == 'solo' ? 'w-full' : 'w-[175px]', 'flex flex-shrink-0 flex-col lg:gap-3 gap-[10px] justify-start lg:w-[318px]']">
+    :class="[list_type == 'solo' ? 'w-full' : 'w-[47%]', 'flex flex-shrink-0 flex-col lg:gap-3 gap-[10px] justify-start lg:w-[318px]']">
     <NuxtLink :to="link" class="relative w-full">
-      <img :class="[list_type == 'solo' ? 'h-[377px]' : 'h-[175px]', 'w-full lg:h-[304px] rounded-lg object-cover']"
-        :src="image ? image : '/images/product/product-2.jpeg'">
+      <img :class="[list_type == 'solo' ? 'h-[377px]' : 'h-[160px]', 'w-full lg:h-[304px] rounded-lg object-cover']"
+        :src="image ? image : '/images/placeholder-logo.png'">
       <span v-if="available == false"
         class="absolute top-0 rounded-lg bg-opacity-60 h-full w-full bg-[#F0EBEB] flex justify-center items-center">
         <span class="!opacity-100 text-gray-900 text-sm lg:text-base font-semibold">{{ $t('product_size_stock_alert')
@@ -30,7 +30,7 @@
           <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + color.hex]">
           </span>
         </span>
-        <NuxtLink :to="localePath('/product/' + related.id)" v-for="related, index in related_products"
+        <NuxtLink :to="localePath('/' + related.slug)" v-for="related, index in related_products"
           :key="'related-color-' + index" class="empty:hidden">
           <span v-if="related.color && index < 5 && related.color.hex != color.hex"
             :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
@@ -74,7 +74,7 @@
 
 <script setup>
 const localePath = useLocalePath()
-defineEmits(['favoriteClick'])
+const emits = defineEmits(['favoriteClick'])
 const { $lang } = useNuxtApp()
 const { t } = useI18n()
 const currency = t('sar')

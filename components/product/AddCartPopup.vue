@@ -11,7 +11,7 @@
       <!-- Cart Items -->
       <div v-if="product"
         class="w-full px-4 no-scrollbar lg:pt-12 pt-5 flex flex-col justify-start items-start gap-6 max-h-[440px] overflow-hidden hover:overflow-y-auto">
-        <CartPopupProductItem :cart_item="add_cart_data"/>
+        <CartPopupProductItem :cart_item="add_cart_data" @remove-item="$emit('hidePopup')"/>
       </div>
       <!-- Cart Total -->
       <div class="w-full lg:pt-12 pt-5 flex justify-between items-center px-6">
@@ -39,11 +39,11 @@
           {{ related_products.title.length > 0 ? related_products.title : $t('before_go_title') }}
         </h6>
         <div
-          class="flex pb-2 lg:gap-7 gap-3 justify-start items-stretch no-scrollbar overflow-x-auto w-full mx-auto">
+          class="flex pb-2 lg:gap-7 gap-3 justify-start items-stretch overflow-x-auto w-full mx-auto">
           <ProductBeforeYouGoProduct v-for="(product, index) in related_products.products" :name="product.name"
             :key="index" :price="product.started_price" :special="product.started_discounted_price"
             :image="product.media && product.media.images && product.media.images.length > 0 ? product.media.images[0] : null"
-            :link="localePath('/product/' + product.id)" @favorite-click="product.favorite != product.favorite"
+            :link="localePath('/' + product.slug)" @favorite-click="product.favorite != product.favorite"
             :favorite="product.favorite" />
         </div>
       </div>

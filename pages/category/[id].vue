@@ -12,7 +12,7 @@
         <CategorySubCategory v-if="sub_category.length" :categories="sub_category" class="lg:pt-[64px] pt-8" />
       </div>
       <!-- Filter start -->
-      <div
+      <div v-if="!isEmpty(sorting_data) || !isEmpty(filter_data)"
         class="bg-[#F3F4F6] lg:px-[68px] mb-[15px] border-t border-b h-[60px] border-gray-100 mt-[54px] hidden lg:flex items-center justify-start">
 
         <h3 class="text-gray-700 font-bold text-base leading-5 rtl:pr-3 ltr:pl-3">
@@ -25,12 +25,14 @@
           <CategoryFilterTag v-for="selected_filter, index in filter_array" :key="index" :tag_data="selected_filter"
             @remove-filter-item="updateFilterArray" />
         </div>
-        <CategorySortingMenu :sorting_options="sorting_data" @update-sorting-value="updateSortingValue" />
+        <CategorySortingMenu v-if="!isEmpty(sorting_data)" :sorting_options="sorting_data"
+          @update-sorting-value="updateSortingValue" />
       </div>
 
       <div class="flex lg:gap-[46px] lg:px-[68px] px-6 flex-col lg:flex-row">
         <!-- Desktop Filter -->
-        <div class="hidden lg:block w-[295px] text-gray-700 font-bold text-base leading-5 rtl:pr-4 ltr:pl-3 pt-[15px]">
+        <div v-if="!isEmpty(filter_data)"
+          class="hidden lg:block w-[295px] text-gray-700 font-bold text-base leading-5 rtl:pr-4 ltr:pl-3 pt-[15px]">
           <div id="accordion-arrow-icon" data-active-classes="bg-gray-50" data-inactive-classes="py-5"
             data-accordion="open">
             <CategoryFilterSection v-for="filter_section, index in filter_data" :filter_array="filter_section.data"
@@ -40,25 +42,27 @@
           </div>
         </div>
         <!-- Mobile Filter -->
-        <div class="lg:hidden flex justify-center items-center gap-5 pt-8">
+        <div v-if="!isEmpty(sorting_data) || !isEmpty(filter_data)"
+          class="lg:hidden flex justify-center items-center gap-5 pt-8">
           <!-- Filter -->
-          <CategoryMobileFilter @filter-reset="resetFilter" :filter_data="filter_data"
+          <CategoryMobileFilter v-if="!isEmpty(filter_data)" @filter-reset="resetFilter" :filter_data="filter_data"
             :selected_filter_array="filter_array" @filter-value="updateFilterArray" />
           <!-- Sorting -->
-          <CategoryMobileSortingMenu :sorting_options="sorting_data" @update-sorting-value="updateSortingValue" />
+          <CategoryMobileSortingMenu v-if="!isEmpty(sorting_data)" :sorting_options="sorting_data"
+            @update-sorting-value="updateSortingValue" />
         </div>
         <!-- Mobile listing switch buttons -->
         <div class="lg:hidden flex justify-end items-center gap-1 pt-[26px]">
           <CategoryListingSwitch @update-listing="listingTypeUpdate" />
         </div>
         <!-- Product listing -->
-        <div class="flex justify-start flex-col gap-16 lg:mt-2 mt-5 w-full" v-if="products.length > 0">
-          <div :class="[listing_type == 'solo' ? 'gap-[18px]' : 'gap-y-[45px] gap-x-[27px]',
-    'flex flex-wrap items-stretch justify-start gap-[42px] lg:gap-y-[55px]']">
+        <div class="flex justify-start flex-col gap-16 mt-5 w-full" v-if="products.length > 0">
+          <div :class="[listing_type == 'solo' ? 'gap-[18px]' : 'lg:gap-y-[45px] gap-y-4 lg:gap-x-[27px] gap-x-3',
+            'flex flex-wrap items-stretch lg:justify-start justify-between gap-[42px] lg:gap-y-[55px]']">
             <CategoryProductItem v-for="product in products" :key="product.id" :id="product.id" :name="product.name"
-              :image="product.media.images && product.media.images.length ? product.media.images[0] : null"
+              :image="product.media.images && product.media.images.length ? product.media.images[0].url : null"
               :color="product.color" :price="product.started_price" :special="product.started_discounted_price"
-              :link="localePath('/product/' + product.id)" :favorite="product.favorite" :tags="product.tags"
+              :link="localePath('/' + product.slug)" :favorite="product.favorite" :tags="product.tags"
               :related_products="product.related_class_products" @favorite-click="product.favorite = !product.favorite"
               :list_type="listing_type" :available="product.availability" />
           </div>
@@ -85,7 +89,7 @@
               </svg>
             </button>
             <span class="text-gray-900 text-base font-normal leading-5"> لقد شاهدت {{ products.length }} من أصل {{
-    category_data.meta.total }} من المنتجات</span>
+              category_data.meta.total }} من المنتجات</span>
           </div>
           <!-- Filter end -->
         </div>
@@ -104,9 +108,11 @@
 <script setup>
 import { initFlowbite } from 'flowbite'
 const website_name = useState('website_name');
+const config = useRuntimeConfig()
 const route = useRoute();
 const localePath = useLocalePath()
-const data_url = ref('/master-products/of-category?category_id=' + route.params.id)
+const category_url_id = route.params && route.params.id ? route.params.id : route.name
+const data_url = ref('/master-products/of-category?category_q=' + category_url_id)
 const sorting_value = ref()
 const listing_type = ref('list')
 const current_page = ref(1)
@@ -135,6 +141,7 @@ const category_bottom_content = ref('')
 onMounted(async () => {
   initFlowbite();
   //window.history.pushState({"id":1}, "Title", "/new-url"); //slug edit
+
   try {
     category_data.value = await useNuxtApp().$apiFetch(data_url.value)
   } catch (error) {
@@ -146,12 +153,13 @@ onMounted(async () => {
     })
   }
   if (category_data.value.data && category_data.value.data.length) {
+    // window.history.pushState({ "id": category_data.value.data[0].category.id }, category_data.value.data[0].category.name, "/" + category_data.value.data[0].category.slug); //slug edit
     products.value = products.value.concat(category_data.value.data)
     //Reset category data reference
     breadcrumb.value = [
       {
         'name': category_data.value.data[0].category.breadcrumb.name,
-        'link': localePath('/category/' + category_data.value.data[0].category.breadcrumb.id)
+        'link': localePath('/' + category_data.value.data[0].category.breadcrumb.slug)
       }
     ]
     category_title.value = category_data.value.data[0].category.name
@@ -179,6 +187,16 @@ onMounted(async () => {
       fatal: true
     })
   }
+
+  useSeoMeta({
+    title: category_title.value +' | '+ website_name.value,
+    ogTitle: category_title.value +' | '+ website_name.value,
+    description: category_bottom_content.value,
+    ogDescription: category_bottom_content.value,
+    ogImage: config.public.BASE_URL + '/images/placeholder-logo.png',
+    ogImageAlt: category_title.value,
+    ogUrl: localePath('/' + category_data.value.data[0].category.slug) 
+  })
   data_loader.value = false
 })
 
@@ -227,7 +245,7 @@ function updateSortingValue(new_sorting_value) {
 
 async function updateProductsCollection() {
   current_page.value = 1
-  data_url.value = '/master-products/of-category?category_id=' + route.params.id
+  data_url.value = '/master-products/of-category?category_q=' + category_url_id
   //filtering
   if (filter_array.value.length > 0) {
     for (let index = 0; index < filter_array.value.length; index++) {

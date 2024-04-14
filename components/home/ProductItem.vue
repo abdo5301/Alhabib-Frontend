@@ -2,7 +2,7 @@
   <div class="flex flex-shrink-0 flex-col justify-start lg:w-[268px] w-[175px]">
     <NuxtLink :to="link" class="relative w-full">
       <img class="w-full lg:h-[267px] h-[170px]"
-        :src="image != null ? image.url : 'https://via.placeholder.com/640x480.png/D9D9D9?text=Alhabib-Shop'">
+        :src="image != null ? image : '/images/placeholder-logo.png'">
       <button @click.prevent="toggleFavoriteCall()"
         class="absolute bg-[#f9fafb9e] lg:p-2 p-1 rounded-full lg:bottom-[12px] bottom-[7px] lg:right-[12px] right-[10px] text-gray-700 text-base lg:text-xl font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
@@ -45,7 +45,7 @@
           <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + color.hex]">
           </span>
         </span>
-        <NuxtLink :to="localPath('/product/' + related.id)" v-for="related, index in related_products"
+        <NuxtLink :to="localPath('/' + related.slug)" v-for="related, index in related_products"
           :key="related.color.hex" class="empty:hidden">
           <span v-if="index < 5 && related.color.hex != color.hex"
             :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
@@ -57,7 +57,7 @@
       </div>
       <!-- Card -->
       <div v-if="cart_btn" class="w-full flex flex-col justify-end flex-1">
-        <Button type="button" color="black" @click="navigateTo(localPath('/product/'+id))"
+        <Button type="button" color="black" @click="navigateTo(link)"
           class="items-center justify-center font-extrabold lg:text-sm text-xs shadow-sm text-white">{{
             $t('home_products_cart_btn') }}</Button>
       </div>

@@ -5,7 +5,7 @@
     <div class="relative w-[80px] h-[80px] flex-shrink-0">
       <img v-if="product.image && product.image != null" class="w-full h-full rounded-md" :src="product.image"
         alt="Alhabib-Shop">
-      <img v-else class="w-full h-full rounded-md" src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop"
+      <img v-else class="w-full h-full rounded-md" src="/images/placeholder-logo.png"
         alt="Alhabib-Shop">
       <span
         class="absolute -top-1.5 -end-2 lg:hidden flex items-center justify-center w-[25px] h-[25px] rounded-full bg-gray-900">

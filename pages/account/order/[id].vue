@@ -12,14 +12,14 @@
         <ClientOnly>
           <!-- Order Data -->
           <div class="w-full flex justify-between">
-            <div class="flex-1 flex justify-start lg:items-start gap-5 lg:gap-[50px]">
+            <div class="flex-1 flex justify-start lg:items-start gap-3 lg:gap-[50px]">
               <!-- ID -->
               <div class="flex flex-col gap-2 lg:gap-3 justify-start items-start">
-                <span class="text-gray-900 text-xs lg:text-base font-semibold leading-[15px] lg:leading-[15px]">
+                <span class="text-gray-900 text-[10px] lg:text-base font-semibold leading-[15px] lg:leading-[15px]">
                   {{ $t('text_order_number') }}
                 </span>
                 <div
-                  class="text-gray-900 flex gap-[5px] text-xs lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
+                  class="text-gray-900 flex gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
                   <span>
                     #{{ order_data.id }}
                   </span>
@@ -34,11 +34,11 @@
               </div>
               <!-- Date -->
               <div v-if="order_data.created_at" class="flex flex-col gap-2 lg:gap-3 justify-start items-start">
-                <span class="font-semibold text-xs lg:text-base text-gray-900 leading-[15px] lg:leading-[15px]">
+                <span class="font-semibold text-[10px] lg:text-base text-gray-900 leading-[15px] lg:leading-[15px]">
                   {{ $t('text_order_date') }}
                 </span>
                 <span dir="ltr"
-                  class="flex justify-center items-center text-xs gap-[5px] lg:text-base lg:leading-[15px] leading-[15px] text-gray-500 font-semibold uppercase max-w-[150px]">
+                  class="flex justify-center items-center text-[10px] gap-[5px] lg:text-base lg:leading-[15px] leading-[15px] text-gray-500 font-semibold uppercase max-w-[150px]">
                   {{ format(new Date(order_data.created_at), "dd MMM, yyyy") }}
                 </span>
               </div>
@@ -193,25 +193,31 @@
             class="flex flex-col justify-start gap-5">
             <div class="flex flex-col justify-start gap-2">
               <div class="flex justify-start items-center gap-[15px]">
-                <h3 class="text-gray-900 font-extrabold lg:font-bold text-sm lg:text-lg leading-5">{{
-    $t('whatsapp_title')
-  }}
+                <h3 class="text-gray-900 font-extrabold lg:font-bold text-sm lg:text-lg leading-5">
+                  {{ $t('whatsapp_title') }}
                 </h3>
                 <img src="/images/icons/phone-gray.png" class="w-9 h-9" alt="Whatsapp">
               </div>
+              <Alert v-if="whatsapp_sub_success" class="my-3" :dismiss="true" color="green" :alert_icon="true">
+                {{ whatsapp_sub_success }}
+              </Alert>
+              <Alert v-if="whatsapp_sub_error" class="my-3" :dismiss="true" color="red" :alert_icon="true">
+                {{ whatsapp_sub_error }}
+              </Alert>
               <div class="h-[38px] flex justify-start items-center">
                 <span class="text-gray-600 text-sm lg:text-base font-semibold leading-5">
                   {{ $t('account_whatsapp_notes') }}
                 </span>
               </div>
             </div>
+
             <InputRadio v-model="whatsapp_sub" input_id="input-account-whatsapp-subscribe"
               label_style="lg:text-sm flex items-center" input_name="account_whatsapp_subscribe" input_value="yes"
-              :input_checked="whatsapp_sub == 'yes' ? true : false" @call-back="console.log(whatsapp_sub)">
+              :input_checked="whatsapp_sub == 'yes' ? true : false" @call-back="toggleSub(true)">
               {{ $t('text_subscription') }}
             </InputRadio>
             <InputRadio v-model="whatsapp_sub" input_id="input-account-whatsapp-unsubscribe"
-              label_style="lg:text-sm flex items-center" @call-back="console.log(whatsapp_sub)"
+              label_style="lg:text-sm flex items-center" @call-back="toggleSub(false)"
               input_name="account_whatsapp_subscribe" input_value="no"
               :input_checked="whatsapp_sub == 'no' ? true : false">
               {{ $t('text_unsubscribe') }}
@@ -222,8 +228,8 @@
             <div class="border-b border-b-gray-200 w-full"></div>
           </div>
           <!-- Shipping Address -->
-          <ul class="flex justify-start flex-col gap-7 py-2 text-gray-600 text-base font-semibold leading-5">
-            <li class="text-gray-900 text-base lg:text-lg font-bold leading-5">{{ $t('shipping_address_title') }}</li>
+          <ul class="flex justify-start flex-col gap-7 py-2 text-gray-600 lg:text-base text-sm font-semibold leading-5">
+            <li class="text-gray-900 text-sm lg:text-lg font-bold leading-5">{{ $t('shipping_address_title') }}</li>
             <li>{{ order_data.customer_name }}</li>
             <li>{{ order_data.customer_country }}</li>
             <li>{{ order_data.customer_region + '، ' }} {{ order_data.customer_city }}</li>
@@ -235,8 +241,8 @@
           </div>
           <!-- Payment Method -->
           <ul v-if="order_data.payment_gateway && order_data.payment_gateway.title"
-            class="flex justify-start flex-col gap-7 py-2 text-gray-600 text-base font-semibold leading-5">
-            <li class="text-gray-900 text-base lg:text-lg font-bold leading-5">{{ $t('payment_method_title') }}</li>
+            class="flex justify-start flex-col gap-7 py-2 text-gray-600 lg:text-base text-sm font-semibold leading-5">
+            <li class="text-gray-900 text-sm lg:text-lg font-bold leading-5">{{ $t('payment_method_title') }}</li>
             <li>{{ order_data.payment_gateway.title }}</li>
           </ul>
           <!-- Divider -->
@@ -247,10 +253,10 @@
           <div v-if="order_data && order_data.order_items && order_data.order_items.length > 0"
             class="flex justify-start flex-col gap-[30px] ">
             <div class="flex flex-col justify-start">
-              <h4 class="text-gray-900 text-base lg:text-lg font-bold leading-5 pt-2 pb-5">
+              <h4 class="text-gray-900 text-sm lg:text-lg font-bold leading-5 pt-2 pb-5">
                 {{ $t('products_title') }}
               </h4>
-              <span class="text-gray-500 text-base font-normal leading-5">
+              <span class="text-gray-500 lg:text-base text-sm font-normal leading-5">
                 {{ $t('label_quantity') }} &nbsp;{{ order_quantity }}
               </span>
             </div>
@@ -377,12 +383,15 @@ definePageMeta({ layout: 'account', middleware: ['auth'] })
 const website_name = useState('website_name')
 const localePath = useLocalePath()
 const { setActiveSection } = useAccount()
+const { getCustomer, subscribeToggle } = useCustomer()
 const route = useRoute()
 const { t } = useI18n()
 const { getOrder } = useOrder()
 const order_status = ref('')
 const order_quantity = ref(0)
 const whatsapp_sub = ref('no')
+const whatsapp_sub_success = ref('')
+const whatsapp_sub_error = ref('')
 const order_id = ref(0)
 const order_data = ref([])
 const pending_status = ["payment_verification", "pending", "ready_to_ship", "review", "branch_review"]
@@ -408,6 +417,12 @@ onMounted(async () => {
     order_data.value.order_items.forEach((value, index) => {
       order_quantity.value += parseInt(value.quantity);
     });
+  }
+  const customer_data = await getCustomer()
+  if (customer_data.whatsapp_subscription == true) {
+    whatsapp_sub.value = 'yes'
+  } else {
+    whatsapp_sub.value = 'no'
   }
 
   data_loader.value = false
@@ -462,6 +477,26 @@ async function cancelAction() {
     data_loader.value = false
   } else {
     alert("Server Error!..Please Try Again Later.")
+  }
+}
+
+//Whatsapp Subscription
+async function toggleSub(sub_action) {
+  whatsapp_sub_success.value = ''
+  whatsapp_sub_error.value = ''
+  var sub_data = {
+    type: 'whatsapp',
+    subscribe: sub_action,
+  }
+  const subscribe_response = await subscribeToggle(sub_data)
+  if (subscribe_response.status && subscribe_response.status == true) {
+    if (sub_action == true) {
+      whatsapp_sub_success.value = t('text_subscribe_success')
+    } else {
+      whatsapp_sub_success.value = t('text_unsubscribe_success')
+    }
+  } else {
+    whatsapp_sub_error.value = 'Server Error..Please Try Again Later'
   }
 }
 

@@ -45,7 +45,7 @@ onMounted(() => {
   if (!!localStorage.getItem('otp_phone')) {
     phone.value = localStorage.getItem('otp_phone')
   } else {
-    window.location.pathname = phone_page.value
+    // window.location.pathname = phone_page.value
   }
 })
 

@@ -58,10 +58,10 @@
           <div v-else
             :class="['flex flex-wrap gap-y-[45px] gap-x-[27px] items-stretch justify-start gap-[42px] lg:gap-y-[55px]']">
             <FavoriteProductItem v-for="product in favorite_paginate" :key="product.id" :id="product.id"
-              :name="product.name"
+              :name="product.name" :slug="product.slug"
               :image="product.media.images && product.media.images.length ? product.media.images[0] : null"
               :color="product.color" :price="product.started_price" :special="product.started_discounted_price"
-              :link="localePath('/product/' + product.id)" :favorite="product.favorite" :tags="product.tags"
+              :link="localePath('/' + product.slug)" :favorite="product.favorite" :tags="product.tags"
               :related_products="product.related_class_products" @favorite-click="refreshProducts()" :cart_btn="true"
               :available="product.availability" />
           </div>
@@ -118,7 +118,7 @@ const empty_data = ref(false)
 onMounted(async () => {
   initFlowbite()
   favorite_data.value = await getFavorites(data_url.value)
-  if (favorite_data.value.data) {
+  if (favorite_data.value.data && !isEmpty(favorite_data.value.data)) {
     favorite_paginate.value = favorite_paginate.value.concat(favorite_data.value.data)
   } else {
     empty_data.value = true

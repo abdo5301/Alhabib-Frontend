@@ -22,11 +22,11 @@
       </div>
       <!-- checkout Link -->
       <div class="px-5 lg:py-12 py-5 grid grid-cols-2 lg:gap-[25px] gap-[18px]">
-        <NuxtLink :to="localePath('/checkout')" @click="$emit('hidePopup')"
+        <NuxtLink :to="nuxt.$localePath('/checkout')" @click="$emit('hidePopup')"
           class="w-full bg-black rounded-md lg:h-[61px] h-[42px] flex flex-shrink-0 items-center justify-center text-white lg:text-xl text-base font-bold leading-5">
           {{ $t('checkout_title') }}
         </NuxtLink>
-        <NuxtLink :to="localePath('/cart')" @click="$emit('hidePopup')"
+        <NuxtLink :to="nuxt.$localePath('/cart')" @click="$emit('hidePopup')"
           class="w-full bg-green-600 rounded-md lg:h-[61px] h-[42px] flex flex-shrink-0 items-center justify-center text-white lg:text-xl text-base font-bold leading-5">
           {{ $t('show_cart_title') }}
         </NuxtLink>
@@ -42,7 +42,7 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(['hidePopup'])
-const localePath = useLocalePath()
+const nuxt = useNuxtApp()
 const { t } = useI18n()
 const currency = t('sar')
 const { cartItems, cartCount, cartShipping, cartSubtotal } = useCart()

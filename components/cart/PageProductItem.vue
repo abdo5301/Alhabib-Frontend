@@ -31,13 +31,12 @@
       <div class="lg:w-[267px] w-[130px] h-[143px] lg:h-[267px] flex-shrink-0">
         <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-lg"
           :src="product.buyable_image" alt="Alhabib-Shop">
-        <img v-else class="w-full h-full rounded-lg"
-          src="https://via.placeholder.com/640x480.png/cccccc?text=Alhabib-Shop" alt="Alhabib-Shop">
+        <img v-else class="w-full h-full rounded-lg" src="/images/placeholder-logo.png" alt="Alhabib-Shop">
       </div>
       <!-- details -->
-      <div class="flex flex-col justify-start gap-2 flex-1">
+      <div class="flex flex-col justify-start gap-3 flex-1">
         <!-- Desktop remove item -->
-        <div class="lg:flex hidden items-start justify-end lg:rtl:pl-[17px] lg:ltr:pr-[17px]">
+        <div class="lg:flex hidden items-start justify-end lg:pe-[17px]">
           <button type="button" @click="deleteCartItem()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M6 18L18 6M6 6L18 18" stroke="#6B7280" stroke-width="2" stroke-linecap="round"
@@ -46,10 +45,10 @@
           </button>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-2 lg:gap-[31px]">
+        <div class="flex flex-col lg:flex-row gap-3 lg:gap-[31px]">
           <!-- name -->
           <div
-            class="order-2 lg:order-1 text-gray-600 text-[15px] lg:text-base font-medium lg:font-semibold leading-6 lg:leading-7 lg:min-h-[60px] 2xl:max-w-[450px] xl:max-w-[300px] max-w-[240px]">
+            class="order-2 lg:order-1 text-gray-600 text-sm lg:text-base font-medium lg:font-semibold leading-6 lg:leading-7 lg:min-h-[60px] 2xl:max-w-[450px] xl:max-w-[300px] max-w-[190px]">
             {{ product.buyable_name }}
           </div>
           <div class="order-1 lg:order-2 flex">
@@ -66,7 +65,7 @@
               </div>
             </div>
             <!-- Mobile remove item -->
-            <div class="lg:hidden flex items-start justify-end lg:rtl:pl-[17px] lg:ltr:pr-[17px]">
+            <div class="lg:hidden flex items-start justify-end lg:pe-[1px]">
               <button type="button" @click="deleteCartItem()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M6 18L18 6M6 6L18 18" stroke="#6B7280" stroke-width="2" stroke-linecap="round"
@@ -78,22 +77,24 @@
         </div>
 
         <!-- Options -->
-        <div class="flex flex-col lg:flex-row lg:gap-[100px] gap-2" v-if="product.variation_option">
-          <div class="flex lg:flex-col flex-row gap-2 lg:gap-1 items-center lg:items-start lg:min-w-[148px]">
+        <div class="flex flex-col lg:flex-row lg:gap-[100px] gap-4" v-if="product.variation_option">
+          <div
+            class="flex lg:flex-col flex-row gap-2 lg:gap-1 items-center lg:items-start lg:min-w-[148px] max-w-[170px] lg:max-w-full">
             <label class="block pb-1 text-sm font-normal text-gray-900 leading-5">{{ $t('label_size') }}</label>
             <select
-              class="bg-white cursor-pointer min-w-[180px] lg:min-w-[190px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 px-3 lg:py-2 py-[6px]">
+              class="bg-white cursor-pointer min-w-[125px] lg:min-w-[190px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 px-3 lg:py-2 py-[6px]">
               <option :value="product.variation_option.id" selected>
                 {{ product.variation_option.value }}
               </option>
             </select>
           </div>
           <!-- Quantity -->
-          <div class="flex lg:flex-col flex-row gap-4 lg:gap-1 items-center lg:items-start"
+          <div
+            class="flex lg:flex-col flex-row gap-4 lg:gap-1 items-center lg:items-start lg:min-w-[148px] max-w-[170px] lg:max-w-full"
             v-if="cart_item.quantity > 0">
             <label class="block pb-1 text-sm font-normal text-gray-900 leading-5">{{ $t('label_quantity') }}</label>
             <select v-model="quantity" @change="updateCartItem()"
-              class="bg-white cursor-pointer min-w-[60px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3 lg:py-2 py-[6px]">
+              class="bg-white cursor-pointer min-w-[125px] lg:min-w-[190px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3 lg:py-2 py-[6px]">
               <option v-for="(qty, index) in product.quantity" :value="qty" :selected="qty == cart_item.quantity">
                 {{ qty }}
               </option>
@@ -158,8 +159,8 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['productHasError'])
-let shown = ref(true);
+const emits = defineEmits(['productHasError', 'refreshCart', 'emptyCart'])
+const shown = ref(true);
 const props = defineProps({
   cart_item: {
     type: Object
@@ -193,6 +194,7 @@ async function updateCartItem() {
     const refresh_cart = await useCart().getAll()
     if (refresh_cart.id) {
       setCartData(refresh_cart)
+      emits('refreshCart')
     }
   }
 }
@@ -204,11 +206,15 @@ async function deleteCartItem() {
     if (refresh_cart.id) {
       setCartData(refresh_cart)
       shown.value = false
+      emits('refreshCart')
+      if (refresh_cart.cart_items.length == 0) {
+        emits('emptyCart')
+      }
     }
   }
 }
 
-const favorite = ref(props.cart_item.product.favorite)
+const favorite = ref(props.cart_item.favorite)
 const { toggleFavorite } = useFavorite()
 async function toggleFavoriteCall() {
   const toggle = await toggleFavorite(props.cart_item.product.id)
