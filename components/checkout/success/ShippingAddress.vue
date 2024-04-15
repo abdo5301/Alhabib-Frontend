@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col lg:p-[30px] lg:pb-0 lg:pt-0">
-    <h5 class="pb-5 lg:pb-[20px] text-gray-900 text-base lg:text-lg font-semibold leading-5">
+    <h5 class="pb-5 lg:pb-[20px] text-gray-900 text-sm lg:text-lg font-semibold leading-5">
       {{ $t('shipping_address_title') }}
     </h5>
     <ul class="flex flex-col justify-start items-start gap-2 text-gray-500 text-sm font-normal leading-5">

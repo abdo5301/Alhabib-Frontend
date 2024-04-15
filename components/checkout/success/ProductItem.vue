@@ -5,17 +5,22 @@
     <div class="relative w-[80px] h-[80px] flex-shrink-0">
       <img v-if="product.image && product.image != null" class="w-full h-full rounded-md" :src="product.image"
         alt="Alhabib-Shop">
-      <img v-else class="w-full h-full rounded-md" src="/images/placeholder-logo.png"
-        alt="Alhabib-Shop">
+      <img v-else class="w-full h-full rounded-md" src="/images/placeholder-logo.png" alt="Alhabib-Shop">
       <span
         class="absolute -top-1.5 -end-2 lg:hidden flex items-center justify-center w-[25px] h-[25px] rounded-full bg-gray-900">
         <span class="text-white text-xs font-bold leading-5">{{ product.quantity }}</span>
       </span>
     </div>
     <!-- details -->
-    <div class="flex flex-col justify-start gap-[10px] py-1 xl:max-w-[268px] max-w-[190px]">
+    <div class="flex flex-col justify-start lg:gap-[10px] py-1 xl:max-w-[268px] max-w-[190px]">
+      <!-- price -->
+      <div class="flex lg:hidden items-center justify-start leading-5 flex-1">
+        <div class="text-[#000] font-bold text-sm leading-5">
+          {{ priceFormate(product.total) }}
+        </div>
+      </div>
       <!-- name -->
-      <span class="text-gray-500 text-sm font-normal leading-5">
+      <span class="text-gray-500 text-xs lg:text-sm font-normal leading-5">
         {{ product.name }}
       </span>
       <!-- quantity -->
@@ -24,7 +29,7 @@
       </span>
     </div>
     <!-- price -->
-    <div class="flex items-center justify-end leading-5 flex-1">
+    <div class="hidden lg:flex items-center justify-end leading-5 flex-1">
       <div class="text-[#000] font-bold text-sm">
         {{ priceFormate(product.total) }}
       </div>
