@@ -76,13 +76,9 @@ onMounted(async () => {
           break;
         case 'REJECTED':
         case 'CLOSED':
-          notes.value = 'فشلت عملية الدفع..من فضللك اعد المحاولة مرة أخرى.'
-          image.value = '/images/icons/x-red.png'
-          redirect.value = localePath('/checkout')
-          localStorage.removeItem('tabby_payment_id')
-          if (successOrderId.value) {
-            await cancelOrder(successOrderId.value)
-          }
+          notes.value = 'تمت عملية الدفع بنجاح ..شكرا لك!'
+          image.value = '/images/icons/true-green.png'
+          redirect.value = localePath('/checkout/success')
           break;
         default:
           break;
