@@ -21,7 +21,7 @@
 <script setup>
 import { initFlowbite } from 'flowbite'
 const home_fetch_data = ref({})
-onMounted(async () => {
+onMounted(() => {
   initFlowbite()
 })
 try {

@@ -1,16 +1,16 @@
 <template>
-  <div class="relative w-full py-[5px] px-[7px] flex lg:gap-16 justify-start items-center bg-[#FBFBFB] rounded-lg">
-    <div class="flex justify-start items-center gap-3 lg:w-[300px] w-[150px]">
+  <div class="relative w-full py-[5px] px-[7px] flex lg:gap-16 gap-2 justify-start items-center bg-[#FBFBFB] rounded-lg">
+    <div class="flex justify-start items-center gap-2 lg:gap-3 lg:w-[300px] w-[100px]">
       <img :src="item_icon" class="w-[36px] h-[36px]" alt="wallet-transaction">
-      <span :class="['text-gray-700 lg:text-sm text-xs font-bold leading-5', item_expire_date ? 'lg:mb-0 mb-3' : '']">{{
+      <span :class="['text-gray-700 lg:text-sm text-[10px] font-bold leading-5', item_expire_date ? 'lg:mb-0 mb-3' : '']">{{
         item_name }}</span>
     </div>
     <div class="flex-1 flex justify-between items-center">
-      <span class="text-gray-700 text-xs lg:text-sm leading-5 font-normal">
+      <span class="text-gray-700 text-[10px] lg:text-sm leading-5 font-normal">
         {{ format(new Date(item_date), "yyyy/MM/dd") }}
       </span>
       <span dir="ltr"
-        :class="['flex gap-1 text-sm font-bold leading-5', item_type == 'add' ? 'text-[#00AB77]' : 'text-[#C72929]']">
+        :class="['flex gap-1 lg:text-sm text-[10px] font-bold leading-5', item_type == 'add' ? 'text-[#00AB77]' : 'text-[#C72929]']">
         <span>{{ item_type == 'add' ? '+' : '-' }}</span><span>{{ item_amount }}</span>
       </span>
     </div>

@@ -12,14 +12,14 @@
         <ClientOnly>
           <!-- Order Data -->
           <div class="w-full flex justify-between">
-            <div class="flex-1 flex justify-start lg:items-start gap-3 lg:gap-[50px]">
+            <div class="flex-1 flex justify-start lg:items-start gap-1 lg:gap-[50px]">
               <!-- ID -->
-              <div class="flex flex-col gap-2 lg:gap-3 justify-start items-start">
+              <div class="flex flex-col gap-1 lg:gap-3 justify-start items-start">
                 <span class="text-gray-900 text-[10px] lg:text-base font-semibold leading-[15px] lg:leading-[15px]">
                   {{ $t('text_order_number') }}
                 </span>
                 <div
-                  class="text-gray-900 flex gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
+                  class="text-gray-900 flex gap-[1px] lg:gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
                   <span>
                     #{{ order_data.id }}
                   </span>
@@ -33,7 +33,7 @@
                 </div>
               </div>
               <!-- Date -->
-              <div v-if="order_data.created_at" class="flex flex-col gap-2 lg:gap-3 justify-start items-start">
+              <div v-if="order_data.created_at" class="flex flex-col gap-1 lg:gap-3 justify-start items-start">
                 <span class="font-semibold text-[10px] lg:text-base text-gray-900 leading-[15px] lg:leading-[15px]">
                   {{ $t('text_order_date') }}
                 </span>
@@ -45,9 +45,10 @@
             </div>
             <div class="flex justify-center items-center">
               <NuxtLink :to="localePath('/')" target="_blank"
-                class="w-[120px] h-[30px] lg:w-[165px] lg:h-[42px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md bg-white">
-                <span class="text-gray-700 text-xs lg:text-sm font-semibold leading-5">{{ $t('text_tax_invoice')
-                  }}</span>
+                class="w-[98px] h-[30px] lg:w-[165px] lg:h-[42px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md bg-white">
+                <span class="text-gray-700 text-[10px] lg:text-sm font-semibold leading-5">
+                  {{ $t('text_tax_invoice') }}
+                </span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="hidden lg:block" width="20" height="20"
                   viewBox="0 0 20 20" fill="none">
                   <path fill-rule="evenodd" clip-rule="evenodd"
@@ -61,7 +62,7 @@
           <div class="flex items-center justify-center w-full">
             <div class="border-b border-b-gray-200 w-full"></div>
           </div>
-          <div class="py-1">
+          <div class="py-1 -mb-3 lg:mb-0">
             <h4 class="text-gray-900 font-bold text-base lg:text-lg leading-5">{{ $t('order_status_title') }}</h4>
           </div>
           <!-- Completed Notes -->
@@ -114,7 +115,7 @@
                 }}</span>
               <span
                 :class="['text-xs lg:text-base leading-4', order_status == 'shipped' ? 'text-green-600 font-bold' : 'text-gray-500 font-semibold']">{{
-    $t('order_status_shipped') }}</span>
+                  $t('order_status_shipped') }}</span>
               <span class="text-gray-500 text-xs lg:text-base font-semibold leading-4">{{ $t('order_status_complete')
                 }}</span>
             </div>
@@ -130,10 +131,10 @@
                   stroke="#9CA3AF" stroke-width="2" />
               </svg>
               <span class="text-gray-400 text-xs lg:text-sm font-semibold uppercase leading-4">{{
-    $t('shipping_company_title')
-  }}</span>
+                $t('shipping_company_title')
+                }}</span>
               <div class="h-6 flex flex-col justify-center text-gray-900 text-xs font-semibold uppercase leading-4">{{
-      order_data.shipping_method_name }}</div>
+                order_data.shipping_method_name }}</div>
             </div>
             <!-- Shipping Number -->
             <div class="flex flex-col justify-center items-center gap-[5px]">
@@ -143,10 +144,10 @@
                   stroke="#9CA3AF" stroke-width="2" stroke-linejoin="round" />
               </svg>
               <span class="text-gray-400 text-xs lg:text-sm font-semibold uppercase leading-4">{{
-    $t('shipping_number_title')
-  }}</span>
+                $t('shipping_number_title')
+                }}</span>
               <span class="h-6 flex flex-col justify-center text-gray-900 text-xs font-semibold uppercase leading-4">#{{
-      order_data.shipment_label_id }}</span>
+                order_data.shipment_label_id }}</span>
             </div>
             <!-- Shipping Contact -->
             <div class="flex flex-col justify-center items-center gap-[5px]">
@@ -156,11 +157,11 @@
                   stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
               <span class="text-gray-400 text-xs lg:text-sm font-semibold uppercase leading-4">{{
-    $t('shipping_contact_title')
-  }}</span>
+                $t('shipping_contact_title')
+                }}</span>
               <span dir="ltr"
                 class="h-6 flex flex-col justify-center text-gray-900 text-xs font-semibold uppercase leading-4">{{
-      order_data.contact_number }}</span>
+                  order_data.contact_number }}</span>
             </div>
           </div>
           <!-- Shipping Duration -->
@@ -290,7 +291,7 @@
             <button type="button" v-if="order_status == 'pending'" @click="cancel_confirm_modal.show()"
               class="w-[100px] h-[28px] lg:w-[204px] lg:h-[42px] flex items-center justify-center ring-1 ring-gray-200 shadow-sm rounded-md bg-white">
               <span class="text-gray-700 lg:text-base text-[10px] font-semibold leading-4 lg:leading-4">{{
-    $t('cancel_order_btn') }}</span>
+                $t('cancel_order_btn') }}</span>
             </button>
             <!-- Return Products -->
             <NuxtLink :to="localePath('/account/return/' + order_data.id)"
@@ -298,7 +299,7 @@
               class="w-[100px] h-[28px] lg:w-[204px] lg:h-[42px] flex items-center justify-center gap-2 ring-1 ring-gray-200 shadow-sm rounded-md bg-white">
               <img src="/images/icons/return.png" class="w-4 h-4 lg:w-5 lg:h-5" alt="return product">
               <span class="text-gray-700 lg:text-base text-[10px] font-semibold leading-4 lg:leading-4">{{
-    $t('order_return_btn') }}</span>
+                $t('order_return_btn') }}</span>
             </NuxtLink>
             <!-- Review Products -->
             <NuxtLink :to="localePath('/account/order/review/' + order_data.id)" target="_blank"
@@ -306,7 +307,7 @@
               class="w-[100px] h-[28px] lg:w-[204px] lg:h-[42px] flex items-center justify-center gap-2 ring-1 ring-gray-200 shadow-sm rounded-md bg-white">
               <img src="/images/icons/edit.png" class="w-4 h-4 lg:w-5 lg:h-5" alt="return product">
               <span class="text-gray-700 lg:text-base text-[10px] font-semibold leading-4 lg:leading-4">{{
-    $t('order_product_evaluation_btn') }}</span>
+                $t('order_product_evaluation_btn') }}</span>
             </NuxtLink>
             <!-- Shipping Url -->
             <NuxtLink :to="order_data.tracking_url" target="_blank"

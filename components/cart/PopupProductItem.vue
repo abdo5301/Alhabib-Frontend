@@ -10,7 +10,7 @@
       </div>
       <!-- Favorite -->
       <button v-if="!favorite" @click.prevent="toggleFavoriteCall()"
-        class="max-w-full py-2 px-2 flex items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md shadow ring-1 ring-gray-300 text-gray-900 text-xs font-semibold">
+        class="max-w-full py-2 px-2 flex items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md shadow ring-1 ring-gray-300 text-gray-900 text-xs lg:text-sm font-semibold">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
           <path
             d="M3.19876 3.94876C2.10041 5.04711 2.10041 6.82789 3.19876 7.92624L8.00003 12.7275L12.8012 7.92624C13.8996 6.82789 13.8996 5.04711 12.8012 3.94876C11.7029 2.85041 9.92211 2.85041 8.82376 3.94876L8.00003 4.77256L7.17624 3.94876C6.07789 2.85041 4.29711 2.85041 3.19876 3.94876Z"
@@ -25,11 +25,11 @@
       class="flex flex-col justify-start lg:gap-4 gap-2 lg:min-w-[330px] lg:max-w-[315px] min-w-full max-w-[150px] w-full">
       <!-- name -->
       <div
-        class="lg:text-gray-600 text-gray-900 text-xs font-semibold leading-5 lg:min-h-[30px] lg:max-w-[298px] max-w-[160px]">
+        class="lg:text-gray-600 text-gray-900 text-xs lg:text-sm font-semibold leading-5 lg:min-h-[30px] lg:max-w-[298px] max-w-[160px]">
         {{ product.buyable_name }}
       </div>
       <!-- price -->
-      <div class="text-[#000] text-xs font-bold leading-5">
+      <div class="text-[#000] text-xs lg:text-sm font-bold leading-5">
         {{ priceFormate(product.discounted_price ? product.discounted_price : product.price ? product.price : 0) }}
       </div>
       <!-- Options -->
