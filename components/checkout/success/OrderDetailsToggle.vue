@@ -1,11 +1,11 @@
 <template>
-  <div :class="['order-1 lg:hidden w-full p-5 flex justify-between items-center']">
-    <div class="flex gap-4 justify-start">
-      <div class="flex flex-col flex-1 gap-2 text-gray-900 text-xs">
+  <div :class="['order-1 lg:hidden w-full py-5 px-1 flex justify-between items-center']">
+    <div class="flex gap-2 justify-start">
+      <div class="flex flex-col flex-1 gap-1 text-gray-900 text-xs">
         <span class="font-semibold leading-4 uppercase">
           {{ $t('text_order_number') }}
         </span>
-        <div class="flex gap-[5px] justify-center items-center font-bold leading-4 uppercase">
+        <div class="flex gap-[1px] justify-center items-center font-bold leading-4 uppercase">
           <span>
             #{{ order_id }}
           </span>
@@ -18,7 +18,7 @@
           </span>
         </div>
       </div>
-      <div class="flex flex-col gap-2 text-xs">
+      <div class="flex flex-col gap-1 text-xs">
         <span class="font-semibold leading-4 text-gray-900 uppercase">
           {{ $t('text_order_date') }}
         </span>
@@ -45,7 +45,7 @@
         <path d="M3 8C3 6.89543 3.89543 6 5 6V16H13C13 17.1046 12.1046 18 11 18H5C3.89543 18 3 17.1046 3 16V8Z"
           fill="white" />
       </svg>
-      <span :class="[order_details ? 'text-white font-bold' : 'text-gray-700 font-normal', 'text-xs']">{{
+      <span :class="[order_details ? 'text-white font-normal' : 'text-gray-700 font-normal', 'text-[10px]']">{{
         order_details ?
         $t('checkout_success_order_details_hide') : $t('checkout_success_order_details_show') }}</span>
       <svg v-if="order_details" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
