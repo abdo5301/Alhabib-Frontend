@@ -90,7 +90,7 @@
     <CheckoutAlrajhiPoints />
 
     <!-- Order Submit -->
-    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id || disable_checkout'
+    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id || disable_checkout || submit_loading'
       @click="submitOrder()"
       class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
@@ -119,6 +119,7 @@ const props = defineProps({
     default: false
   }
 })
+const submit_loading = ref(false)
 const route = useRoute()
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
@@ -406,6 +407,7 @@ async function createTabbySession() {
 }
 
 async function submitOrder() {
+  submit_loading.value = true
   if (props.disable_checkout == false) {
     if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
       if (!tabby_session.value || !tabby_session.value.length) {
@@ -434,6 +436,7 @@ async function submitOrder() {
       emits('submit', payment_method_id.value)
     }
   }
+  submit_loading.value = false
 }
 
 </script>
