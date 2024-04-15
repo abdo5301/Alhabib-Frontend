@@ -1,5 +1,5 @@
 <template>
-  <div v-if="shown" class="w-full flex flex-col gap-3">
+  <div v-if="shown" class="w-full relative flex flex-col gap-3">
     <!-- Mobile Low Quantity Alert -->
     <div v-if="product.quantity < 10 && cart_item.availability == true"
       class="lg:hidden flex justify-start items-center gap-[6px]">
@@ -26,15 +26,28 @@
     </div>
 
     <!-- Product Data -->
-    <div class="flex gap-3 lg:border-t lg:border-t-gray-200 lg:pt-6 w-full">
+    <div class="lg:flex gap-3 lg:gap-4 grid grid-cols-3 lg:border-t lg:border-t-gray-200 lg:pt-6 w-full">
       <!-- image -->
-      <div class="lg:w-[267px] w-[130px] h-[143px] lg:h-[267px] flex-shrink-0">
-        <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-lg"
-          :src="product.buyable_image" alt="Alhabib-Shop">
-        <img v-else class="w-full h-full rounded-lg" src="/images/placeholder-logo.png" alt="Alhabib-Shop">
+      <div class="flex flex-col gap-3">
+        <div class="lg:w-[267px] w-full lg:max-h-[267px] max-h-[143px] min-h-[100px] lg:h-[267px] flex-shrink-0">
+          <img v-if="product.buyable_image && product.buyable_image != null" class="w-full h-full rounded-lg"
+            :src="product.buyable_image" alt="Alhabib-Shop">
+          <img v-else class="w-full h-full rounded-lg" src="/images/placeholder-logo.png" alt="Alhabib-Shop">
+        </div>
+        <!-- Mobile Favorite -->
+        <button v-if="!favorite" @click.prevent="toggleFavoriteCall()"
+          class="lg:hidden flex w-full py-2 px-2 shadow-sm  items-center justify-center gap-1 bg-white rounded-md ring-1 ring-gray-300 text-gray-900 text-[10px] font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M3.59835 5.26534C2.13388 6.72981 2.13388 9.10418 3.59835 10.5686L10 16.9703L16.4017 10.5686C17.8661 9.10418 17.8661 6.72981 16.4016 5.26534C14.9372 3.80088 12.5628 3.80088 11.0983 5.26534L10 6.36374L8.90165 5.26534C7.43718 3.80088 5.06282 3.80088 3.59835 5.26534Z"
+              stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          {{ $t('cart_popup_add_favorite_btn') }}
+        </button>
       </div>
+
       <!-- details -->
-      <div class="flex flex-col justify-start gap-3 flex-1">
+      <div class="flex col-start-2 col-span-2 flex-col justify-start gap-3 flex-1">
         <!-- Desktop remove item -->
         <div class="lg:flex hidden items-start justify-end lg:pe-[17px]">
           <button type="button" @click="deleteCartItem()">
@@ -45,20 +58,23 @@
           </button>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-3 lg:gap-[31px]">
+        <div
+          class="flex flex-col lg:flex-row gap-3 lg:gap-[31px] lg:min-h-[60px] 2xl:max-w-[450px] xl:max-w-[300px] max-w-full">
           <!-- name -->
           <div
-            class="order-2 lg:order-1 text-gray-600 text-sm lg:text-base font-medium lg:font-semibold leading-6 lg:leading-7 lg:min-h-[60px] 2xl:max-w-[450px] xl:max-w-[300px] max-w-[190px]">
+            class="order-2 lg:order-1 text-gray-600 text-sm lg:text-base font-medium lg:font-semibold leading-6 lg:leading-7">
             {{ product.buyable_name }}
           </div>
           <div class="order-1 lg:order-2 flex">
             <!-- price -->
-            <div class="flex-1 leading-5">
+            <div class="flex-1 flex !leading-5 justify-start lg:pt-[2px]">
               <div class="inline-flex gap-1" v-if="product.discounted_price">
-                <span class="text-red-600 font-bold lg:text-base text-sm">{{ priceFormate(product.discounted_price)
-                  }}</span>
-                <span class="text-gray-900 font-normal line-through lg:text-base text-sm">{{ priceFormate(product.price)
-                  }}</span>
+                <span class="text-red-600 font-bold lg:text-base text-sm  !leading-5">{{
+                  priceFormate(product.discounted_price)
+                }}</span>
+                <span class="text-gray-900 font-normal line-through lg:text-base text-sm  !leading-5">{{
+                  priceFormate(product.price)
+                }}</span>
               </div>
               <div class="text-[#000] font-bold text-base" v-else>
                 {{ priceFormate(product.price) }}
@@ -141,16 +157,7 @@
 
     </div>
 
-    <!-- Mobile Favorite -->
-    <button v-if="!favorite" @click.prevent="toggleFavoriteCall()"
-      class="lg:hidden flex max-w-[141px] py-2 px-3 shadow-sm  items-center justify-center rtl:gap-2 ltr:gap-[6px] bg-white rounded-md ring-1 ring-gray-300 text-gray-900 text-sm font-semibold">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path
-          d="M3.59835 5.26534C2.13388 6.72981 2.13388 9.10418 3.59835 10.5686L10 16.9703L16.4017 10.5686C17.8661 9.10418 17.8661 6.72981 16.4016 5.26534C14.9372 3.80088 12.5628 3.80088 11.0983 5.26534L10 6.36374L8.90165 5.26534C7.43718 3.80088 5.06282 3.80088 3.59835 5.26534Z"
-          stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-      {{ $t('cart_popup_add_favorite_btn') }}
-    </button>
+
   </div>
   <!-- Divider -->
   <div v-if="!last_item" class="lg:hidden flex items-center justify-center h-[40px] w-full px-[14px]">

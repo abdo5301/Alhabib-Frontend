@@ -6,25 +6,25 @@
 
 <template>
   <Title>{{ $t('wallet_title') }} | {{ website_name }}</Title>
-  <div class="w-full px-[27px] py-[30px] lg:p-0 flex flex-col gap-6 lg:gap-[30px]">
+  <div class="w-full flex flex-col gap-6 lg:gap-[30px]">
     <AccountBreadcrumb :current="$t('wallet_title')" />
     <AccountPageTitle>{{ $t('wallet_title') }}</AccountPageTitle>
     <div v-if="wallet_data"
       class="w-full flex flex-col gap-[30px] bg-white py-5 px-5 lg:py-[40px] lg:px-[30px] rounded-lg shadow">
       <!-- Wallet -->
-      <div class="p-[30px] flex gap-10 w-full lg:h-[314px] flex-col justify-start wallet-bg rounded-[20px] shadow">
+      <div class="lg:p-[30px] p-5 flex gap-10 w-full lg:h-[314px] flex-col justify-start wallet-bg rounded-[20px] shadow">
         <!-- logo -->
         <div class="flex flex-row justify-end">
           <img src="/images/logo-white.png" class="w-[73px] lg:w-[87px]" alt="">
         </div>
         <!-- Total credit -->
         <div class="flex flex-col justify-start">
-          <h5 class="text-[#B0B0B0] lg:text-2xl font-normal text-base">
+          <h5 class="text-[#B0B0B0] lg:text-2xl font-normal text-sm">
             {{ $t('total_balance_title') }}
           </h5>
           <!-- Permanent credit -->
           <div
-            class="text-white text-4xl lg:text-[54px] font-bold leading-normal h-[67px] lg:h-[101px] flex justify-start items-center">
+            class="text-white text-3xl lg:text-[54px] font-bold leading-normal h-[67px] lg:h-[101px] flex justify-start items-center">
             {{ wallet_data.credit ? priceFormate(wallet_data.credit, true) : priceFormate(0, true) }}
           </div>
           <!-- Temporary credit-->

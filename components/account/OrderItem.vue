@@ -8,17 +8,17 @@
     class="w-full flex flex-col gap-[25px] flex-shrink-0 bg-white py-[23px] px-5 lg:py-[23px] lg:px-[30px] rounded-md shadow-md">
     <!-- Order Info -->
     <div class="w-full flex justify-between">
-      <div class="flex-1 flex justify-start lg:items-start gap-2 lg:gap-8">
+      <div class="flex-1 flex justify-start lg:items-start gap-1 lg:gap-8">
         <img v-if="pending_status.includes(item_status)" src="/images/icons/cube-green.png"
           class="w-[35px] lg:w-[45px] h-[35px] lg:h-[45px]" alt="Order">
         <img v-else-if="item_status == 'canceled'" src="/images/icons/cube-red.png"
           class="w-[35px] lg:w-[45px] h-[35px] lg:h-[45px]" alt="Order">
         <img v-else src="/images/icons/cube-gray.png" class="w-[35px] lg:w-[45px] h-[35px] lg:h-[45px]" alt="Order">
         <!-- ID -->
-        <div class="flex flex-col gap-[5px] lg:gap-3 justify-start items-start">
-          <span class="text-gray-900 text-[10px] lg:text-sm font-semibold leading-[15px]">{{ $t('text_order_number')
+        <div class="flex flex-col gap-1 lg:gap-3 justify-start items-start">
+          <span class="text-gray-900 text-[10px] lg:text-sm font-semibold leading-[15px] lg:leading-[15px]">{{ $t('text_order_number')
           }}</span>
-          <div class="text-gray-900 flex gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] ">
+          <div class="text-gray-900 flex gap-[1px] lg:gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
             <span>
               #{{ item_id }}
             </span>
@@ -33,7 +33,7 @@
         </div>
         <!-- Date -->
         <div class="flex flex-col gap-[5px] lg:gap-3 justify-start items-start">
-          <span class="font-semibold text-[10px] lg:text-sm text-gray-900 leading-[15px]">
+          <span class="font-semibold text-[10px] lg:text-sm text-gray-900 lg:leading-[15px] leading-[15px]">
             {{ $t('text_order_date') }}
           </span>
           <span dir="ltr"
@@ -44,15 +44,15 @@
       </div>
       <div class="flex lg:flex-row flex-col lg:justify-center justify-end items-center">
         <button v-if="item_status == 'pending'" type="button" @click="$emit('triggerCancelOrder', item_id)"
-          class="w-[65px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm lg:rounded-md rounded bg-white">
+          class="w-[60px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm lg:rounded-md rounded bg-white">
           <span class="text-gray-700 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('cancel_order_btn') }}</span>
         </button>
         <div v-else-if="item_status == 'canceled'"
-          class="w-[65px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-red-200 shadow-sm lg:rounded-md rounded bg-red-100">
+          class="w-[60px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-red-200 shadow-sm lg:rounded-md rounded bg-red-100">
           <span class="text-red-700 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('order_canceled_text') }}</span>
         </div>
         <div v-else
-          class="w-[65px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-200 shadow-sm lg:rounded-md rounded bg-gray-100">
+          class="w-[60px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-200 shadow-sm lg:rounded-md rounded bg-gray-100">
           <span class="text-gray-400 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('cancel_order_btn') }}</span>
         </div>
       </div>
@@ -113,9 +113,9 @@
       <div v-if="(item_status == 'shipped' || item_status == 'ready_to_ship') && item_tracking_link"
         class="flex flex-col justify-end items-end">
         <NuxtLink :to="item_tracking_link" target="_blank"
-          class="w-[80px] h-[26px] lg:w-[126px] lg:h-[34px] flex justify-center items-center gap-2 rounded-md bg-black shadow-sm">
+          class="w-[70px] h-[26px] lg:w-[126px] lg:h-[34px] flex justify-center items-center gap-[2px] lg:gap-2 rounded-md bg-black shadow-sm">
           <span class="text-white text-[10px] lg:text-base font-semibold leading-4">{{ $t('text_track') }}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 lg:w-4 lg:h-4" viewBox="0 0 16 17" fill="none">
             <path
               d="M8.80002 3.04883C8.3582 3.04883 8.00002 3.407 8.00002 3.84883C8.00002 4.29066 8.3582 4.64883 8.80002 4.64883H10.8687L5.83434 9.68314C5.52192 9.99556 5.52192 10.5021 5.83434 10.8145C6.14676 11.1269 6.65329 11.1269 6.96571 10.8145L12 5.7802V7.84883C12 8.29066 12.3582 8.64883 12.8 8.64883C13.2419 8.64883 13.6 8.29066 13.6 7.84883V3.84883C13.6 3.407 13.2419 3.04883 12.8 3.04883H8.80002Z"
               fill="white" />
@@ -127,16 +127,16 @@
       </div>
       <!-- Mobile Complete Actions -->
       <div v-if="item_status == 'complete'"
-        class="flex lg:hidden flex-col lg:flex-row justify-end items-center gap-3 lg:gap-[17px]">
+        class="flex lg:hidden flex-col lg:flex-row justify-end items-center gap-3 lg:gap-[17px] ms-1">
         <NuxtLink :to="localePath('/account/return/' + item_id)"
-          class="flex justify-center items-center lg:gap-2 gap-1 w-[85px] h-[28px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm rounded-md ring-1 ring-gray-300">
-          <img src="/images/icons/return.png" class="w-4 h-4 lg:w-5 lg:h-5" alt="return product">
+          class="flex justify-center items-center lg:gap-2 gap-1 w-[62px] h-[25px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm lg:rounded-md rounded ring-1 ring-gray-300">
+          <img src="/images/icons/return.png" class="hidden lg:block w-4 h-4 lg:w-5 lg:h-5" alt="return product">
           <span class="text-gray-700 text-[10px] lg:text-sm font-medium lg:font-semibold leading-5">{{
             $t('order_return_btn') }}</span>
         </NuxtLink>
         <NuxtLink :to="localePath('/account/order/review/' + item_id)"
-          class="flex justify-center items-center lg:gap-2 gap-1 w-[85px] h-[28px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm rounded-md ring-1 ring-gray-300">
-          <img src="/images/icons/edit.png" class="w-4 h-4 lg:w-5 lg:h-5" alt="return product">
+          class="flex justify-center items-center lg:gap-2 gap-1 w-[62px] h-[25px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm lg:rounded-md rounded ring-1 ring-gray-300">
+          <img src="/images/icons/edit.png" class="hidden lg:block w-4 h-4 lg:w-5 lg:h-5" alt="return product">
           <span class="text-gray-700 text-[10px] lg:text-sm font-medium lg:font-semibold leading-5">{{
             $t('order_product_evaluation_btn') }}</span>
         </NuxtLink>
@@ -216,7 +216,7 @@
       <span v-else></span>
       <div class="flex justify-end items-end">
         <NuxtLink :to="localePath('/account/order/' + item_id)"
-          class="w-[85px] h-[28px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md bg-white">
+          class="w-[55px] h-[28px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md bg-white">
           <span class="text-gray-700 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('details_title') }}</span>
         </NuxtLink>
       </div>

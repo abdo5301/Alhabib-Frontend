@@ -137,6 +137,9 @@
 
 
 <script setup>
+onMounted(() => {
+  initFlowbite()
+})  
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 const availableLocales = useNuxtApp().$all_lang
