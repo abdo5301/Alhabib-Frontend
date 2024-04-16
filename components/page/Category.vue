@@ -111,7 +111,13 @@ const website_name = useState('website_name');
 const config = useRuntimeConfig()
 const route = useRoute();
 const localePath = useLocalePath()
-const category_url_id = route.params && route.params.id ? route.params.id : null
+const props = defineProps({
+  url_data: {
+    type: Object
+  }
+})
+// console.log(props.url_data);
+const category_url_id = props.url_data && props.url_data.slug ? props.url_data.slug : null
 const data_url = ref('/master-products/of-category?category_q=' + category_url_id)
 const sorting_value = ref()
 const listing_type = ref('list')
@@ -140,8 +146,6 @@ const category_bottom_content = ref('')
 
 onMounted(async () => {
   initFlowbite();
-  //window.history.pushState({"id":1}, "Title", "/new-url"); //slug edit
-
   try {
     category_data.value = await useNuxtApp().$apiFetch(data_url.value)
   } catch (error) {
@@ -152,10 +156,9 @@ onMounted(async () => {
       fatal: true
     })
   }
+  //Reset category data reference
   if (category_data.value.data && category_data.value.data.length) {
-    // window.history.pushState({ "id": category_data.value.data[0].category.id }, category_data.value.data[0].category.name, "/" + category_data.value.data[0].category.slug); //slug edit
     products.value = products.value.concat(category_data.value.data)
-    //Reset category data reference
     breadcrumb.value = [
       {
         'name': category_data.value.data[0].category.breadcrumb.name,

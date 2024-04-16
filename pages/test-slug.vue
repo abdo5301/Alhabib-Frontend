@@ -9,7 +9,10 @@ const switchLocalePath = useSwitchLocalePath()
 const router = useRouter()
 const slug_data = ref(null)
 const lang = useNuxtApp().$lang
-const { locale, setLocale } = useI18n()
+const { locale, setLocale, locales } = useI18n()
+const nuxt = useNuxtApp()
+const localePath = useLocalePath()
+
 onMounted(async () => {
   const url_slug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
   try {
@@ -29,8 +32,9 @@ onMounted(async () => {
     const slug_name = slug_data.value.data.slug
     const slug_type = slug_data.value.data.slugable_type
     const slug_id = slug_data.value.data.slugable_id
-    // const new_path = locale.value == 'ar' ? "/" + slug_name : "/" + locale.value + "/" + slug_name
-    const new_path = "/" + slug_name
+    const new_path = localePath({ params: { slug: slug_name } })//localePath('/' + slug_name)
+    
+    console.log(nuxt.$i18n.paths);
     switch (slug_type) {
       case "App\\Models\\Category":
         router.addRoute({
@@ -51,7 +55,7 @@ onMounted(async () => {
         await router.replace({ name: slug_name })
         break;
       default:
-      throw createError({
+        throw createError({
           statusCode: 404,
           statusMessage: 'page_not_found',
           fatal: true

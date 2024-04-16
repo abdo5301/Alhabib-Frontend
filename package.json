@@ -30,7 +30,7 @@
     "@nuxtjs/robots": "^3.0.0",
     "date-fns": "^3.3.1",
     "flowbite": "2.2",
-    "vue": "^3.4.8",
-    "vue-star-rating": "^2.1.0"
+    "nuxt-rating": "^0.0.15",
+    "vue": "^3.4.8"
   }
 }

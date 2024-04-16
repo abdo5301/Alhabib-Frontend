@@ -25,7 +25,7 @@
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink :to="localePath('account/order')" class="hover:underline">{{
+                <NuxtLink :to="localePath('/account/order')" class="hover:underline">{{
                   $t('footer_help_menu_return_ticket') }}</NuxtLink>
               </li>
             </ul>

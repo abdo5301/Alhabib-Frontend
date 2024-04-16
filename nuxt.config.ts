@@ -1,11 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/i18n', 'nuxt-lodash',['@nuxtjs/robots', { configPath: "~/config/robots.config" }]],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/i18n', 'nuxt-lodash','nuxt-rating',
+  ['@nuxtjs/robots', { configPath: "~/config/robots.config" }]],
   experimental: {
     viewTransition: true,
     asyncEntry:true,
   },
   i18n: {
+    customRoutes: 'config',
+    pages: {
+      'page/[slug]': {
+         ar: '/[slug]',
+         en: '/[slug]'
+      }
+    },
     baseUrl:process.env.NUXT_BASE_URL,
     vueI18n: './i18n.config.ts',
     defaultLocale: 'ar',
