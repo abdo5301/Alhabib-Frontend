@@ -24,7 +24,7 @@
           fill="#9CA3AF" />
       </svg>
       <NuxtLink class="line-clamp-1 text-gray-500 font-semibold lg:text-base text-xs leading-5"
-        :to="localePath(page.link)">
+        :to="page.link">
         {{ page.name }}
       </NuxtLink>
     </li>

@@ -3,7 +3,7 @@
     <h2 :id="'section-accordion-' + section_key">
       <button type="button" @click="active_section = !active_section"
         class="flex items-center justify-between w-full font-bold text-gray-700 text-base leading-5"
-        :data-accordion-target="'#section-accordion-body-' + section_key" :aria-expanded="opened"
+        :data-accordion-target="'#section-accordion-body-' + section_key" :aria-expanded="active_section"
         :aria-controls="'section-accordion-body-' + section_key">
         <span>{{ title }}</span>
         <svg v-if="active_section" xmlns="http://www.w3.org/2000/svg" width="39" height="2" viewBox="0 0 39 2"
@@ -16,7 +16,7 @@
         </svg>
       </button>
     </h2>
-    <div class="hidden" :id="'section-accordion-body-' + section_key"
+    <div :class="[active_section ? '': 'hidden']" :id="'section-accordion-body-' + section_key"
       :aria-labelledby="'section-accordion-' + section_key">
       <ClientOnly>
         <div class="pt-6 pb-1 text-base text-black font-medium leading-8" v-html="decodeHtml(description)">
