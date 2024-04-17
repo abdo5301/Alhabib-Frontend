@@ -1,7 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/i18n', 'nuxt-lodash','nuxt-rating',
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/i18n', 'nuxt-lodash','nuxt-rating','nuxt-primevue',
   ['@nuxtjs/robots', { configPath: "~/config/robots.config" }]],
+  primevue:{
+    components: {
+      prefix: 'Prime',
+      include: '*'
+    },
+    options: {
+      // unstyled: true,
+    },
+  },
   experimental: {
     viewTransition: true,
     asyncEntry:true,
@@ -80,7 +89,6 @@ export default defineNuxtConfig({
       proxy:'https://api.tabby.ai/**'
     }
    },
-
   devtools: {
     enabled: true,
   },

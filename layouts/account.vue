@@ -1,4 +1,5 @@
 <style>
+/* @import url("primevue/resources/themes/aura-light-green/theme.css"); */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700&display=swap');
 
 input[type='password'] {
