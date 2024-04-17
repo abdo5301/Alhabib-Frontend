@@ -56,7 +56,7 @@
                 v-if="product_data.related_class_products && product_data.related_class_products.length && product_data.color && product_data.color.hex"
                 class="flex justify-start gap-[5px] flex-wrap">
                 <span
-                  class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[27px] lg:h-[27px] w-[23px] h-[23px] z-20">
+                  class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[28px] lg:h-[28px] w-[23px] h-[23px] z-20">
                   <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40"
                     :style="['background-color:' + product_data.color.hex]">
                   </span>

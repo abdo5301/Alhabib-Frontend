@@ -20,6 +20,7 @@ export function useOrder() {
           payment_gateway_id: data.payment_gateway_id,
           gifted: data.gifted,
           gift_phrase: data.gift_phrase,
+          source: "web",
         },
       })
       if (add_order.data && add_order.status) {

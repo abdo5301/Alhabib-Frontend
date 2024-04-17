@@ -90,8 +90,8 @@
     <CheckoutAlrajhiPoints />
 
     <!-- Order Submit -->
-    <button v-if='!selectedApplePayMethod' id='order-save-btn' :disabled='!payment_method_id || disable_checkout || submit_loading'
-      @click="submitOrder()"
+    <button v-if='!selectedApplePayMethod' id='order-save-btn'
+      :disabled='!payment_method_id || disable_checkout || submit_loading' @click="submitOrder(),submit_loading = true"
       class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
     </button>
@@ -99,7 +99,8 @@
     <!-- Apple Pay  -->
     <div v-show='selectedApplePayMethod'
       class='w-full rounded-md shadow bg-black h-[50px] flex justify-center items-center'>
-      <div @click='onApplePayButtonClicked' class='apple-pay-button apple-pay-button-black'></div>
+      <div @click='onApplePayButtonClicked'
+        :class="['apple-pay-button apple-pay-button-black', submit_loading ? 'pointer-events-none' : '']"></div>
     </div>
   </div>
 </template>
@@ -273,7 +274,8 @@ let pay = async applePayToken => {
         address_id: props.address_id,
         payment_gateway_id: payment_method_id.value,
         gifted: "0",
-        gift_phrase: ""
+        gift_phrase: "",
+        source: "web"
       },
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -407,7 +409,6 @@ async function createTabbySession() {
 }
 
 async function submitOrder() {
-  submit_loading.value = true
   if (props.disable_checkout == false) {
     if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
       if (!tabby_session.value || !tabby_session.value.length) {
@@ -436,7 +437,6 @@ async function submitOrder() {
       emits('submit', payment_method_id.value)
     }
   }
-  submit_loading.value = false
 }
 
 </script>
