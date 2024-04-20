@@ -22,7 +22,7 @@
             {{ register_error == "email_exist" ? $t('register_error_email_exist') : $t('register_error_phone_exist')
             }}
             <NuxtLink
-              :to="register_error == 'email_exist' ? localePath('/auth/login-email') : localePath('/auth/login-phone')"
+              :to="register_error == 'email_exist' ? localePath('/login-email') : localePath('/login')"
               class="font-bold inline-flex items-center">
               {{ $t('login_title') }}
             </NuxtLink>
@@ -45,14 +45,14 @@
 
         <div class="flex items-center justify-between mt-1">
           <div class="text-sm">
-            <NuxtLink :to="localePath('/auth/register')" class="font-bold text-xs text-gray-900 hover:text-gray-600">{{
+            <NuxtLink :to="localePath('/register')" class="font-bold text-xs text-gray-900 hover:text-gray-600">{{
               $t('privacy_policy_notes') }}</NuxtLink>
           </div>
         </div>
         <div class="flex items-center flex-row-reverse  mt-1">
           <div class="text-xs text-gray-900">
             <span>{{ $t('login_link_1') }}</span>&nbsp;
-            <NuxtLink :to="localePath('/auth/login-phone')" class="font-bold  hover:text-gray-600">
+            <NuxtLink :to="localePath('/login')" class="font-bold  hover:text-gray-600">
               {{ $t('login_link_2') }}
             </NuxtLink>
           </div>
@@ -109,8 +109,8 @@ async function register() {
         password: password.value
       }
     })
-    useAuth().setUserOTP(phone_country.value + phone.value, localePath('/auth/login-phone'))
-    window.location.pathname = localePath('/auth/phone-confirm');
+    useAuth().setUserOTP(phone_country.value + phone.value, localePath('/login'))
+    window.location.pathname = localePath('/phone-confirm');
   } catch (error) {
     console.log(error.data)
     if (error.data && error.data.message) {

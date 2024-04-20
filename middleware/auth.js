@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     //save current path and redirect to login page
     useAuth().removeUser()
     localStorage.setItem('login_redirect', to.fullPath)
-    window.location.pathname = nuxt.$localePath('/auth/login-phone')
-    return navigateTo(nuxt.$localePath('/auth/login-phone')) 
+    window.location.pathname = nuxt.$localePath('/login')
+    return navigateTo(nuxt.$localePath('/login')) 
   }
 })

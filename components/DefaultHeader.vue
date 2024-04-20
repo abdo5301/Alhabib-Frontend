@@ -1,6 +1,6 @@
 <style scoped>
 .default_header {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.901) 50%, rgba(255, 255, 255, 0.00) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76) 50%, rgba(255, 255, 255, 0.00) 100%);
 }
 
 .fixed_header {
@@ -17,7 +17,7 @@
   <div>
     <header
       :class="[page_scrolled || (route.path != '/' && route.path != '/en') ? 'fixed_header' : 'default_header', route.path != '/' && route.path != '/en' ? 'border-b border-b-gray-300' : 'border-b-0', 'fixed w-full max-w-full lg:hover:bg-white z-40']">
-      <nav aria-label="Top" class="lg:h-[165px] h-[4rem] px-3 lg:px-[20px] pt-[22px] lg:pt-[40px]">
+      <nav aria-label="Top" class="lg:h-[165px] h-[4rem] px-2 lg:px-[20px] pt-[22px] lg:pt-[40px]">
         <div class="flex gap-12 flex-col">
 
           <div class="flex w-full content-center">
@@ -41,7 +41,7 @@
 
               <!-- Mobile Search Trigger -->
               <div @click="search_popup.show(), search_input.focus()"
-                class="flex items-end rtl:mt-[6.5px] ltr:mt-[4px] lg:hidden rtl:pr-[9px] ltr:pl-[9px] cursor-pointer">
+                class="flex items-end rtl:mt-[6.5px] ltr:mt-[4px] lg:hidden ps-1 cursor-pointer">
                 <svg v-if="lang.code == 'ar'" xmlns="http://www.w3.org/2000/svg" width="24" height="20"
                   viewBox="0 0 24 23" fill="none">
                   <path fill-rule="evenodd" clip-rule="evenodd"
@@ -85,7 +85,7 @@
             <div class="flex  items-center justify-end gap-1 flex-1 flex-row w-1/3">
               <!-- User -->
               <div class="flex">
-                <NuxtLink :to="localePath('/auth/login-phone')" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
+                <NuxtLink :to="localePath('/login')" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
                   <span class="sr-only">User</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                     <path

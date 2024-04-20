@@ -18,7 +18,7 @@
             class="absolute bg-white flex px-7 py-[9px] top-0 rtl:right-[-1px] ltr:left-[-0.5px]  transform -translate-x-0 -translate-y-10  border rounded-t-md border-gray-300 border-b-white">
             <span class="text-gray-700 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_phone') }}</span>
           </div>
-          <NuxtLink :to="localePath('/auth/login-email')"
+          <NuxtLink :to="localePath('/login-email')"
             class="absolute bg-white flex px-4 py-[7px] top-0 left-[45%] transform sm:-translate-x-[58px] ltr:lg:-translate-x-[30px] ltr:-translate-x-[15px] -translate-y-[63px] -translate-x-[60%]">
             <span class="text-gray-500 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_email') }}</span>
           </NuxtLink>
@@ -26,7 +26,7 @@
           <Alert class="h-[29px] flex items-center" color="red" v-if="login_error" :alert_icon="true">
             <span v-if="login_error == 'validation_login'">
               {{ $t('validation_login_phone_1') }}
-              <NuxtLink :to="localePath('/auth/register')" class="font-bold inline-flex items-center gap-1">
+              <NuxtLink :to="localePath('/register')" class="font-bold inline-flex items-center gap-1">
                 {{ $t('validation_login_phone_2') }}
                 <svg class="ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13"
                   fill="none">
@@ -65,7 +65,7 @@
         <div class="flex items-center mt-1">
           <div class="text-xs text-gray-900">
             <span>{{ $t('register_link_1') }}</span>&nbsp;
-            <NuxtLink :to="localePath('/auth/register')" class="font-bold  hover:text-gray-600 inline-block">
+            <NuxtLink :to="localePath('/register')" class="font-bold  hover:text-gray-600 inline-block">
               {{ $t('register_link_2') }}
               <ArrowRightIcon v-if="$lang.dir == 'ltr'" class="h-4 w-4 text-gray-900 inline-block" />
               <ArrowLeftIcon v-else class="h-4 w-4 text-gray-900 inline-block" />
@@ -118,8 +118,8 @@ async function login() {
         mobile: phone_country.value + phone.value
       }
     })
-    useAuth().setUserOTP(phone_country.value + phone.value, localePath('/auth/login-phone'))
-    window.location.pathname = localePath('/auth/phone-confirm');
+    useAuth().setUserOTP(phone_country.value + phone.value, localePath('/login'))
+    window.location.pathname = localePath('/phone-confirm');
   } catch (error) {
     console.log(error.data.message)
     if (error.data.message === "validation.phone") {

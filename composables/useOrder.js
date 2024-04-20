@@ -1,5 +1,3 @@
-import registerVue from '~/pages/auth/register.vue'
-
 export function useOrder() {
   const successOrderId = computed(() => {
     if (process.client) {
