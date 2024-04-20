@@ -95,9 +95,9 @@
   "category_sorting_sales":"Sales",
   "category_load_more_btn":"Show More",
   "product_color_title":"Color : ",
-  "product_size_title":"Size",
+  "product_size_title":"Product Options",
   "product_size_modal_link":"How can I measure my bed?",
-  "product_size_menu_title":"Select Size",
+  "product_size_menu_title":"Select Option",
   "product_size_stock_alert":"Out of stock",
   "product_stock_notify_button":"Notify me",
   "product_stock_notify_button_disabled":"You will receive an alert when available",
@@ -272,7 +272,8 @@
   "order_cancel_date_notes":"The order has been cancelled at ",
   "order_complete_date_notes":"It was delivered in ",
   "order_return_btn":"Return product",
-  "order_product_evaluation_btn":"Product evaluation",
+  "order_product_evaluation_btn":"Product Rating",
+  "order_product_rating_btn":"Product Rating",
   "order_details_title":"Order Details",
   "order_status_title":"Order Status",
   "shipping_company_title":"Shipping Company",
@@ -298,5 +299,9 @@
   "text_unsubscribe_success":"Subscription has been canceled successfully",
   "text_active_discount_code":"Active Discount Code ",
   "blog_title":"Blog",
-  "btn_read_more":"Read More"
+  "btn_read_more":"Read More",
+  "text_review_content_placeholder":"Write your product review here!",
+  "text_review_title_ask":"How satisfied are you with this product?",
+  "text_rating_success_1":"Your opinion is our focus!",
+  "text_rating_success_2":"Thank you for ordering from Al Habib Bedding"
 }

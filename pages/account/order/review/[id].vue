@@ -10,10 +10,10 @@
           <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
         </div>
       </template>
-      <AccountRatingItem v-for="(product, index) in products"
-        class="w-full flex flex-col gap-[30px] bg-white py-5 px-5 lg:px-[30px] rounded-lg shadow">
-         تقييم المنتج هنا
-      </AccountRatingItem>
+      <div class="w-full flex flex-col gap-[40px] lg:gap-[30px]">
+        <AccountProductRatingForm v-for="(product, index) in products" :product_id="product.id"
+          :product_image="product.image" :product_rating="product.rating" :product_name="product.name"/>
+      </div>
     </ClientOnly>
   </div>
 </template>
@@ -31,14 +31,14 @@ const order_id = Number(route.params.id)
 const order_status = ref('')
 const order_data = ref([])
 const products = ref([])
-const rating = ref(0)
+const rating = ref(1)
 onMounted(async () => {
   initFlowbite()
   setActiveSection('orders')
   if (!isNaN(order_id)) {
     order_data.value = await getOrder(order_id)
     order_status.value = order_data.value.state.id
-    if (order_data.value.order_items) {
+    if (order_data.value.state && order_data.value.state.id != 'completed' && order_data.value.order_items) {
       products.value = order_data.value.order_items
     } else {
       throw createError({
@@ -47,7 +47,13 @@ onMounted(async () => {
         fatal: true
       })
     }
-    //console.log(order_data.value)
+    console.log(order_data.value)
+  } else {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'page_not_found',
+      fatal: true
+    })
   }
 })
 

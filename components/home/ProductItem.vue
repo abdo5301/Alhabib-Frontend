@@ -1,4 +1,5 @@
 <template>
+  <ClientOnly>
   <div class="flex flex-shrink-0 flex-col justify-start lg:w-[268px] w-[175px]">
     <NuxtLink :to="link" class="relative w-full">
       <img class="w-full lg:h-[267px] h-[170px]"
@@ -63,6 +64,7 @@
       </div>
     </div>
   </div>
+</ClientOnly>
 </template>
 
 

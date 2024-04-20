@@ -96,7 +96,7 @@
         <div class="flex flex-col lg:flex-row lg:gap-[100px] gap-4" v-if="product.variation_option">
           <div
             class="flex lg:flex-col flex-row gap-2 lg:gap-1 items-center lg:items-start lg:min-w-[148px] max-w-[170px] lg:max-w-full">
-            <label class="block pb-1 text-sm font-normal text-gray-900 leading-5">{{ $t('label_size') }}</label>
+            <label class="block pb-1 text-sm font-normal text-gray-900 leading-5">{{ $t('product_size_title') }}</label>
             <select
               class="bg-white cursor-pointer min-w-[125px] lg:min-w-[190px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 px-3 lg:py-2 py-[6px]">
               <option :value="product.variation_option.id" selected>
