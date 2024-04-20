@@ -12,7 +12,27 @@ export default defineNuxtConfig({
       'page/[slug]': {
          ar: '/[slug]',
          en: '/[slug]'
-      }
+      },
+      'auth/login-phone': {
+         ar: '/login',
+         en: '/login'
+      },
+      'auth/login-email': {
+         ar: '/login-email',
+         en: '/login-email'
+      },
+      'auth/register': {
+         ar: '/register',
+         en: '/register'
+      },
+      'auth/phone-confirm': {
+         ar: '/phone-confirm',
+         en: '/phone-confirm'
+      },
+      'auth/forgot-password': {
+         ar: '/forgot-password',
+         en: '/forgot-password'
+      },
     },
     baseUrl:process.env.NUXT_BASE_URL,
     vueI18n: './i18n.config.ts',

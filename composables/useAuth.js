@@ -126,7 +126,7 @@ export function useAuth() {
         return []
       } finally {
         removeUser()
-        window.location.pathname = nuxt.$localePath('/auth/login-phone')
+        window.location.pathname = nuxt.$localePath('/login')
       }
     }
   }

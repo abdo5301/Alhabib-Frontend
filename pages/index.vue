@@ -16,13 +16,13 @@
     <LazyHomeProductSection v-if="home_data.master_products && home_data.master_products.length > 0"
       v-for="products, index in home_data.master_products" :key="index" :products="products.data"
       class="pb-20 lg:pt-6 empty:hidden">{{ products.title }}</LazyHomeProductSection>
+    <LazyHomeCustomerImageSlider v-if="home_data.customer_images" />
     <LazyHomeBlogBanner v-if="home_data.blog && home_data.blog.topics && home_data.blog.topics.length > 0"
       :blog_data="home_data.blog">{{ $t('home_blog_banner_title') }}</LazyHomeBlogBanner>
-    <LazyHomeCustomerImageSlider v-if="home_data.customer_images" />
     <LazyHomeBottomBanner
       v-if="home_data.bottom_banners && (home_data.bottom_banners[0].data.length > 0 || home_data.bottom_banners[1].data.length > 0)"
       :banner_data="home_data.bottom_banners" />
-    <HomeFeatureSection />
+    <LazyHomeFeatureSection />
   </div>
   </ClientOnly>
 </template>

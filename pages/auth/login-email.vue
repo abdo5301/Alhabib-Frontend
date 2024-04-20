@@ -13,7 +13,7 @@
       <form class="space-y-6 pt-14" action="#" @submit.prevent="login">
         <div class="relative border rounded-md box-border border-gray-300 space-y-6 pt-2 pb-7 pr-4 pl-6">
 
-          <NuxtLink :to="localePath('/auth/login-phone')"
+          <NuxtLink :to="localePath('/login')"
             class="absolute bg-white flex px-4 py-[7px] top-0 rtl:right-0 ltr:left-0 transform -translate-x-0 -translate-y-10">
             <span class="text-gray-500 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_phone') }}</span>
           </NuxtLink>
@@ -25,7 +25,7 @@
           <Alert class="h-[29px] flex items-center" color="red" v-if="login_error" :alert_icon="true">
             <span v-if="login_error == 'validation_login'">
               {{ $t('validation_login_email_1') }}
-              <NuxtLink :to="localePath('/auth/register')" class="font-bold inline-flex items-center gap-1">
+              <NuxtLink :to="localePath('/register')" class="font-bold inline-flex items-center gap-1">
                 {{ $t('validation_login_email_2') }}
                 <svg class="ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13"
                   fill="none">
@@ -58,7 +58,7 @@
                   $t('label_remember') }}</label>
             </div>
             <div class="text-sm">
-              <NuxtLink :to="localePath('/auth/forgot-password')"
+              <NuxtLink :to="localePath('/forgot-password')"
                 class="font-bold text-xs text-gray-900 hover:text-gray-600">{{ $t('forget_password_link') }}</NuxtLink>
             </div>
           </div>
@@ -69,7 +69,7 @@
         <div class="flex items-center mt-1">
           <div class="text-xs text-gray-900">
             <span>{{ $t('register_link_1') }}</span>&nbsp;
-            <NuxtLink :to="localePath('/auth/register')" class="font-bold  hover:text-gray-600 inline-block">
+            <NuxtLink :to="localePath('/register')" class="font-bold  hover:text-gray-600 inline-block">
               {{ $t('register_link_2') }}
               <ArrowRightIcon v-if="$lang.dir == 'ltr'" class="h-4 w-4 text-gray-900 inline-block" />
               <ArrowLeftIcon v-else class="h-4 w-4 text-gray-900 inline-block" />

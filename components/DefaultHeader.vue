@@ -1,6 +1,6 @@
 <style scoped>
 .default_header {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.901) 50%, rgba(255, 255, 255, 0.00) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76) 50%, rgba(255, 255, 255, 0.00) 100%);
 }
 
 .fixed_header {
@@ -85,7 +85,7 @@
             <div class="flex  items-center justify-end gap-1 flex-1 flex-row w-1/3">
               <!-- User -->
               <div class="flex">
-                <NuxtLink :to="localePath('/auth/login-phone')" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
+                <NuxtLink :to="localePath('/login')" class="p-1 lg:p-2 text-gray-900 hover:text-gray-500">
                   <span class="sr-only">User</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                     <path
