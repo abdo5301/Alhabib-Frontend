@@ -96,9 +96,9 @@
   "category_sorting_sales":"الاكثر مبيعًا حديثًا",
   "category_load_more_btn":"عرض المزيد",
   "product_color_title":"اللون : ",
-  "product_size_title":"المقاس",
+  "product_size_title":"خيارات المنتج",
   "product_size_modal_link":"كيف اقيس سريري؟",
-  "product_size_menu_title":"اختر المقاس",
+  "product_size_menu_title":"حدد خيار",
   "product_size_stock_alert":"نفذت الكمية",
   "product_stock_notify_button":"نبهني عند التوفر",
   "product_stock_notify_button_disabled":"سيصلك تنبيه عند التوفر",
@@ -275,6 +275,7 @@
   "order_complete_date_notes":"تم تسليمه في ",
   "order_return_btn":"إسترجاع منتج",
   "order_product_evaluation_btn":"تقييم المنتجات",
+  "order_product_rating_btn":"تقييم المنتج",
   "order_details_title":"تفاصيل الطلب",
   "order_status_title":"حالة الطلب",
   "shipping_company_title":"شركة الشحن",
@@ -300,5 +301,9 @@
   "text_unsubscribe_success":"تم الغاء الاشتراك بنجاح ",
   "text_active_discount_code":" كود الخصم الفعال",
   "blog_title":"المدونة",
-  "btn_read_more":"إقرأ اكثر"
+  "btn_read_more":"إقرأ اكثر",
+  "text_review_content_placeholder":"اكتب مراجعتك للمنتج هنا! ",
+  "text_review_title_ask":"مامدى رضاك عن هذا المنتج؟",
+  "text_rating_success_1":"رأيك محط اهتمامنا!",
+  "text_rating_success_2":"شكرًا لطلبك من مفارش الحبيب"
 }

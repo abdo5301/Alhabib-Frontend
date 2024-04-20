@@ -52,11 +52,14 @@
 
       <div class="flex h-full ">
         <span class="h-3/4 w-[0.5px] bg-[#9CA3AF] mx-[60px]" aria-hidden="true" />
-        <NuxtLink :to="localePath('/' + category.slug)">
-          <img v-if="category.image" :src="category.image.url" class="h-[258px] w-[504px]">
-          <img v-else :src="'https://via.placeholder.com/640x480.png/c2c2c?text=' + category.name"
-            class="h-[258px] w-[504px]">
+        <ClientOnly>
+          <NuxtLink :to="localePath('/' + category.slug)">
+          <img v-if="category.image" :src="category.image" class="h-[258px] w-[504px]">
+          <img v-else src="/images/placeholder-logo.png"
+            class="h-[258px] w-[504px] object-cover">
         </NuxtLink>
+        </ClientOnly>
+        
       </div>
     </div>
   </div>

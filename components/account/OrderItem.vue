@@ -126,7 +126,7 @@
         </NuxtLink>
       </div>
       <!-- Mobile Complete Actions -->
-      <div v-if="item_status == 'complete'"
+      <div v-if="item_status == 'completed'"
         class="flex lg:hidden flex-col lg:flex-row justify-end items-center gap-3 lg:gap-[17px] ms-1">
         <NuxtLink :to="localePath('/account/return/' + item_id)"
           class="flex justify-center items-center lg:gap-2 gap-1 w-[62px] h-[25px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm lg:rounded-md rounded ring-1 ring-gray-300">
@@ -163,7 +163,7 @@
       </div>
     </div>
     <!-- Desktop Complete Actions -->
-    <div v-if="item_status == 'complete'"
+    <div v-if="item_status == 'completed'"
       class="hidden lg:flex flex-col lg:flex-row justify-end items-center gap-3 lg:gap-[17px]">
       <NuxtLink :to="localePath('/account/return/' + item_id)"
         class="flex justify-center items-center gap-2 w-[100px] h-[28px] lg:w-[150px] lg:h-[34px] bg-white shadow-sm rounded-md ring-1 ring-gray-300">

@@ -35,7 +35,7 @@
       <!-- Options -->
       <div class="flex lg:flex-row flex-col lg:gap-12 gap-2" v-if="product.variation_option">
         <div class="lg:min-w-[148px] lg:max-w-full max-w-[100px]">
-          <label class="block pb-1 text-xs font-normal text-gray-900 leading-5">{{ $t('label_size') }}</label>
+          <label class="block pb-1 text-xs font-normal text-gray-900 leading-5">{{ $t('product_size_title') }}</label>
           <select
             class="bg-white cursor-pointer lg:min-w-[190px] min-w-[140px] border flex items-center justify-between border-gray-300 text-gray-900 text-xs font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-full px-3">
             <option :value="product.variation_option.id" selected>

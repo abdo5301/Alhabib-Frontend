@@ -1,8 +1,12 @@
 <template>
-  <div>
+  <div v-if="data_loader" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
+    <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
+  </div>
+  <div v-show="!data_loader">
     <ClientOnly>
       <Title>{{ product_data.name }} | {{ website_name }}</Title>
-      <Breadcrumb class="lg:pb-[80px] pb-6" :current="product_data.name" :pages=breadcrumb></Breadcrumb>
+      <Breadcrumb v-show="!data_loader" class="lg:pb-[80px] pb-6" :current="product_data.name" :pages=breadcrumb>
+      </Breadcrumb>
     </ClientOnly>
     <ClientOnly>
       <div
@@ -79,12 +83,12 @@
               :options="product_data.products" @update-option-value="getSelectedOption" />
           </ClientOnly>
           <!-- Add Cart or Stock Alert -->
-          <div class="w-full gap-2 lg:gap-5 relative py-4 flex justify-between items-center">
+          <div v-show="!data_loader" class="w-full gap-2 lg:gap-5 relative py-4 flex justify-between items-center">
             <!-- Out stock btn -->
             <button type="button" v-show="out_stock" id="stockNotifyAlertButton" data-dropdown-placement="bottom"
               data-dropdown-offset-skidding="0" data-dropdown-toggle="stockNotifyAlert" @click="outStockNotify"
               :disabled="disable_out_stock_btn"
-              class="flex lg:gap-8 gap-6 items-center justify-center lg:h-12 h-[52px] bg-black rounded-md lg:w-[498px] w-[315px] text-white lg:text-2xl text-sm leading-5 lg:font-bold font-semibold disabled:bg-gray-600 disabled:cursor-not-allowed">
+              class="flex flex-1 lg:gap-8 gap-6 items-center justify-center lg:h-12 h-[52px] bg-black rounded-md lg:w-[498px] w-[315px] text-white lg:text-2xl text-sm leading-5 lg:font-bold font-semibold disabled:bg-gray-600 disabled:cursor-not-allowed">
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="31" viewBox="0 0 30 31" fill="none">
                 <path
                   d="M5 21.8965H11.25H18.75H25L23.2438 20.1403C22.7676 19.6641 22.5 19.0181 22.5 18.3445V14.3965C22.5 11.1309 20.413 8.35284 17.5 7.32325V6.89648C17.5 5.51577 16.3807 4.39648 15 4.39648C13.6193 4.39648 12.5 5.51577 12.5 6.89648V7.32325C9.58702 8.35284 7.5 11.1309 7.5 14.3965V18.3445C7.5 19.0181 7.23243 19.6641 6.75617 20.1403L5 21.8965Z"
@@ -104,8 +108,8 @@
               </button>
             </ClientOnly>
             <!-- favorite -->
-            <button type="button" @click="toggleFavoriteCall()" data-dropdown-toggle="favoriteAlert"
-              :data-dropdown-placement="lang.dir == 'rtl' ? 'right' : 'left'"
+            <button v-show="!data_loader" type="button" @click="toggleFavoriteCall()"
+              data-dropdown-toggle="favoriteAlert" :data-dropdown-placement="lang.dir == 'rtl' ? 'right' : 'left'"
               class="w-14 lg:h-12 h-[52px] flex justify-center items-center flex-shrink-0 rounded-md ring-1 ring-gray-400 bg-white">
               <ClientOnly>
                 <svg v-if="favorite" xmlns="http://www.w3.org/2000/svg" width="42" height="43" viewBox="0 0 42 43"
@@ -155,11 +159,11 @@
         </div>
 
       </div>
-
-      <div class="w-full flex justify-center items-center mb-6 lg:px-[70px] px-6">
-        <span class="bg-gray-400 w-full h-[1px]"></span>
-      </div>
-
+      <ClientOnly>
+        <div v-show="!data_loader" class="w-full flex justify-center items-center mb-6 lg:px-[70px] px-6">
+          <span class="bg-gray-400 w-full h-[1px]"></span>
+        </div>
+      </ClientOnly>
       <div class="w-full lg:pb-20 pb-8 lg:mt-16 mt-6 lg:px-[70px] px-6 flex flex-col justify-start lg:gap-14 gap-6">
         <LazyProductRelatedProducts v-for="related_products in product_data.related_products"
           :products="related_products.master_products">{{ related_products.title }}</LazyProductRelatedProducts>
