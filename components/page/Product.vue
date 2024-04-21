@@ -53,7 +53,7 @@
 
             <!-- Colors -->
             <div v-if="product_data.color">
-              <h4 class="pb-2 text-gray-900 text-lg font-bold leading-5">
+              <h4 class="pb-2 text-gray-900 text-base lg:text-lg font-bold leading-5 lg:leading-5">
                 {{ $t('product_color_title') }} {{ product_data.color.name }}
               </h4>
               <div
@@ -77,6 +77,11 @@
                   </span>
                 </NuxtLink>
               </div>
+            </div>
+            <!-- SKU -->
+            <div
+              class="flex justify-start items-center gap-2 text-gray-900 text-base lg:text-lg font-bold leading-5 lg:leading-5">
+              <span>SKU:</span> <span>{{ product_sku }}</span>
             </div>
             <!-- Size -->
             <ProductOptionsSection v-if="product_data.products && product_data.products.length > 0"
@@ -214,6 +219,7 @@ const selected_option = ref({})
 const price = ref(null)
 const discount_price = ref(null)
 const favorite = ref(false)
+const product_sku = ref(null)
 const product_images = ref([])
 const product_videos = ref([])
 const breadcrumb = ref([])
@@ -280,6 +286,9 @@ onMounted(async () => {
     if (product_data.value.media && product_data.value.media.videos && product_data.value.media.videos.length) {
       product_videos.value = product_videos.value.concat(product_data.value.media.videos)
     }
+    if (product_data.value.products && product_data.value.products.length > 0) {
+      product_sku.value = product_data.value.products[0].sku
+    }
   } else {
     throw createError({
       statusCode: 404,
@@ -287,8 +296,6 @@ onMounted(async () => {
       fatal: true
     })
   }
-
-
 
   // Tabby 
   new TabbyPromo({
@@ -308,6 +315,9 @@ onMounted(async () => {
 function getSelectedOption(option_data) {
   selected_option.value = option_data
   out_stock_btn.value = t('product_stock_notify_button')
+  if (selected_option.value.sku) {
+    product_sku.value = selected_option.value.sku
+  }
   if (selected_option.value.price) {
     price.value = priceFormate(selected_option.value.price)
   }
