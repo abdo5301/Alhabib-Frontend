@@ -88,6 +88,9 @@ export default defineNuxtConfig({
       BASE_URL: process.env.NUXT_BASE_URL,
       TAPPY_PUBLIC_KEY: process.env.NUXT_TAPPY_PUBLIC_KEY,//tabby p_k
       TAPPY_SECRET_KEY: process.env.NUXT_TAPPY_SECRET_KEY,//tabby s_k
+      TAMARA_API_TOKEN: process.env.NUXT_TAMARA_API_TOKEN,
+      TAMARA_NOTIFICATION_TOKEN: process.env.NUXT_TAMARA_NOTIFICATION_TOKEN,
+
     }
   },
 
@@ -98,6 +101,9 @@ export default defineNuxtConfig({
    routeRules:{
     '/tabby/**': {
       proxy:'https://api.tabby.ai/**'
+    },
+    '/api/**': {
+      proxy: process.env.NUXT_API_URL+'/**'
     }
    },
   devtools: {

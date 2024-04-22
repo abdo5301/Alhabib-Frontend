@@ -39,6 +39,7 @@ useHead({
   ],
   script: [
     { src: "https://checkout.tabby.ai/tabby-promo.js" },
+    // { src: "https://cdn.tamara.co/widget/product-widget.min.js" },
     { src: "https://www.googletagmanager.com/gtag/js?id=G-X65QTT0G8K", async: true }],
 })
 

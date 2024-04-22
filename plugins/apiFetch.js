@@ -1,5 +1,4 @@
 export default defineNuxtPlugin(async nuxtApp => {
-  const config = useRuntimeConfig()
   const headers = new Headers()
   headers.append('Content-Type', 'application/json')
   headers.append('Accept', 'application/json')
@@ -12,7 +11,7 @@ export default defineNuxtPlugin(async nuxtApp => {
   nuxtApp.provide(
     'apiFetch',
     $fetch.create({
-      baseURL: config.public.API_URL,
+      baseURL: '/api',
       headers: headers ,
     })
   )

@@ -91,7 +91,7 @@
 
     <!-- Order Submit -->
     <button v-if='!selectedApplePayMethod' id='order-save-btn'
-      :disabled='!payment_method_id || disable_checkout || submit_loading' @click="submitOrder(),submit_loading = true"
+      :disabled='!payment_method_id || disable_checkout || submit_loading' @click="submitOrder(), submit_loading = true"
       class='w-full rounded-md shadow bg-gray-900 h-[50px] flex justify-center items-center text-white font-semibold text-base disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'>
       {{ $t('confirm_order_btn') }}
     </button>
@@ -289,6 +289,28 @@ let pay = async applePayToken => {
   }
 }
 
+//Tamara Session
+async function createTamaraSession() {
+  var new_order_data = {
+    address_id: props.address_id,
+    payment_gateway_id: payment_method_id.value,
+    gifted: "0",
+    gift_phrase: ""
+  }
+  const create_tamara_order = await addOrder(new_order_data)
+  if (!create_tamara_order || !create_tamara_order.id) {
+    return;
+  }
+  const tamara_order_data = await getOrder(create_tamara_order.id)
+  if (!tabby_order_data || !tabby_order_data.id) {
+    return;
+  }
+  setSuccessOrderId(tamara_order_data.id)
+
+  const tamara_order_items = []
+
+}
+
 //Tabby Session
 async function createTabbySession() {
   var new_order_data = {
@@ -410,11 +432,13 @@ async function createTabbySession() {
 
 async function submitOrder() {
   if (props.disable_checkout == false) {
-    if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
+    if (payment_method_code.value == 'tamarapay') { //If Tamara payment
+      alert('Tamara Is Not Available Now !')
+    } else if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
       if (!tabby_session.value || !tabby_session.value.length) {
         await createTabbySession()
       }
-      console.log(tabby_session.value)
+      //console.log(tabby_session.value)
       if (tabby_session.value && tabby_session.value.payment) {
         setSuccessOrderId(tabby_session.value.payment.order.reference_id)
         if (tabby_session.value.status == "created") {
@@ -432,7 +456,6 @@ async function submitOrder() {
           console.log(tabby_error)
         }
       }
-
     } else { //Any payment else
       emits('submit', payment_method_id.value)
     }

@@ -50,7 +50,11 @@
             <!-- Tabby -->
             <div id="tabbyPromo" class="!w-full font-semibold flex rounded-md flex-shrink-0">
             </div>
-
+            <!-- Tamara -->
+            <!-- <div id="tamara-product-widget" class="tamara-product-widget w-full font-semibold !font-sans rounded-md" :data-lang="lang.code" :data-price="price"
+              data-currency="SAR" data-country-code="sa" data-payment-type="installment" data-number-of-installments="4"
+              data-installment-minimum-amount="100" data-disable-paylater="true">
+            </div> -->
             <!-- Colors -->
             <div v-if="product_data.color">
               <h4 class="pb-2 text-gray-900 text-base lg:text-lg font-bold leading-5 lg:leading-5">
@@ -308,6 +312,25 @@ onMounted(async () => {
     publicKey: 'pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d',// required
     merchantCode: 'tabby'// required
   });
+
+  //Tamara
+  // window.tamara = [];
+  // window.langCode = lang.code;
+  // window.tamara.currencyCode = "SAR";
+  // window.checkTamaraProductWidgetCount = 0;
+  // window.tamara.widgetPublicKey = "";
+  // document.getElementById("tamara-product-widget").setAttribute("data-lang", lang.code);
+  // var existTamaraProductWidget = setInterval(function () {
+  //   if (window.TamaraProductWidget) {
+  //     window.TamaraProductWidget.init({ lang: window.tamara.langCode, currency: window.tamara.currencyCode });
+  //     window.TamaraProductWidget.render();
+  //     clearInterval(existTamaraProductWidget);
+  //   }
+  //   window.checkTamaraProductWidgetCount += 1;
+  //   if (window.checkTamaraProductWidgetCount > 33) {
+  //     clearInterval(existTamaraProductWidget);
+  //   }
+  // }, 300);
 
   data_loader.value = false
 })
