@@ -418,6 +418,7 @@ async function createTabbySession() {
     }
   }
   try {
+    console.table(tabby_session_data);
     tabby_session.value = await $fetch('/tabby/api/v2/checkout', {
       method: 'POST',
       body: tabby_session_data,
