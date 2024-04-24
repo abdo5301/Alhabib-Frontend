@@ -88,9 +88,9 @@ export default defineNuxtConfig({
       BASE_URL: process.env.NUXT_BASE_URL,
       TAPPY_PUBLIC_KEY: process.env.NUXT_TAPPY_PUBLIC_KEY,//tabby p_k
       TAPPY_SECRET_KEY: process.env.NUXT_TAPPY_SECRET_KEY,//tabby s_k
+      TAMARA_ENV: process.env.NUXT_TAMARA_ENV,
       TAMARA_API_TOKEN: process.env.NUXT_TAMARA_API_TOKEN,
       TAMARA_NOTIFICATION_TOKEN: process.env.NUXT_TAMARA_NOTIFICATION_TOKEN,
-
     }
   },
 

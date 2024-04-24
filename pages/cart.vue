@@ -1,7 +1,7 @@
 <template>
   <Title>{{ $t('cart_title') }} | {{ website_name }}</Title>
   <div v-if="data_loader" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
-    <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[110px]" />
+    <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
   </div>
   <div v-show="!data_loader" :class="[favorite_products.data && favorite_products.data.length ? 'pb-[104px]' : '']">
     <ClientOnly>
@@ -11,7 +11,7 @@
       </CartPageEmpty>
 
       <!-- Cart Content -->
-      <div v-else class="flex flex-col lg:flex-row gap-[10px] justify-start px-[9px] lg:px-0 lg:rtl:pr-7 lg:ltr:pl-7">
+      <div v-else class="flex flex-col lg:flex-row gap-[10px] justify-start px-[9px] lg:px-0 lg:ps-7">
 
         <!-- Cart Items -->
         <div class="flex flex-1 flex-col">
@@ -21,13 +21,14 @@
           <div v-if="cartItems && cartItems.length > 0"
             class="w-full lg:bg-gray-50 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow no-scrollbar my-5 lg:my-10 lg:px-0 px-[6px] lg:py-0 py-5 flex flex-col justify-start items-start gap-6 lg:gap-10 lg:max-h-[800px] overflow-hidden hover:overflow-y-auto">
             <CartPageProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item"
-              :last_item="index + 1 == cartItems.length" @product-has-error="disable_checkout = true" @refresh-cart="resetTotals()" @empty-cart="reloadNuxtApp()"/>
+              :last_item="index + 1 == cartItems.length" @product-has-error="disable_checkout = true"
+              @refresh-cart="resetTotals()" @empty-cart="reloadNuxtApp()" />
           </div>
         </div>
 
         <!-- Cart Totals -->
         <div
-          class="lg:w-[602px] w-full lg:bg-gray-100 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow flex-shrink-0 h-auto">
+          class="lg:!w-[602px] w-full lg:bg-gray-100 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow flex-shrink-0 h-auto">
           <div class="lg:pt-[120px] p-5 w-full flex flex-col gap-6 lg:gap-8 lg:px-14">
             <!-- Title -->
             <h4
@@ -36,11 +37,17 @@
             </h4>
 
             <!-- Totals -->
-            <CartPageTotals :totals="cartTotals"  :key="totals_key" />
+            <CartPageTotals :totals="cartTotals" :key="totals_key" />
             <!-- Tamara -->
 
             <!-- Tabby -->
             <div id="tabbyPromo"></div>
+            <!-- Tamara -->
+            <div id="tamara-product-widget" class="tamara-product-widget font-semibold !font-sans rounded-md"
+              :data-lang="lang.code" :data-price="cartTotal" data-currency="SAR" data-country-code="sa"
+              data-payment-type="installment" data-number-of-installments="4" data-installment-minimum-amount="100"
+              data-disable-paylater="true">
+            </div>
             <!-- Free Shipping Alert -->
             <div
               class="bg-green-50 text-green-800 rounded-lg h-10 w-full flex items-center justify-center flex-shrink-0 lg:text-base text-sm leading-5 font-semibold">
@@ -125,6 +132,25 @@ onMounted(async () => {
     publicKey: 'pk_test_d8638745-5fe7-4236-aacf-db9b16e0683d',// required
     merchantCode: 'tabby'// required
   });
+
+  //Tamara
+  // window.tamara = [];
+  // window.langCode = lang.code;
+  // window.tamara.currencyCode = "SAR";
+  // window.checkTamaraProductWidgetCount = 0;
+  // window.tamara.widgetPublicKey = "";
+  // var existTamaraProductWidget = setInterval(function () {
+  //   if (window.TamaraProductWidget) {
+  //     window.TamaraProductWidget.init({ lang: window.tamara.langCode, currency: window.tamara.currencyCode });
+  //     window.TamaraProductWidget.render();
+  //     clearInterval(existTamaraProductWidget);
+  //   }
+  //   window.checkTamaraProductWidgetCount += 1;
+  //   if (window.checkTamaraProductWidgetCount > 33) {
+  //     clearInterval(existTamaraProductWidget);
+  //   }
+  // }, 300);
+ 
   data_loader.value = false
 
   //Favorites

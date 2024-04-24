@@ -6,7 +6,7 @@
       </h1>
       <div class="container relative flex flex-col lg:flex-row justify-start mx-auto mb-24 bg-[#fff]">
         <div class="flex flex-shrink-0 font-semibold justify-start">
-          <img v-if="blog_data.image" :src="blog_data.image.url" class="flex-shrink-0 lg:w-[563px] w-full h-full"
+          <img v-if="blog_data.image" :src="blog_data.image" class="flex-shrink-0 lg:w-[563px] w-full h-full"
             alt="Blog">
           <img v-else src="/images/bedding-202.png" class="flex-shrink-0 lg:w-[563px] w-full h-full" alt="Blog">
         </div>
