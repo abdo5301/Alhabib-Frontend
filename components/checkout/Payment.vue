@@ -144,6 +144,12 @@ const tabby_session = ref({})
 const tabby_pay_id = ref(0)
 const tabby_pay_url = ref('')
 
+//Tamara
+const tamara_session = ref({})
+const tamara_pay_id = ref(0)
+const tamara_order_id = ref(0)
+const tamara_pay_url = ref('')
+
 onMounted(async () => {
   const wallet_data = await getWalletData()
   if (wallet_data.id && wallet_data.credit) {
@@ -302,12 +308,93 @@ async function createTamaraSession() {
     return;
   }
   const tamara_order_data = await getOrder(create_tamara_order.id)
-  if (!tabby_order_data || !tabby_order_data.id) {
+  if (!tamara_order_data || !tamara_order_data.id) {
     return;
   }
-  setSuccessOrderId(tamara_order_data.id)
+
+  tamara_order_id.value = tamara_order_data.id
+  setSuccessOrderId(tamara_order_id.value)
 
   const tamara_order_items = []
+
+  tamara_order_data.order_items.forEach((item) => {
+    var new_tamara_item = {
+      "name": item.name,//required
+      "type": "Physical",//required
+      "reference_id": String(item.id),//required
+      "quantity": Number(item.quantity),//required
+      "sku": String(item.sku),//required
+      "item_url": config.public.BASE_URL + localePath("/product/" + item.id),
+      "image_url": item.image ? item.image : `${config.public.BASE_URL}/images/placeholder-logo.png`,
+      "unit_price": { amount: Number(priceFormate(item.total / item.quantity, false)), currency: 'SAR' },
+      "total_amount": { amount: Number(item.total), currency: 'SAR' },//required
+    }
+    tamara_order_items.push(new_tamara_item);
+  });
+
+  const tamara_session_data = JSON.stringify({
+    total_amount: { amount: Number(tamara_order_data.total), currency: 'SAR' },
+    shipping_amount: { amount: Number(tamara_order_data.shipping), currency: 'SAR' },
+    tax_amount: { amount: Number(tamara_order_data.tax), currency: 'SAR' },
+    order_reference_id: String(tamara_order_data.id),
+    order_number: String(tamara_order_data.id),
+    discount: tamara_order_data.discount_code ? { name: String(tamara_order_data.discount_code), amount: { amount: Number(tamara_order_data.discount), currency: 'SAR' } } : { name: 'Voucher A', amount: { amount: 0, currency: 'SAR' } },
+    items: tamara_order_items,
+    consumer: {
+      email: String(tamara_order_data.customer_email),
+      first_name: String(tamara_order_data.customer_name),
+      last_name: '.',
+      phone_number: String(tamara_order_data.customer_mobile)
+    },
+    country_code: 'SA',
+    description: 'Enter order description here.',
+    merchant_url: {
+      cancel: config.public.BASE_URL + localePath("/checkout/from-tamara"),
+      failure: config.public.BASE_URL + localePath("/checkout/from-tamara"),
+      success: config.public.BASE_URL + localePath("/checkout/success"),
+      notification: config.public.BASE_URL + localePath("/checkout/from-tamara")
+    },
+    payment_type: 'PAY_BY_INSTALMENTS',
+    instalments: 4,
+    billing_address: {
+      city: String(tamara_order_data.customer_city),
+      country_code: 'SA',
+      first_name: String(tamara_order_data.customer_name),
+      last_name: '.',
+      line1: String(tamara_order_data.customer_city + ',' + tamara_order_data.customer_street),
+      line2: 'string',
+      phone_number: String(tamara_order_data.customer_mobile),
+      region: String(tamara_order_data.customer_region),
+    },
+    shipping_address: {
+      city: String(tamara_order_data.customer_city),
+      country_code: 'SA',
+      first_name: String(tamara_order_data.customer_name),
+      last_name: '.',
+      line1: String(tamara_order_data.customer_city + ',' + tamara_order_data.customer_street),
+      line2: 'string',
+      phone_number: String(tamara_order_data.customer_mobile),
+      region: String(tamara_order_data.customer_region)
+    },
+    platform: 'platform name here',
+    is_mobile: true,
+    locale: 'ar_SA',
+  })
+
+  const tamara_api_url = config.public.TAMARA_ENV == 'test' ? 'https://api-sandbox.tamara.co/checkout' : 'https://api.tamara.co/checkout'
+  try {
+    tamara_session.value = await $fetch(tamara_api_url, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'authorization': 'Bearer ' + config.public.TAMARA_API_TOKEN
+      },
+      body: tamara_session_data
+    })
+  } catch (error) {
+    console.log(error.data)
+  }
 
 }
 
@@ -339,7 +426,7 @@ async function createTabbySession() {
       "discount_amount": "0",
       "category": String(item.category),//required
       "image_url": item.image ? item.image : "",
-      "product_url": localePath("/product/" + item.id),
+      "product_url": config.public.BASE_URL + localePath("/product/" + item.id),
       "gender": "Male",
       "color": "string",
       "product_material": "string",
@@ -412,7 +499,7 @@ async function createTabbySession() {
     "lang": lang.code,
     "merchant_code": "sa",
     "merchant_urls": {
-      "success": config.public.BASE_URL + localePath("/checkout/from-tabby"),
+      "success": config.public.BASE_URL + localePath("/checkout/success"),
       "cancel": config.public.BASE_URL + localePath("/checkout/from-tabby"),
       "failure": config.public.BASE_URL + localePath("/checkout/from-tabby"),
     }
@@ -433,28 +520,36 @@ async function createTabbySession() {
 async function submitOrder() {
   if (props.disable_checkout == false) {
     if (payment_method_code.value == 'tamarapay') { //If Tamara payment
-      alert('Tamara Is Not Available Now !')
+      if (!tamara_session.value || !tamara_session.value.length) {
+        await createTamaraSession()
+      }
+      if (tamara_session.value && tamara_session.value.status && tamara_session.value.status == "new" && tamara_order_id.value != 0) {
+        //console.log(tamara_session.value)
+        tamara_pay_url.value = tamara_session.value.checkout_url
+        tamara_pay_id.value = tamara_session.value.order_id
+        setSuccessOrderId(tamara_order_id.value)
+        localStorage.setItem('tamara_payment_id', tamara_pay_id.value)
+        return navigateTo(tamara_pay_url.value, {
+          external: true,
+        })
+      } else {
+        alert('Tamara Server Error Please Reload The Page!')
+      }
     } else if (payment_method_code.value == 'tabby_installments') { //If Tabby payment
       if (!tabby_session.value || !tabby_session.value.length) {
         await createTabbySession()
       }
-      //console.log(tabby_session.value)
-      if (tabby_session.value && tabby_session.value.payment) {
+      if (tabby_session.value && tabby_session.value.payment && tabby_session.value.status == "created") {
+        //console.log(tabby_session.value)
         setSuccessOrderId(tabby_session.value.payment.order.reference_id)
-        if (tabby_session.value.status == "created") {
-          tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
-          tabby_pay_id.value = tabby_session.value.payment.id
-          localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
-          return navigateTo(tabby_pay_url.value, {
-            external: true,
-          })
-        } else if (tabby_session.value.status == "authorized") {//success
-          return navigateTo(localePath("/checkout/success"))
-        } else {//expired or rejected or closed
-          await cancelOrder(tabby_session.value.payment.order.reference_id)
-          const tabby_error = tabby_session.value.configuration.products.installments[0].rejection_reason
-          console.log(tabby_error)
-        }
+        tabby_pay_url.value = tabby_session.value.configuration.available_products.installments[0].web_url
+        tabby_pay_id.value = tabby_session.value.payment.id
+        localStorage.setItem('tabby_payment_id', tabby_pay_id.value)
+        return navigateTo(tabby_pay_url.value, {
+          external: true,
+        })
+      } else {
+        alert('Tabby Server Error Please Reload The Page!')
       }
     } else { //Any payment else
       emits('submit', payment_method_id.value)

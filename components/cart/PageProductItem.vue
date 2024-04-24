@@ -65,11 +65,11 @@
             class="order-2 lg:order-1 text-gray-600 text-sm lg:text-base font-medium lg:font-semibold leading-6 lg:leading-7">
             {{ product.buyable_name }}
           </div>
-          <div class="order-1 lg:order-2 flex">
+          <div class="order-1 lg:order-2 flex flex-shrink-0">
             <!-- price -->
             <div class="flex-1 flex !leading-5 justify-start lg:pt-[2px]">
               <div class="inline-flex gap-1" v-if="product.discounted_price">
-                <span class="text-red-600 font-bold lg:text-base text-sm  !leading-5">{{
+                <span class="text-red-600 font-bold lg:text-base text-sm !leading-5">{{
                   priceFormate(product.discounted_price)
                 }}</span>
                 <span class="text-gray-900 font-normal line-through lg:text-base text-sm  !leading-5">{{

@@ -110,6 +110,8 @@ onMounted(async () => {
 
   //Empty saved tabby payment id
   localStorage.removeItem('tabby_payment_id')
+  //Empty saved tamara payment id
+  localStorage.removeItem('tamara_payment_id')
 
   data_loader.value = false
 })

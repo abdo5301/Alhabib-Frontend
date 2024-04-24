@@ -2,7 +2,7 @@
   <div  v-if="data_loader" class="flex items-center justify-center h-[900px] max-h-screen w-full mx-auto">
     <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
   </div>
-  <LazyHomeTopBanner v-show="!data_loader" v-if="home_data.top_banners" :banner_data="home_data.top_banners" />
+  <LazyHomeTopBanner v-show="!data_loader" :banner_data="home_data?.top_banners" />
   <ClientOnly>
   <div v-show="!data_loader">
     <LazyHomeSecondBanner v-if="home_data.ads_banners && home_data.ads_banners.length > 0"
