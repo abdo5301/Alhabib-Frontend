@@ -5,7 +5,7 @@
       class="items-center justify-between font-medium hidden w-full md:flex md:w-auto md:order-1 overflow-y-hidden overflow-x-hidden hover:overflow-x-auto pb-3 no-scrollbar">
       <ul class="flex gap-6 items-center justify-start font-sans-serif font-bold text-lg leading-[23px] ">
         <li class="min-w-max" v-for="category in menu_data.data" :key="category.id">
-          <NuxtLink to="javascript:void(0)" :data-popover-target="'desk-nav-category-' + category.id"
+          <NuxtLink :to="localePath('/' + category.slug)" :data-popover-target="'desk-nav-category-' + category.id"
             data-popover-offset="0" :id="category.id + '-link'" data-popover-placement="bottom"
             class="text-gray-900  pb-1 focus:border-b-2 focus:border-b-gray-400 text-center hover:border-b-2 hover:border-b-gray-400">
             {{ category.name }}
@@ -54,12 +54,11 @@
         <span class="h-3/4 w-[0.5px] bg-[#9CA3AF] mx-[60px]" aria-hidden="true" />
         <ClientOnly>
           <NuxtLink :to="localePath('/' + category.slug)">
-          <img v-if="category.image" :src="category.image" class="h-[258px] w-[504px]">
-          <img v-else src="/images/placeholder-logo.png"
-            class="h-[258px] w-[504px] object-cover">
-        </NuxtLink>
+            <NuxtImg v-if="category.image" loading="lazy" :src="category.image" width="504px" class="h-[258px] object-cover"/>
+            <NuxtImg v-else src="/images/placeholder-logo.png" loading="lazy" class="h-[258px] w-[504px] object-cover" />
+          </NuxtLink>
         </ClientOnly>
-        
+
       </div>
     </div>
   </div>

@@ -1,19 +1,19 @@
 <template>
-  <ClientOnly>
-    <div class="flex mx-auto container flex-col gap-7 justify-center items-center px-[22px] lg:px-[75px]">
+  <!-- <ClientOnly> -->
+    <div class="flex mx-auto container flex-col gap-7 lg:gap-8 justify-center items-center px-[22px] lg:px-[75px]">
       <h1 class="text-gray-700 text-[20px] lg:text-[34px] font-bold">
         <slot />
       </h1>
       <div class="container relative flex flex-col lg:flex-row justify-start mx-auto mb-24 bg-[#fff]">
         <div class="flex flex-shrink-0 font-semibold justify-start">
-          <img v-if="blog_data.image" :src="blog_data.image" class="flex-shrink-0 lg:w-[563px] w-full h-full"
-            alt="Blog">
-          <img v-else src="/images/bedding-202.png" class="flex-shrink-0 lg:w-[563px] w-full h-full" alt="Blog">
+          <NuxtImg v-if="blog_data.image" preload :src="blog_data.image" loading="lazy" width="300px" class="flex-shrink-0 lg:w-[563px] w-full h-full object-cover"
+            alt="Blog" />
+          <NuxtImg v-else src="/images/bedding-202.png" loading="lazy" width="300px" class="flex-shrink-0 lg:w-[563px] w-full h-full" alt="Blog" />
         </div>
         <ul v-if="blog_data.topics && blog_data.topics.length"
           class="flex flex-col pt-6 pb-16 lg:pt-[45px] gap-8 lg:gap-12 underline-offset-8 text-gray-600 lg:text-[#000] font-semibold text-base lg:text-2xl flex-1 w-full rtl:mr-5 ltr:ml-5 lg:rtl:mr-24 lg:ltr:ml-20">
           <li v-for="topic, index in blog_data.topics" :key="index" class="empty:hidden">
-            <NuxtLink v-if="index <= 4" :to="localPath('/blog/' + topic.id)" class="underline">{{ topic.title }}
+            <NuxtLink v-if="index <= 6" :to="localPath('/blog/' + topic.id)" class="underline">{{ topic.title }}
             </NuxtLink>
           </li>
         </ul>
@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-  </ClientOnly>
+  <!-- </ClientOnly> -->
 
 </template>
 

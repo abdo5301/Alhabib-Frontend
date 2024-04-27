@@ -1,6 +1,6 @@
 <template>
-  <div v-if="products.length > 0" class="flex mx-auto container flex-col justify-center items-center gap-7 px-[22px] lg:px-[75px]">
-    <h3 class="text-gray-700 text-xl lg:text-[34px] leading-4 font-bold lg:pb-12 pb-4">
+  <div v-if="products.length > 0" class="flex mx-auto container flex-col justify-center items-center gap-7 lg:gap-11 px-[22px] lg:px-[75px]">
+    <h3 class="text-gray-700 text-xl lg:text-[34px] leading-4 font-bold">
      <slot />
     </h3>
     <div 
