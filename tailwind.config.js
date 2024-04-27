@@ -16,7 +16,7 @@ module.exports = {
         'sans-serif': ['Cairo'],
         sans: ['Cairo'],
       },
-    },
+    }
   },
   corePlugins: {
     aspectRatio: false,

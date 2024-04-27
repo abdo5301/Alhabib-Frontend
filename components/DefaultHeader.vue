@@ -33,7 +33,7 @@
               <div class="hidden lg:flex lg:items-center">
                 <!-- Language -->
                 <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
-                  :title="locale.name"><img width="40" :src="locale.icon" :alt="locale.name"></a>
+                  :title="locale.name"><NuxtImg width="300px" class="w-10" preload loading="lazy" :src="locale.icon" :alt="locale.name" /></a>
                 <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[10px]" aria-hidden="true" />
                 <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
                   :title="locale.name">{{ locale.list_name }}</a>
@@ -99,7 +99,7 @@
               </div>
               <!-- Cart -->
               <div class="flex">
-                <NuxtLink to="javascript:void(0)" @click="cartDrawer.show()"
+                <button type="button" :title="$t('show_cart_title')" @click="cartDrawer.show()"
                   class="group -m-2 hidden lg:flex items-center p-1 lg:p-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24" fill="none">
                     <path
@@ -107,7 +107,7 @@
                       stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                   <span class="sr-only">items in cart, view bag</span>
-                </NuxtLink>
+                </button>
                 <NuxtLink :to="localePath('/cart')" class="group -m-2 lg:hidden flex items-center p-1 lg:p-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24" fill="none">
                     <path

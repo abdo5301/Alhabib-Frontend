@@ -38,8 +38,8 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
   script: [
-    { src: "https://checkout.tabby.ai/tabby-promo.js" },
-    { src: "https://cdn.tamara.co/widget/product-widget.min.js" },
+    { src: "https://checkout.tabby.ai/tabby-promo.js", defer: true },
+    // { src: "https://cdn.tamara.co/widget/product-widget.min.js", defer: true },
     { src: "https://www.googletagmanager.com/gtag/js?id=G-X65QTT0G8K", async: true }],
 })
 

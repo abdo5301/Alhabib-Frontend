@@ -2,8 +2,8 @@
   <div class="container w-full mx-auto  h-[281px] lg:h-[515px]">
     <!--  Single Image Banner -->
     <div v-if="banner_type == 'fixed'" class="w-full">
-      <img src="/images/banner/main-banner-1.jpg" alt="Alhabib"
-        class="absolute h-[282px] lg:h-[515px] mx-auto right-0 left-0 top-0 w-full">
+      <NuxtImg src="/images/banner/main-banner-1.jpg" alt="Alhabib-slider" loading="lazy" preload
+        class="absolute h-[282px] lg:h-[515px] mx-auto right-0 left-0 top-0 w-full" />
     </div>
 
     <div v-else-if="banner_type == 'slider'" id="default-carousel"
@@ -12,30 +12,34 @@
       <div class="relative h-full overflow-hidden">
         <!-- Item 1 -->
         <div class="transform ease-in-out h-full" data-carousel-item>
-          <img src="/images/banner/main-banner-1.jpg"
-            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="slider">
+          <NuxtImg src="/images/banner/main-banner-1.jpg" loading="lazy" preload
+            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="Alhabib-slider" />
         </div>
         <!-- Item 2 -->
         <div class="transform ease-in-out h-full" data-carousel-item>
-          <img src="/images/banner/main-banner-2.jpg"
-            class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="slider">
+          <NuxtImg src="/images/banner/main-banner-2.jpg" loading="lazy" preload
+            class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="Alhabib-slider" />
         </div>
       </div>
     </div>
 
-    <div v-else id="default-carousel"
-      class="absolute top-0 left-0 right-0  h-[282px] lg:h-[515px] w-full mx-auto" data-carousel="slide">
+    <div v-else id="default-carousel" class="absolute top-0 left-0 right-0  h-[282px] lg:h-[515px] w-full mx-auto"
+      data-carousel="slide">
       <!-- Carousel Banner -->
       <div class="relative h-full overflow-hidden">
         <!-- Item 1 -->
         <div class="transform ease-in-out h-full" data-carousel-item>
-          <img src="/images/banner/main-banner-1.jpg"
-            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="slider">
+          <NuxtImg src="/images/banner/main-banner-1.jpg" loading="lazy" preload
+            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
+            alt="Alhabib-slider" />
         </div>
         <!-- Item 2 -->
         <div class="transform ease-in-out h-full" data-carousel-item>
-          <img src="/images/banner/main-banner-2.jpg"
-            class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="slider">
+          <NuxtImg src="/images/banner/main-banner-2.jpg" loading="lazy" preload
+            class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
+            alt="Alhabib-slider" />
         </div>
       </div>
     </div>

@@ -164,7 +164,6 @@
                 :section_key="index + '-' + product_details.title" :description="product_details.description" />
             </ClientOnly>
           </div>
-
         </div>
 
       </div>

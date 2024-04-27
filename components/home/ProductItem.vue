@@ -1,10 +1,10 @@
 <template>
-  <ClientOnly>
+  
   <div class="flex flex-shrink-0 flex-col justify-start lg:w-[268px] w-[175px]">
     <NuxtLink :to="link" class="relative w-full">
-      <img class="w-full lg:h-[267px] h-[170px]"
-        :src="image != null ? image : '/images/placeholder-logo.png'">
-      <button @click.prevent="toggleFavoriteCall()"
+      <NuxtImg class="w-full lg:h-[267px] h-[170px]"
+        :src="image != null ? image : '/images/placeholder-logo.png'" :alt="name" loading="lazy"/>
+      <button @click.prevent="toggleFavoriteCall()" type="button" :title="$t('product_add_favorite_btn')"
         class="absolute bg-[#f9fafb9e] lg:p-2 p-1 rounded-full lg:bottom-[12px] bottom-[7px] lg:right-[12px] right-[10px] text-gray-700 text-base lg:text-xl font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" class="lg:w-[26px] w-5 h-5 lg:h-[26px] " viewBox="0 0 26 26"
           :fill="favorite ? '#A30000' : 'none'">
@@ -64,7 +64,7 @@
       </div>
     </div>
   </div>
-</ClientOnly>
+
 </template>
 
 
