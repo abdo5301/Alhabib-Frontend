@@ -51,9 +51,10 @@
             <div id="tabbyPromo" class="!w-full font-semibold flex rounded-md flex-shrink-0">
             </div>
             <!-- Tamara -->
-            <div id="tamara-product-widget" class="tamara-product-widget w-full font-semibold !font-sans rounded-md" :data-lang="lang.code" :data-price="price"
-              data-currency="SAR" data-country-code="sa" data-payment-type="installment" data-number-of-installments="4"
-              data-installment-minimum-amount="100" data-disable-paylater="true">
+            <div id="tamara-product-widget" class="tamara-product-widget w-full font-semibold !font-sans rounded-md"
+              :data-lang="lang.code" :data-price="price" data-currency="SAR" data-country-code="sa"
+              data-payment-type="installment" data-number-of-installments="4" data-installment-minimum-amount="100"
+              data-disable-paylater="true">
             </div>
             <!-- Colors -->
             <div v-if="product_data.color">
@@ -179,7 +180,7 @@
     </ClientOnly>
     <!-- Cart Popup Content -->
     <div id="add-cart-alert" aria-labelledby="add-cart-alert-label"
-      :class="[!isMobile ? '-translate-y-full' : 'translate-y-full', 'fixed rounded-t-md lg:rounded-t-none lg:top-0 bottom-0 rtl:left-0 ltr:right-0 z-[100] lg:w-[600px] w-full lg:min-h-[700px] min-h-[638px] lg:max-h-screen max-h-96  overflow-hidden hover:overflow-y-auto duration-700 transition-transform translate-x-1 bg-white']"
+      :class="[!isMobile ? '-translate-y-full' : 'translate-y-full', 'fixed rounded-t-md lg:rounded-t-none lg:top-0 bottom-0 rtl:left-0 ltr:right-0 z-[100] lg:w-[600px] lg:max-w-[600px] w-full lg:min-h-[700px] min-h-[638px] lg:max-h-screen max-h-96  overflow-hidden hover:overflow-y-auto duration-700 transition-transform translate-x-1 bg-white']"
       tabindex="-1">
       <ProductAddCartPopup :key="'add-cart-key-' + addCartKey" @hide-popup="addCartDrawer.hide()"
         :add_cart_data="addCartSuccess" />
@@ -213,6 +214,9 @@ const props = defineProps({
   url_data: {
     type: Object
   }
+})
+useHead({
+  script: [{ src: "https://cdn.tamara.co/widget/product-widget.min.js", defer: true }]
 })
 //Product data reference
 const url_product_id = props.url_data && props.url_data.slug ? props.url_data.slug : null
@@ -313,22 +317,22 @@ onMounted(async () => {
   });
 
   //Tamara
-  // window.tamara = [];
-  // window.langCode = lang.code;
-  // window.tamara.currencyCode = "SAR";
-  // window.checkTamaraProductWidgetCount = 0;
-  // window.tamara.widgetPublicKey = "";
-  // var existTamaraProductWidget = setInterval(function () {
-  //   if (window.TamaraProductWidget) {
-  //     window.TamaraProductWidget.init({ lang: window.tamara.langCode, currency: window.tamara.currencyCode });
-  //     window.TamaraProductWidget.render();
-  //     clearInterval(existTamaraProductWidget);
-  //   }
-  //   window.checkTamaraProductWidgetCount += 1;
-  //   if (window.checkTamaraProductWidgetCount > 33) {
-  //     clearInterval(existTamaraProductWidget);
-  //   }
-  // }, 300);
+  window.tamara = [];
+  window.langCode = lang.code;
+  window.tamara.currencyCode = "SAR";
+  window.checkTamaraProductWidgetCount = 0;
+  window.tamara.widgetPublicKey = "";
+  var existTamaraProductWidget = setInterval(function () {
+    if (window.TamaraProductWidget) {
+      window.TamaraProductWidget.init({ lang: window.tamara.langCode, currency: window.tamara.currencyCode });
+      window.TamaraProductWidget.render();
+      clearInterval(existTamaraProductWidget);
+    }
+    window.checkTamaraProductWidgetCount += 1;
+    if (window.checkTamaraProductWidgetCount > 33) {
+      clearInterval(existTamaraProductWidget);
+    }
+  }, 300);
 
   data_loader.value = false
 })

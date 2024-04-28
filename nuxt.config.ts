@@ -15,7 +15,8 @@ export default defineNuxtConfig({
     asyncEntry:true,
   },
   image: {
-    format: ['webp']
+    format: ['webp'],
+    quality: 80
   },
   primevue:{
     components:{
@@ -149,6 +150,6 @@ export default defineNuxtConfig({
     // }
    },
   devtools: {
-    enabled: true,
+    enabled: false,
   },
 })

@@ -111,6 +111,9 @@ const favorite_products = ref([])
 const data_loader = ref(true)
 const disable_checkout = ref(false)
 const totals_key = ref(123)
+useHead({
+  script: [{ src: "https://cdn.tamara.co/widget/product-widget.min.js", defer: true }]
+})
 onMounted(async () => {
   initFlowbite();
 
@@ -134,22 +137,22 @@ onMounted(async () => {
   });
 
   //Tamara
-  // window.tamara = [];
-  // window.langCode = lang.code;
-  // window.tamara.currencyCode = "SAR";
-  // window.checkTamaraProductWidgetCount = 0;
-  // window.tamara.widgetPublicKey = "";
-  // var existTamaraProductWidget = setInterval(function () {
-  //   if (window.TamaraProductWidget) {
-  //     window.TamaraProductWidget.init({ lang: window.tamara.langCode, currency: window.tamara.currencyCode });
-  //     window.TamaraProductWidget.render();
-  //     clearInterval(existTamaraProductWidget);
-  //   }
-  //   window.checkTamaraProductWidgetCount += 1;
-  //   if (window.checkTamaraProductWidgetCount > 33) {
-  //     clearInterval(existTamaraProductWidget);
-  //   }
-  // }, 300);
+  window.tamara = [];
+  window.langCode = lang.code;
+  window.tamara.currencyCode = "SAR";
+  window.checkTamaraProductWidgetCount = 0;
+  window.tamara.widgetPublicKey = "";
+  var existTamaraProductWidget = setInterval(function () {
+    if (window.TamaraProductWidget) {
+      window.TamaraProductWidget.init({ lang: window.tamara.langCode, currency: window.tamara.currencyCode });
+      window.TamaraProductWidget.render();
+      clearInterval(existTamaraProductWidget);
+    }
+    window.checkTamaraProductWidgetCount += 1;
+    if (window.checkTamaraProductWidgetCount > 33) {
+      clearInterval(existTamaraProductWidget);
+    }
+  }, 300);
  
   data_loader.value = false
 
