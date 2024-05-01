@@ -46,23 +46,7 @@
             </ul>
           </div>
           <div class="flex flex-col gap-4 w-44">
-            <h2 class="text-xl font-extrabold text-gray-600 uppercase">{{ $t('footer_branches_menu_title') }}</h2>
-            <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4">
-              <li>
-                <NuxtLink target="_blank" to="#" class="hover:underline text-sm">{{ $t('footer_branches_menu_1') }}
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink target="_blank"
-                  to="https://www.google.com/maps/place/Alhabib+Bedding/@24.7251951,46.7555043,17z/data=!3m1!4b1!4m6!3m5!1s0x3e2f0196e7c3760b:0x95c39d5c44dafd88!8m2!3d24.7251951!4d46.7555043!16s%2Fg%2F11jyx92rgs?hl=en-SA&shorturl=1&entry=tts&shorturl=1"
-                  class="hover:underline text-sm">{{ $t('footer_branches_menu_2') }}</NuxtLink>
-              </li>
-              <li>
-                <NuxtLink target="_blank"
-                  to="https://www.google.com/maps/place/%D9%85%D9%81%D8%A7%D8%B1%D8%B4+%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8+%7C+Alhabib+Bedding%E2%80%AD/@24.7253326,46.6876522,12z/data=!4m6!3m5!1s0x3e2efd776f821de9:0x2b0778664ce1a91a!8m2!3d24.8068988!4d46.7363265!16s%2Fg%2F11twz11nlv?hl=en-SA&coh=164777&shorturl=1&entry=tts&shorturl=1"
-                  class="hover:underline text-sm">{{ $t('footer_branches_menu_3') }}</NuxtLink>
-              </li>
-            </ul>
+            <NuxtLink :to="localePath('/branches-locations')" class="text-xl hover:underline  font-extrabold text-gray-600 uppercase">{{ $t('footer_branches_menu_title') }}</NuxtLink>
           </div>
           <div class="flex">
             <NuxtLink target="_blank" to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
@@ -229,39 +213,8 @@
             </div>
           </div>
           <div class="w-full flex flex-col items-center justify-center">
-            <button type="button"
-              class="flex items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600 transition duration-75 group"
-              aria-controls="dropdown-branches" data-collapse-toggle="dropdown-branches">
-              <span class="inline-block whitespace-nowrap flex-1 rtl:mr-[26px] ltr:ml-[26px]">{{
-                $t('footer_branches_menu_title') }}</span>
-              <span class="rtl:ml-4 ltr:mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" height="24" viewBox="0 0 20 24" fill="none">
-                  <path d="M16.5827 8.95001L11.155 15.47C10.514 16.24 9.46512 16.24 8.82413 15.47L3.39648 8.95001"
-                    stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg>
-              </span>
-            </button>
-            <div id="dropdown-branches" class="hidden pt-4">
-              <ul class="text-gray-600 font-normal text-sm flex flex-col gap-4 items-center">
-                <li>
-                  <NuxtLink to="#" target="_blank" class="hover:underline text-base">{{ $t('footer_branches_menu_1') }}
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink
-                    to="https://www.google.com/maps/place/Alhabib+Bedding/@24.7251951,46.7555043,17z/data=!3m1!4b1!4m6!3m5!1s0x3e2f0196e7c3760b:0x95c39d5c44dafd88!8m2!3d24.7251951!4d46.7555043!16s%2Fg%2F11jyx92rgs?hl=en-SA&shorturl=1&entry=tts&shorturl=1"
-                    target="_blank" class="hover:underline">{{ $t('footer_branches_menu_2') }}</NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink
-                    to="https://www.google.com/maps/place/%D9%85%D9%81%D8%A7%D8%B1%D8%B4+%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8+%7C+Alhabib+Bedding%E2%80%AD/@24.7253326,46.6876522,12z/data=!4m6!3m5!1s0x3e2efd776f821de9:0x2b0778664ce1a91a!8m2!3d24.8068988!4d46.7363265!16s%2Fg%2F11twz11nlv?hl=en-SA&coh=164777&shorturl=1&entry=tts&shorturl=1"
-                    target="_blank" class="hover:underline">{{ $t('footer_branches_menu_3') }}</NuxtLink>
-                </li>
-              </ul>
-            </div>
+            <NuxtLink :to="localePath('/branches-locations')" class="flex justify-center items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600">{{  $t('footer_branches_menu_title') }}</NuxtLink>
           </div>
-
         </div>
       </div>
 
