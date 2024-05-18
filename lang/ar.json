@@ -305,5 +305,8 @@
   "text_review_content_placeholder":"اكتب مراجعتك للمنتج هنا! ",
   "text_review_title_ask":"مامدى رضاك عن هذا المنتج؟",
   "text_rating_success_1":"رأيك محط اهتمامنا!",
-  "text_rating_success_2":"شكرًا لطلبك من مفارش الحبيب"
+  "text_rating_success_2":"شكرًا لطلبك من مفارش الحبيب",
+  "text_empty_return_orders":"ليس لديك أي طلبات استرجاع مفتوحة",
+  "text_Retrieval_ticket":"رقم تذكرة الاسترجاع",
+  "text_show_details":"عرض التفاصيل"
 }

@@ -303,5 +303,8 @@
   "text_review_content_placeholder":"Write your product review here!",
   "text_review_title_ask":"How satisfied are you with this product?",
   "text_rating_success_1":"Your opinion is our focus!",
-  "text_rating_success_2":"Thank you for ordering from Al Habib Bedding"
+  "text_rating_success_2":"Thank you for ordering from Al Habib Bedding",
+  "text_empty_return_orders":"You don't have any open return orders",
+  "text_Retrieval_ticket":"Retrieval ticket number",
+  "text_show_details":"Show Details"
 }

@@ -33,7 +33,9 @@
               <div class="hidden lg:flex lg:items-center">
                 <!-- Language -->
                 <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
-                  :title="locale.name"><NuxtImg width="300px" class="w-10" preload loading="lazy" :src="locale.icon" :alt="locale.name" /></a>
+                  :title="locale.name">
+                  <NuxtImg width="300px" class="w-10" preload loading="lazy" :src="locale.icon" :alt="locale.name" />
+                </a>
                 <span class="h-6 w-[0.5px] bg-[#4B5563] mx-[10px]" aria-hidden="true" />
                 <a v-for="locale in availableLocales" :key="locale.code" :href="switchLocalePath(locale.code)"
                   :title="locale.name">{{ locale.list_name }}</a>
@@ -192,8 +194,11 @@
           <!-- Search Item -->
           <NuxtLink v-for="(search_item, index) in search_result" :key="index" @click="search_popup.hide()"
             :to="localePath('/' + search_item.slug)"
-            class="flex justify-start items-center p-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-600 hover:text-white shadow-md">
-            {{ search_item.name }}
+            class="flex justify-between gap-2 items-center p-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-600 hover:text-white shadow-md">
+            <span class="text-sm lg:text-base">{{ search_item.name }}</span>
+            <NuxtImg :alt="search_item.name" loading="lazy" placeholder="/images/placeholder-logo.png" width="80"
+              class="w-[60px] lg:w-[80px] rounded-sm"
+              :src="search_item.media.images && search_item.media.images.length ? search_item.media.images[0].url : '/images/placeholder-logo.png'" />
           </NuxtLink>
         </div>
         <div v-if="!search_loader && search.length > 0 && search_result.length == 0"
@@ -279,6 +284,7 @@ const getSearch = debounce(async function (event) {
     try {
       const search_fetch_data = await useNuxtApp().$apiFetch('/search?query=' + search.value)
       search_result.value = search_fetch_data.data
+      console.log(search_result.value);
     } catch (error) {
       search_result.value = []
       console.log(error.data)

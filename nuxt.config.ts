@@ -4,7 +4,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
     'nuxt-lodash',
-    'nuxt-rating',
     'nuxt-primevue',
     'nuxt-aos',
     ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
@@ -21,12 +20,9 @@ export default defineNuxtConfig({
   primevue:{
     components:{
       prefix: 'Prime',
-      include: '*'
+      include: ['Carousel','Stepper','StepperPanel']
     },
     cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities',
-    options:{
-      ripple: true
-    }
   },
   aos: {
     // Global settings:
@@ -126,6 +122,7 @@ export default defineNuxtConfig({
     // Private config that is only available on the server
     //  baseUrl: '/api',
     // Config within public will be also exposed to the client
+    GTM_ID: process.env.NUXT_GTM_ID,
     public: {
       API_URL: process.env.NUXT_API_URL,
       BASE_URL: process.env.NUXT_BASE_URL,

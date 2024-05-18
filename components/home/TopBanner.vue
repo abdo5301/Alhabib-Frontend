@@ -29,7 +29,7 @@
       :value="[{ src: '/images/banner/main-banner-1.jpg' }, { src: '/images/banner/main-banner-2.jpg' }]"
       :numVisible="1" :num-scroll="1" circular :autoplayInterval="6000">
       <template #item="slotProps">
-        <NuxtImg :src="slotProps.data.src" loading="lazy" preload class="w-full lg:h-full h-[282px] object-cover" width="1920px" quality="80"
+        <NuxtPicture format="avif,webp" :src="slotProps.data.src" loading="lazy"  preload :imgAttrs="{class:'w-full lg:h-full h-[282px] object-cover'}" class="w-full lg:h-full h-[282px]" width="1920px" quality="80"
           alt="Alhabib-slider" />
       </template>
     </PrimeCarousel>
