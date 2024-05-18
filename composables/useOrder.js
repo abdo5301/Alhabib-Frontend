@@ -18,7 +18,7 @@ export function useOrder() {
           payment_gateway_id: data.payment_gateway_id,
           gifted: data.gifted,
           gift_phrase: data.gift_phrase,
-          source: "web",
+          source: 'web',
         },
       })
       if (add_order.data && add_order.status) {
@@ -164,6 +164,83 @@ export function useOrder() {
     }
   }
 
+  async function addReturnOrder(data) {
+    try {
+      const add_order = await useNuxtApp().$apiFetch('/customer/return-order/create', {
+        method: 'POST',
+        body: {
+          order_id: data.order_id,
+          order_items_ids: data.order_items_ids,
+          quantity: data.quantity,
+          opened: data.opened,
+          return_reason: data.return_reason,
+          intended: data.intended,
+          note: data.note,
+          image: data.image,
+        },
+      })
+      if (add_order.data && add_order.status) {
+        return add_order.data
+      }
+    } catch (error) {
+      console.log(error.data)
+      if (
+        error.data &&
+        error.data.message &&
+        error.data.message == 'Unauthenticated.'
+      ) {
+        unAuthenticated()
+      }
+      return []
+    }
+  }
+
+  async function getReturnOrder(return_order_id) {
+    if (process.client) {
+      try {
+        const order_data = await useNuxtApp().$apiFetch(
+          '/customer/return-order/get?return_order_id=' + return_order_id
+        )
+        if (order_data.data && order_data.status) {
+          return order_data.data
+        }
+      } catch (error) {
+        console.log(error.data)
+        if (
+          error.data &&
+          error.data.message &&
+          error.data.message == 'Unauthenticated.'
+        ) {
+          unAuthenticated()
+        }
+        return []
+      }
+    }
+  }
+
+  async function getReturnOrders() {
+    if (process.client) {
+      try {
+        const orders = await useNuxtApp().$apiFetch(
+          'customer/return-order/get-all'
+        )
+        if (orders.data) {
+          return orders.data
+        }
+      } catch (error) {
+        console.log(error.data)
+        if (
+          error.data &&
+          error.data.message &&
+          error.data.message == 'Unauthenticated.'
+        ) {
+          unAuthenticated()
+        }
+        return []
+      }
+    }
+  }
+
   return {
     successOrderId,
     setSuccessOrderId,
@@ -173,5 +250,8 @@ export function useOrder() {
     cancelOrder,
     saveOrderPayment,
     saveOrderAddress,
+    addReturnOrder,
+    getReturnOrder,
+    getReturnOrders
   }
 }

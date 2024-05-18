@@ -4,7 +4,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
     'nuxt-lodash',
-    'nuxt-rating',
     'nuxt-primevue',
     'nuxt-aos',
     ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
@@ -21,12 +20,9 @@ export default defineNuxtConfig({
   primevue:{
     components:{
       prefix: 'Prime',
-      include: '*'
+      include: ['Carousel','Stepper','StepperPanel']
     },
     cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities',
-    options:{
-      ripple: true
-    }
   },
   aos: {
     // Global settings:
