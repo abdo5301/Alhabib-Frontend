@@ -25,6 +25,7 @@ input[type='password'] {
 <script setup>
 const { $lang } = useNuxtApp()
 const config = useRuntimeConfig()
+const route = useRoute()
 const { t } = useI18n()
 const title = useState('website_name', () => t('company_name'));
 const localePath = useLocalePath()
@@ -38,6 +39,16 @@ useHead({
     class: 'h-full',
 
   },
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: config.public.BASE_URL + route.path,
+    },
+  ],
   script: [
     {
       hid: 'gtmHead',
@@ -57,5 +68,17 @@ useHead({
       tagPosition: 'bodyOpen',
     }
   ]
+})
+
+useSeoMeta({
+  title: 'مفارش الحبيب - صديق ثلث العمر | AlHabib Bedding',
+  ogTitle: 'مفارش الحبيب - صديق ثلث العمر | AlHabib Bedding',
+  description: 'أفضل متجر إلكتروني في السعودية مختص بـ المفارش الفندقية، الصيفية، الشتوية، العرائس، مفارش الأطفال والمواليد، مخدات طبية، لباد، بطانيات، مناشف وأرواب الحمام.',
+  ogDescription: 'أفضل متجر إلكتروني في السعودية مختص بـ المفارش الفندقية، الصيفية، الشتوية، العرائس، مفارش الأطفال والمواليد، مخدات طبية، لباد، بطانيات، مناشف وأرواب الحمام.',
+  keywords: 'مفارش,مفارش الحبيب,مفارش النوم,مفرش,ارواب,منشفة,بطانية شتوية,مفارش اطفال,موقع مفارش تركية,مفارش صيفي,مفرش سرير,مفرش مضغوط,مفرش مزدوج,مفارش صيفية,مفرش صيفي,مفرش فندقي,مفرش اطفال,وسادة,وسادة طبية,وسادة نوم,موقع وسادة,خداديات,لباد,لباد فندقي,لباد مفارش,لباد سرير,لباد نفر,مفارش فندقية,الحبيب مفارش,الحبيب للمفروشات,تطبيق مفارش الحبيب,مفارش الحبيب اون لاين,فروع مفارش الحبيب،مفارش الحبيب الرياض,متجر مفارش الحبيب,مفارش الحبيب لباد,كود خصم مفارش الحبيب',
+  ogImage: config.public.BASE_URL + '/images/placeholder-logo.png',
+  ogImageAlt: 'Alhabib Bedding',
+  ogUrl: config.public.BASE_URL,
+  ogType: "website"
 })
 </script>

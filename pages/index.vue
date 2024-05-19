@@ -8,7 +8,7 @@
       :banners="home_data.ads_banners" />
 
     <LazyHomeCategorySection data-aos="fade-down" v-if="home_data.categories && home_data.categories.length > 0"
-      v-for="category, index in home_data.categories" :key="index" :categories="category.data"
+      v-for="category, index in home_data.categories" :key="index" :categories="category.data" :first_item="index == 0"
       class="mb-[93px] empty:hidden">{{ category.title }}</LazyHomeCategorySection>
 
     <LazyHomeMiddleBanner

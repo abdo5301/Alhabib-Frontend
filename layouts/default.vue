@@ -37,6 +37,12 @@ useHead({
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
+  link: [
+    {
+      rel: 'canonical',
+      href: config.public.BASE_URL + route.path,
+    },
+  ],
   script: [
     { src: "https://checkout.tabby.ai/tabby-promo.js", defer: true },
     {
@@ -47,7 +53,7 @@ useHead({
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','${config.GTM_ID}');`,
-      tagPosition: 'head'
+      tagPosition: "head"
     }
   ],
   noscript: [
@@ -60,11 +66,14 @@ useHead({
 })
 
 useSeoMeta({
-  title: title.value,
-  ogTitle: title.value,
-  description: title.value,
-  ogDescription: title.value,
-  ogImage: config.public.BASE_URL + '/images/placeholder-log.png',
-  ogImageAlt: 'Alhabib-Bedding main page'
+  title: 'مفارش الحبيب - صديق ثلث العمر | AlHabib Bedding',
+  ogTitle: 'مفارش الحبيب - صديق ثلث العمر | AlHabib Bedding',
+  description: 'أفضل متجر إلكتروني في السعودية مختص بـ المفارش الفندقية، الصيفية، الشتوية، العرائس، مفارش الأطفال والمواليد، مخدات طبية، لباد، بطانيات، مناشف وأرواب الحمام.',
+  ogDescription: 'أفضل متجر إلكتروني في السعودية مختص بـ المفارش الفندقية، الصيفية، الشتوية، العرائس، مفارش الأطفال والمواليد، مخدات طبية، لباد، بطانيات، مناشف وأرواب الحمام.',
+  keywords: 'مفارش,مفارش الحبيب,مفارش النوم,مفرش,ارواب,منشفة,بطانية شتوية,مفارش اطفال,موقع مفارش تركية,مفارش صيفي,مفرش سرير,مفرش مضغوط,مفرش مزدوج,مفارش صيفية,مفرش صيفي,مفرش فندقي,مفرش اطفال,وسادة,وسادة طبية,وسادة نوم,موقع وسادة,خداديات,لباد,لباد فندقي,لباد مفارش,لباد سرير,لباد نفر,مفارش فندقية,الحبيب مفارش,الحبيب للمفروشات,تطبيق مفارش الحبيب,مفارش الحبيب اون لاين,فروع مفارش الحبيب،مفارش الحبيب الرياض,متجر مفارش الحبيب,مفارش الحبيب لباد,كود خصم مفارش الحبيب',
+  ogImage: config.public.BASE_URL + '/images/placeholder-logo.png',
+  ogImageAlt: 'Alhabib Bedding',
+  ogUrl: config.public.BASE_URL,
+  ogType: "website"
 })
 </script>

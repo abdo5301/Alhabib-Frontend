@@ -153,7 +153,7 @@ onMounted(async () => {
       clearInterval(existTamaraProductWidget);
     }
   }, 300);
- 
+
   data_loader.value = false
 
   //Favorites
@@ -165,6 +165,37 @@ onMounted(async () => {
   if (favorite_products_fetch.value.data) {
     favorite_products.value = favorite_products_fetch.value.data
   }
+
+  //for google analytics
+  if (typeof dataLayer !== "undefined") {
+    let gtm_cart_items = [];
+    cart_data.value.cart_items.forEach((item) => {
+      var new_cart_item = {
+        "name": item.product.buyable_en_name,
+        "id": String(item.product.id),
+        "price": Number(priceFormate(item.total, false)),
+        'brand': '',
+        'category': item.product.buyable_category_en_name,
+        'variant': '',
+        'dimension3': 'In Stock',
+        "quantity": Number(item.quantity),
+      }
+      gtm_cart_items.push(new_cart_item);
+    });
+    dataLayer.push({
+      'event': 'view_cart',
+      'eventCat': 'eCommerce',
+      'eventVal': +Number(priceFormate(cart_data.value.total, false)),
+      'ecommerce': {
+        'currencyCode': 'SAR',
+        'checkout': {
+          'actionField': { 'step': 0 },
+          'products': gtm_cart_items
+        }
+      }
+    });
+  }
+  //console.log(dataLayer);
 })
 function resetTotals() {
   totals_key.value += 11

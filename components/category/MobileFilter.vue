@@ -17,9 +17,9 @@
 
     <div class="w-full flex basis-full flex-col">
       <div class="flex items-center justify-start rtl:pl-[17px] ltr:pr-[17px] rtl:pr-8 ltr:pl-8 pt-9 pb-4">
-        <h5 class="flex flex-1 items-center justify-start text-gray-900 text-lg leading-5 font-bold">
+        <h3 class="flex flex-1 items-center justify-start text-gray-900 text-lg leading-5 font-bold">
           {{ $t('category_filter_title_mobile') }}
-        </h5>
+        </h3>
         <!--Reset Filter  -->
         <button @click.prevent="$emit('FilterReset')" class="text-gray-500 text-xs font-semibold leading-5">{{
           $t('category_filter_reset_mobile')

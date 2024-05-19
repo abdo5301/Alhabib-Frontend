@@ -1,5 +1,5 @@
 <template>
-  <Title>{{ category_title }} | {{ website_name }}</Title>
+  <Title>{{ category_meta_title }} | {{ website_name }}</Title>
   <div v-if="data_loader" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
     <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
   </div>
@@ -8,16 +8,16 @@
       <Breadcrumb class="pb-[40px]" :current="category_title" :pages=breadcrumb></Breadcrumb>
       <div class="px-[25px] lg:px-[68px]">
         <CategoryDescription v-if="category_top_title.length || category_top_content.length" :title="category_top_title"
-          :content="category_top_content" class="pt-4" />
+          :content="category_top_content" :h1="true" class="pt-4" />
         <CategorySubCategory v-if="sub_category.length" :categories="sub_category" class="lg:pt-[64px] pt-8" />
       </div>
       <!-- Filter start -->
       <div v-if="!isEmpty(sorting_data) || !isEmpty(filter_data)"
         class="bg-[#F3F4F6] lg:px-[68px] mb-[15px] border-t border-b h-[60px] border-gray-100 mt-[54px] hidden lg:flex items-center justify-start">
 
-        <h3 class="text-gray-700 font-bold text-base leading-5 rtl:pr-3 ltr:pl-3">
+        <h2 class="text-gray-700 font-bold text-base leading-5 rtl:pr-3 ltr:pl-3">
           {{ $t("category_filter_title") }}
-        </h3>
+        </h2>
         <span class="border-r-2 mx-[29px] border-gray-400 h-6"></span>
         <!-- filter selected tags -->
         <div
@@ -139,11 +139,24 @@ const products = ref([])
 const breadcrumb = ref([])
 const sub_category = ref([])
 const category_title = ref('')
+const category_image = ref('')
 const category_top_title = ref('')
 const category_top_content = ref('')
 const category_bottom_title = ref('')
 const category_bottom_content = ref('')
 
+//Meta Tags Reference
+const category_meta_title = ref('')
+const category_meta_description = ref('')
+const category_meta_keyword = ref('')
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: config.public.BASE_URL + localePath('/' + category_url_id),
+    },
+  ],
+})
 onMounted(async () => {
   initFlowbite();
   try {
@@ -166,12 +179,16 @@ onMounted(async () => {
       }
     ]
     category_title.value = category_data.value.data[0].category.name
+    category_image.value = category_data.value.data[0].category.image
     category_top_title.value = category_data.value.data[0].category.top_description.title ? category_data.value.data[0].category.top_description.title : '';
     category_top_content.value = category_data.value.data[0].category.top_description.details ? category_data.value.data[0].category.top_description.details : '';
     category_bottom_title.value = category_data.value.data[0].category.bottom_description.title ? category_data.value.data[0].category.bottom_description.title : '';
     category_bottom_content.value = category_data.value.data[0].category.bottom_description.details ? category_data.value.data[0].category.bottom_description.details : '';
     sub_category.value = category_data.value.data[0].category.subcategory && category_data.value.data[0].category.subcategory.length ? category_data.value.data[0].category.subcategory : []
 
+    category_meta_title.value = category_data.value.data[0].category.meta_title
+    category_meta_description.value = category_data.value.data[0].category.meta_description
+    category_meta_keyword.value = category_data.value.data[0].category.meta_keyword
     //Reset Filter & Sorting Data
     try {
       filter_sorting_fetch.value = await useNuxtApp().$apiFetch('/filter-and-sort/get')
@@ -192,13 +209,14 @@ onMounted(async () => {
   }
 
   useSeoMeta({
-    title: category_title.value + ' | ' + website_name.value,
-    ogTitle: category_title.value + ' | ' + website_name.value,
-    description: category_bottom_content.value,
-    ogDescription: category_bottom_content.value,
-    ogImage: config.public.BASE_URL + '/images/placeholder-logo.png',
+    title: category_meta_title.value + ' | ' + website_name.value,
+    ogTitle: category_meta_title.value + ' | ' + website_name.value,
+    description: category_meta_description.value,
+    ogDescription: category_meta_description.value,
+    keywords: category_meta_keyword.value,
+    ogImage: category_image.value ? category_image.value : config.public.BASE_URL + '/images/placeholder-logo.png',
     ogImageAlt: category_title.value,
-    ogUrl: localePath('/' + category_data.value.data[0].category.slug)
+    ogUrl: config.public.BASE_URL + localePath('/' + category_data.value.data[0].category.slug)
   })
   data_loader.value = false
 })

@@ -2,9 +2,9 @@
   <div :class="[out_stock ? ' gap-2' : ' gap-5', 'flex flex-col w-full']">
 
     <div class="flex w-full text-gray-900">
-      <h4 class="flex-1 lg:font-bold font-semibold lg:text-lg text-base leading-5">
+      <h2 class="flex-1 lg:font-bold font-semibold lg:text-lg text-base leading-5">
         {{ $t('product_size_title') }}
-      </h4>
+      </h2>
       <!-- Size modal trigger -->
       <NuxtLink
         v-if="options && options.length && options[0].variation_option.variation.description && options[0].variation_option.variation.description.title"

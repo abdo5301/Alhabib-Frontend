@@ -4,7 +4,7 @@
       <path d="M294.9 1.02539L-0.000318527 1.02539" stroke="#E5E7EB" />
     </svg>
   </span>
-  <h2 :id="'filter-accordion-' + filter_key" class="hidden lg:block">
+  <h3 :id="'filter-accordion-' + filter_key" class="hidden lg:block">
     <button type="button" @click="active_filter = !active_filter"
       class="flex items-center justify-between w-full pt-5 px-3 font-bold text-gray-700 text-base leading-5"
       :data-accordion-target="'#filter-accordion-body-' + filter_key" :aria-expanded="opened"
@@ -19,7 +19,7 @@
           stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </button>
-  </h2>
+  </h3>
   <span class="flex lg:hidden items-center justify-between w-full pt-5 px-3 font-bold text-gray-700 text-lg leading-5">{{
     title }}</span>
   <div :id="'filter-accordion-body-' + filter_key" :aria-labelledby="'filter-accordion-' + filter_key">

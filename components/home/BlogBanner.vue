@@ -1,12 +1,12 @@
 <template>
   <!-- <ClientOnly> -->
     <div class="flex mx-auto container flex-col gap-7 lg:gap-8 justify-center items-center px-[22px] lg:px-[75px]">
-      <h1 class="text-gray-700 text-[20px] lg:text-[34px] font-bold">
+      <h2 class="text-gray-700 text-[20px] lg:text-[34px] font-bold">
         <slot />
-      </h1>
+      </h2>
       <div class="container relative flex flex-col lg:flex-row justify-start mx-auto mb-24 bg-[#fff]">
         <div class="flex flex-shrink-0 font-semibold justify-start">
-          <NuxtImg v-if="blog_data.image" preload :src="blog_data.image" loading="lazy" width="300px" class="flex-shrink-0 lg:w-[563px] w-full h-full object-cover"
+          <NuxtImg v-if="blog_data.image" preload :src="blog_data.image" loading="lazy" width="300px" class="flex-shrink-0 lg:w-[563px] w-full lg:max-w-[563px] h-full object-cover"
             alt="Blog" />
           <NuxtImg v-else src="/images/bedding-202.png" loading="lazy" width="300px" class="flex-shrink-0 lg:w-[563px] w-full h-full" alt="Blog" />
         </div>
