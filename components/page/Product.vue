@@ -4,7 +4,7 @@
   </div>
   <div v-show="!data_loader">
     <ClientOnly>
-      <Title>{{ product_data.name }} | {{ website_name }}</Title>
+      <!-- <Title>{{ product_data.name }} | {{ website_name }}</Title> -->
       <Breadcrumb v-show="!data_loader" class="lg:pb-[80px] pb-6" :current="product_data.name" :pages=breadcrumb>
       </Breadcrumb>
     </ClientOnly>
@@ -24,10 +24,10 @@
           :class="[product_images.length || product_videos.length ? 'basis-1/2' : 'basis-full max-w-full', ' flex justify-start items-start flex-col gap-6 lg:max-w-[660px] md:max-w-[660px]']">
           <ClientOnly>
             <!-- Title -->
-            <h3
+            <h1
               class="h-16 flex items-start justify-start text-gray-900 lg:font-bold font-semibold lg:text-xl text-base leading-8">
               {{ product_data.name }}
-            </h3>
+            </h1>
             <!-- Tags -->
             <div v-if="product_data.tags && product_data.tags.length > 0"
               class="flex flex-wrap justify-start lg:gap-5 gap-3">
@@ -58,9 +58,9 @@
             </div>
             <!-- Colors -->
             <div v-if="product_data.color">
-              <h4 class="pb-2 text-gray-900 text-base lg:text-lg font-bold leading-5 lg:leading-5">
+              <h2 class="pb-2 text-gray-900 text-base lg:text-lg font-bold leading-5 lg:leading-5">
                 {{ $t('product_color_title') }} {{ product_data.color.name }}
-              </h4>
+              </h2>
               <div
                 v-if="product_data.related_class_products && product_data.related_class_products.length && product_data.color && product_data.color.hex"
                 class="flex justify-start gap-[5px] flex-wrap">
@@ -215,9 +215,6 @@ const props = defineProps({
     type: Object
   }
 })
-useHead({
-  script: [{ src: "https://cdn.tamara.co/widget/product-widget.min.js", defer: true }]
-})
 //Product data reference
 const url_product_id = props.url_data && props.url_data.slug ? props.url_data.slug : null
 const product_fetch_data = ref({})
@@ -230,10 +227,17 @@ const product_sku = ref(null)
 const product_images = ref([])
 const product_videos = ref([])
 const breadcrumb = ref([])
+useHead({
+  script: [{ src: "https://cdn.tamara.co/widget/product-widget.min.js", defer: true }],
+  link: [
+    {
+      rel: 'canonical',
+      href: config.public.BASE_URL + localePath('/' + url_product_id),
+    },
+  ],
+})
 onMounted(async () => {
   initFlowbite();
-  // window.history.pushState({ "id": product_data.id }, product_data.name, "/" + product_data.slug); //slug edit
-
   // check mobile device
   if (((window.innerWidth <= 800) && (window.innerHeight <= 600)) || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     isMobile.value = true
@@ -263,18 +267,10 @@ onMounted(async () => {
     })
   }
 
-  //Reset category data reference
+  //Reset product data reference
   product_data.value = product_fetch_data.value.data ? product_fetch_data.value.data : []
   if (product_data.value && product_data.value.name) {
-    useSeoMeta({
-      title: product_data.value.name + ' | ' + website_name.value,
-      ogTitle: product_data.value.name + ' | ' + website_name.value,
-      description: product_data.value.name,
-      ogDescription: product_data.value.name,
-      ogImage: product_data.value.media.images[0] ? product_data.value.media.images[0].url : config.public.BASE_URL + '/images/placeholder-logo.png',
-      ogImageAlt: product_data.value.name,
-      ogUrl: localePath('/' + product_data.value.slug)
-    })
+
     price.value = product_data.value.started_price ? priceFormate(product_data.value.started_price) : null
     discount_price.value = product_data.value.started_discounted_price ? priceFormate(product_data.value.started_discounted_price) : null
     favorite.value = product_data.value.favorite
@@ -296,6 +292,16 @@ onMounted(async () => {
     if (product_data.value.products && product_data.value.products.length > 0) {
       product_sku.value = product_data.value.products[0].sku
     }
+    useSeoMeta({
+      title: product_data.value.meta_title + ' | ' + website_name.value,
+      ogTitle: product_data.value.meta_title + ' | ' + website_name.value,
+      description: product_data.value.meta_description,
+      ogDescription: product_data.value.meta_description,
+      keywords: product_data.value.meta_keyword,
+      ogImage: product_data.value.media && product_data.value.media.images[0] ? product_data.value.media.images[0].url : config.public.BASE_URL + '/images/placeholder-logo.png',
+      ogImageAlt: product_data.value.name,
+      ogUrl: config.public.BASE_URL + localePath('/' + product_data.value.slug)
+    })
   } else {
     throw createError({
       statusCode: 404,
@@ -359,6 +365,31 @@ function getSelectedOption(option_data) {
   }
   disable_out_stock_btn.value = false
   disable_cart_btn.value = false
+
+  if (typeof dataLayer !== 'undefined') { //for google analytics
+    var event_price = discount_price.value ? discount_price.value : price.value
+    event_price = +Number(priceFormate(event_price, false))
+    dataLayer.push({
+      'event': 'view_item',
+      'eventCat': 'eCommerce',
+      'eventLbl': product_data.value.name,
+      'ecommerce': {
+        'currencyCode': 'SAR',
+        'detail': {
+          'products': [{
+            'name': product_data.value.name,
+            'id': product_data.value.id,
+            'price': event_price,
+            'brand': product_data.value.brand,
+            'category': product_data.value.category.name,
+            'variant': '',
+            'dimension3': out_stock.value == true ? 'Out Of Stock' : 'In Stock',
+          }]
+        }
+      }
+    });
+  }
+  console.log(dataLayer);
 }
 
 function outStockNotify() {
@@ -387,6 +418,33 @@ async function addToCart() {
     addCartDrawer.value.show()
     disable_cart_btn.value = false
     //console.log(addCartSuccess.value)
+    if (typeof dataLayer !== "undefined") { //for google analytics
+      var event_price = discount_price.value ? discount_price.value : price.value
+      event_price = +Number(priceFormate(event_price, false))
+      var event_data = {
+        'event': 'add_to_cart',
+        'eventCat': 'eCommerce',
+        'eventLbl': product_data.value.name,
+        'eventVal': event_price,
+        'ecommerce': {
+          'currencyCode': 'SAR',
+          'add': {
+            'products': [{
+              'name': product_data.value.name,
+              'id': product_data.value.id,
+              'price': event_price,
+              'brand': '',
+              'category': product_data.value.category.name,
+              'variant': '',
+              'quantity': 1,
+              'dimension3': 'In Stock',
+            }]
+          }
+        }
+      }
+      dataLayer.push(event_data);
+      console.log(dataLayer);
+    }
   }
 }
 

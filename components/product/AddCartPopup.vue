@@ -1,10 +1,10 @@
 <template>
   <div>
     <ClientOnly>
-      <h4 id="add-cart-alert-label"
+      <h3 id="add-cart-alert-label"
         class="lg:flex hidden justify-center items-center text-center pt-11 text-[#000] font-bold lg:text-2xl text-xl leading-6">
         {{ $t('cart_title') }} ({{ cartCount }})
-      </h4>
+      </h3>
 
       <div class="lg:block hidden border-b border-b-gray-200 pt-5 w-full"></div>
       <CartPopupAlert alert_type="add-to-cart-success"></CartPopupAlert>

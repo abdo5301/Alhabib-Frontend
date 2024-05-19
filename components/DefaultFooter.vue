@@ -50,19 +50,19 @@
           </div>
           <div class="flex">
             <NuxtLink target="_blank" to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
-              <img src="/images/vat.png" width="40" alt="VAT">
+              <NuxtImg src="/images/vat.png" width="50px" height="70px" alt="VAT" loading="lazy" preload />
             </NuxtLink>
           </div>
           <div class="flex">
             <NuxtLink to="#">
-              <img src="/images/nadav-logo-1.svg" alt="NADAV">
+              <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" alt="NADAV" loading="lazy" preload />
             </NuxtLink>
           </div>
         </div>
         <!--End Right Section -->
 
         <!--Start Left Section -->
-        <div class="flex gap-5 items-start flex-col mx-auto lg:px-12 px-4 max-w-max">
+        <div class="flex gap-5 items-start flex-col mx-auto lg:px-12 px-4 max-w-full">
           <!--Start Download App Section -->
           <div class="flex flex-col gap-5">
             <div
@@ -89,15 +89,15 @@
                 <span class="hidden lg:flex px-1"></span>
               </div>
             </div>
-            <div class="flex gap-[14px] w-full">
+            <div class="lg:gap-[14px] gap-2 w-full grid grid-cols-2">
               <NuxtLink target="_blank"
                 to="https://apps.apple.com/sa/app/%D9%85%D9%81%D8%A7%D8%B1%D8%B4-%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8/id1420285929">
-                <img v-if="$lang.dir == 'rtl'" src="/images/download-app/app-store-ar.svg" alt="App Store">
-                <img v-else src="/images/download-app/app-store-en.svg" alt="App Store">
+                <NuxtImg v-if="$lang.dir == 'rtl'" src="/images/download-app/app-store-ar.svg" width="202px" height="46px" loading="lazy" preload alt="App Store" />
+                <NuxtImg v-else src="/images/download-app/app-store-en.svg" width="202px" height="46px" loading="lazy" preload alt="App Store" />
               </NuxtLink>
               <NuxtLink target="_blank" to="https://play.google.com/store/apps/details?id=com.alhabibshop.android">
-                <img v-if="$lang.dir == 'rtl'" src="/images/download-app/google-play-ar.svg" alt="Google Play">
-                <img v-else src="/images/download-app/google-play-en.svg" alt="App Store">
+                <NuxtImg v-if="$lang.dir == 'rtl'" src="/images/download-app/google-play-ar.svg" width="202px" height="46px" loading="lazy" preload alt="Google Play" />
+                <NuxtImg v-else src="/images/download-app/google-play-en.svg" width="202px" height="46px"  loading="lazy" preload alt="App Store"/>
               </NuxtLink>
             </div>
           </div>
@@ -228,7 +228,7 @@
 
         <!--Payments Section -->
         <div class="flex items-center content-center order-3">
-          <img src="/images/payments-icons.svg" alt="Payments">
+          <NuxtImg src="/images/payments-icons.svg" width="461px" height="29px" loading="lazy" preload alt="Payments" />
         </div>
 
         <!--Social media Section -->
@@ -305,10 +305,10 @@
 
       <div class="flex lg:hidden items-center justify-center mx-auto gap-5 pt-1 pb-4">
         <NuxtLink to="#">
-          <img src="/images/nadav-logo-1.svg" alt="NADAV">
+          <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" loading="lazy" alt="NADAV" preload />
         </NuxtLink>
         <NuxtLink to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
-          <img src="/images/vat.png" width="40" alt="VAT">
+          <NuxtImg src="/images/vat.png" width="40px" height="52px" alt="VAT" loading="lazy" preload />
         </NuxtLink>
       </div>
     </div>

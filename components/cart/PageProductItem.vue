@@ -109,7 +109,7 @@
             class="flex lg:flex-col flex-row gap-4 lg:gap-1 items-center lg:items-start lg:min-w-[148px] max-w-[170px] lg:max-w-full"
             v-if="cart_item.quantity > 0">
             <label class="block pb-1 text-sm font-normal text-gray-900 leading-5">{{ $t('label_quantity') }}</label>
-            <select v-model="quantity" @change="updateCartItem()"
+            <select v-model="quantity" @change="updateCartItem(cart_item.quantity)"
               class="bg-white cursor-pointer min-w-[125px] lg:min-w-[190px] shadow-sm border flex items-center justify-between border-gray-300 text-gray-900 text-sm font-semibold rounded-md focus:ring-gray-300 focus:border-gray-300 w-max px-3 lg:py-2 py-[6px]">
               <option v-for="(qty, index) in product.quantity" :value="qty" :selected="qty == cart_item.quantity">
                 {{ qty }}
@@ -189,7 +189,7 @@ const { setCartData } = useCart()
 if (props.cart_item.availability == false) {
   emits('productHasError')
 }
-async function updateCartItem() {
+async function updateCartItem(old_qty = 1) {
   if (props.cart_item && props.cart_item.id && product && quantity.value <= product.quantity) {
     const update_cart_data = {
       cart_item_id: props.cart_item.id,
@@ -199,9 +199,10 @@ async function updateCartItem() {
     }
     await useCart().editItem(update_cart_data)
     const refresh_cart = await useCart().getAll()
-    if (refresh_cart.id) {
+    if (refresh_cart.id) {//success
       setCartData(refresh_cart)
       emits('refreshCart')
+      updateDataLayer(old_qty)
     }
   }
 }
@@ -217,6 +218,7 @@ async function deleteCartItem() {
       if (refresh_cart.cart_items.length == 0) {
         emits('emptyCart')
       }
+      updateDataLayer(quantity.value)
     }
   }
 }
@@ -227,6 +229,41 @@ async function toggleFavoriteCall() {
   const toggle = await toggleFavorite(props.cart_item.product.id)
   if (toggle.status) {
     favorite.value = !favorite.value
+  }
+}
+
+function updateDataLayer(old_qty = 1) {//for google analytics
+  if (typeof dataLayer !== "undefined") {
+    var event_type = quantity.value > old_qty ? 'add' : 'remove'
+    var event_qty = event_type == 'remove' ? (old_qty - quantity.value) : (quantity.value - old_qty)
+    event_qty = Math.abs(event_qty)
+    var event_price = product.discounted_price && product.discounted_price > 0 ? product.discounted_price : product.price
+    event_price = +Number(priceFormate(event_price, false))
+    var event_total = event_qty > 0 ? event_qty * event_price : quantity.value * event_price
+    event_total = +Number(priceFormate(event_total, false))
+    var event_data = {
+      'event': event_type == 'add' ? 'add_to_cart' : 'remove_from_cart',
+      'eventCat': 'eCommerce',
+      'eventLbl': product.buyable_en_name,
+      'eventVal': event_total,
+      'ecommerce': {
+        'currencyCode': 'SAR',
+      }
+    }
+    event_data.ecommerce[event_type] = {
+      'products': [{
+        'name': product.buyable_en_name,
+        'id': product.id,
+        'price': event_price,
+        'brand': '',
+        'category': product.buyable_category_en_name,
+        'variant': '',
+        'quantity': event_qty > 0 ? event_qty : quantity.value,
+        'dimension3': 'In Stock',
+      }]
+    }
+    dataLayer.push(event_data);
+    //console.log(dataLayer);
   }
 }
 </script>

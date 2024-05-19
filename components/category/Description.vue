@@ -1,9 +1,12 @@
 <template>
   <div class="flex flex-col lg:gap-8 gap-5 justify-start">
     <ClientOnly>
-      <h3 class="font-bold lg:text-2xl text-base leading-5 text-gray-900">
+      <h1 v-if="h1" class="font-bold lg:text-2xl text-base leading-5 text-gray-900">
         {{ title }}
-      </h3>
+      </h1>
+      <h2 v-else class="font-bold lg:text-2xl text-base leading-5 text-gray-900">
+        {{ title }}
+      </h2>
       <div v-html="decodeHtml(content)" class="font-light lg:font-normal lg:text-base text-xs leading-5 text-gray-900">
       </div>
       <template #fallback>
@@ -20,7 +23,11 @@ const props = defineProps({
   },
   content: {
     type: String
+  },
+  h1: {
+    type: Boolean,
+    default: false
   }
 });
 
-</script> 
+</script>
