@@ -52,7 +52,7 @@
             </div>
             <!-- Tamara -->
             <div id="tamara-product-widget" class="tamara-product-widget w-full font-semibold !font-sans rounded-md"
-              :data-lang="lang.code" :data-price="price" data-currency="SAR" data-country-code="sa"
+              :data-lang="lang.code" :data-price="discount_price ? discount_price : price" data-currency="SAR" data-country-code="sa"
               data-payment-type="installment" data-number-of-installments="4" data-installment-minimum-amount="100"
               data-disable-paylater="true">
             </div>
