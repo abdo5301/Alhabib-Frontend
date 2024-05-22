@@ -3,6 +3,7 @@ Allow: /
 Disallow: /account*
 Disallow: /cart
 Disallow: /checkout*
+Disallow: /*search
 Disallow: /*sort
 Disallow: /*order
 Disallow: /*page
