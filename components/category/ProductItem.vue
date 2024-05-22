@@ -1,9 +1,10 @@
 <template>
   <div
     :class="[list_type == 'solo' ? 'w-full' : 'w-[47%]', 'flex flex-shrink-0 flex-col lg:gap-3 gap-[10px] justify-start lg:w-[318px]']">
-    <NuxtLink :to="link" class="relative w-full">
-      <NuxtImg loading="lazy" width="318px" height="304px" :class="[list_type == 'solo' ? 'h-[377px]' : 'h-[160px]', 'w-full lg:h-[304px] rounded-lg object-cover']"
-        :src="image ? image : '/images/placeholder-logo.png'" :alt="name"/>
+    <NuxtLink :to="link" class="relative w-full" @click="triggerClickProduct(null)">
+      <NuxtImg loading="lazy" width="318px" height="304px"
+        :class="[list_type == 'solo' ? 'h-[377px]' : 'h-[160px]', 'w-full lg:h-[304px] rounded-lg object-cover']"
+        :src="image ? image : '/images/placeholder-logo.png'" :alt="name" />
       <span v-if="available == false"
         class="absolute top-0 rounded-lg bg-opacity-60 h-full w-full bg-[#F0EBEB] flex justify-center items-center">
         <span class="!opacity-100 text-gray-900 text-sm lg:text-base font-semibold">{{ $t('product_size_stock_alert')
@@ -31,7 +32,7 @@
           </span>
         </span>
         <NuxtLink :to="localePath('/' + related.slug)" v-for="related, index in related_products"
-          :key="'related-color-' + index" class="empty:hidden">
+          :key="'related-color-' + index" @click="triggerClickProduct(related)" class="empty:hidden">
           <span v-if="related.color && index < 5 && related.color.hex != color.hex"
             :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
             <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40" :style="['background-color:' + related.color.hex]">
@@ -40,7 +41,7 @@
           </span>
         </NuxtLink>
       </div>
-      <NuxtLink :to="link"
+      <NuxtLink :to="link" @click="triggerClickProduct(null)"
         class="line-clamp-2 lg:text-base text-sm lg:min-h-[48px] min-h-[42px] text-gray-900 font-normal leading-[22px]">
         {{ name }}
       </NuxtLink>
@@ -48,7 +49,7 @@
       <div v-if="tags && tags.length > 0" class="flex flex-wrap justify-start gap-[7px] h-7">
         <span v-for="tag, index in tags" :key="index">
           <span class="text-center px-5 font-normal text-xs text-gray-900 bg-[#D9D9D9] rounded-md" v-if="index < 2">{{
-      tag.name }}</span>
+            tag.name }}</span>
         </span>
       </div>
       <!-- price -->
@@ -109,6 +110,9 @@ const props = defineProps({
   id: {
     type: Number,
   },
+  product_sort: {
+    type: Number,
+  },
   list_type: {
     type: String,
     default: 'list'
@@ -116,6 +120,9 @@ const props = defineProps({
   available: {
     type: Boolean,
     default: true
+  },
+  category_name: {
+    type: String,
   }
 });
 const favorite = ref(props.favorite)
@@ -126,5 +133,50 @@ async function toggleFavoriteCall() {
     favorite.value = !favorite.value
     emits('favoriteClick')
   }
+}
+
+function triggerClickProduct(related_product = null) {
+  if (typeof dataLayer !== 'undefined') {
+    var event_price = props.special ? props.special : props.price ? props.price : 0
+    event_price = Number(priceFormate(event_price, false))
+    var event_name = props.name
+    var event_id = props.id
+    var event_category = props.category_name
+    var event_stock = props.available == true ? 'In Stock' : 'Out Of Stock'
+    var event_position = Math.abs(props.product_sort)
+
+    if (related_product != null) {
+      event_price = related_product.started_discounted_price ? related_product.started_discounted_price : related_product.started_price ? related_product.started_price : 0
+      event_price = Number(priceFormate(event_price, false))
+      event_name = related_product.name
+      event_id = related_product.id
+      event_category = related_product.category?.name
+      event_stock = related_product.availability == true ? 'In Stock' : 'Out Of Stock'
+    }
+
+    dataLayer.push({
+      'event': 'select_item',
+      'eventCat': 'eCommerce',
+      'eventLbl': event_name,
+      'ecommerce': {
+        'currencyCode': 'SAR',
+        'click': {
+          'actionField': { 'list': event_category }, // The list Name.
+          'products': [{
+            'name': event_name,
+            'id': event_id,
+            'price': event_price,
+            'brand': '',
+            'category': event_category,
+            'variant': '',
+            'list': event_category,
+            'dimension3': event_stock,
+            'position': event_position
+          }]
+        }
+      }
+    });
+  }
+  //console.log(dataLayer);
 }
 </script>

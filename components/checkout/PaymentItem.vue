@@ -1,6 +1,6 @@
 <template>
   <div v-if="payment_method_code != 'applepay' || (payment_method_code == 'applepay' && availableApplePay)"
-    @click="$emit('paymentValue', payment_method_value), $emit('paymentCode', payment_method_code)"
+    @click="setPaymentData"
     :class="[selected_payment == payment_method_value ? 'ring-gray-900' : 'ring-gray-300', 'w-full cursor-pointer ring-1 rounded-lg lg:ps-[25px] lg:pe-[17px] px-4 lg:py-[17px] py-3']">
     <div class="flex justify-between items-center w-full min-h-[50px]">
       <!-- Payment Content -->
@@ -36,7 +36,7 @@
 
 <script setup>
 const lang = useNuxtApp().$lang
-const emits = defineEmits(['paymentValue', 'paymentCode'])
+const emits = defineEmits(['paymentValue', 'paymentCode', 'paymentName'])
 const props = defineProps({
   payment_method_name: {
     type: String,
@@ -75,4 +75,12 @@ onMounted(() => {
   }
 })
 
+function setPaymentData() {
+  var payment_method_data = {
+    name: props.payment_method_name,
+    code: props.payment_method_code,
+    id: props.payment_method_value
+  }
+  emits('paymentValue', payment_method_data)
+}
 </script>

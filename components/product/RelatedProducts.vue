@@ -6,9 +6,10 @@
     <div
       class="no-scrollbar overflow-x-auto flex w-full mx-auto items-stretch justify-start lg:gap-[44px] gap-5 pb-4">
 
-      <HomeProductItem v-for="product in products"
+      <HomeProductItem v-for="product,index in products"
        :key="product.id"
        :id="product.id"
+       :product_sort="index + 1"
        :name="product.name"
        :image="product.media.images && product.media.images.length > 0 ? product.media.images[0].url : null"
        :color="product.color"
@@ -18,6 +19,8 @@
        :favorite="product.favorite"
        :tags="product.tags"
        :related_products="product.related_class_products"
+       :available="product.availability"
+       :category_name="product.category.name"
        @favorite-click="product.favorite = !product.favorite"
        :cart_btn = false
        ></HomeProductItem>

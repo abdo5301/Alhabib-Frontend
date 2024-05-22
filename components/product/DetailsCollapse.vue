@@ -1,5 +1,5 @@
 <template>
-  <div class="border-t border-t-gray-400 pt-[28px] lg:pb-8 pb-9 lg:px-[6px] px-5">
+  <div v-if="description" class="border-t border-t-gray-400 pt-[28px] lg:pb-8 pb-9 lg:px-[6px] px-5">
     <h2 :id="'section-accordion-' + section_key">
       <button type="button" @click="active_section = !active_section"
         class="flex items-center justify-between w-full font-bold text-gray-700 text-base leading-5"

@@ -27,7 +27,7 @@
           <span class="text-gray-900 font-normal line-through text-sm">{{ priceFormate(product.price) }}</span>
         </div>
         <div class="text-[#000] font-bold lg:text-sm text-xs">
-          {{ priceFormate(product.price) }}
+          {{ priceFormate(cart_item.total) }}
         </div>
       </div>
     </div>
