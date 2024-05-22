@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /*sort
+Disallow: /*order
+Disallow: /*page
+Disallow: /*add-return
+Disallow: /*return
+Disallow: /*shipment-payment
+Disallow: /*privacy
+
+User-agent: Googlebot-Image
+User-agent: Googlebot
+Allow: /Image/
+
+Sitemap: https://alhabibshop.com/sitemap.xml
