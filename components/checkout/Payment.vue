@@ -80,7 +80,7 @@
       <CheckoutPaymentItem v-for='(method, index) in payment_methods_array' :key='index'
         :payment_method_value='method.id' :payment_method_name='method.title' :payment_method_image='method.image'
         :payment_method_code='method.code' :payment_method_description='method.description'
-        :selected_payment='payment_method_id' @payment-value='getPaymentValue' @payment-code='getPaymentCode' />
+        :selected_payment='payment_method_id' @payment-value='getPaymentValue' />
     </div>
     <div v-else class='flex items-center justify-center text-gray-700 text-2xl font-semibold'>
       {{ $t('text_empty_payment_methods') }}
@@ -165,27 +165,21 @@ async function toggleWalletStatus(status) {
   console.log('Wallet Status: ' + status)
 }
 
-async function getPaymentValue(value) {//change payment_id
-  if (payment_method_id.value == value) {
+async function getPaymentValue(payment_data) {//change payment data
+  if (payment_method_id.value == payment_data.id) {
     return;
   }
   payment_method_id.value = 0
-  const new_cart = await saveOrderPayment(value)
-  setCartData(new_cart.data)
-  emits('savePayment')
-  payment_method_id.value = value
-}
-
-function getPaymentCode(code) { //change payment_code
-  if (payment_method_code.value == code) {
-    return;
-  }
-  payment_method_code.value = code
-  if (code == 'applepay') {
+  payment_method_code.value = payment_data.code
+  if (payment_data.code == 'applepay') {
     selectedApplePayMethod.value = true
   } else {
     selectedApplePayMethod.value = false
   }
+  const new_cart = await saveOrderPayment(payment_data.id)
+  setCartData(new_cart.data)
+  emits('savePayment', payment_data)
+  payment_method_id.value = payment_data.id
 }
 // Apple Pay Select
 function onApplePayButtonClicked() {

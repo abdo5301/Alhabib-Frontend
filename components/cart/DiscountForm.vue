@@ -73,11 +73,41 @@ async function submit_discount_code(code_value) {
       emits('submitDiscountCode')
       discount_input_success.value = t('alert_discount_code_success')
       input.value = ''
+      //for google analytics
+      if (typeof dataLayer !== 'undefined') {
+        dataLayer.push({
+          event: 'coupon_redemption',
+          eventCat: 'eCommerce',
+          code: code_value, // The coupon code.
+          status: t('alert_discount_code_success'),
+        })
+        // console.log(dataLayer)
+      }
     } else {
       discount_input_error.value = t('alert_discount_code_error')
+      //for google analytics
+      if (typeof dataLayer !== 'undefined') {
+        dataLayer.push({
+          event: 'coupon_redemption',
+          eventCat: 'eCommerce',
+          code: code_value, // The coupon code.
+          status: t('alert_discount_code_error'),
+        })
+        // console.log(dataLayer)
+      }
     }
   } catch (error) {
     discount_input_error.value = t('alert_discount_code_error')
+    //for google analytics
+    if (typeof dataLayer !== 'undefined') {
+      dataLayer.push({
+        event: 'coupon_redemption',
+        eventCat: 'eCommerce',
+        code: code_value, // The coupon code.
+        status: t('alert_discount_code_error'),
+      })
+      // console.log(dataLayer)
+    }
     console.log(error.data)
   }
 }

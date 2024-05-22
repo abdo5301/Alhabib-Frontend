@@ -56,7 +56,7 @@
           <!-- Payment -->
           <CheckoutPayment v-if="current_step == 'select_payment'" :step="current_step" :address_id="address_id"
             @submit="saveOrder" :disable_checkout="disable_checkout" @wallet-status="resetTotals()"
-            @save-payment="resetTotals()" />
+            @save-payment="resetTotals(), google_analytics_event('add_payment_info', { 'step': 3, 'option': $event.name })" />
         </div>
       </div>
 
@@ -95,17 +95,21 @@ const lang = useNuxtApp().$lang
 const router = useRouter();
 const localePath = useLocalePath()
 const { setSuccessOrderId, saveOrderAddress, saveOrderPayment } = useOrder()
-const { getAll, cartTotal, setCartData, cartTotals } = useCart()
+const { getAll, cartTotal, setCartData, cartTotals, cartItems } = useCart()
 const disable_checkout = ref(false)
 const totals_key = ref(123)
 const shipping_loader = ref(true)
 const details_loader = ref(true)
+const cart_items = ref([])
+const cart_total = ref(0)
 onMounted(async () => {
   initFlowbite();
   const cart_data = await getAll()
   if (!cart_data.id || !cart_data.cart_items || !cart_data.cart_items.length) {
     navigateTo(localePath('/cart'))
   }
+  cart_items.value = cart_data.cart_items
+  cart_total.value = cart_data.total
   //if totals not loaded we refresh cart 
   if (cartTotals.value.length == 0) {
     setTimeout(async () => {
@@ -117,6 +121,7 @@ onMounted(async () => {
   totals_key.value += 1
   details_loader.value = false
   shipping_loader.value = false
+  google_analytics_event('begin_checkout', { 'step': 1 })
 })
 const order_details = ref(false) //For Mobile
 
@@ -141,6 +146,7 @@ async function saveAddress(new_address_id) {
   const new_cart = await saveOrderAddress(new_address_id)
   setCartData(new_cart.data)
   resetTotals()
+  google_analytics_event('add_shipping_info', { 'step': 2 })
 }
 
 async function saveOrder(payment_method) {
@@ -160,6 +166,38 @@ async function saveOrder(payment_method) {
       //window.location.pathname = localePath('/checkout/success')
     }
   }
+}
+
+function google_analytics_event(event_key, action_field) {//Start google analytics
+  if (typeof dataLayer !== "undefined" && !isEmpty(cart_items.value)) {
+    let event_cart_items = [];
+    cart_items.value.forEach((item) => {
+      var event_cart_item = {
+        "name": item.product.buyable_en_name,
+        "id": String(item.product.id),
+        "price": Number(priceFormate(item.total, false)),
+        'brand': '',
+        'category': item.product.buyable_category_en_name,
+        'variant': '',
+        'dimension3': 'In Stock',
+        "quantity": Number(item.quantity),
+      }
+      event_cart_items.push(event_cart_item);
+    });
+    dataLayer.push({
+      'event': event_key,
+      'eventCat': 'eCommerce',
+      'eventVal': cart_total.value,
+      'ecommerce': {
+        'currencyCode': 'SAR',
+        'checkout': {
+          'actionField': action_field,
+          'products': event_cart_items
+        }
+      }
+    });
+   //console.log(dataLayer);
+  }//End google analytics
 }
 
 </script>

@@ -59,12 +59,14 @@
         <div class="flex justify-start flex-col gap-16 mt-5 w-full" v-if="products.length > 0">
           <div :class="[listing_type == 'solo' ? 'gap-[18px]' : 'lg:gap-y-[45px] gap-y-4 lg:gap-x-[27px] gap-x-3',
             'flex flex-wrap items-stretch lg:justify-start justify-between gap-[42px] lg:gap-y-[55px]']">
-            <CategoryProductItem v-for="product in products" :key="product.id" :id="product.id" :name="product.name"
+            <CategoryProductItem v-for="product, index in products" :key="product.id" :id="product.id"
+              :name="product.name"
               :image="product.media.images && product.media.images.length ? product.media.images[0].url : null"
               :color="product.color" :price="product.started_price" :special="product.started_discounted_price"
               :link="localePath('/' + product.slug)" :favorite="product.favorite" :tags="product.tags"
               :related_products="product.related_class_products" @favorite-click="product.favorite = !product.favorite"
-              :list_type="listing_type" :available="product.availability" />
+              :list_type="listing_type" :available="product.availability" :category_name="product.category.name"
+              :product_sort="index + 1" />
           </div>
           <!-- Infinite  scroll -->
           <div class="flex items-center justify-center flex-col gap-5 w-full">
@@ -219,6 +221,7 @@ onMounted(async () => {
     ogUrl: config.public.BASE_URL + localePath('/' + category_data.value.data[0].category.slug)
   })
   data_loader.value = false
+  googlEventListing(products.value)
 })
 
 async function loadMore() {
@@ -299,6 +302,40 @@ async function updateProductsCollection() {
   category_data.value = await useNuxtApp().$apiFetch(data_url.value)
   products.value = category_data.value.data
   //console.log(category_data.value)
+}
+
+function googlEventListing(category_products = []) { //for google analytics
+  if (typeof dataLayer !== "undefined" && !isEmpty(category_products)) {
+    let event_products = []
+    category_products.forEach((item,index) => {
+      var event_price = item.started_discounted_price ? item.started_discounted_price : item.started_price ? item.started_price : 0
+      event_price = Number(priceFormate(event_price, false))
+      var event_stock = item.availability == true ? 'In Stock' : 'Out Of Stock'
+      var event_product_data = {
+        "name": item.name,
+        "id": String(item.id),
+        "price": Number(priceFormate(event_price, false)),
+        'brand': '',
+        'category': item.category?.name,
+        'variant': '',
+        'list': item.category?.name,
+        'dimension3': event_stock,
+        "quantity": '',
+        'position': Math.abs(index + 1),
+      }
+      event_products.push(event_product_data);
+    });
+    dataLayer.push({
+      'event': 'view_item_list',
+      'eventCat': 'eCommerce',
+      'eventLbl': category_title.value,
+      'ecommerce': {
+        'currencyCode': 'SAR',
+        'impressions': event_products
+      }
+    });
+  }
+  //console.log(dataLayer);
 }
 
 </script>

@@ -96,6 +96,52 @@ onMounted(async () => {
   if (successOrderId.value) {
     try {
       order_data.value = await getOrder(successOrderId.value)
+      if (typeof dataLayer !== "undefined") {//Start google analytics
+        let gtm_order_items = [];
+        order_data.value.order_items.forEach((item) => {
+          var event_order_item = {
+            "name": item.name,
+            "id": String(item.id),
+            "price": Number(priceFormate(item.total, false)),
+            'brand': '',
+            'category': item.category,
+            'variant': '',
+            'dimension3': 'In Stock',
+            "quantity": Number(item.quantity),
+          }
+          gtm_order_items.push(event_order_item);
+        });
+        dataLayer.push({
+          'event': 'purchase',
+          'eventCat': 'eCommerce',
+          'eventLbl': order_data.value.id, // Transaction ID.
+          'eventVal': +order_data.value.total,// Total value.
+          'ecommerce': {
+            'currencyCode': 'SAR',
+            'purchase': {
+              'actionField': {
+                'id': order_data.value.id,// Transaction ID. Required
+                'affiliation': 'Website',
+                'revenue': +order_data.value.total,// Total transaction value (incl. tax and shipping)
+                'tax': +order_data.value.tax,
+                'shipping': +order_data.value.shipping,
+                'coupon': order_data.value.coupon ? order_data.value.coupon : ''
+              },
+              'products': gtm_order_items
+            }
+          }
+        });
+
+        dataLayer.push({
+          'event': 'purchase',
+          'order_value': +order_data.value.total,
+          'enhanced_conversion_data': {
+            "email": order_data.value.customer_email
+          }
+        })
+        //console.log(dataLayer);
+      }//End google analytics
+
     } catch (error) {
       console.log(error.data)
     }

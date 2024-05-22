@@ -52,9 +52,9 @@
             </div>
             <!-- Tamara -->
             <div id="tamara-product-widget" class="tamara-product-widget w-full font-semibold !font-sans rounded-md"
-              :data-lang="lang.code" :data-price="discount_price ? discount_price : price" data-currency="SAR" data-country-code="sa"
-              data-payment-type="installment" data-number-of-installments="4" data-installment-minimum-amount="100"
-              data-disable-paylater="true">
+              :data-lang="lang.code" :data-price="discount_price ? discount_price : price" data-currency="SAR"
+              data-country-code="sa" data-payment-type="installment" data-number-of-installments="4"
+              data-installment-minimum-amount="100" data-disable-paylater="true">
             </div>
             <!-- Colors -->
             <div v-if="product_data.color">
@@ -63,24 +63,24 @@
               </h2>
               <div
                 v-if="product_data.related_class_products && product_data.related_class_products.length && product_data.color && product_data.color.hex"
-                class="flex justify-start gap-[5px] flex-wrap">
+                class="flex justify-start gap-[5px] flex-wrap pt-2">
                 <span
-                  class="ring-1 ring-gray-900 relative  flex items-center justify-center rounded-full lg:w-[28px] lg:h-[28px] w-[23px] h-[23px] z-20">
+                  class="ring-1 ring-gray-900 relative flex items-center justify-center rounded-full lg:w-[28px] lg:h-[28px] w-[24px] h-[24px] z-20">
                   <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40"
                     :style="['background-color:' + product_data.color.hex]">
                   </span>
                 </span>
-                <NuxtLink :to="localePath('/' + related.slug)"
-                  v-for="related, index in product_data.related_class_products" :key="related.color"
-                  class="empty:hidden">
-                  <span v-if="index < 5 && related.color.hex != product_data.color.hex"
-                    :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
-                    <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40"
-                      :style="['background-color:' + related.color.hex]">
+                <span v-for="related, index in product_data.related_class_products" :key="index" class="empty:hidden">
+                  <NuxtLink v-if="related.color && index < 5 && related.color.hex != product_data.color.hex" :to="localePath('/' + related.slug)" :title="related.color.name ? related.color.name : '..'" class="empty:hidden">
+                    <span
+                      :class="[('relative  flex items-center justify-center rounded-full lg:w-7 lg:h-7 w-6 h-6 z-20')]">
+                      <span class="rounded-full lg:w-6 lg:h-6 w-5 h-5 z-40"
+                        :style="['background-color:' + related.color.hex]">
+                      </span>
+                      <span v-if="related.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
                     </span>
-                    <span v-if="related.stock" class="absolute border-b-black border-b w-8 -rotate-45 z-50"></span>
-                  </span>
-                </NuxtLink>
+                  </NuxtLink>
+                </span>
               </div>
             </div>
             <!-- SKU -->
@@ -270,7 +270,6 @@ onMounted(async () => {
   //Reset product data reference
   product_data.value = product_fetch_data.value.data ? product_fetch_data.value.data : []
   if (product_data.value && product_data.value.name) {
-
     price.value = product_data.value.started_price ? priceFormate(product_data.value.started_price) : null
     discount_price.value = product_data.value.started_discounted_price ? priceFormate(product_data.value.started_discounted_price) : null
     favorite.value = product_data.value.favorite
