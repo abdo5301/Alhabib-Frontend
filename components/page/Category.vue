@@ -231,18 +231,27 @@ async function loadMore() {
   } else {
     data_url.value += '&page=' + (current_page.value + 1)
   }
-
-  category_data.value = await useNuxtApp().$apiFetch(data_url.value)
-  products.value = products.value.concat(category_data.value.data)
-  if (category_data.value.meta.total != products.value.length) {
-    current_page.value = current_page.value + 1
+  try {
+    category_data.value = await useNuxtApp().$apiFetch(data_url.value)
+    if (category_data.value.data) { // success
+      products.value = products.value.concat(category_data.value.data)
+      if (category_data.value.meta.total != products.value.length) {
+        current_page.value = current_page.value + 1
+      }
+    } else {//reset url page parameter
+      data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value - 1))
+    }
+  } catch (error) {
+    console.log("Failed to fetch data:", error)
+    data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value - 1))
   }
   infinite_scroll_loading.value = false
 }
 
-function listingTypeUpdate(new_list_type) {
+function listingTypeUpdate(new_list_type) { // change list type
   listing_type.value = new_list_type
 }
+
 function updateFilterArray(filter_value) {
   if (filter_array.value.includes(filter_value)) {
     filter_array.value.splice(filter_array.value.indexOf(filter_value), 1)
@@ -257,6 +266,7 @@ function updateFilterArray(filter_value) {
   //console.log(filter_array.value)
   updateProductsCollection()
 }
+
 function resetFilter() {
   filter_array.value = []
   updateProductsCollection()
@@ -291,23 +301,24 @@ async function updateProductsCollection() {
         default:
           break;
       }
-
     }
   }
   // sorting
   if (sorting_value.value) {
     data_url.value += '&sorting=' + sorting_value.value
   }
-  //console.log(data_url.value)
-  category_data.value = await useNuxtApp().$apiFetch(data_url.value)
-  products.value = category_data.value.data
-  //console.log(category_data.value)
+  try {
+    category_data.value = await useNuxtApp().$apiFetch(data_url.value)
+    products.value = category_data.value?.data
+  } catch (error) {
+    console.log("Failed to fetch data:", error)
+  }
 }
 
 function googlEventListing(category_products = []) { //for google analytics
   if (typeof dataLayer !== "undefined" && !isEmpty(category_products)) {
     let event_products = []
-    category_products.forEach((item,index) => {
+    category_products.forEach((item, index) => {
       var event_price = item.started_discounted_price ? item.started_discounted_price : item.started_price ? item.started_price : 0
       event_price = Number(priceFormate(event_price, false))
       var event_stock = item.availability == true ? 'In Stock' : 'Out Of Stock'

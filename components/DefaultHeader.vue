@@ -280,11 +280,11 @@ try {
 }
 
 const getSearch = debounce(async function (event) {
-  if (search.value && search.value.length > 0) {
+  if (search.value && search.value.length && search.value.length > 0) {
     try {
       const search_fetch_data = await useNuxtApp().$apiFetch('/search?query=' + search.value)
       search_result.value = search_fetch_data.data
-      console.log(search_result.value);
+      //console.log(search_result.value);
     } catch (error) {
       search_result.value = []
       console.log(error.data)

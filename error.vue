@@ -5,7 +5,7 @@
       <img src="/images/error-for-page.png" alt="Error" class="w-[276px] lg:w-[335px] ">
       <div
         class=" max-w-[290px] lg:max-w-[780px] flex justify-center items-center text-center text-gray-500 lg:text-[34px] text-[20px] font-medium leading-8">
-        <h2 v-if="error.statusCode == '404' || error.statusMessage == 'page_not_found'" class="">
+        <h2 v-if="error.statusCode == '404' || error.statusMessage == 'page_not_found'">
           {{ $t('error_page_not_found') }}
         </h2>
         <h2 v-else>{{ error.statusMessage }}</h2>

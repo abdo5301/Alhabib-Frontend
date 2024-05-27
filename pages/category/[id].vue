@@ -208,10 +208,19 @@ async function loadMore() {
     data_url.value += '&page=' + (current_page.value + 1)
   }
 
-  category_data.value = await useNuxtApp().$apiFetch(data_url.value)
-  products.value = products.value.concat(category_data.value.data)
-  if (category_data.value.meta.total != products.value.length) {
-    current_page.value = current_page.value + 1
+  try {
+    category_data.value = await useNuxtApp().$apiFetch(data_url.value)
+    if (category_data.value.data) { // success
+      products.value = products.value.concat(category_data.value.data)
+      if (category_data.value.meta.total != products.value.length) {
+        current_page.value = current_page.value + 1
+      }
+    } else {//reset url page parameter
+      data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value - 1))
+    }
+  } catch (error) {
+    console.log("Failed to fetch data:", error)
+    data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value - 1))
   }
   infinite_scroll_loading.value = false
 }
