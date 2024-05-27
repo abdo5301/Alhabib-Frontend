@@ -92,9 +92,10 @@ async function login() {
 
   } catch (error) {
     console.log(error.data)
-    if (error.data.errors && error.data.errors.code) {
+    error.data.errors ??= {}
+    if (error.data.errors.code) {
       validation_error.value = t('phone_confirm_error')
-    } else if (error.data.errors && error.data.errors.mobile) {
+    } else if (error.data.errors.mobile) {
       validation_error.value = t('validation_error_phone')
     } else {
       validation_error.value = error.data.message

@@ -146,12 +146,21 @@ async function loadMore() {
     data_url.value += '&page=' + (current_page.value + 1)
   }
 
-  favorite_data.value = await getFavorites(data_url.value)
-  favorite_paginate.value = favorite_paginate.value.concat(favorite_data.value.data)
-  if (favorite_data.value.meta.total != favorite_paginate.value.length) {
-    current_page.value = current_page.value + 1
+  try {
+    favorite_data.value = await getFavorites(data_url.value)
+    if (favorite_data.value.data) {//success
+      favorite_paginate.value = favorite_paginate.value.concat(favorite_data.value.data)
+      if (favorite_data.value.meta.total != favorite_paginate.value.length) {
+        current_page.value = current_page.value + 1
+      }
+    } else {
+      data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value - 1))
+    }
+  } catch (error) {
+    console.log("Failed to fetch data:", error)
+    data_url.value = data_url.value.replace('&page=' + current_page.value, '&page=' + (current_page.value - 1))
   }
   infinite_scroll_loading.value = false
 }
- 
+
 </script>

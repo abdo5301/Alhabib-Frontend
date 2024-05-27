@@ -49,7 +49,7 @@
               data-disable-paylater="true">
             </div>
             <!-- Free Shipping Alert -->
-            <div
+            <div v-if="cartShipping == 0"
               class="bg-green-50 text-green-800 rounded-lg h-10 w-full flex items-center justify-center flex-shrink-0 lg:text-base text-sm leading-5 font-semibold">
               <span class="w-full flex items-center justify-center gap-[10px]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -100,7 +100,7 @@ import { initFlowbite } from 'flowbite'
 definePageMeta({ middleware: ['auth'] })
 const lang = useNuxtApp().$lang
 const cart_data = ref([])
-const { cartData, setCartData, cartCount, cartItems, cartTotal, cartTotals } = useCart()
+const { cartData, setCartData, cartCount, cartItems, cartTotal, cartTotals,cartShipping } = useCart()
 const emptyText = ref('')
 const website_name = useState('website_name');
 const localePath = useLocalePath()

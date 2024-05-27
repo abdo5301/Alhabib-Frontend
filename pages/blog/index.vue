@@ -62,11 +62,20 @@ const blog_items = ref([])
 const empty_data = ref(false)
 onMounted(async () => {
   initFlowbite()
-  blog_data.value = await getArticles(data_url.value)
-  if (blog_data.value.data && !isEmpty(blog_data.value.data)) {
-    blog_items.value = blog_items.value.concat(blog_data.value.data)
-  } else {
-    empty_data.value = true
+  try {
+    blog_data.value = await getArticles(data_url.value)
+    if (blog_data.value.data && !isEmpty(blog_data.value.data)) {//success
+      blog_items.value = blog_items.value.concat(blog_data.value.data)
+    } else {
+      empty_data.value = true
+    }
+  } catch (error) {
+    console.log("Failed to fetch data:", error)
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'No Articles Found !',
+      fatal: true
+    })
   }
   data_loader.value = false
 })
@@ -79,11 +88,21 @@ async function loadMore() {
     data_url.value += '?page=' + (current_page.value + 1)
   }
 
-  blog_data.value = await getArticles(data_url.value)
-  blog_items.value = blog_items.value.concat(blog_data.value.data)
-  if (blog_data.value.meta.total != blog_items.value.length) {
-    current_page.value = current_page.value + 1
+  try {
+    blog_data.value = await getArticles(data_url.value)
+    if (blog_data.value.data) {//success
+      blog_items.value = blog_items.value.concat(blog_data.value.data)
+      if (blog_data.value.meta.total != blog_items.value.length) {
+        current_page.value = current_page.value + 1
+      }
+    } else {//reset url page parameter
+      data_url.value = data_url.value.replace('?page=' + current_page.value, '?page=' + (current_page.value - 1))
+    }
+  } catch (error) {
+    console.log("Failed to fetch data:", error)
+    data_url.value = data_url.value.replace('?page=' + current_page.value, '?page=' + (current_page.value - 1))
   }
+
   infinite_scroll_loading.value = false
 }
 
