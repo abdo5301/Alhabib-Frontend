@@ -25,12 +25,15 @@
       </div>
     </div>
 
-    <PrimeCarousel  v-else dir="ltr" :show-navigators="false" :show-indicators="false"
-      :value="[{ src: '/images/banner/main-banner-1.jpg' }, { src: '/images/banner/main-banner-2.jpg' }]"
+    <PrimeCarousel v-else dir="ltr" :show-navigators="false" :show-indicators="false"
+      :value="[{ src: '/images/banner/main-banner-1.jpg', link: localePath('/offers-and-discounts') }, { src: '/images/banner/main-banner-2.jpg', link: localePath('/quilts') }]"
       :numVisible="1" :num-scroll="1" circular :autoplayInterval="6000">
       <template #item="slotProps">
-        <NuxtPicture format="avif,webp" :src="slotProps.data.src" loading="lazy"  preload :imgAttrs="{class:'w-full lg:h-full h-[282px] object-cover'}" class="w-full lg:h-full h-[282px]" width="1920px" quality="80"
-          alt="Alhabib-slider" />
+        <NuxtLink :to="slotProps.data.link">
+          <NuxtPicture format="avif,webp" :src="slotProps.data.src" loading="lazy" preload
+            :imgAttrs="{ class: 'w-full lg:h-full h-[282px] object-cover' }" class="w-full lg:h-full h-[282px]"
+            width="1920px" quality="80" alt="Alhabib-slider" />
+        </NuxtLink>
       </template>
     </PrimeCarousel>
 
@@ -62,7 +65,7 @@ const props = defineProps({
     type: Object
   }
 })
-
+const localePath = useLocalePath()
 const banner_type = ref('static')
 
 if (props.banner_data && props.banner_data[1].data.length > 0) {
