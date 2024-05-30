@@ -42,7 +42,7 @@
           class="flex pb-2 lg:gap-7 gap-3 justify-start items-stretch overflow-x-auto w-full mx-auto">
           <ProductBeforeYouGoProduct v-for="(product, index) in related_products.products" :name="product.name"
             :key="index" :price="product.started_price" :special="product.started_discounted_price"
-            :image="product.media && product.media.images && product.media.images.length > 0 ? product.media.images[0] : null"
+            :image="product.media && product.media.images && product.media.images.length > 0 ? product.media.images[0].url : null"
             :link="localePath('/' + product.slug)" @favorite-click="product.favorite != product.favorite"
             :favorite="product.favorite" />
         </div>
