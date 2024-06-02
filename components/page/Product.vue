@@ -442,7 +442,7 @@ async function addToCart() {
         }
       }
       dataLayer.push(event_data);
-      console.log(dataLayer);
+      //console.log(dataLayer);
     }
   }
 }
