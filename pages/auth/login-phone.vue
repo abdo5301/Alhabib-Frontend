@@ -16,11 +16,13 @@
 
           <div
             class="absolute bg-white flex px-7 py-[9px] top-0 rtl:right-[-1px] ltr:left-[-0.5px]  transform -translate-x-0 -translate-y-10  border rounded-t-md border-gray-300 border-b-white">
-            <span class="text-gray-700 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_phone') }}</span>
+            <span class="text-gray-700 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_phone')
+              }}</span>
           </div>
           <NuxtLink :to="localePath('/login-email')"
             class="absolute bg-white flex px-4 py-[7px] top-0 left-[45%] transform sm:-translate-x-[58px] ltr:lg:-translate-x-[30px] ltr:-translate-x-[15px] -translate-y-[63px] -translate-x-[60%]">
-            <span class="text-gray-500 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_email') }}</span>
+            <span class="text-gray-500 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_email')
+              }}</span>
           </NuxtLink>
 
           <Alert class="h-[29px] flex items-center" color="red" v-if="login_error" :alert_icon="true">
@@ -28,10 +30,11 @@
               {{ $t('validation_login_phone_1') }}
               <NuxtLink :to="localePath('/register')" class="font-bold inline-flex items-center gap-1">
                 {{ $t('validation_login_phone_2') }}
-                <svg class="ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13"
-                  fill="none">
+                <svg class="ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" width="14" height="13"
+                  viewBox="0 0 14 13" fill="none">
                   <g clip-path="url(#clip0_1_3236)">
-                    <path d="M5.814 11.2913L1.74414 7.49967M1.74414 7.49967L5.814 3.70801M1.74414 7.49967L12.2095 7.49967"
+                    <path
+                      d="M5.814 11.2913L1.74414 7.49967M1.74414 7.49967L5.814 3.70801M1.74414 7.49967L12.2095 7.49967"
                       stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </g>
                   <defs>
@@ -46,8 +49,9 @@
           </Alert>
 
           <Input v-model="phone" :label_name="$t('label_phone')" label_for="phone" input_id="input-phone"
-            input_name="phone" input_type="text" input_dir="ltr" :input_phone_country="true" input_placeholder="534398859"
-            @phone-country="getPhoneCountry" :error_text="phone_error" input_aria_describedby="input-phone-error" />
+            input_name="phone" input_type="text" input_dir="ltr" :input_phone_country="true"
+            input_placeholder="534398859" @phone-country="getPhoneCountry" :error_text="phone_error"
+            input_aria_describedby="input-phone-error" />
 
           <div class="flex items-center justify-between mt-1">
             <div class="flex items-center ">
@@ -59,8 +63,9 @@
             </div>
           </div>
         </div>
-        <Button type="submit" color="black" class="flex w-full justify-center" :outline="false" :disabled="!unDisabled">{{
-          $t('login_title') }}</Button>
+        <Button type="submit" color="black" class="flex w-full justify-center" :outline="false"
+          :disabled="!unDisabled">{{
+            $t('login_title') }}</Button>
 
         <div class="flex items-center mt-1">
           <div class="text-xs text-gray-900">
@@ -124,12 +129,25 @@ async function login() {
     console.log(error.data.message)
     if (error.data.message === "validation.phone") {
       phone_error.value = t('validation_error_phone')
+      triggerPhoneLoginDataLayer('فشل تسجيل الدخول: رقم الهاتف غير صحيح')
     } else if (error.data.message === "The customer was not found") {
       login_error.value = 'validation_login'
+      triggerPhoneLoginDataLayer('فشل تسجيل الدخول: رقم الهاتف غير مسجل')
     } else {
       login_error.value = error.data.message
     }
 
+  }
+}
+
+function triggerPhoneLoginDataLayer(message) {//google analytics
+  if (typeof dataLayer !== 'undefined') {
+    dataLayer.push({
+      'event': 'login',
+      'eventCat': 'User Properties',
+      'method ': 'Mobile Number',
+      'status': message ??= '',
+    })
   }
 }
 

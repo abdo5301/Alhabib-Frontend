@@ -15,11 +15,13 @@
 
           <NuxtLink :to="localePath('/login')"
             class="absolute bg-white flex px-4 py-[7px] top-0 rtl:right-0 ltr:left-0 transform -translate-x-0 -translate-y-10">
-            <span class="text-gray-500 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_phone') }}</span>
+            <span class="text-gray-500 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_phone')
+              }}</span>
           </NuxtLink>
           <div
             class="absolute bg-white flex px-4 ltr:px-9 py-[9px] top-0 left-1/2 transform rtl:sm:-translate-x-[58px] ltr:-translate-x-[75px] -translate-y-[63px] -translate-x-[60%] border rounded-t-md border-gray-300 border-b-white ">
-            <span class="text-gray-700 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_email') }}</span>
+            <span class="text-gray-700 lg:text-base text-sm leading-5 lg:leading-5 font-semibold">{{ $t('label_email')
+              }}</span>
           </div>
 
           <Alert class="h-[29px] flex items-center" color="red" v-if="login_error" :alert_icon="true">
@@ -27,10 +29,11 @@
               {{ $t('validation_login_email_1') }}
               <NuxtLink :to="localePath('/register')" class="font-bold inline-flex items-center gap-1">
                 {{ $t('validation_login_email_2') }}
-                <svg class="ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13"
-                  fill="none">
+                <svg class="ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" width="14" height="13"
+                  viewBox="0 0 14 13" fill="none">
                   <g clip-path="url(#clip0_1_3236)">
-                    <path d="M5.814 11.2913L1.74414 7.49967M1.74414 7.49967L5.814 3.70801M1.74414 7.49967L12.2095 7.49967"
+                    <path
+                      d="M5.814 11.2913L1.74414 7.49967M1.74414 7.49967L5.814 3.70801M1.74414 7.49967L12.2095 7.49967"
                       stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </g>
                   <defs>
@@ -63,8 +66,9 @@
             </div>
           </div>
         </div>
-        <Button type="submit" color="black" class="flex w-full justify-center" :outline="false" :disabled="!unDisabled">{{
-          $t('login_title') }}</Button>
+        <Button type="submit" color="black" class="flex w-full justify-center" :outline="false"
+          :disabled="!unDisabled">{{
+            $t('login_title') }}</Button>
 
         <div class="flex items-center mt-1">
           <div class="text-xs text-gray-900">
@@ -121,6 +125,7 @@ async function login() {
     })
     if (auth_token.data && auth_token.data.access_token) {
       useAuth().setUser(auth_token.data.access_token)
+      triggerEmailLoginDataLayer('النجاح في تسجيل الدخول')
       window.location.pathname = redirect_page.value
     } else {
       login_error.value = 'Token not found..Please try again'
@@ -131,17 +136,31 @@ async function login() {
       if (error.data.message === "Server Error") {
         login_error.value = 'validation_login'
         email_error.value = ' '
+        triggerEmailLoginDataLayer('فشل تسجيل الدخول: البريد الإلكتروني غير مسجل')
       } else if (error.data.message === "Too Many Attempts.") {
         login_error.value = t('validation_login_to_many')
+        triggerEmailLoginDataLayer('فشل تسجيل الدخول: الحد الاقصى من المحاولات')
       } else if (error.data.message === "Email or password are wrong") {
         login_error.value = t('validation_error_email')
         email_error.value = ' '
         password_error.value = ' '
+        triggerEmailLoginDataLayer('فشل تسجيل الدخول: البريد الإلكتروني أو كلمة المرور خاطئة')
       } else {
         login_error.value = error.data.message
       }
     }
 
+  }
+}
+
+function triggerEmailLoginDataLayer(message) {//google analytics
+  if (typeof dataLayer !== 'undefined') {
+    dataLayer.push({
+      'event': 'login',
+      'eventCat': 'User Properties',
+      'method ': 'Email',
+      'status': message ??= '',
+    })
   }
 }
 

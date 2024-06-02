@@ -175,6 +175,10 @@ export function useCart() {
       : 0
   })
 
+  const cartWalletStatus = computed(() => {
+    return cartData.value && cartData.value.wallet_enabled == true ? true : false
+  })
+
   const cartCoupon = computed(() => {
     return cartData.value && cartData.value.coupon ? cartData.value.coupon : 0
   })
@@ -206,6 +210,7 @@ export function useCart() {
     cartShipping,
     cartTax,
     cartWalletCredit,
+    cartWalletStatus,
     cartCoupon,
     cartCouponCode,
     cartTotals,

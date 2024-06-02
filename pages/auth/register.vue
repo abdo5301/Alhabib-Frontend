@@ -21,8 +21,7 @@
           <p class="text-sm font-normal text-yellow-700">
             {{ register_error == "email_exist" ? $t('register_error_email_exist') : $t('register_error_phone_exist')
             }}
-            <NuxtLink
-              :to="register_error == 'email_exist' ? localePath('/login-email') : localePath('/login')"
+            <NuxtLink :to="register_error == 'email_exist' ? localePath('/login-email') : localePath('/login')"
               class="font-bold inline-flex items-center">
               {{ $t('login_title') }}
             </NuxtLink>
@@ -110,6 +109,7 @@ async function register() {
       }
     })
     useAuth().setUserOTP(phone_country.value + phone.value, localePath('/login'))
+    triggerRegisterDataLayer('نجاح التسجيل')
     window.location.pathname = localePath('/phone-confirm');
   } catch (error) {
     console.log(error.data)
@@ -125,23 +125,30 @@ async function register() {
               } else {
                 name_error.value = error_value
               }
+              triggerRegisterDataLayer('فشل التسجيل: الاسم غير صالح')
               break;
             case 'mobile_ie164':
               if (error_value == "The mobile ie164 has already been taken.") {
                 register_error.value = "phone_exist"
+                triggerRegisterDataLayer('فشل التسجيل: رقم الجوال مسجل مسبقا')
               } else if (error_value == "validation.phone") {
                 phone_error.value = t('validation_error_phone')
+                triggerRegisterDataLayer('فشل التسجيل: رقم الجوال غير صحيح')
               } else {
                 phone_error.value = error_value
+                triggerRegisterDataLayer('فشل التسجيل: رقم الجوال غير صحيح')
               }
               break;
             case 'email':
               if (error_value == "The email has already been taken.") {
                 register_error.value = "email_exist"
+                triggerRegisterDataLayer('فشل التسجيل: البريد الإلكتروني مسجل مسبقا')
               } else if (error_value == "The email field must be a valid email address.") {
                 email_error.value = t('validation_error_email_not_valid')
+                triggerRegisterDataLayer('فشل التسجيل: البريد الإلكتروني غير صحيح')
               } else {
                 email_error.value = error_value
+                triggerRegisterDataLayer('فشل التسجيل: البريد الإلكتروني غير صحيح')
               }
               break;
             case 'password':
@@ -149,6 +156,7 @@ async function register() {
                 password_error.value = t('validation_required_password')
               } else if (error_value == "The password field must be at least 6 characters.") {
                 password_error.value = t('validation_error_password')
+                triggerRegisterDataLayer('فشل التسجيل: كلمة المرور أقل من المطلوب')
               } else {
                 password_error.value = error_value
               }
@@ -160,13 +168,26 @@ async function register() {
       } else {//Server errors
         if (error.data.message === "Server Error") {
           register_error.value = "Server Error"
+          triggerRegisterDataLayer('فشل التسجيل: مشكلة في الخادم')
         } else if (error.data.message === "Too Many Attempts.") {
           register_error.value = t('validation_login_to_many')
+          triggerRegisterDataLayer('فشل التسجيل: الحد الأقصى من المحاولات')
         } else {
           register_error.value = error.data.message
         }
       }
     }
+  }
+}
+
+function triggerRegisterDataLayer(message) {//google analytics
+  if (typeof dataLayer !== 'undefined') {
+    dataLayer.push({
+      'event': 'sign_up',
+      'eventCat': 'User Properties',
+      'method ': 'Email',
+      'status': message ??= '',
+    })
   }
 }
 

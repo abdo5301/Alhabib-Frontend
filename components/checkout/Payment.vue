@@ -72,7 +72,8 @@
     </h4>
 
     <!-- Wallet -->
-    <CheckoutWallet :credit="wallet_credit" :wallet_status="wallet_status" @wallet-status='toggleWalletStatus' />
+    <CheckoutWallet v-if="admin_wallet_status" :credit="wallet_credit" :wallet_status="wallet_status"
+      @wallet-status='toggleWalletStatus' />
 
     <!-- Payment Methods Container -->
     <div v-if='payment_methods_array && payment_methods_array.length > 0' class='flex flex-col gap-[15px]'>
@@ -87,7 +88,7 @@
     </div>
 
     <!-- Alrajhi Mokafaah Points -->
-    <CheckoutAlrajhiPoints />
+    <CheckoutAlrajhiPoints v-if="admin_wallet_status" />
 
     <!-- Order Submit -->
     <button v-if='!selectedApplePayMethod' id='order-save-btn'
@@ -124,7 +125,7 @@ const submit_loading = ref(false)
 const route = useRoute()
 const localePath = useLocalePath()
 const lang = useNuxtApp().$lang
-const { cartTotal, setCartData, cartWalletCredit } = useCart()
+const { cartTotal, setCartData, cartWalletCredit, cartWalletStatus } = useCart()
 const { setSuccessOrderId, saveOrderPayment, cancelOrder, addOrder, getOrder } = useOrder()
 const config = useRuntimeConfig()
 const selectedApplePayMethod = ref(false)
@@ -138,7 +139,7 @@ const payment_methods_array = ref(await allPaymentMethods())
 //Wallet
 const wallet_credit = ref(0)
 const wallet_status = ref(cartWalletCredit.value && cartWalletCredit.value > 0 ? true : false)
-
+const admin_wallet_status = ref(cartWalletStatus.value ??= false)
 //Tabby
 const tabby_session = ref({})
 const tabby_pay_id = ref(0)

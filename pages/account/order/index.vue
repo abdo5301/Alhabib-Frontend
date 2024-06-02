@@ -97,7 +97,7 @@ onMounted(async () => {
   initFlowbite()
   setActiveSection('orders')
   orders.value = await useOrder().getAllOrders()
-  items_loader.value = false 
+  items_loader.value = false
   // set cancel order confirm popup
   const cancel_confirm_popup = document.getElementById('cancel-order-confirm-popup');
 
@@ -147,6 +147,21 @@ async function cancelAction() {
     items_loader.value = true
     orders.value = await useOrder().getAllOrders(active_tab.value)
     orders_div_key.value += 3
+    const cancel_order_data = await useOrder().getOrder(cancel_order_id.value) 
+    if (typeof dataLayer !== "undefined") {//for google analytics
+      dataLayer.push({
+        'event': 'refund',
+        'eventCat': 'eCommerce',
+        'eventLbl': cancel_order_id.value, // Transaction ID.
+        'eventVal': Number(cancel_order_data.total), // Total value.
+        'ecommerce': {
+          'currencyCode': 'SAR',
+          'refund': {
+            'actionField': { 'id': cancel_order_id.value }, // Transaction ID.
+          }
+        }
+      });
+    }
     items_loader.value = false
   } else {
     alert("Server Error!..Please Try Again Later.")

@@ -90,7 +90,7 @@
         </div>
       </div>
     </div>
-    <CheckoutAlrajhiPoints />
+    <CheckoutAlrajhiPoints  v-if="wallet_status"/>
   </div>
 </template>
 
@@ -105,6 +105,7 @@ const { getWalletData, getWalletTransactions } = useWallet()
 const wallet_data = ref({})
 const wallet_transactions = ref({})
 const transactions_paginate = ref([])
+const wallet_status = ref(false)
 const data_loader = ref(true)
 const infinite_scroll_loading = ref(false)
 const current_page = ref(1)
@@ -118,6 +119,7 @@ onMounted(async () => {
     if (wallet_transactions.value.data) {
       transactions_paginate.value = transactions_paginate.value.concat(wallet_transactions.value.data)
     }
+    wallet_status.value = wallet_data.value.wallet_enabled
   }
   data_loader.value = false
 })
