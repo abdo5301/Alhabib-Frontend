@@ -132,7 +132,7 @@
               </svg>
               <span class="text-gray-400 text-xs lg:text-sm font-semibold uppercase leading-4">{{
                 $t('shipping_company_title')
-                }}</span>
+              }}</span>
               <div class="h-6 flex flex-col justify-center text-gray-900 text-xs font-semibold uppercase leading-4">{{
                 order_data.shipping_method_name }}</div>
             </div>
@@ -145,7 +145,7 @@
               </svg>
               <span class="text-gray-400 text-xs lg:text-sm font-semibold uppercase leading-4">{{
                 $t('shipping_number_title')
-                }}</span>
+              }}</span>
               <span class="h-6 flex flex-col justify-center text-gray-900 text-xs font-semibold uppercase leading-4">#{{
                 order_data.shipment_label_id }}</span>
             </div>
@@ -158,7 +158,7 @@
               </svg>
               <span class="text-gray-400 text-xs lg:text-sm font-semibold uppercase leading-4">{{
                 $t('shipping_contact_title')
-                }}</span>
+              }}</span>
               <span dir="ltr"
                 class="h-6 flex flex-col justify-center text-gray-900 text-xs font-semibold uppercase leading-4">{{
                   order_data.contact_number }}</span>
@@ -471,10 +471,24 @@ async function cancelAction() {
     data_loader.value = true
     order_data.value = await getOrder(order_id.value)
     order_status.value = order_data.value.state.id
-    order_data.value.order_items.forEach((value, index) => {
+    order_data.value.order_items.forEach((value, index) => { //order qty sum 
       order_quantity.value += parseInt(value.quantity);
     });
     data_div_key.value += 3
+    if (typeof dataLayer !== "undefined") {//for google analytics
+      dataLayer.push({
+        'event': 'refund',
+        'eventCat': 'eCommerce',
+        'eventLbl': order_id.value, // Transaction ID.
+        'eventVal': Number(order_data.value.total), // Total value.
+        'ecommerce': {
+          'currencyCode': 'SAR',
+          'refund': {
+            'actionField': { 'id': order_id.value }, // Transaction ID.
+          }
+        }
+      });
+    }
     data_loader.value = false
   } else {
     alert("Server Error!..Please Try Again Later.")

@@ -19,8 +19,9 @@
         <Input :error_text="validation_error" :input_phone_otp="true" v-model="code" :label_name="$t('label_otp')"
           @resend-otp="new_otp" label_for="code" input_id="input-code" input_name="code" input_dir="ltr" />
 
-        <Button type="submit" color="black" class="flex w-full justify-center" :outline="false" :disabled="!unDisabled">{{
-          $t('login_title') }}</Button>
+        <Button type="submit" color="black" class="flex w-full justify-center" :outline="false"
+          :disabled="!unDisabled">{{
+            $t('login_title') }}</Button>
 
       </form>
 
@@ -85,6 +86,7 @@ async function login() {
     })
     if (auth_token.data && auth_token.data.access_token) {
       useAuth().setUser(auth_token.data.access_token)
+      triggerPhoneLoginDataLayer('النجاح في تسجيل الدخول')
       window.location.pathname = redirect_page.value
     } else {
       validation_error.value = 'Token not found..Please try again!'
@@ -95,11 +97,24 @@ async function login() {
     error.data.errors ??= {}
     if (error.data.errors.code) {
       validation_error.value = t('phone_confirm_error')
+      triggerPhoneLoginDataLayer('فشل تسجيل الدخول: رمز التحقق من الهاتف غير صحيح')
     } else if (error.data.errors.mobile) {
       validation_error.value = t('validation_error_phone')
+      triggerPhoneLoginDataLayer('فشل تسجيل الدخول: رقم الهاتف غير صحيح')
     } else {
       validation_error.value = error.data.message
     }
+  }
+}
+
+function triggerPhoneLoginDataLayer(message) {//google analytics
+  if (typeof dataLayer !== 'undefined') {
+    dataLayer.push({
+      'event': 'login',
+      'eventCat': 'User Properties',
+      'method ': 'Mobile Number',
+      'status': message ??= '',
+    })
   }
 }
 
