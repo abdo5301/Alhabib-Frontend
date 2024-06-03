@@ -3,19 +3,23 @@
     class="flex relative container flex-col gap-12 justify-center items-center z-30 lg:px-5 w-full">
     <!-- Slider -->
     <div id="product-carousel" class="block relative w-full ">
-      <div class="relative overflow-hidden h-[377px] lg:h-[700px]">
+      <div class="relative overflow-hidden h-[350px] lg:h-[700px]">
         <!-- Slider items -->
         <div :id="'product-carousel-' + index" ref="sliderImagesRefs" v-for="item, index in images" :key="index"
           class="hidden duration-700 ease-in-out cursor-pointer"
           @click="zoomModal.show(), zoomModalImage = item.url, zoomModalType = 'image'">
-          <img loading="lazy" :src="item.url"
-            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="image">
+          <NuxtImg loading="lazy" :src="item.url" width="50vh" quality="90" placeholder="/images/image-loader.svg"
+            placeholder-class="object-none"
+            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="product-image" />
         </div>
-        <div :id="'video-product-carousel-' + Number(index + images.length)" ref="sliderVideosRefs" v-for="item, index in videos" :key="index"
-          class="hidden duration-700 ease-in-out cursor-pointer"
+        <div :id="'video-product-carousel-' + Number(index + images.length)" ref="sliderVideosRefs"
+          v-for="item, index in videos" :key="index" class="hidden duration-700 ease-in-out cursor-pointer"
           @click="zoomModal.show(), zoomModalImage = item.url, zoomModalType = 'video'">
-          <img loading="lazy" :src="item.url"
-            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="video">
+          <NuxtImg loading="lazy" :src="item.url" width="50vh" quality="90" placeholder="/images/image-loader.svg"
+            placeholder-class="object-none"
+            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="product-video" />
         </div>
       </div>
 
@@ -25,12 +29,14 @@
         <div class="flex-shrink-0 lg:w-[123px] w-[77px] lg:h-[118px] h-[72px] cursor-pointer flex items-center"
           ref="indicatorImagesRefs" :id="'product-carousel-indicator-' + index" v-for="item, index in images"
           :key="index">
-          <img loading="lazy" class="lg:w-[123px] w-[77px] lg:h-[118px] h-[72px]" :src="item.url" alt="">
+          <NuxtImg loading="lazy" class="lg:w-[123px] w-[77px] lg:h-[118px] h-[72px]" :src="item.url"
+            alt="product-image" width="50px" placeholder="/images/image-loader.svg" placeholder-class="object-none width-5"/>
         </div>
         <div class="flex-shrink-0 lg:w-[123px] w-[77px] lg:h-[118px] h-[72px] cursor-pointer flex items-center relative"
-          ref="indicatorVideosRefs" :id="'video-product-carousel-indicator-' + Number(index + images.length)" v-for="item, index in videos"
-          :key="index">
-          <img loading="lazy" class="lg:w-[123px] w-[77px] lg:h-[118px] h-[72px]" :src="item.url" alt="">
+          ref="indicatorVideosRefs" :id="'video-product-carousel-indicator-' + Number(index + images.length)"
+          v-for="item, index in videos" :key="index">
+          <NuxtImg loading="lazy" class="lg:w-[123px] w-[77px] lg:h-[118px] h-[72px]" :src="item.url"
+            alt="product-video" width="70px" placeholder="/images/image-loader.svg" placeholder-class="object-none width-5"/>
           <span class="absolute w-full flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53" fill="none">
               <path d="M52.0578 26.5772L0.984641 52.7799L1.11791 0.116332L52.0578 26.5772Z" fill="#E5E7EB" />
@@ -70,8 +76,9 @@
   <!-- Single Image -->
   <div v-if="images && images.length == 1"
     class="h-[377px] lg:h-[888px] flex relative container flex-col gap-12 justify-center items-center z-30 lg:px-5">
-    <img :src="images[0].url" @click="zoomModal.show(), zoomModalImage = images[0].url"
-      class="lg:max-w-5xl max-w-md flex-shrink-0 my-auto h-full w-full cursor-pointer" alt="product-image">
+    <NuxtImg :src="images[0].url" @click="zoomModal.show(), zoomModalImage = images[0].url"
+      class="lg:max-w-5xl max-w-md flex-shrink-0 my-auto h-full w-full cursor-pointer" alt="product-image" width="50vh"
+      quality="90" placeholder="/images/image-loader.svg" placeholder-class="object-none" />
   </div>
   <!-- Modal content -->
   <div id="image-zoom-modal" tabindex="-1"

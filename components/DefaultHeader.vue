@@ -24,11 +24,8 @@
 
             <!-- Right Section -->
             <div class="flex lg:gap-6 items-center w-1/3">
-              <ClientOnly>
-                <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
-                </MobileNavbarMenu>
-              </ClientOnly>
-
+              <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
+              </MobileNavbarMenu>
 
               <div class="hidden lg:flex lg:items-center">
                 <!-- Language -->
@@ -196,8 +193,8 @@
             :to="localePath('/' + search_item.slug)"
             class="flex justify-between gap-2 items-center p-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-600 hover:text-white shadow-md">
             <span class="text-sm lg:text-base">{{ search_item.name }}</span>
-            <NuxtImg :alt="search_item.name" loading="lazy" placeholder="/images/placeholder-logo.png" width="80"
-              class="w-[60px] lg:w-[80px] rounded-sm"
+            <NuxtImg :alt="search_item.name" loading="lazy" placeholder="/images/image-loader.svg"
+              placeholder-class="object-none width-4" width="80" quality="60" class="w-[60px] lg:w-[80px] rounded-sm"
               :src="search_item.media.images && search_item.media.images.length ? search_item.media.images[0].url : '/images/placeholder-logo.png'" />
           </NuxtLink>
         </div>
@@ -218,6 +215,7 @@ import { Drawer, Modal } from 'flowbite';
 import { debounce } from 'lodash-es'
 const page_scrolled = ref(false);
 const localePath = useLocalePath()
+const config = useRuntimeConfig()
 const switchLocalePath = useSwitchLocalePath()
 const availableLocales = useNuxtApp().$all_lang
 const lang = useNuxtApp().$lang
@@ -225,7 +223,6 @@ const route = useRoute()
 const cartDrawer = ref()
 const { cartData, cartPopUpKey, setCartData } = useCart()
 const cart_data = ref([])
-const navigation = ref([])
 //search
 const search = ref('')
 const search_input = ref()
@@ -273,10 +270,10 @@ onMounted(async () => {
     setCartData(cart_data.value)
   }
 })
-try {
-  navigation.value = await useNuxtApp().$apiFetch('/categories')
-} catch (error) {
-  console.log(error.data)
+//Category Menu
+const { data: navigation, error: navigation_error } = await useAsyncData('navbar_categories', () => $fetch(config.public.API_URL + '/categories'))
+if (navigation_error.value) {
+  console.log(navigation_error.value.data)
 }
 
 const getSearch = debounce(async function (event) {

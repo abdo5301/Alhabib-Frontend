@@ -176,6 +176,6 @@ function triggerClickProduct(related_product = null) {
       }
     });
   }
-  console.log(dataLayer);
+  // console.log(dataLayer);
 }
 </script>

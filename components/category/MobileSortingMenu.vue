@@ -14,8 +14,8 @@
   </button>
 
   <!-- Dropdown menu -->
-  <div id="mobileSortingDropdown" class="z-30 hidden bg-gray-50 shadow w-[180px] border border-gray-300 rounded-md">
-    <ul class="text-xs leading-6 text-center font-medium text-gray-600 divide-y divide-gray-300">
+  <div id="mobileSortingDropdown" class="z-30 hidden bg-white shadow w-[180px] border border-gray-300 rounded-md">
+    <ul class="text-xs leading-6 text-center font-medium text-gray-600 divide-y divide-gray-300 ">
       <li @click="dropdown.hide()" v-for="option, index in sorting_options">
         <NuxtLink to="javascript:void(0)" @click="$emit('updateSortingValue', option.key), menu_title = option.name"
           class="block px-4 py-2 hover:bg-gray-100 rounded-md">
