@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     'nuxt-primevue',
     'nuxt-aos',
     ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
-    "@nuxt/image"
+    "@nuxt/image",
+    "@nuxtjs/html-validator"
   ],
   experimental: {
     viewTransition: true,
