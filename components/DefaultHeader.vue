@@ -225,6 +225,7 @@ const route = useRoute()
 const cartDrawer = ref()
 const { cartData, cartPopUpKey, setCartData } = useCart()
 const cart_data = ref([])
+const navigation = ref({})
 //search
 const search = ref('')
 const search_input = ref()
@@ -273,9 +274,10 @@ onMounted(async () => {
   }
 })
 //Category Menu
-const { data: navigation, error: navigation_error } = await useAsyncData('navbar_categories', () => $fetch(config.public.API_URL + '/categories'))
-if (navigation_error.value) {
-  console.log(navigation_error.value.data)
+try {
+  navigation.value = await useNuxtApp().$apiFetch('/categories')
+} catch (error) {
+  console.log(error.data)
 }
 
 const getSearch = debounce(async function (event) {
