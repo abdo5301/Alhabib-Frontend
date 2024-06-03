@@ -1,10 +1,10 @@
 <template>
   <!-- Sorting Menu -->
   <button id="sortingDropdownButton"
-    :class="['w-[223px] mt-[6px] mx-1 text-gray-700 bg-white focus:outline-none ring-1 ring-gray-300 focus:ring-gray-300 font-bold rounded-md text-base leading-5 px-[13px] py-[9px] inline-flex items-end justify-start']"
+    :class="['w-[223px] mt-[6px] mx-1 text-gray-700 bg-white focus:outline-none ring-1 ring-gray-300 focus:ring-gray-300 font-bold rounded-md text-sm leading-5 px-[13px] py-[9px] inline-flex items-end justify-start']"
     type="button">
     <span class="w-full flex-1 flex">
-      {{ menu_title ?? $t('category_sorting_title') }}
+      {{ menu_title ??= $t('category_sorting_title') }}
     </span>
     <svg v-if="!show_menu" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path fill-rule="evenodd" clip-rule="evenodd"
@@ -21,7 +21,7 @@
   <!-- Dropdown menu -->
   <div id="sortingDropdown"
     class="z-30 hidden bg-white shadow w-[222px] border border-gray-300 border-t-0 rounded-br-md rounded-bl-md">
-    <ul class="text-base leading-5 font-medium text-gray-700 divide-y divide-gray-300">
+    <ul class="text-sm leading-5 font-medium text-gray-700 divide-y divide-gray-300">
       <li @click="dropdown.hide()" v-for="option, index in sorting_options"
         :key="option.key">
         <NuxtLink to="javascript:void(0)" class="block px-4 py-4 hover:bg-gray-100 rounded-md"

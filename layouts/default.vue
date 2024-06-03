@@ -5,7 +5,7 @@
 <template>
   <div class="bg-gray-50 flex flex-col h-screen text-gray-900 max-w-full">
     <Title>{{ title }}</Title>
-    <NuxtLoadingIndicator color="#cccccc" :height="3" />
+    <NuxtLoadingIndicator color="#a65858" :height="4" :duration="4000" :throttle="600"/>
     <DefaultHeader></DefaultHeader>
     <div class="flex-grow">
       <div v-if="route.path != '/' && route.path != '/en'" class="lg:h-[165px] h-[65px]"></div>

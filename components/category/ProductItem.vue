@@ -4,7 +4,8 @@
     <NuxtLink :to="link" class="relative w-full" @click="triggerClickProduct(null)">
       <NuxtImg loading="lazy" width="318px" height="304px"
         :class="[list_type == 'solo' ? 'h-[377px]' : 'h-[160px]', 'w-full lg:h-[304px] rounded-lg object-cover']"
-        :src="image ? image : '/images/placeholder-logo.png'" :alt="name" />
+        :src="image ? image : '/images/placeholder-logo.png'" :alt="name" placeholder="/images/image-loader.svg"
+        placeholder-class="object-none" />
       <span v-if="available == false"
         class="absolute top-0 rounded-lg bg-opacity-60 h-full w-full bg-[#F0EBEB] flex justify-center items-center">
         <span class="!opacity-100 text-gray-900 text-sm lg:text-base font-semibold">{{ $t('product_size_stock_alert')

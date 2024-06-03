@@ -1,6 +1,7 @@
 <template>
   <footer class="bg-gray-200 w-full max-w-full">
-    <div class="mx-auto lg:w-[90%] w-full bg-gray-200 overflow-x-hidden lg:block flex flex-col justify-center items-center">
+    <div
+      class="mx-auto lg:w-[90%] w-full bg-gray-200 overflow-x-hidden lg:block flex flex-col justify-center items-center">
       <div
         class="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between justify-center pt-[40px] lg:px-4 lg:pt-[73px] w-full">
         <!--Start Right Section -->
@@ -41,21 +42,24 @@
                 <NuxtLink :to="localePath('/blog')" class="hover:underline">{{ $t('footer_info_menu_blog') }}</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/sitemap.html" target="_blank" class="hover:underline">{{ $t('footer_info_menu_site_map') }}</NuxtLink>
+                <NuxtLink to="/sitemap.html" target="_blank" class="hover:underline">{{ $t('footer_info_menu_site_map')
+                  }}</NuxtLink>
               </li>
             </ul>
           </div>
           <div class="flex flex-col gap-4 w-44">
-            <NuxtLink :to="localePath('/branches-locations')" class="text-xl hover:underline  font-extrabold text-gray-600 uppercase">{{ $t('footer_branches_menu_title') }}</NuxtLink>
+            <NuxtLink :to="localePath('/branches-locations')"
+              class="text-xl hover:underline  font-extrabold text-gray-600 uppercase">{{
+                $t('footer_branches_menu_title') }}</NuxtLink>
           </div>
           <div class="flex">
             <NuxtLink target="_blank" to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
-              <NuxtImg src="/images/vat.png" width="50px" height="70px" alt="VAT" loading="lazy" preload />
+              <NuxtImg src="/images/vat.png" width="50px" height="70px" alt="VAT" loading="lazy" />
             </NuxtLink>
           </div>
           <div class="flex">
             <NuxtLink to="#">
-              <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" alt="NADAV" loading="lazy" preload />
+              <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" alt="NADAV" loading="lazy" />
             </NuxtLink>
           </div>
         </div>
@@ -92,12 +96,16 @@
             <div class="lg:gap-[14px] gap-2 w-full grid grid-cols-2">
               <NuxtLink target="_blank"
                 to="https://apps.apple.com/sa/app/%D9%85%D9%81%D8%A7%D8%B1%D8%B4-%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8/id1420285929">
-                <NuxtImg v-if="$lang.dir == 'rtl'" src="/images/download-app/app-store-ar.svg" width="202px" height="46px" loading="lazy" preload alt="App Store" />
-                <NuxtImg v-else src="/images/download-app/app-store-en.svg" width="202px" height="46px" loading="lazy" preload alt="App Store" />
+                <NuxtImg v-if="$lang.dir == 'rtl'" src="/images/download-app/app-store-ar.svg" width="202px"
+                  height="46px" loading="lazy" preload alt="App Store" />
+                <NuxtImg v-else src="/images/download-app/app-store-en.svg" width="202px" height="46px" loading="lazy"
+                  preload alt="App Store" />
               </NuxtLink>
               <NuxtLink target="_blank" to="https://play.google.com/store/apps/details?id=com.alhabibshop.android">
-                <NuxtImg v-if="$lang.dir == 'rtl'" src="/images/download-app/google-play-ar.svg" width="202px" height="46px" loading="lazy" preload alt="Google Play" />
-                <NuxtImg v-else src="/images/download-app/google-play-en.svg" width="202px" height="46px"  loading="lazy" preload alt="App Store"/>
+                <NuxtImg v-if="$lang.dir == 'rtl'" src="/images/download-app/google-play-ar.svg" width="202px"
+                  height="46px" loading="lazy" preload alt="Google Play" />
+                <NuxtImg v-else src="/images/download-app/google-play-en.svg" width="202px" height="46px" loading="lazy"
+                  preload alt="App Store" />
               </NuxtLink>
             </div>
           </div>
@@ -206,21 +214,25 @@
                   </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink to="/sitemap.html" target="_blank" class="hover:underline">{{ $t('footer_info_menu_site_map') }}
+                  <NuxtLink to="/sitemap.html" target="_blank" class="hover:underline">{{
+                    $t('footer_info_menu_site_map') }}
                   </NuxtLink>
                 </li>
               </ul>
             </div>
           </div>
           <div class="w-full flex flex-col items-center justify-center">
-            <NuxtLink :to="localePath('/branches-locations')" class="flex justify-center items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600">{{  $t('footer_branches_menu_title') }}</NuxtLink>
+            <NuxtLink :to="localePath('/branches-locations')"
+              class="flex justify-center items-center font-semibold border-b border-gray-500 w-full max-w-sm p-2 text-lg text-gray-600">
+              {{ $t('footer_branches_menu_title') }}</NuxtLink>
           </div>
         </div>
       </div>
 
       <hr class="hidden lg:block mb-5 mt-8 w-full border-black sm:mx-auto" />
 
-      <div class="flex flex-col lg:flex-row gap-8 items-center justify-between w-full max-w-full pb-3 lg:px-10 px-3 pt-7 lg:pt-0">
+      <div
+        class="flex flex-col lg:flex-row gap-8 items-center justify-between w-full max-w-full pb-3 lg:px-10 px-3 pt-7 lg:pt-0">
         <!--Copy Rights Section -->
         <span class="text-sm font-normal text-gray-700 order-2">
           {{ $t('footer_copy_right') }}

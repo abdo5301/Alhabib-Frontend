@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   primevue:{
     components:{
       prefix: 'Prime',
-      include: ['Carousel','Stepper','StepperPanel']
+      include: ['Stepper','StepperPanel']
     },
     cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities',
   },

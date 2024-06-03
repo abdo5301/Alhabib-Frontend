@@ -1,7 +1,7 @@
 <template>
   <div class="w-full mx-auto lg:h-auto lg:max-h-[600px] h-[281px] overflow-hidden">
     <!--  Single Image Banner -->
-    <div v-if="banner_type == 'fixed'" class="w-full">
+    <div v-if="banner_type == 'fixed'" class="w-full lg:h-[650px] h-[282px] mx-auto">
       <NuxtImg src="/images/banner/main-banner-1.jpg" alt="Alhabib-slider" loading="lazy" preload
         class="absolute h-[282px] lg:h-[515px] mx-auto right-0 left-0 top-0 w-full" />
     </div>
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <PrimeCarousel v-else dir="ltr" :show-navigators="false" :show-indicators="false"
+    <!-- <PrimeCarousel v-else dir="ltr" :show-navigators="false" :show-indicators="false"
       :value="[{ src: '/images/banner/main-banner-1.jpg', link: localePath('/offers-and-discounts') }, { src: '/images/banner/main-banner-2.jpg', link: localePath('/quilts') }]"
       :numVisible="1" :num-scroll="1" circular :autoplayInterval="6000">
       <template #item="slotProps">
@@ -35,26 +35,30 @@
             width="1920px" quality="80" alt="Alhabib-slider" />
         </NuxtLink>
       </template>
-    </PrimeCarousel>
+</PrimeCarousel> -->
 
-    <!-- <div v-else id="default-carousel" class="absolute top-0 left-0 right-0  h-[282px] lg:h-[515px] w-full mx-auto"
-      data-carousel="slide"> -->
-    <!-- Carousel Banner -->
-    <!-- <div class="relative h-full overflow-hidden"> -->
-    <!-- Item 1 -->
-    <!-- <div class="transform ease-in-out h-full" data-carousel-item>
-          <NuxtImg src="/images/banner/main-banner-1.jpg" loading="lazy" preload
-            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
-            alt="Alhabib-slider" />
-        </div> -->
-    <!-- Item 2 -->
-    <!-- <div class="transform ease-in-out h-full" data-carousel-item>
-          <NuxtImg src="/images/banner/main-banner-2.jpg" loading="lazy" preload
-            class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
-            alt="Alhabib-slider" />
+    <div v-else id="default-carousel" class="relative top-0 left-0 right-0 lg:h-[650px] h-[282px] w-full mx-auto"
+      data-carousel="slide" data-carousel-interval="9000">
+      <!-- Carousel Banner -->
+      <div class="relative h-full overflow-hidden">
+        <!-- Item 1 -->
+        <div class="hidden duration-700 transform ease-in-out h-full" data-carousel-item>
+          <NuxtLink :to="localePath('/offers-and-discounts')">
+            <NuxtImg src="/images/banner/main-banner-1.jpg" loading="lazy" preload width="1920px" quality="80"
+              class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
+              alt="Alhabib-slider" />
+          </NuxtLink>
+        </div>
+        <!-- Item 2 -->
+        <div class="hidden duration-700 transform ease-in-out h-full" data-carousel-item>
+          <NuxtLink :to="localePath('/quilts')">
+            <NuxtImg src="/images/banner/main-banner-2.jpg" loading="lazy" preload width="1920px" quality="80"
+              class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
+              alt="Alhabib-slider" />
+          </NuxtLink>
         </div>
       </div>
-    </div> -->
+    </div>
 
   </div>
 </template>
