@@ -24,8 +24,10 @@
 
             <!-- Right Section -->
             <div class="flex lg:gap-6 items-center w-1/3">
-              <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
-              </MobileNavbarMenu>
+              <ClientOnly>
+                <MobileNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
+                </MobileNavbarMenu>
+              </ClientOnly>
 
               <div class="hidden lg:flex lg:items-center">
                 <!-- Language -->
