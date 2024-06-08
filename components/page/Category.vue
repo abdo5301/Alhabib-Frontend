@@ -157,11 +157,11 @@ const category_meta_keyword = ref('')
 const { data: all_category_data, error, pending } = await useAsyncData(data_url.value, () => $fetch(data_url.value))
 if (error.value) {
   console.log(error.value.data)
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Category - Server Error',
-    fatal: true
-  })
+  // throw createError({
+  //   statusCode: 404,
+  //   statusMessage: 'Category - Server Error',
+  //   fatal: true
+  // })
 } else {
   category_data.value = all_category_data.value ??= {}
   //Reset category data reference

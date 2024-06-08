@@ -211,11 +211,11 @@ const { data: product_fetch_data, error, pending } = await useFetch(config.publi
 })
 if (error.value) {
   console.log(error.value.data)
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Product - Server Error',
-    fatal: true
-  })
+  // throw createError({
+  //   statusCode: 404,
+  //   statusMessage: 'Product - Server Error',
+  //   fatal: true
+  // })
 } else {
   //Reset product data reference
   product_data.value = product_fetch_data.value.data ??= {}
