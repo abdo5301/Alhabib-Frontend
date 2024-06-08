@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
-  target: 'server',
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
@@ -105,7 +104,7 @@ export default defineNuxtConfig({
   },
   css: ['primevue/resources/themes/aura-light-noir/theme.css'],
   tailwindcss: {
-    cssPath: '~/assets/css/tailwind.css',
+    cssPath: ['~/assets/css/tailwind.css',{ injectPosition: "first" }],
     configPath: './tailwind.config.js',
     exposeConfig: false,
     exposeLevel: 2,

@@ -21,11 +21,11 @@ const { data: slug_data, pending, error } = await useFetch(config.public.API_URL
 })
 if (error.value) { //error
   console.log(error.value.data)
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Server Error',
-    fatal: true
-  })
+  // throw createError({
+  //   statusCode: 404,
+  //   statusMessage: 'Slug - Server Error',
+  //   fatal: true
+  // })
 } else { //success
   if (!slug_data.value.data || !slug_data.value.data.slugable_type) {
     throw createError({ statusCode: 404, statusMessage: 'Slug not found', fatal: true })

@@ -132,10 +132,8 @@
             </div>
 
           </div>
-
           <DesktopNavbarMenu v-if="navigation.data && navigation.data.length" :menu_data="navigation">
           </DesktopNavbarMenu>
-
         </div>
       </nav>
     </header>
@@ -272,10 +270,14 @@ onMounted(async () => {
   if (cart_data.value && cart_data.value.id) {
     setCartData(cart_data.value)
   }
+
+
 })
+
 //Category Menu
 try {
-  navigation.value = await useNuxtApp().$apiFetch('/categories')
+  //  navigation.value = await useNuxtApp().$apiFetch('/categories')
+  navigation.value = await $fetch(config.public.API_URL + '/categories')
 } catch (error) {
   console.log(error.data)
 }
