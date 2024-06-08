@@ -23,7 +23,7 @@ if (error.value) { //error
   console.log(error.value.data)
   throw createError({
     statusCode: 404,
-    statusMessage: 'Server Error',
+    statusMessage: 'Slug - Server Error',
     fatal: true
   })
 } else { //success

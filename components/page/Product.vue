@@ -213,7 +213,7 @@ if (error.value) {
   console.log(error.value.data)
   throw createError({
     statusCode: 404,
-    statusMessage: 'Server Error',
+    statusMessage: 'Product - Server Error',
     fatal: true
   })
 } else {
