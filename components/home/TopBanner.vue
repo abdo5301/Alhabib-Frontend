@@ -43,7 +43,7 @@
       <div class="relative h-full overflow-hidden">
         <!-- Item 1 -->
         <div class="hidden duration-700 transform ease-in-out h-full" data-carousel-item>
-          <NuxtLink :to="localePath('/offers-and-discounts')">
+          <NuxtLink :to="localePath('/Eid-Collection')">
             <NuxtImg src="/images/banner/main-banner-1.jpg" loading="lazy" preload width="1920px" quality="80"
               class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
               alt="Alhabib-slider" />
