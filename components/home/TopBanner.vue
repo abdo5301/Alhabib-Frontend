@@ -17,7 +17,7 @@ const sliderImagesRefs = ref([])
 const sliders = [
   {
     src: '/images/banner/main-banner-1.jpg',
-    link: localePath('/offers-and-discounts'),
+    link: localePath('/Eid-Collection'),
     title:'Offers-Discounts'
   },
   {
