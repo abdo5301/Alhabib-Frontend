@@ -77,7 +77,8 @@
               <div class="flex items-center justify-center w-[110px] lg:w-[186px]">
                 <NuxtLink :to="localePath('/')">
                   <span class="sr-only">Your Company</span>
-                  <img class="w-full" src="/images/logo.svg" alt="" />
+                  <NuxtImg class="w-full" format="webp" quality="80" loading="lazy" width="200px" src="/images/logo.svg"
+                    alt="Alhabib-Bedding-Logo" />
                 </NuxtLink>
               </div>
             </div>
@@ -194,7 +195,8 @@
             class="flex justify-between gap-2 items-center p-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-600 hover:text-white shadow-md">
             <span class="text-sm lg:text-base">{{ search_item.name }}</span>
             <NuxtImg :alt="search_item.name" loading="lazy" placeholder="/images/image-loader.svg"
-              placeholder-class="object-none width-4" width="80" quality="60" class="w-[60px] lg:w-[80px] rounded-sm"
+              placeholder-class="object-none width-4" width="80" format="webp" quality="60"
+              class="w-[60px] lg:w-[80px] rounded-sm"
               :src="search_item.media.images && search_item.media.images.length ? search_item.media.images[0].url : '/images/placeholder-logo.png'" />
           </NuxtLink>
         </div>
@@ -213,6 +215,7 @@
 <script setup>
 import { Drawer, Modal } from 'flowbite';
 import { debounce } from 'lodash-es'
+const nuxtApp = useNuxtApp()
 const page_scrolled = ref(false);
 const localePath = useLocalePath()
 const config = useRuntimeConfig()
@@ -275,13 +278,49 @@ onMounted(async () => {
 })
 
 //Category Menu
-try {
-  //  navigation.value = await useNuxtApp().$apiFetch('/categories')
-  navigation.value = await $fetch(config.public.API_URL + '/categories')
-} catch (error) {
-  console.log(error.data)
-}
+// try {
+//   navigation.value = await $fetch(config.public.API_URL + '/categories')
+// } catch (error) {
+//   console.log(error.data)
+// }
 
+const { data: navigation_fetch, error: navigation_error } = await useLazyAsyncData('navbar-categories',
+  () => $fetch(config.public.API_URL + '/categories'), {
+  transform(input) {
+    return {
+      ...input,
+      fetchedAt: new Date()
+    }
+  },
+  getCachedData(key) {
+    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    // If data is not fetched yet
+    if (!data) {
+      // Fetch the first time
+      return
+    }
+    // Is the data too old?
+    const expirationDate = new Date(data.fetchedAt)
+    expirationDate.setTime(expirationDate.getTime() + 2629800 * 1000) //One month
+    const isExpired = expirationDate.getTime() < Date.now()
+    if (isExpired) {
+      // Refetch the data
+      return
+    }
+
+    return data
+  }
+})
+if (navigation_error.value) {
+  console.log(navigation_error.value.data)
+} else {
+  navigation.value = navigation_fetch.value ??= {}
+}
+watch(navigation_fetch, (new_navigation_fetch) => {
+  // Because filter_sorting_fetch might start out null, you won't have access
+  // to its contents immediately, but you can watch it.
+  navigation.value = new_navigation_fetch ??= {}
+})
 const getSearch = debounce(async function (event) {
   if (search.value && search.value.length && search.value.length > 0) {
     try {

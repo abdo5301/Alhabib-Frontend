@@ -54,8 +54,9 @@
         <span class="h-3/4 w-[0.5px] bg-[#9CA3AF] mx-[60px]" aria-hidden="true" />
         <ClientOnly>
           <NuxtLink :to="localePath('/' + category.slug)">
-            <NuxtImg v-if="category.image" loading="lazy" :alt="category.name" :src="category.image" width="504px" height="258" class="h-[258px] object-cover"/>
-            <NuxtImg v-else src="/images/placeholder-logo.png" loading="lazy" :alt="category.name" width="504px" height="258" class="h-[258px] w-[504px] object-cover" />
+            <NuxtImg loading="lazy" format="webp" quality="80" width="504px" height="258"
+              :src="category.image ??= '/images/placeholder-logo.png'" :alt="category.name"
+              class="h-[258px] object-cover" />
           </NuxtLink>
         </ClientOnly>
 

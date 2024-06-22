@@ -50,14 +50,14 @@ const breadcrumb = [
 onMounted(async () => {
   initFlowbite()
   try {
-    product_data.value = await useNuxtApp().$apiFetch('/master-products/get?master_product_id=' + route.params.id)
+    product_data.value = await useNuxtApp().$apiFetch('/master-products/get?master_product_q=' + route.params.id)
   } catch (error) {
     console.log(error.data)
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'page_not_found',
-      fatal: true
-    })
+    // throw createError({
+    //   statusCode: 404,
+    //   statusMessage: 'page_not_found',
+    //   fatal: true
+    // })
   }
   if (product_data.value.data && product_data.value.status
     && product_data.value.data.related_products && product_data.value.data.related_products[0]

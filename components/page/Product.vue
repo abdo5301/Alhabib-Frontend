@@ -178,6 +178,7 @@ const props = defineProps({
   }
 })
 const config = useRuntimeConfig()
+const nuxtApp = useNuxtApp()
 const url_product_id = props.url_data && props.url_data.slug ? props.url_data.slug : null
 const addCartDrawer = ref()
 const addCartSuccess = ref({})
@@ -207,7 +208,30 @@ const product_videos = ref([])
 const product_description = ref([])
 const breadcrumb = ref([])
 const { data: product_fetch_data, error, pending } = await useFetch(config.public.API_URL + '/master-products/get', {
-  query: { master_product_q: url_product_id }
+  query: { master_product_q: url_product_id },
+  transform(input) {
+    return {
+      ...input,
+      fetchedAt: new Date()
+    }
+  },
+  getCachedData(key) {
+    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    // If data is not fetched yet
+    if (!data) {
+      // Fetch the first time
+      return
+    }
+    // Is the data too old?
+    const expirationDate = new Date(data.fetchedAt)
+    expirationDate.setTime(expirationDate.getTime() + 86400 * 1000)//One day
+    const isExpired = expirationDate.getTime() < Date.now()
+    if (isExpired) {
+      // Refetch the data
+      return
+    }
+    return data
+  }
 })
 if (error.value) {
   console.log(error.value.data)
