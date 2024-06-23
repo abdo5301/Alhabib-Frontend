@@ -10,10 +10,9 @@
     <div class="overflow-x-auto no-scrollbar flex w-full mx-auto items-center justify-start lg:gap-14 gap-6 pb-4">
       <NuxtLink :to="localePath('/' + category.slug)" v-for="category in categories" :key="category.id"
         class="flex flex-shrink-0 flex-col gap-5 items-center justify-center">
-        <NuxtImg v-if="category.image && category.image != null" loading="lazy"  width="100vw"
-          class="rounded-md lg:w-[300px] w-[210px] lg:h-[225px] h-[200px]" :src="category.image" :alt="category.name" />
-        <NuxtImg v-else class="rounded-md lg:w-[300px] w-[210px] lg:h-[225px] h-[200px]" width="100vw" loading="lazy"
-           :src="'/images/placeholder-logo.png'" :alt="category.name" />
+        <NuxtImg loading="lazy" width="100vw" format="webp" quality="80"
+          class="rounded-md lg:w-[300px] w-[210px] lg:h-[225px] h-[200px]"
+          :src="category.image ??= '/images/placeholder-logo.png'" :alt="category.name" />
         <span class="text-gray-700 text-base lg:text-xl font-bold">{{ category.name }}</span>
       </NuxtLink>
     </div>

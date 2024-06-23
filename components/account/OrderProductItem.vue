@@ -3,10 +3,7 @@
   <div v-if="product" class="flex gap-[15px] lg:gap-[25px] w-full py-[6.5px]">
     <!-- image -->
     <div class="relative flex flex-col justify-center w-[120px] h-[120px] lg:w-[150px] lg:h-[150px] flex-shrink-0">
-      <img v-if="product.image && product.image != null" class="w-full h-full rounded-md" :src="product.image"
-        alt="Alhabib-Shop">
-      <img v-else class="w-full h-full rounded-md" src="/images/placeholder-logo.png"
-        alt="Alhabib-Shop">
+      <img class="w-full h-full rounded-md" :src="product.image ??= '/images/placeholder-logo.png'" alt="Alhabib-Shop">
     </div>
     <!-- details -->
     <div class="flex flex-col justify-center gap-[5px] lg:gap-[10px] max-w-full">

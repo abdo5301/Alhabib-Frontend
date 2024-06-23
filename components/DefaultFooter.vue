@@ -54,12 +54,12 @@
           </div>
           <div class="flex">
             <NuxtLink target="_blank" to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
-              <NuxtImg src="/images/vat.png" width="50px" height="70px" alt="VAT" loading="lazy" />
+              <NuxtImg src="/images/vat.png" width="50px" height="70px" alt="VAT" format="webp" quality="80" loading="lazy" />
             </NuxtLink>
           </div>
           <div class="flex">
             <NuxtLink to="#">
-              <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" alt="NADAV" loading="lazy" />
+              <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" alt="NADAV" loading="lazy" format="webp" quality="80" />
             </NuxtLink>
           </div>
         </div>
@@ -317,10 +317,10 @@
 
       <div class="flex lg:hidden items-center justify-center mx-auto gap-5 pt-1 pb-4">
         <NuxtLink to="#">
-          <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" loading="lazy" alt="NADAV" preload />
+          <NuxtImg src="/images/nadav-logo-1.svg" width="96px" height="36px" loading="lazy" format="webp" quality="80" alt="NADAV" preload />
         </NuxtLink>
         <NuxtLink to="https://alhabibshop.com/image/catalog/footer/VATRegistrationCertificate.png">
-          <NuxtImg src="/images/vat.png" width="40px" height="52px" alt="VAT" loading="lazy" preload />
+          <NuxtImg src="/images/vat.png" width="40px" height="52px" alt="VAT" loading="lazy" format="webp" quality="80" preload />
         </NuxtLink>
       </div>
     </div>

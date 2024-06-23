@@ -36,47 +36,6 @@
             </span>
           </div>
         </div>
-        <!-- <div class="flex justify-start w-full">
-          <PrimeStepper orientation="vertical">
-            <PrimeStepperPanel header="Header I">
-              <template #content="{ nextCallback }">
-                <div class="flex flex-col h-[12rem]">
-                  <div
-                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-md bg-surface-0 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                    Content I</div>
-                </div>
-                <div class="flex pt-4 justify-end">
-                  <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
-                </div>
-              </template>
-            </PrimeStepperPanel>
-            <PrimeStepperPanel header="Header II">
-              <template #content="{ prevCallback, nextCallback }">
-                <div class="flex flex-col h-[12rem]">
-                  <div
-                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-md bg-surface-0 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                    Content II</div>
-                </div>
-                <div class="flex pt-4 justify-between">
-                  <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
-                  <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
-                </div>
-              </template>
-            </PrimeStepperPanel>
-            <PrimeStepperPanel header="Header III">
-              <template #content="{ prevCallback }">
-                <div class="flex flex-col h-[12rem]">
-                  <div
-                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-md bg-surface-0 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                    Content III</div>
-                </div>
-                <div class="flex pt-4 justify-start">
-                  <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
-                </div>
-              </template>
-            </PrimeStepperPanel>
-          </PrimeStepper>
-        </div> -->
       </ClientOnly>
     </div>
   </div>

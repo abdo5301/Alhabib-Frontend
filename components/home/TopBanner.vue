@@ -1,82 +1,41 @@
 <template>
-  <div class="w-full mx-auto lg:h-auto lg:max-h-[600px] h-[281px] overflow-hidden">
-    <!--  Single Image Banner -->
-    <div v-if="banner_type == 'fixed'" class="w-full lg:h-[650px] h-[282px] mx-auto">
-      <NuxtImg src="/images/banner/main-banner-1.jpg" alt="Alhabib-slider" loading="lazy" preload
-        class="absolute h-[282px] lg:h-[515px] mx-auto right-0 left-0 top-0 w-full" />
-    </div>
-
-    <div v-else-if="banner_type == 'slider'" id="default-carousel"
-      class="absolute top-0 left-0 right-0  h-[282px] lg:h-[515px] w-full mx-auto" data-carousel="slide">
-      <!-- Carousel Banner -->
-      <div class="relative h-full overflow-hidden">
-        <!-- Item 1 -->
-        <div class="transform ease-in-out h-full" data-carousel-item>
-          <NuxtImg src="/images/banner/main-banner-1.jpg" loading="lazy" preload
-            class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="Alhabib-slider" />
-        </div>
-        <!-- Item 2 -->
-        <div class="transform ease-in-out h-full" data-carousel-item>
-          <NuxtImg src="/images/banner/main-banner-2.jpg" loading="lazy" preload
-            class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="Alhabib-slider" />
-        </div>
-      </div>
-    </div>
-
-    <!-- <PrimeCarousel v-else dir="ltr" :show-navigators="false" :show-indicators="false"
-      :value="[{ src: '/images/banner/main-banner-1.jpg', link: localePath('/offers-and-discounts') }, { src: '/images/banner/main-banner-2.jpg', link: localePath('/quilts') }]"
-      :numVisible="1" :num-scroll="1" circular :autoplayInterval="6000">
-      <template #item="slotProps">
-        <NuxtLink :to="slotProps.data.link">
-          <NuxtPicture format="avif,webp" :src="slotProps.data.src" loading="lazy" preload
-            :imgAttrs="{ class: 'w-full lg:h-full h-[282px] object-cover' }" class="w-full lg:h-full h-[282px]"
-            width="1920px" quality="80" alt="Alhabib-slider" />
-        </NuxtLink>
-      </template>
-</PrimeCarousel> -->
-
-    <div v-else id="default-carousel" class="relative top-0 left-0 right-0 lg:h-[650px] h-[282px] w-full mx-auto"
-      data-carousel="slide" data-carousel-interval="9000">
-      <!-- Carousel Banner -->
-      <div class="relative h-full overflow-hidden">
-        <!-- Item 1 -->
-        <div class="hidden duration-700 transform ease-in-out h-full" data-carousel-item>
-          <NuxtLink :to="localePath('/Eid-Collection')">
-            <NuxtImg src="/images/banner/main-banner-1.jpg" loading="lazy" preload width="1920px" quality="80"
-              class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
-              alt="Alhabib-slider" />
-          </NuxtLink>
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 transform ease-in-out h-full" data-carousel-item>
-          <NuxtLink :to="localePath('/quilts')">
-            <NuxtImg src="/images/banner/main-banner-2.jpg" loading="lazy" preload width="1920px" quality="80"
-              class="absolute block w-full h-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
-              alt="Alhabib-slider" />
-          </NuxtLink>
-        </div>
-      </div>
-    </div>
-
+  <div class="w-full mx-auto lg:h-auto lg:max-h-[600px] h-[255px] overflow-hidden">
+    <UCarousel dir="ltr" ref="carouselRef" v-slot="{ item }" :items="sliders" :ui="{ item: 'basis-full' }"
+      class="overflow-hidden w-full">
+      <NuxtLink :to="item.link" class="w-full h-full">
+        <NuxtImg :src="item.src" class="w-full h-[250px] lg:h-[700px] object-cover" loading="lazy" width="100vh"
+          quality="80" format="webp" draggable="false" :alt="item.title" preload />
+      </NuxtLink>
+    </UCarousel>
   </div>
 </template>
 
 <script setup>
-const props = defineProps({
-  banner_data: {
-    type: Object
-  }
-})
 const localePath = useLocalePath()
-const banner_type = ref('static')
+const carouselRef = ref()
+const sliderImagesRefs = ref([])
+const sliders = [
+  {
+    src: '/images/banner/main-banner-1.jpg',
+    link: localePath('/Eid-Collection'),
+    title:'Offers-Discounts'
+  },
+  {
+    src: '/images/banner/main-banner-2.jpg',
+    link: localePath('/quilts'),
+    title:'Quilts'
+  }
+]
 
-if (props.banner_data && props.banner_data[1].data.length > 0) {
-  banner_type.value = 'slider'
-} else if (props.banner_data && props.banner_data[0].data.length > 0) {
-  banner_type.value = 'fixed'
-} else {
-  banner_type.value = 'static'
-}
+onMounted(async () => {
+  setInterval(() => {
+    if (!carouselRef.value) return
+
+    if (carouselRef.value.page === carouselRef.value.pages) {
+      return carouselRef.value.select(0)
+    }
+
+    carouselRef.value.next()
+  }, 6000)
+})
 </script>

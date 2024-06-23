@@ -2,8 +2,8 @@
   <div v-if="favorite"
     :class="['w-[175px] flex flex-shrink-0 flex-col lg:gap-3 gap-[10px] justify-start lg:w-[318px]']">
     <NuxtLink :to="link" class="relative w-full">
-      <img :class="['h-[175px] w-full lg:h-[304px] rounded-lg object-cover']"
-        :src="image ? image : '/images/product/product-2.jpeg'">
+      <NuxtImg :class="['h-[175px] w-full lg:h-[304px] rounded-lg object-cover']"
+      :src="image ??= '/images/placeholder-logo.png'" :alt="name" loading="lazy" format="webp" quality="80" />
       <span v-if="available == false"
         class="absolute top-0 rounded-lg bg-opacity-60 h-full w-full bg-[#F0EBEB] flex justify-center items-center">
         <span class="!opacity-100 text-gray-900 text-sm lg:text-base font-semibold">{{ $t('product_size_stock_alert')
@@ -88,7 +88,7 @@
               {{ $t('product_stock_notify_button') }}
             </span>
           </button>
-          <NuxtLink :to="localePath('/favorite/similar/' + id)"
+          <NuxtLink :to="localePath('/favorite/similar/' + slug)"
             class="flex justify-center items-center gap-2 w-[185px] lg:w-[151px] h-[38px] bg-white shadow rounded-md ring-1 ring-gray-300">
             <span class="text-gray-700 text-[10px] lg:text-sm font-medium lg:font-semibold leading-5">
               {{ $t('similar_products_title') }}

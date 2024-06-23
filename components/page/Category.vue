@@ -1,9 +1,9 @@
 <template>
   <Title>{{ category_meta_title }} | {{ website_name }}</Title>
-  <!-- <div v-if="pending" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
+  <div v-if="category_pending" class="flex items-center justify-center h-[600px] max-h-screen w-full mx-auto">
     <InlineLoader loader_style="mx-auto flex items-center justify-center w-auto h-[90px]" />
-  </div> -->
-  <div class="pb-[104px]">
+  </div>
+  <div v-else class="pb-[104px]">
 
     <Breadcrumb class="pb-[40px]" :current="category_title" :pages=breadcrumb></Breadcrumb>
     <div class="px-[25px] lg:px-[68px]">
@@ -16,50 +16,53 @@
       <CategorySubCategory v-if="sub_category.length" :categories="sub_category" class="lg:pt-[64px] pt-8" />
     </div>
     <!-- Filter start -->
-    <div v-if="!isEmpty(sorting_data) || !isEmpty(filter_data)"
-      class="bg-[#F3F4F6] lg:px-[68px] mb-[15px] border-t border-b h-[60px] border-gray-100 mt-[54px] hidden lg:flex items-center justify-start">
-      <!-- Desktop Filter Title -->
-      <h2 class="text-gray-700 font-bold text-base leading-5 rtl:pr-3 ltr:pl-3">
-        {{ $t("category_filter_title") }}
-      </h2>
-      <span class="border-r-2 mx-[29px] border-gray-400 h-6"></span>
-      <!-- Desktop selected filter tags -->
-      <div
-        class="mx-[100px] flex gap-5 items-center justify-start flex-1 overflow-x-auto overflow-y-hidden no-scrollbar">
-        <CategoryFilterTag v-for="selected_filter, index in filter_array" :key="index" :tag_data="selected_filter"
-          @remove-filter-item="updateFilterArray" />
-      </div>
-      <!-- Desktop Sorting -->
-      <CategorySortingMenu v-if="!isEmpty(sorting_data)" :sorting_options="sorting_data"
-        @update-sorting-value="updateSortingValue" />
-    </div>
-
-    <div class="flex lg:gap-[46px] lg:px-[68px] px-6 flex-col lg:flex-row">
-      <!-- Desktop Filter -->
-      <div v-if="!isEmpty(filter_data)"
-        class="hidden lg:block w-[295px] text-gray-700 font-bold text-base leading-5 rtl:pr-4 ltr:pl-3 pt-[15px]">
-        <div id="accordion-arrow-icon" data-active-classes="bg-gray-50" data-inactive-classes="py-5"
-          data-accordion="open">
-          <CategoryFilterSection v-for="filter_section, index in filter_data" :filter_array="filter_section.data"
-            :title="filter_section.name" :key="filter_section.key" :filter_key="filter_section.key"
-            :first_item="index == 0 ? true : false" @filter-value="updateFilterArray"
-            :selected_filter_array="filter_array" />
-        </div>
-      </div>
-      <!-- Mobile Filter -->
+    <ClientOnly>
       <div v-if="!isEmpty(sorting_data) || !isEmpty(filter_data)"
-        class="lg:hidden flex justify-center items-center gap-5 pt-8">
-        <!-- Mobile Filter Items -->
-        <CategoryMobileFilter v-if="!isEmpty(filter_data)" @filter-reset="resetFilter" :filter_data="filter_data"
-          :selected_filter_array="filter_array" @filter-value="updateFilterArray" />
-        <!-- Mobile Sorting -->
-        <CategoryMobileSortingMenu v-if="!isEmpty(sorting_data)" :sorting_options="sorting_data"
+        class="bg-[#F3F4F6] lg:px-[68px] mb-[15px] border-t border-b h-[60px] border-gray-100 mt-[54px] hidden lg:flex items-center justify-start">
+        <!-- Desktop Filter Title -->
+        <h2 class="text-gray-700 font-bold text-base leading-5 rtl:pr-3 ltr:pl-3">
+          {{ $t("category_filter_title") }}
+        </h2>
+        <span class="border-r-2 mx-[29px] border-gray-400 h-6"></span>
+        <!-- Desktop selected filter tags -->
+        <div
+          class="mx-[100px] flex gap-5 items-center justify-start flex-1 overflow-x-auto overflow-y-hidden no-scrollbar">
+          <CategoryFilterTag v-for="selected_filter, index in filter_array" :key="index" :tag_data="selected_filter"
+            @remove-filter-item="updateFilterArray" />
+        </div>
+        <!-- Desktop Sorting -->
+        <CategorySortingMenu v-if="!isEmpty(sorting_data)" :sorting_options="sorting_data"
           @update-sorting-value="updateSortingValue" />
       </div>
-      <!-- Mobile listing switch buttons -->
-      <div class="lg:hidden flex justify-end items-center gap-1 pt-[26px]">
-        <CategoryListingSwitch @update-listing="listingTypeUpdate" />
-      </div>
+    </ClientOnly>
+    <div class="flex lg:gap-[46px] lg:px-[68px] px-6 flex-col lg:flex-row">
+      <ClientOnly>
+        <!-- Desktop Filter -->
+        <div v-if="!isEmpty(filter_data)"
+          class="hidden lg:block w-[295px] text-gray-700 font-bold text-base leading-5 rtl:pr-4 ltr:pl-3 pt-[15px]">
+          <div id="accordion-arrow-icon" data-active-classes="bg-gray-50" data-inactive-classes="py-5"
+            data-accordion="open">
+            <CategoryFilterSection v-for="filter_section, index in filter_data" :filter_array="filter_section.data"
+              :title="filter_section.name" :key="filter_section.key" :filter_key="filter_section.key"
+              :first_item="index == 0 ? true : false" @filter-value="updateFilterArray"
+              :selected_filter_array="filter_array" />
+          </div>
+        </div>
+        <!-- Mobile Filter -->
+        <div v-if="!isEmpty(sorting_data) || !isEmpty(filter_data)"
+          class="lg:hidden flex justify-center items-center gap-5 pt-8">
+          <!-- Mobile Filter Items -->
+          <CategoryMobileFilter v-if="!isEmpty(filter_data)" @filter-reset="resetFilter" :filter_data="filter_data"
+            :selected_filter_array="filter_array" @filter-value="updateFilterArray" />
+          <!-- Mobile Sorting -->
+          <CategoryMobileSortingMenu v-if="!isEmpty(sorting_data)" :sorting_options="sorting_data"
+            @update-sorting-value="updateSortingValue" />
+        </div>
+        <!-- Mobile listing switch buttons -->
+        <div class="lg:hidden flex justify-end items-center gap-1 pt-[26px]">
+          <CategoryListingSwitch @update-listing="listingTypeUpdate" />
+        </div>
+      </ClientOnly>
       <!-- Product listing -->
       <div class="flex justify-start flex-col gap-16 mt-5 w-full" v-if="products.length > 0">
         <div :class="[listing_type == 'solo' ? 'gap-[18px]' : 'lg:gap-y-[45px] gap-y-4 lg:gap-x-[27px] gap-x-3',
@@ -119,6 +122,7 @@ const website_name = useState('website_name');
 const config = useRuntimeConfig()
 const route = useRoute();
 const localePath = useLocalePath()
+const nuxtApp = useNuxtApp()
 const props = defineProps({
   url_data: {
     type: Object
@@ -132,7 +136,7 @@ const listing_type = ref('list')
 const current_page = ref(1)
 const infinite_scroll_loading = ref(false)
 //Filter data reference
-const filter_sorting_fetch = ref([])
+// const filter_sorting_fetch = ref([])
 const filter_fetch_data = ref([])
 const filter_array = ref([])
 const filter_data = ref([])
@@ -154,7 +158,33 @@ const category_bottom_content = ref('')
 const category_meta_title = ref('')
 const category_meta_description = ref('')
 const category_meta_keyword = ref('')
-const { data: all_category_data, error, pending } = await useAsyncData(data_url.value, () => $fetch(data_url.value))
+const { data: all_category_data, pending: category_pending, error } = await useLazyAsyncData(data_url.value, () => $fetch(data_url.value), {
+
+  transform(input) {
+    return {
+      ...input,
+      fetchedAt: new Date()
+    }
+  },
+  getCachedData(key) {
+    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    // If data is not fetched yet
+    if (!data) {
+      // Fetch the first time
+      return
+    }
+    // Is the data too old?
+    const expirationDate = new Date(data.fetchedAt)
+    expirationDate.setTime(expirationDate.getTime() + 86400 * 1000)//One day
+    const isExpired = expirationDate.getTime() < Date.now()
+    if (isExpired) {
+      // Refetch the data
+      return
+    }
+
+    return data
+  }
+})
 if (error.value) {
   console.log(error.value.data)
   // throw createError({
@@ -196,14 +226,56 @@ if (error.value) {
     })
     googlEventListing(products.value)//Google analytics
   } else {//Empty Category
+    // throw createError({
+    //   statusCode: 401,
+    //   statusMessage: 'لا توجد منتجات في هذا القسم ',
+    //   fatal: true
+    // })
+  }
+}
+watch(all_category_data, (new_category_data) => {
+  // Because category_data might start out null, you won't have access
+  // to its contents immediately, but you can watch it.
+  category_data.value = new_category_data ??= {}
+  //Reset category data reference
+  if (category_data.value.data && category_data.value.data.length) {
+    products.value = products.value.concat(category_data.value.data)
+    breadcrumb.value = [
+      {
+        'name': category_data.value.data[0].category.breadcrumb.name,
+        'link': localePath('/' + category_data.value.data[0].category.breadcrumb.slug)
+      }
+    ]
+    category_title.value = category_data.value.data[0].category.name
+    category_image.value = category_data.value.data[0].category.image
+    category_top_title.value = category_data.value.data[0].category.top_description.title ??= ''
+    category_top_content.value = category_data.value.data[0].category.top_description.details ??= ''
+    category_bottom_title.value = category_data.value.data[0].category.bottom_description.title ??= ''
+    category_bottom_content.value = category_data.value.data[0].category.bottom_description.details ??= ''
+    sub_category.value = (category_data.value.data[0].category.subcategory && category_data.value.data[0].category.subcategory.length) ? category_data.value.data[0].category.subcategory : []
+
+    category_meta_title.value = category_data.value.data[0].category.meta_title
+    category_meta_description.value = category_data.value.data[0].category.meta_description
+    category_meta_keyword.value = category_data.value.data[0].category.meta_keyword
+    useSeoMeta({
+      title: category_meta_title.value + ' | ' + website_name.value,
+      ogTitle: category_meta_title.value + ' | ' + website_name.value,
+      description: category_meta_description.value,
+      ogDescription: category_meta_description.value,
+      keywords: category_meta_keyword.value,
+      ogImage: category_image.value ??= config.public.BASE_URL + '/images/placeholder-logo.png',
+      ogImageAlt: category_title.value,
+      ogUrl: config.public.BASE_URL + localePath('/' + category_data.value.data[0].category.slug)
+    })
+    googlEventListing(products.value)//Google analytics
+  } else {//Empty Category
     throw createError({
       statusCode: 401,
-      statusMessage: ' !لا توجد منتجات في هذا القسم ',
+      statusMessage: 'لا توجد منتجات في هذا القسم ',
       fatal: true
     })
   }
-}
-
+})
 useHead({
   link: [
     {
@@ -212,20 +284,68 @@ useHead({
     },
   ],
 })
-onMounted(async () => {
-  initFlowbite();
-  //We Do Filter data fetching here and After Page Mounted during Flowbite library finish loading
-  try {
-    filter_sorting_fetch.value = await useNuxtApp().$apiFetch('/filter-and-sort/get')
-  } catch (error) {
-    console.log("Failed to fetch Filter and Sorting base data:", error)
+
+const { data: filter_sorting_fetch, error: filter_error } = await useLazyAsyncData('filter-and-sort',
+  () => $fetch(config.public.API_URL + '/filter-and-sort/get'), {
+  default: (() => []),
+  transform(input) {
+    return {
+      ...input,
+      fetchedAt: new Date()
+    }
+  },
+  getCachedData(key) {
+    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    // If data is not fetched yet
+    if (!data) {
+      // Fetch the first time
+      return
+    }
+    // Is the data too old?
+    const expirationDate = new Date(data.fetchedAt)
+    expirationDate.setTime(expirationDate.getTime() + 2629800 * 1000) //One month
+    const isExpired = expirationDate.getTime() < Date.now()
+    if (isExpired) {
+      // Refetch the data
+      return
+    }
+    return data
   }
+})
+if (filter_error.value) {
+  console.log(error.value.data)
+} else {
   //Reset Filter & Sorting Data
   if (filter_sorting_fetch.value && filter_sorting_fetch.value.status == true) {
-    filter_fetch_data.value = filter_sorting_fetch.value.data
+    filter_fetch_data.value = filter_sorting_fetch.value.data ??= {}
     filter_data.value = filter_fetch_data.value.filter ??= []
     sorting_data.value = filter_fetch_data.value.sorting ??= []
   }
+}
+watch(filter_sorting_fetch, (fetched_filter) => {
+  // Because filter_sorting_fetch might start out null, you won't have access
+  // to its contents immediately, but you can watch it.
+  filter_fetch_data.value = fetched_filter.data ??= {}
+  filter_data.value = filter_fetch_data.value.filter ??= []
+  sorting_data.value = filter_fetch_data.value.sorting ??= []
+})
+
+onMounted(async () => {
+  initFlowbite();
+  //We Do Filter data fetching here and After Page Mounted during Flowbite library finish loading
+  // try {
+  //   filter_sorting_fetch.value = await useNuxtApp().$apiFetch('/filter-and-sort/get')
+  // } catch (error) {
+  //   console.log("Failed to fetch Filter and Sorting base data:", error)
+  // }
+
+
+  //Reset Filter & Sorting Data
+  // if (filter_sorting_fetch.value && filter_sorting_fetch.value.status == true) {
+  //   filter_fetch_data.value = filter_sorting_fetch.value.data
+  //   filter_data.value = filter_fetch_data.value.filter ??= []
+  //   sorting_data.value = filter_fetch_data.value.sorting ??= []
+  // }
 })
 
 async function loadMore() {
