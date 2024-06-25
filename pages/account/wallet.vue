@@ -90,7 +90,7 @@
         </div>
       </div>
     </div>
-    <CheckoutAlrajhiPoints  v-if="wallet_status"/>
+    <CheckoutAlrajhiPoints  v-if="admin_wallet_status && $config.public.alrajhi_points_status != 'disable'"/>
   </div>
 </template>
 
