@@ -20,7 +20,7 @@
 
   <!-- Start Mobile Main Menu -->
   <div id="mobile-main-menu"
-    class="fixed flex top-0 left-0 z-40 h-screen overflow-y-auto transition-transform -translate-x-full duration-500 bg-white w-full dark:bg-gray-800"
+    class="fixed flex top-0 left-0 z-40 h-screen overflow-y-auto transition-transform -translate-x-full duration-500 bg-white w-full"
     tabindex="-1">
 
     <div class="flex basis-full flex-col">
@@ -90,7 +90,7 @@
 
   <!-- Start Mobile Sub Menu -->
   <div v-for="category in menu_data.data" :id="'mobile-menu-' + category.id"
-    class="fixed flex top-0 left-0 z-40 h-screen overflow-y-auto transition-transform -translate-x-full duration-500 bg-white w-full dark:bg-gray-800"
+    class="fixed flex top-0 left-0 z-40 h-screen overflow-y-auto transition-transform -translate-x-full duration-500 bg-white w-full"
     tabindex="-1">
 
     <div class="flex basis-full flex-col" v-if="category.subcategory.length">

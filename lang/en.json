@@ -306,5 +306,23 @@
   "text_rating_success_2":"Thank you for ordering from Al Habib Bedding",
   "text_empty_return_orders":"You don't have any open return orders",
   "text_Retrieval_ticket":"Retrieval ticket number",
-  "text_show_details":"Show Details"
+  "text_show_details":"Show Details",
+  "read_btn":"Read",
+  "next_btn":"Next",
+  "return_exchange_policy_title":"Return and exchange policy",
+  "return_exchange_policy_mobile_title":"Return policy",
+  "return_products_select_title":"Select returned products",
+  "financial_recovery_title":"Financial recovery",
+  "return_exchange_policy_subtitle":"I have read and agree to the exchange and return policy",
+  "return_products_select_subtitle1":"you selected ",
+  "return_products_select_subtitle2":" products for return",
+  "financial_recovery_subtitle":"The financial recovery information has been filled out",
+  "return_exchange_policy_condition1":"يسترجع المنتج خلال 7 أيام من تاريخ الاستلام.",
+  "return_exchange_policy_condition2":"يحق للعميل استرجاع المنتج في حال وجود عيب مصنعي أو إذا كان تالف.",
+  "return_exchange_policy_condition3":"طلب الاستبدال لكل طلب مرة واحدة فقط، وفي حال تم الاستبدال لا يحق لك طلب الاسترجاع لنفس الطلب.",
+  "return_exchange_policy_checkbox":"لقد قرأت ووافقت على",
+  "return_financial_recovery_select":"كيف تفضل استرجاع المبلغ المالي؟",
+  "return_financial_recovery_order_method":"طريقة الدفع الاصليه",
+  "return_financial_recovery_wallet_method":"إرجاع المبلغ الى محفظتي في مفارش الحبيب"
+
 }

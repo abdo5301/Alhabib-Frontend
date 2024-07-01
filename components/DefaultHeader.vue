@@ -77,7 +77,7 @@
               <div class="flex items-center justify-center w-[110px] lg:w-[186px]">
                 <NuxtLink :to="localePath('/')">
                   <span class="sr-only">Your Company</span>
-                  <NuxtImg class="w-full" format="webp" quality="80" loading="lazy" width="200px" src="/images/logo.svg"
+                  <NuxtImg class="lg:w-full min-w-[100px]" format="webp" quality="80" loading="lazy" width="200px" src="/images/logo.svg"
                     alt="Alhabib-Bedding-Logo" />
                 </NuxtLink>
               </div>

@@ -88,7 +88,7 @@ onMounted(async () => {
     placement: 'center',
     backdrop: 'dynamic',
     backdropClasses:
-      'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+      'bg-gray-900/50 fixed inset-0 z-40',
     closable: true,
   };
   delete_success_modal.value = new Modal($delete_success_popup, delete_success_popup_options);

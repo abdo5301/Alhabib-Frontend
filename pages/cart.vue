@@ -18,7 +18,7 @@
           <Breadcrumb :current="$t('cart_title')"></Breadcrumb>
           <CartTitle :count="cartCount" />
           <!-- <CartReceiveFromShop /> -->
-          <div v-if="cartItems && cartItems.length > 0"
+          <div v-if="cartItems && cartItems.length > 0" :key="items_key"
             class="w-full lg:bg-gray-50 bg-white lg:rounded-none rounded-lg lg:shadow-none shadow no-scrollbar my-5 lg:my-10 lg:px-0 px-[6px] lg:py-0 py-5 flex flex-col justify-start items-start gap-6 lg:gap-10 lg:max-h-[800px] overflow-hidden hover:overflow-y-auto">
             <CartPageProductItem v-for="(item, index) in cartItems" :key="index" :cart_item="item"
               :last_item="index + 1 == cartItems.length" @product-has-error="disable_checkout = true"
@@ -111,6 +111,7 @@ const favorite_products = ref([])
 const data_loader = ref(true)
 const disable_checkout = ref(false)
 const totals_key = ref(123)
+const items_key = ref(132)
 useHead({
   script: [{ src: "https://cdn.tamara.co/widget/product-widget.min.js", defer: true }]
 })
@@ -199,5 +200,6 @@ onMounted(async () => {
 })
 function resetTotals() {
   totals_key.value += 11
+  items_key.value += 23
 }
 </script>
