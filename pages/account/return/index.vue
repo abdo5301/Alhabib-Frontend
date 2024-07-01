@@ -45,6 +45,7 @@ onMounted(async () => {
   setActiveSection('return')
   try {
     return_orders.value = await getReturnOrders()
+    console.log(return_orders.value);
   } catch (error) {
     console.log(error.data)
     throw createError({

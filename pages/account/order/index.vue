@@ -106,7 +106,7 @@ onMounted(async () => {
     placement: 'center',
     backdrop: 'dynamic',
     backdropClasses:
-      'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+      'bg-gray-900/50 fixed inset-0 z-40',
     closable: true,
   };
   cancel_confirm_modal.value = new Modal(cancel_confirm_popup, cancel_confirm_popup_options);
@@ -119,7 +119,7 @@ onMounted(async () => {
     placement: 'center',
     backdrop: 'dynamic',
     backdropClasses:
-      'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+      'bg-gray-900/50 fixed inset-0 z-40',
     closable: true,
   };
   cancel_success_modal.value = new Modal(cancel_success_popup, cancel_success_popup_options);

@@ -132,7 +132,7 @@ onMounted(
     const modalOptions = {
       placement: 'center',
       backdrop: 'dynamic',
-      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
+      backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-40',
       closable: true,
     }
     modal.value = new Modal(modalTarget, modalOptions)

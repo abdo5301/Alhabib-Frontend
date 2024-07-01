@@ -16,7 +16,7 @@ module.exports = {
         'sans-serif': ['Cairo'],
         sans: ['Cairo'],
       },
-    }
+    },
   },
   corePlugins: {
     aspectRatio: false,
@@ -28,5 +28,6 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
     require('flowbite/plugin'),
+    require('tailwindcss-animated'),
   ],
 }
