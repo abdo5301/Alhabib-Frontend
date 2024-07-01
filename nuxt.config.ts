@@ -119,6 +119,7 @@ export default defineNuxtConfig({
       TAMARA_ENV: process.env.NUXT_TAMARA_ENV,
       TAMARA_API_TOKEN: process.env.NUXT_TAMARA_API_TOKEN,
       TAMARA_NOTIFICATION_TOKEN: process.env.NUXT_TAMARA_NOTIFICATION_TOKEN,
+      alrajhi_points_status: process.env.NUXT_ALRAJHI_POINTS_STATUS,
       sentry: {
         dsn: process.env.NUXT_PUBLIC_SENTRY_DSN,
         environment: process.env.NUXT_PUBLIC_SENTRY_ENVIRONMENT,

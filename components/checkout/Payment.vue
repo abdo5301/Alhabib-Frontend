@@ -88,7 +88,7 @@
     </div>
 
     <!-- Alrajhi Mokafaah Points -->
-    <CheckoutAlrajhiPoints v-if="admin_wallet_status" />
+    <CheckoutAlrajhiPoints v-if="admin_wallet_status && $config.public.alrajhi_points_status != 'disable'" />
 
     <!-- Order Submit -->
     <button v-if='!selectedApplePayMethod' id='order-save-btn'
