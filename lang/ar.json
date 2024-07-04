@@ -133,7 +133,7 @@
   "cart_checkout_link":"المتابعة لإنهاء الطلب",
   "input_placeholder_discount_code":"إضافة كود الخصم",
   "btn_add":"إضافة",
-  "alert_discount_code_success":"تم تفعيل كود الخصم!",
+  "alert_discount_code_success":"تم تفعيل كود الخصم!, الكود قد لا يشمل المنتجات المخفضة",
   "alert_discount_code_error":"عذرًا، كود الخصم غير فعّال",
   "cart_notes_shipping_title":"مدة التوصيل",
   "cart_notes_shipping_content":"مدة التوصيل 3 - 8 أيام عمل داخل السعودية",
