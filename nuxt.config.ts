@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     'nuxt-aos',
     ['@nuxtjs/robots', { configPath: "~/config/robots.config" }],
     "@nuxt/image",
-    "@nuxt/ui"
+    "@nuxt/ui",
+    "@vueuse/nuxt"
   ],
   experimental: {
     viewTransition: true,
@@ -135,6 +136,9 @@ export default defineNuxtConfig({
     '/tabby/**': {
       proxy:'https://api.tabby.ai/**'
     },
+    '/':{
+      prerender: true
+    }
     // '/api/**': {
     //   proxy: process.env.NUXT_API_URL+'/**'
     // }

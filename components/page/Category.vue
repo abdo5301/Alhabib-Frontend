@@ -330,22 +330,8 @@ watch(filter_sorting_fetch, (fetched_filter) => {
   sorting_data.value = filter_fetch_data.value.sorting ??= []
 })
 
-onMounted(async () => {
+onMounted(() => {
   initFlowbite();
-  //We Do Filter data fetching here and After Page Mounted during Flowbite library finish loading
-  // try {
-  //   filter_sorting_fetch.value = await useNuxtApp().$apiFetch('/filter-and-sort/get')
-  // } catch (error) {
-  //   console.log("Failed to fetch Filter and Sorting base data:", error)
-  // }
-
-
-  //Reset Filter & Sorting Data
-  // if (filter_sorting_fetch.value && filter_sorting_fetch.value.status == true) {
-  //   filter_fetch_data.value = filter_sorting_fetch.value.data
-  //   filter_data.value = filter_fetch_data.value.filter ??= []
-  //   sorting_data.value = filter_fetch_data.value.sorting ??= []
-  // }
 })
 
 async function loadMore() {

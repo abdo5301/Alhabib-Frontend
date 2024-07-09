@@ -1,6 +1,6 @@
 <template>
   <!-- Step Header -->
-  <div
+  <div 
     :class="['relative w-full flex flex-col lg:items-start items-center gap-[10px] z-20 animate-flip-down animate-once', step == currentStep ? 'lg:pb-[10px]' : 'lg:pb-[40px]']">
     <!-- Step Heder Border -->
     <span v-if="step != totalSteps"
@@ -20,7 +20,7 @@
           </svg>
         </span>
         <!-- Step Title -->
-        <div class="w-full flex flex-col justify-center items-center gap-2">
+        <div tabindex='-1' :id="'step-title-container-' + step"  class="w-full flex flex-col justify-center items-center gap-2">
           <h2
             :class="['w-full text-center flex lg:justify-start justify-center items-center font-bold lg:leading-7 text-xs',
               step <= currentStep ? ' text-gray-900' : 'text-gray-300', step == currentStep ? 'lg:text-base' : 'lg:text-sm text-xs']">
@@ -53,7 +53,7 @@
   <div v-if="step == currentStep" :id="'step-content-height-dev-' + step" class="lg:!h-auto w-[1px] z-10">
   </div>
   <!-- Step Content -->
-  <div v-if="step == currentStep" :id="'step-content-' + step"
+  <div v-show="step == currentStep" :id="'step-content-' + step"
     class="w-full end-1/2 start-0 z-30 lg:end-0 absolute lg:top-0 top-[140px] lg:ps-12 lg:relative lg:pb-5 animate-flip-down animate-once animate-duration-500 animate-delay-100">
     <!-- Step Content Border -->
     <span v-if="step != totalSteps"
