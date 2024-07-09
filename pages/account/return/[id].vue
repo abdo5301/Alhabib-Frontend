@@ -41,7 +41,7 @@
         <!-- Stepper Start -->
         <div class="w-full relative flex lg:flex-col lg:justify-start justify-center animate-flip-down animate-once">
           <!-- Step 1 -->
-          <AccountStepperItem ref="stepper_item" :step="1" :currentStep="current_step" :totalSteps="total_steps"
+          <AccountStepperItem :step="1" :currentStep="current_step" :totalSteps="total_steps"
             @set-current-step="setCurrent" :edit_step_btn="$t('read_btn')" :validStep="return_policy">
             <template #title>
               <span class="lg:block hidden">{{ $t('return_exchange_policy_title') }}</span>
@@ -72,7 +72,7 @@
                 <ClientOnly>
                   <label for="return-policy"
                     class="lg:py-3 py-6 w-full max-w-max flex gap-2 lg:items-center items-start justify-start lg:font-medium font-semibold text-gray-900 cursor-pointer text-sm">
-                    <input v-model="return_policy" id="return-policy" name="return-policy" type="checkbox"
+                    <input v-model="return_policy" id="return-policy" name="return_policy" type="checkbox"
                       :checked="return_policy"
                       class="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-transparent cursor-pointer" />
                     <span class="lg:font-medium font-semibold">
@@ -88,18 +88,22 @@
           </AccountStepperItem>
           <!-- Step 2 -->
           <AccountStepperItem :step="2" :currentStep="current_step" :totalSteps="total_steps"
-            @set-current-step="setCurrent" :valid-step="true">
+            @set-current-step="setCurrent" :valid-step="validProductsForm">
             <template #title>
               {{ $t('return_products_select_title') }}
             </template>
             <template #subtitle>
               {{ $t('return_products_select_subtitle1') }}
-              <!-- Selected Products Count  --> 2
+              {{ return_products.length }}
               {{ $t('return_products_select_subtitle2') }}
             </template>
             <template #content>
-              <div class="h-40 p-4 bg-red-400">
-                Select Products Here
+              <div class="w-full flex flex-col gap-5 pb-5">
+                <!-- Product Item -->
+                <AccountStepperProductItem v-for="(item, index) in order_products" :key="index" :product_data="item"
+                  @toggle-product-select="selectReturnProduct" @fix-mobile-height="fixContentHeight(current_step)"
+                  @save-product-form="saveReturnProductFormData" @closed-form="product_form_closed = $event"
+                  :return_products_ids="return_products" />
               </div>
             </template>
           </AccountStepperItem>
@@ -152,16 +156,36 @@ const { getOrder } = useOrder()
 const order_id = Number(route.params.id)
 const order_status = ref('')
 const order_data = ref([])
+const order_products = ref([])
 const total_steps = 3
 const current_step = ref(1)
+const product_form_closed = ref(false)
+onMounted(async () => {
+  initFlowbite()
+  setActiveSection('return')
+  if (!isNaN(order_id)) {
+    try {
+      order_data.value = await getOrder(order_id)
+      order_status.value = order_data.value.state?.id
+      order_products.value = order_data.value.order_items ??= []
+    } catch (error) {
+      console.log(error.data)
+    }
+    //console.log(order_data.value)
+  }
+})
 //form reference
 const return_policy = ref(false)
+const return_products = ref([])
+const return_products_form_data = ref([])
 const financial_recovery = ref('wallet_method')
-const stepper_item = ref()
+//elements references
+const stepTitleElement = ref()
 const contentBox = ref()
 const contentBoxContainer = ref()
-function fixContentHeight(selected_step) {
+function fixContentHeight(selected_step, focus_title = false) {
   setTimeout(() => {
+    stepTitleElement.value = document.getElementById('step-title-container-' + selected_step)
     contentBox.value = document.getElementById('step-content-' + selected_step)
     contentBoxContainer.value = document.getElementById('step-content-height-dev-' + selected_step)
     if (contentBoxContainer.value && contentBox.value &&
@@ -169,22 +193,49 @@ function fixContentHeight(selected_step) {
       //console.log(contentBox.value.offsetHeight);
       contentBoxContainer.value.style.height = contentBox.value.offsetHeight + 150 + 'px'
     }
+    if (focus_title && stepTitleElement.value) {
+      stepTitleElement.value.focus()
+    }
   }, 100)
 }
 function setCurrent(step) {
   current_step.value = step
-  fixContentHeight(step)
+  fixContentHeight(step, true)
 }
 
-
-onMounted(async () => {
-  initFlowbite()
-  setActiveSection('return')
-  if (!isNaN(order_id)) {
-    order_data.value = await getOrder(order_id)
-    order_status.value = order_data.value.state.id
-    // console.log(order_data.value)
+function selectReturnProduct(product_id) {
+  if (return_products.value.includes(product_id)) {//Unselect product
+    return_products.value.splice(return_products.value.indexOf(product_id), 1)
+    const data_index = return_products_form_data.value.findIndex(element => element.id === product_id);
+    if (data_index !== -1) {
+      return_products_form_data.value.splice(data_index, 1);
+    }
+  } else { //select product
+    return_products.value.push(product_id)
   }
+  fixContentHeight(current_step.value)
+}
+
+function saveReturnProductFormData(form_data) {
+  for (let index = 0; index < return_products.value.length; index++) {
+    const product_id = return_products.value[index];
+    if (form_data.id == product_id) {
+      const check_index = return_products_form_data.value.findIndex(element => element.id === product_id);
+      if (check_index !== -1) {
+        return_products_form_data.value.splice(check_index, 1);
+      }
+      return_products_form_data.value.push(form_data)
+      break
+    }
+  }
+  //console.log(return_products_form_data.value);
+  fixContentHeight(current_step.value)
+}
+
+const validProductsForm = computed(() => {
+  return return_products.value.length > 0
+    && (return_products.value.length == return_products_form_data.value.length)
+    && product_form_closed.value == true
 })
 
 </script>
