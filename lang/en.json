@@ -342,5 +342,17 @@
   "text_return_image_warning1":"Please upload a photo showing that the product maintains its original packaging",
   "text_return_image_warning2":"If the product contains a manufacturing defect, please upload a picture showing this",
   "error_return_images_size":"Images must be less than 10MB in size",
-  "error_return_images_type":"Invalid file type"
+  "error_return_images_type":"Invalid file type",
+  "text_status_verification":"Verification",
+  "text_status_delivery":"Delivery",
+  "text_status_arrival":"Arrival",
+  "text_status_retrieval":"Retrieval",
+  "text_faq_title":"FAQ",
+  "return_ticket_page_title":"Return ticket details",
+  "return_ticket_number":"Ticket number",
+  "return_order_number":"Return order number",
+  "return_order_date":"Creation Date",
+  "return_reason_title":"Return or exchange reason",
+  "text_notes":"Notes",
+  "pictures_included":"Pictures included"
 }

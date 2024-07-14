@@ -3,15 +3,15 @@
   <div
     class="w-full flex flex-col gap-[25px] flex-shrink-0 bg-white py-[23px] px-5 lg:py-[23px] lg:px-[30px] rounded-md shadow-md">
     <div class="w-full flex justify-between">
-      <div class="flex-1 flex justify-start lg:items-start gap-1 lg:gap-8">
+      <div class="flex justify-start lg:items-center lg:gap-5 gap-3">
         <img src="/images/icons/ticket-green.png" class="w-[35px] lg:w-[45px] h-[35px] lg:h-[45px]" alt="Order">
         <!-- ID -->
-        <div class="flex flex-col gap-1 lg:gap-3 justify-start items-start">
-          <span class="text-gray-900 text-[10px] lg:text-sm font-semibold leading-[15px] lg:leading-[15px]">{{
-            $t('text_Retrieval_ticket')
-          }}</span>
-          <div
-            class="text-gray-900 flex gap-[1px] lg:gap-[5px] text-[10px] lg:text-base justify-center items-center font-bold leading-[15px] lg:leading-[15px]">
+        <div
+          class="flex lg:flex-row flex-col gap-1 lg:gap-4 text-black text-xs lg:text-base font-bold leading-[15px] lg:leading-[15px]">
+          <span class="font-semibold lg:font-bold text-[10px] lg:text-base lg:leading-[15px]">
+            {{ $t('text_Retrieval_ticket') }}
+          </span>
+          <div class="flex gap-[1px] lg:gap-[5px] items-center">
             <span>
               #{{ item_id }}
             </span>
@@ -25,9 +25,9 @@
           </div>
         </div>
       </div>
-      <div class="flex lg:flex-row flex-col lg:justify-center justify-end items-center">
+      <div class="flex lg:flex-row flex-col lg:justify-center justify-center items-center">
         <NuxtLink :to="localePath('/account/return/ticket/' + item_id)"
-          class="w-[60px] h-[25px] lg:w-[126px] lg:h-[34px] flex items-center justify-center gap-2 ring-1 ring-gray-300 shadow-sm lg:rounded-md rounded bg-white">
+          class="w-[100px] h-[28px] lg:w-[186px] lg:h-[42px] flex items-center justify-center lg:gap-3 gap-2 ring-1 ring-gray-300 shadow-sm lg:rounded-md rounded bg-white">
           <span class="text-gray-700 lg:text-sm text-[10px] font-semibold leading-5">{{ $t('text_show_details')
             }}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -92,6 +92,19 @@
           </div>
         </div>
       </div>
+
+    </div>
+    <!-- Progress bar -->
+    <div class="w-full flex flex-col justify-start lg:gap-[14px] gap-2 lg:py-8 py-5">
+      <div class="w-full bg-gray-200 rounded-[10px] h-[11px]">
+        <div class="bg-green-500 h-2.5 rounded-[10px]" :style="{ width: getStatusPercent() }"></div>
+        <div class="w-full flex justify-between items-center pt-2">
+          <span v-for="(return_status_item, index) in return_status_arr" :key="index"
+            :class="['text-[10px] lg:text-sm font-bold leading-4', return_status_arr.findIndex(element => element.name === return_status) >= index ? 'text-green-600' : 'text-gray-400']">
+            {{ $t('text_status_' + return_status_item.name) }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -99,18 +112,20 @@
 <script setup>
 const localePath = useLocalePath()
 const image_placeholder = '/images/placeholder-logo.png'
+const return_status_arr = [
+  { name: "verification", percent: "25%" },
+  { name: "delivery", percent: "50%" },
+  { name: "arrival", percent: "75%" },
+  { name: "retrieval", percent: "100%" }
+]
+const return_status = ref('verification')
+function getStatusPercent() {
+  const statusObj = return_status_arr.find(obj => obj.name === return_status.value)
+  return statusObj ? statusObj.percent : '0%'
+}
 const props = defineProps({
   item_id: {
     type: Number
-  },
-  item_create_date: {
-    type: String
-  },
-  item_update_date: {
-    type: String
-  },
-  item_tracking_link: {
-    type: String
   },
   item_products: {
     type: Object
@@ -119,7 +134,5 @@ const props = defineProps({
     type: String
   }
 })
-
-
 
 </script>

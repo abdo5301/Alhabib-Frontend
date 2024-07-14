@@ -346,5 +346,18 @@
   "text_return_image_warning1":"يرجى رفع صورة توضح أن المنتج محافظ على تغليفه الأصلي",
   "text_return_image_warning2":"في حالة كان المنتج يحتوي على عيب مصنعي يرجى رفع صورة توضح ذلك",
   "error_return_images_size":"يجب أن يكون حجم الصور أقل من 10 ميجا بايت",
-  "error_return_images_type":"نوع الملف غير صالح "
+  "error_return_images_type":"نوع الملف غير صالح ",
+  "text_status_verification":"تحقق",
+  "text_status_delivery":"تسليم",
+  "text_status_arrival":"وصول",
+  "text_status_retrieval":"استرجاع",
+  "text_faq_title":"الأسئلة الشائعة",
+  "return_ticket_page_title":"عرض تفاصيل الاسترجاع",
+  "return_ticket_number":"رقم التذكرة",
+  "return_order_number":"رقم طلب الاسترجاع",
+  "return_order_date":"تاريخ الإنشاء",
+  "return_reason_title":"سبب الاسترجاع او الاستبدال",
+  "text_notes":"ملاحظات",
+  "pictures_included":"الصور المدرجة"
+
 }
