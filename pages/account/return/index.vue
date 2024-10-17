@@ -76,8 +76,8 @@ onMounted(async () => {
   initFlowbite()
   setActiveSection('return')
   try {
-    //return_orders.value = await getReturnOrders()
-    return_orders.value = await useOrder().getAllOrders()
+    return_orders.value = await getReturnOrders()
+    //return_orders.value = await useOrder().getAllOrders()
     console.log(return_orders.value);
   } catch (error) {
     console.log(error.data)
